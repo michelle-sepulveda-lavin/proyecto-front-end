@@ -1,3 +1,93 @@
 body {
-    color: red;
+  color: red;
+}
+.logo {
+  height: 3em;
+}
+
+.plan {
+  color: #000000;
+}
+
+.plan li {
+  list-style: none;
+  height: 10%;
+  border-bottom: 0.9px solid rgba(46, 46, 46, 0.123);
+  font-size: 0.9rem;
+}
+.plan li:last-of-type {
+  border: none;
+}
+
+.plan h3 {
+  text-align: center;
+}
+
+.plan-header {
+  width: 100%;
+  height: 18em;
+  background: #f7f7f7;
+}
+.plan-price {
+  font-size: 4em;
+  color: #000000;
+  font-weight: 700;
+}
+.plan .tipo-moneda {
+  font-size: 2em;
+}
+
+.boton-preferido {
+  background: #ffffff;
+  border-radius: 30px;
+  cursor: pointer;
+  display: block;
+  margin-top: 1.6em;
+}
+
+.boton-preferido:hover {
+  background: #000000;
+  transition: 0.25s;
+  color: #ffffff;
+}
+
+.boton-no-preferido {
+  border: 1px solid #0087bd;
+  border-radius: 30px;
+  cursor: pointer;
+  display: block;
+  width: 40%;
+  margin: 0.5em auto 1em auto;
+  text-align: center;
+}
+.boton-no-preferido:hover {
+  background: #0087bd;
+  transition: 0.3s;
+}
+
+.price-div {
+  border-top: 0.9px solid rgba(46, 46, 46, 0.123);
+}
+.planes-titulo {
+  font-size: 4rem;
+  color: #0087bd;
+}
+.boton-a-inicio {
+  font-size: 1.4em;
+  width: 7em;
+  height: 2em;
+  border: 1px solid #002b3b;
+  border-radius: 20px;
+  padding: 10px;
+  cursor: pointer;
+  display: block;
+  line-height: 0.5em;
+  text-align: center;
+  color: #000;
+}
+.boton-a-inicio:hover {
+  transform: scale(1.05);
+  background: #69caf0;
+  transition: 0.2s;
+  border: none;
 }
