@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     return (
@@ -18,8 +19,8 @@ const Home = () => {
                         </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
-                        <a className="btn btn-outline-success mr-1" href="/" role="button">Iniciar sesión</a>
-                        <a className="btn btn-outline-success" href="/" role="button">Planes</a>
+                        <Link to="./login" className="btn btn-outline-success mr-1" role="button">Iniciar sesión</Link>
+                        <Link className="btn btn-outline-success" to="./planes" role="button">Planes</Link>
                     </form>
                 </div>
             </nav>

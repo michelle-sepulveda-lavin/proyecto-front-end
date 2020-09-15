@@ -127,13 +127,13 @@ const Planes = () => {
                                         {plans.body.map((items, index) => {
                                             return <li key={index} className="text-center p-3"> <span className="px-2 px-md-4">{items}</span></li>
                                         })}
-                                        {planes.indexOf(plans) !== planes.length - 1 &&
-                                            <div className="price-div">
-                                                <span className="boton-no-preferido p-3 shadow " data-toggle="modal" data-target="#modal-suscripcion" onClick={() => {
-                                                    setNewContact({ ...newContact, plan: plans.name })
-                                                }}>¡LO QUIERO!</span>
-                                            </div>
-                                        }
+
+                                        <div className="price-div">
+                                            <span className="boton-no-preferido p-3 shadow " data-toggle="modal" data-target="#modal-suscripcion" onClick={() => {
+                                                setNewContact({ ...newContact, plan: plans.name })
+                                            }}>¡LO QUIERO!</span>
+                                        </div>
+
                                     </div>
                                 </div>
 
