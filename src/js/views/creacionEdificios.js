@@ -1,11 +1,10 @@
 import React from 'react';
 
-const MenuNavegacion = () => {
+const CreacionEdificios = () => {
     return (
         <>
-
         </>
     )
 };
 
-export default MenuNavegacion;
+export default CreacionEdificios;
