@@ -6,12 +6,14 @@ import Login from './views/login';
 import Planes from './views/planes';
 import Footer from './views/footer';
 import MenuNavegacion from './views/superAdmin/menuNavegacion';
+import CrearEdificios from './views/crearEdificios';
 
 const Layout = () => {
     return (
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/crearedificio' component={CrearEdificios} />
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/' component={Home} />
                     <Route exact path='/planes' component={Planes} />
