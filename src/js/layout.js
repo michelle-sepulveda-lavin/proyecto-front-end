@@ -16,7 +16,7 @@ const Layout = () => {
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/' component={Home} />
                     <Route exact path='/planes' component={Planes} />
-                    <Route exact path='/ModifyPlans' component={ModifyPlans} />
+                    <Route exact path='/superAdmin/planes' component={ModifyPlans} />
                     <Route render={() => <h1 className="notfound">Not found!</h1>} />
                 </Switch>
                 <Footer />

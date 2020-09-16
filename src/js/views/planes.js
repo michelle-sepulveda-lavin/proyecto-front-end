@@ -42,7 +42,7 @@ const Planes = () => {
                 <div className="row row-cols-1 row-cols-md-2 d-flex justify-content-center">
 
 
-                    {planes.map((plans, index) => {
+                    {planes.length > 0 && planes.map((plans, index) => {
 
                         return (
                             <div key={index} className="col-9 col-md-5 mb-5 plan">
