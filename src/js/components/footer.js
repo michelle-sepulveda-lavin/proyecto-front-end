@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
     return (
         <>
-            <div className="card-footer mt-5">
+            <div className="card-footer mt-5 sticky-bottom">
                 <div className="row">
                     <div className="col-md-9">
                         <div className="p-3">Logo</div>
