@@ -96,6 +96,7 @@ body {
   margin-top: 0.3em;
 }
 
+<<<<<<< HEAD
 .footer {
   position: relative;
   right: 0;
@@ -205,3 +206,11 @@ body {
 li {
   list-style: none;
 }
+=======
+.navegacionadm{
+  height: 100vh;
+  
+  
+}
+
+>>>>>>> ceab090d67c377a2ea9e5ea0148d4d1a414cff2d

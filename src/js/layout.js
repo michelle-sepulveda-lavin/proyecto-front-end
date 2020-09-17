@@ -21,6 +21,8 @@ import BoletinesConserje from './views/conserjes/boletinesConserje';
 import PaqueteriaConserje from './views/conserjes/paqueteriaConserje';
 import GastosConserje from './views/conserjes/gastosConserje';
 import GastosUser from './views/user/gastosUser';
+import RecuperacionContraseña from './views/recuperacionContraseña';
+
 
 const Layout = () => {
     return (
@@ -40,6 +42,8 @@ const Layout = () => {
                     <Route exact path='/listado-edificios' component={ListadoEdificioAdm} />
                     <Route exact path='/dashboard' component={Dashboard} />
                     <Route exact path='/navegacionAdm' component={NavegacionAdm} />
+                    <Route exact path='/recuperacion-password' component={RecuperacionContraseña} />
+
                     <Route exact path='/crearedificio' component={CrearEdificios} />
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/' component={Home} />
