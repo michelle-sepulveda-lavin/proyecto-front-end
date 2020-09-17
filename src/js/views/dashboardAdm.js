@@ -3,11 +3,11 @@ import React from 'react';
 const DashboardAdm = () => {
     return (
         <>
-            
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="/">Logo</a>
-                </nav>
-            
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="/">Logo</a>
+            </nav>
+
             <div className="container">
                 <div class="row row-cols-1 row-cols-md-2 mt-5">
                     <div class="col mb-4">

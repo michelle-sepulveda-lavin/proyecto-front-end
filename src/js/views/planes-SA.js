@@ -22,6 +22,7 @@ const ModifyPlans = () => {
             body: JSON.stringify(plan)
         })
         const data = await response.json()
+        console.log(data)
         getData()
     }
 

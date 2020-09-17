@@ -6,23 +6,45 @@ import Login from './views/login';
 import Planes from './views/planes';
 import Footer from './components/footer';
 import NavegacionAdm from './components/navegacionAdm';
-import DashboardAdm from './views/dashboardAdm'
-import ListadoEdificioAdm from './views/listadoEdificioAdm'
+import ListadoEdificioAdm from './views/superAdmin/listadoEdificioAdm'
 import ModifyPlans from './views/planes-SA';
-import CrearEdificios from './views/crearEdificios';
+import CrearEdificios from './views/superAdmin/crearEdificios';
+import SidebarPage from './components/SidebarPage';
+import Dashboard from './views/dashboard';
+import Contactos from './views/superAdmin/contactos';
+import Conserjes from './views/admin/conserjes';
+import DepartamentosAdmin from './views/admin/departamentosAdmin';
+import BoletinesAdmin from './views/admin/boletinesAdmin';
+import GastosAdmin from './views/admin/gastosAdmin';
+import DepartamentosConserje from './views/conserjes/departamentosConserje';
+import BoletinesConserje from './views/conserjes/boletinesConserje';
+import PaqueteriaConserje from './views/conserjes/paqueteriaConserje';
+import GastosConserje from './views/conserjes/gastosConserje';
+import GastosUser from './views/user/gastosUser';
 
 const Layout = () => {
     return (
         <>
             <BrowserRouter>
                 <Switch>
-                <Route exact path='/listadoEdificioAdm' component={ListadoEdificioAdm} />
-                    <Route exact path='/dashboardAdm' component={DashboardAdm} />
+                    <Route exact path='/usuario/gastos-comunes' component={GastosUser} />
+                    <Route exact path='/conserje/gastos-comunes' component={GastosConserje} />
+                    <Route exact path='/conserje/paqueteria' component={PaqueteriaConserje} />
+                    <Route exact path='/conserje/boletines' component={BoletinesConserje} />
+                    <Route exact path='/conserje/departamentos' component={DepartamentosConserje} />
+                    <Route exact path='/admin/gastos-comunes' component={GastosAdmin} />
+                    <Route exact path='/admin/boletines' component={BoletinesAdmin} />
+                    <Route exact path='/admin/departamentos' component={DepartamentosAdmin} />
+                    <Route exact path='/conserjes' component={Conserjes} />
+                    <Route exact path='/contactos' component={Contactos} />
+                    <Route exact path='/listado-edificios' component={ListadoEdificioAdm} />
+                    <Route exact path='/dashboard' component={Dashboard} />
                     <Route exact path='/navegacionAdm' component={NavegacionAdm} />
                     <Route exact path='/crearedificio' component={CrearEdificios} />
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/' component={Home} />
                     <Route exact path='/planes' component={Planes} />
+                    <Route exact path='/sidebar' component={SidebarPage} />
                     <Route exact path='/superAdmin/planes' component={ModifyPlans} />
                     <Route render={() => <h1 className="notfound">Not found!</h1>} />
                 </Switch>

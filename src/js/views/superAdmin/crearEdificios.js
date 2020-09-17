@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { Context } from '../store/appContext';
+import SidebarPage from '../../components/SidebarPage';
+import { Context } from '../../store/appContext';
 
 const CrearEdificios = () => {
-    const {store, actions} = useContext(Context)
+    const { store, actions } = useContext(Context)
     const [state, setState] = useState({})
 
     const handleSubmit = (e) => {
@@ -16,7 +17,8 @@ const CrearEdificios = () => {
     }
 
     return (
-        <>
+
+        <SidebarPage>
             <div className="container">
                 <div className="container">
                     <h2 className="d-flex justify-content-center">Formulario inicializacion edificio</h2>
@@ -87,7 +89,7 @@ const CrearEdificios = () => {
                     </form>
                 </div>
             </div>
-        </>
+        </SidebarPage>
     )
 };
 

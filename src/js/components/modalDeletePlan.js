@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 
 
 const ModalDeletePlan = props => {
@@ -10,6 +10,7 @@ const ModalDeletePlan = props => {
             },
         })
         const data = await response.json()
+        console.log(data)
         props.getData()
         props.close()
     }

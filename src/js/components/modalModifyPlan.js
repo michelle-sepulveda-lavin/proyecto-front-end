@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import { Context } from "../store/appContext";
+import React, { useRef } from "react";
 
 const ModalModifyPlan = (props) => {
 
@@ -10,13 +7,6 @@ const ModalModifyPlan = (props) => {
         props.setPlanToModify({ ...props.planToModify, [e.target.name]: e.target.value });
     };
     const inputCaracteristica = useRef("")
-    const [newPlan, setNewPlan] = useState({
-        name: null,
-        price: null,
-        body: [],
-        frecuencia: null
-    })
-
 
     const deleteItem = (index) => {
         props.planToModify.body.splice(index, 1);
@@ -34,6 +24,7 @@ const ModalModifyPlan = (props) => {
             body: JSON.stringify(modifiedPlan)
         })
         const data = await response.json()
+        console.log(data)
         props.getData()
     }
 

@@ -3,12 +3,12 @@ import React from 'react';
 const Footer = () => {
     return (
         <>
-            <div className="card-footer mt-5 sticky-bottom">
-                <div className="row">
-                    <div className="col-md-9">
+            <div className="footer text-light">
+                <div className="d-flex justify-content-between">
+                    <div className="">
                         <div className="p-3">Logo</div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="p-0">
                         <div >Contacto: <br />
                         Telefono: +569 12345678 <br />
                         Email: edificio@felizfeliz.cl

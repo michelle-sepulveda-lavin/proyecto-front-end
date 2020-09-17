@@ -5,23 +5,33 @@ const Home = () => {
     return (
         <>
             {/* navbar */}
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a className="navbar-brand ml-2" href="/">Logo</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+            <nav className="navbar navbar-color navbar-light navbar-expand-lg navbar-light bg-light">
 
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <div className="d-md-flex justify-content-between w-100 text-center">
+                    <Link className="navbar-brand ml-2 float-left" to={"./"}>Logo</Link>
 
-                    <ul className="navbar-nav mx-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link " href="/">Edificios Felices<span className="sr-only">(current)</span></a>
-                        </li>
-                    </ul>
-                    <form className="form-inline my-2 my-lg-0">
-                        <Link to="./login" className="btn btn-outline-success mr-1" role="button">Iniciar sesión</Link>
-                        <Link className="btn btn-outline-success" to="./planes" role="button">Planes</Link>
-                    </form>
+                    <span className="titulo-navbar align-self-center font-weight-bold ">Edificios Felices</span>
+                    <div className="d-inline float-right">
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+
+                            <ul class="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
+
+                                <li class="d-block">
+                                    <Link to="./login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
+                                </li>
+                                <li class="d-block mt-2 mt-md-0">
+                                    <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
+
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
                 </div>
             </nav>
             {/* navbar end */}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 const Planes = () => {
+
     const getData = async () => {
         const response = await fetch('http://127.0.0.1:5000/api/planes');
         const data = await response.json()
@@ -12,6 +13,32 @@ const Planes = () => {
         getData()
     }, []);
 
+    const sendContact = async (contact) => {
+        const response = await fetch("http://127.0.0.1:5000/api/info-contacto", {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(contact)
+        })
+        const data = await response.json()
+        if (data.msg === "Contacto ya existe") {
+            setCustomAlert('repeated')
+            setNewContact({
+                ...newContact,
+                name: "",
+                phone: "",
+                email: "",
+            })
+        }
+        else {
+            setCustomAlert("completed")
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000);
+        }
+
+    }
 
     const [planes, setPlanes] = useState([
     ])
@@ -23,7 +50,7 @@ const Planes = () => {
         email: "",
         plan: ""
     })
-    const [alert, setAlert] = useState("false")
+    const [customAlert, setCustomAlert] = useState("false")
 
     const handleInput = e => {
         e.preventDefault();
@@ -77,14 +104,8 @@ const Planes = () => {
 
                                                         <form onSubmit={(e) => {
                                                             e.preventDefault()
-                                                            const values = Object.values(newContact)
-                                                            if (values.includes("")) {
-                                                                setAlert("missing")
-                                                            }
-                                                            else {
-                                                                setAlert("completed")
-                                                                setTimeout(() => { window.location.reload() }, 2000);
-                                                            }
+                                                            sendContact(newContact)
+
 
                                                         }}>
                                                             <div className="form-group">
@@ -104,10 +125,10 @@ const Planes = () => {
                                                                 <input required type="email" name="email" className="form-control" id="exampleInputPassword1" value={newContact.email}
                                                                     onChange={handleInput} />
                                                             </div>
-                                                            <div className={"alert alert-danger " + (alert === "missing" ? "d-block" : "d-none")} role="alert">
-                                                                ¡Por favor completa todos los datos!
+                                                            <div className={"alert alert-danger " + (customAlert === "repeated" ? "d-block" : "d-none")} role="alert">
+                                                                Este email ya existe Por favor espera a que te contactemos o ingresa otro correo
                                                             </div>
-                                                            <div className={"alert alert-success " + (alert === "completed" ? "d-block" : "d-none")} role="alert">
+                                                            <div className={"alert alert-success " + (customAlert === "completed" ? "d-block" : "d-none")} role="alert">
                                                                 ¡Te contactaremos lo antes posible!
                                                             </div>
 
