@@ -1,14 +1,15 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			apiURL: 'http://localhost:5000',
+			apiURL: "http://localhost:5000",
 			username: '',
             password: '',
             currentUser: null,
             error: null,
             success: null,
             profile: null,
-			edificios: []
+			edificios: [],
+			msgEmail: null
 		},
 		actions: {
 			handleChangeLogin: e => {
@@ -50,19 +51,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 console.log(data);
 			},
-			crearEdificio: async (aux) => {
+			crearEdificio: async (e, aux) => {
+				e.preventDefault()
 				const resp = await fetch("http://localhost:5000/crearedificio", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(aux)
 				});
 				const data = await resp.json();
-				if (!resp.ok) {
-					alert(data.msg);
-				}else{
+				const { msg } = data;
+				if(resp.ok){
 					alert(data.msg)
+
+				}
+				else if (msg !== undefined) {
+					setStore({
+                        error: msg
+                    })
 				}
 			},
+			buscarEmail: async (e, email) =>{
+				e.preventDefault();
+				const { apiURL } = getStore();
+				const resp = await fetch(`${apiURL}/recuperar-password`, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({email})	
+				});
+				const data = await resp.json();
+				const { msg } = data;
+				if (msg !== undefined) {
+					setStore({
+                        msgEmail: msg
+                    })
+				}
+			},
+			resetMsg:() =>{
+				setStore({
+					msgEmail : null
+				})
+			}
+			
 /* 			logout: () => {
                 localStorage.removeItem("currentUser");
                 sessionStorage.removeItem("currentUser");
