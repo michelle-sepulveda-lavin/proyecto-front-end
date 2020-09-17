@@ -10,13 +10,15 @@ import DashboardAdm from './views/dashboardAdm'
 import ListadoEdificioAdm from './views/listadoEdificioAdm'
 import ModifyPlans from './views/planes-SA';
 import CrearEdificios from './views/crearEdificios';
+import RecuperacionContraseña from './views/recuperacionContraseña';
 
 const Layout = () => {
     return (
         <>
             <BrowserRouter>
                 <Switch>
-                <Route exact path='/listadoEdificioAdm' component={ListadoEdificioAdm} />
+                    <Route exact path='/recuperacion-password' component={RecuperacionContraseña} />
+                    <Route exact path='/listadoEdificioAdm' component={ListadoEdificioAdm} />
                     <Route exact path='/dashboardAdm' component={DashboardAdm} />
                     <Route exact path='/navegacionAdm' component={NavegacionAdm} />
                     <Route exact path='/crearedificio' component={CrearEdificios} />

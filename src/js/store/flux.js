@@ -3,13 +3,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			apiURL: "http://localhost:5000",
 			username: '',
-            password: '',
+			password: '',
+			passwordConfirmacion: '',
+			currentToken: "",
             currentUser: null,
             error: null,
             success: null,
             profile: null,
 			edificios: [],
-			msgEmail: null
+			msgEmail: null,
+			flagRecordar: false
 		},
 		actions: {
 			handleChangeLogin: e => {
@@ -45,11 +48,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         error: null
                     })
                     localStorage.setItem('currentUser', JSON.stringify(data));
-                    sessionStorage.setItem('currentUser', JSON.stringify(data));
+                    /* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
                     /* history.push("/") */
                 }
-
-                console.log(data);
 			},
 			crearEdificio: async (e, aux) => {
 				e.preventDefault()
@@ -90,6 +91,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({
 					msgEmail : null
 				})
+			},
+			handleSubmitContraseña: (e) =>{
+				e.preventDefault()
+				const { passwordConfirmacion, password } = getStore();
+
+				if(password === passwordConfirmacion){
+					console.log("Funciona")
+				}
+			},
+			handleRecordar: () =>{
+				const { flagRecordar, username } = getStore();
+				if(username == ""){
+					setStore({
+						flagRecordar: false
+					})
+				}
+				setStore({
+					flagRecordar: !flagRecordar
+				})
+				if(!flagRecordar){
+					localStorage.setItem("usuario", JSON.stringify(username))					
+				}else{
+					localStorage.setItem("usuario", JSON.stringify(""))
+				}
 			}
 			
 /* 			logout: () => {
