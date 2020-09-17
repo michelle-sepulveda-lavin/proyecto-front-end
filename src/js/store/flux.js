@@ -1,8 +1,10 @@
+import { get } from "jquery";
+
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             apiURL: "http://localhost:5000",
-            username: '',
+			username: "",
             password: '',
             passwordConfirmacion: '',
             currentToken: "",
@@ -100,22 +102,33 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("Funciona")
                 }
             },
-            handleRecordar: () => {
-                const { flagRecordar, username } = getStore();
+            handleRecordar: (e) => {
+				const { flagRecordar, username } = getStore();
                 if (username == "") {
                     setStore({
                         flagRecordar: false
-                    })
-                }
-                setStore({
-                    flagRecordar: !flagRecordar
-                })
-                if (!flagRecordar) {
-                    localStorage.setItem("usuario", JSON.stringify(username))
-                } else {
-                    localStorage.setItem("usuario", JSON.stringify(""))
-                }
-            }
+					})
+				}
+				setStore({
+					flagRecordar: !flagRecordar
+				})
+				if (!flagRecordar) {
+					localStorage.setItem("usuario", JSON.stringify(username))
+				} else {
+					localStorage.setItem("usuario", JSON.stringify(""))
+				}
+			},
+			mostrarUsuario: () =>{
+				if(getStore().username == ""){
+					const auxiliar = localStorage.getItem("usuario")
+					if (auxiliar){
+						const aux2 = localStorage.getItem("usuario").replace(/['"]+/g, '')
+						setStore({
+							username: aux2
+						})
+					}					
+				}
+			}
 
             /* 			logout: () => {
                             localStorage.removeItem("currentUser");
