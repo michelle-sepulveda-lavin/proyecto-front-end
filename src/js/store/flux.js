@@ -22,7 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     [e.target.name]: e.target.value
                 })
             },
-            loginAction: async (e, history) => {
+            loginAction: async (e) => {
                 e.preventDefault();
                 const { username, password, apiURL } = getStore();
                 const resp = await fetch(`${apiURL}/login`, {
@@ -50,8 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         error: null
                     })
                     localStorage.setItem('currentUser', JSON.stringify(data));
-                    /* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
-                    /* history.push("/") */
+					/* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
                 }
             },
             crearEdificio: async (e, aux) => {
@@ -111,23 +110,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 
             },
-            handleRecordar: () => {
-                const { flagRecordar, username } = getStore();
-                if (username == "") {
-                    setStore({
-                        flagRecordar: false
-                    })
-                }
-                setStore({
-                    flagRecordar: !flagRecordar
-                })
-                if (!flagRecordar) {
-                    localStorage.setItem("usuario", JSON.stringify(username))
-                } else {
-                    localStorage.setItem("usuario", JSON.stringify(""))
-                }
-            },
-
             handleRecordar: (e) => {
                 const { flagRecordar, username } = getStore();
                 if (username !== "") {
@@ -138,7 +120,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                             flagRecordar: true
                         })
                     } else {
-                        localStorage.clear()
+						localStorage.removeItem("usuario")
+						localStorage.removeItem("recordando")
                         setStore({
                             flagRecordar: false
                         })
@@ -174,15 +157,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                     edificios: data
                 })
                 console.log(data)
-            }
+			},
+			handleClose: (history) =>{
+				localStorage.removeItem("currentUser")
+				setStore({
+					currentRol: null
+				})
+				history.push("/")
+			}
 
-            /* 			logout: () => {
-                            localStorage.removeItem("currentUser");
-                            sessionStorage.removeItem("currentUser");
-                            setStore({
-                                currentUser: null
-                            })
-                        },
+            /* 			
                         profile: () => {
                             const { apiURL, currentUser: { access_token } } = getStore();
             
