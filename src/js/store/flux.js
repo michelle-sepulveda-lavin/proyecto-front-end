@@ -23,7 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     [e.target.name]: e.target.value
                 })
             },
-            loginAction: async (e, history) => {
+            loginAction: async (e) => {
                 e.preventDefault();
                 const { username, password, apiURL } = getStore();
                 const resp = await fetch(`${apiURL}/login`, {
@@ -51,8 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         error: null
                     })
                     localStorage.setItem('currentUser', JSON.stringify(data));
-                    /* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
-                    /* history.push("/") */
+					/* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
                 }
             },
             crearEdificio: async (e, aux) => {
@@ -122,7 +121,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                             flagRecordar: true
                         })
                     } else {
-                        localStorage.clear()
+						localStorage.removeItem("usuario")
+						localStorage.removeItem("recordando")
                         setStore({
                             flagRecordar: false
                         })
@@ -167,15 +167,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                     contactos: data
                 })
                 console.log(data)
-            }
+			},
+			handleClose: (history) =>{
+				localStorage.removeItem("currentUser")
+				setStore({
+					currentRol: null
+				})
+				history.push("/")
+			}
 
-            /* 			logout: () => {
-                            localStorage.removeItem("currentUser");
-                            sessionStorage.removeItem("currentUser");
-                            setStore({
-                                currentUser: null
-                            })
-                        },
+            /* 			
                         profile: () => {
                             const { apiURL, currentUser: { access_token } } = getStore();
             

@@ -7,9 +7,8 @@ const Login = props => {
     const { store, actions } = useContext(Context);
     const history = useHistory();
 
-
     useEffect(() => {
-        if (store.currentUser !== null) history.push("/");
+        if (store.currentUser !== null)history.push("/dashboard");
         actions.mostrarUsuario()
 
     }, [store.currentUser]);
@@ -35,7 +34,7 @@ const Login = props => {
                 </div>
             </div>
             <div className="container mt-5">
-                <form className="text-center col-md-6 m-auto" onSubmit={(e) => actions.loginAction(e, history)}>
+                <form className="text-center col-md-6 m-auto" onSubmit={(e) => actions.loginAction(e)}>
                     <div className="form-group">
                         <label htmlFor="usuario">Usuario</label>
                         <input
