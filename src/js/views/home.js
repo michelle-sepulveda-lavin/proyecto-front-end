@@ -22,7 +22,7 @@ const Home = () => {
                             <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
 
                                 <li className="d-block">
-                                    <Link to="./login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
+                                    <Link to="/login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
                                 </li>
                                 <li className="d-block mt-2 mt-md-0">
                                     <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>

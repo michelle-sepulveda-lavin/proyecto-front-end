@@ -25,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             loginAction: async (e) => {
                 e.preventDefault();
-                const { username, password, apiURL } = getStore();
+                const { username, password, apiURL, currentRol } = getStore();
                 const resp = await fetch(`${apiURL}/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -51,7 +51,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                         error: null
                     })
                     localStorage.setItem('currentUser', JSON.stringify(data));
-					/* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
+                    /* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
+                    const user = JSON.parse(localStorage.getItem("currentUser"));
+                    setStore({
+                        currentRol: user.user.rol.name
+                    })
                 }
             },
             crearEdificio: async (e, aux) => {
@@ -121,8 +125,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                             flagRecordar: true
                         })
                     } else {
-						localStorage.removeItem("usuario")
-						localStorage.removeItem("recordando")
+                        localStorage.removeItem("usuario")
+                        localStorage.removeItem("recordando")
                         setStore({
                             flagRecordar: false
                         })
@@ -167,14 +171,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     contactos: data
                 })
                 console.log(data)
-			},
-			handleClose: (history) =>{
-				localStorage.removeItem("currentUser")
-				setStore({
-					currentRol: null
-				})
-				history.push("/")
-			}
+            },
+            handleClose: (history) => {
+                localStorage.removeItem("currentUser")
+                setStore({
+                    currentRol: null,
+                    currentUser: null
+                })
+                history.push("/")
+            }
 
             /* 			
                         profile: () => {

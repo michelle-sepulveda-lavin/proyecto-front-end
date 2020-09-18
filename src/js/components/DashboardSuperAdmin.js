@@ -7,12 +7,6 @@ const DashboardSuperAdmin = (props) => {
 
     const { store } = useContext(Context)
 
-    const getLastContactData = async (id) => {
-        const response = await fetch(`http://127.0.0.1:5000/api/info-contacto/${id}`);
-        const data = await response.json()
-        setLastContacts(data)
-    }
-
     const planesMensuales = store.contactos.filter((contactos) => {
         return contactos.plan === "Plan mensual"
     })
@@ -21,10 +15,6 @@ const DashboardSuperAdmin = (props) => {
     })
 
     const [lastContacts, setLastContacts] = useState([])
-
-    useEffect(() => {
-        getLastContactData(3)
-    }, [])
 
     return (<>
 
@@ -69,8 +59,10 @@ const DashboardSuperAdmin = (props) => {
                                 <h2 className="card-title text-center">Clientes a contactar</h2>
                                 <h5>Emails más recientes:</h5>
                                 <ul className="p-0 mt-3 text-center">
-                                    {lastContacts.map((contacto, index) => {
-                                        return <li key={index} className="card shadow-sm mb-3 pt-2 px-1"> <h6>{contacto.email}</h6><h5 className="font-weight-bold dashboard-subtitle">{contacto.plan}</h5></li>
+                                    {store.contactos.slice(0).reverse().map((contacto, index) => {
+                                        if (index < 3) {
+                                            return <li key={index} className="card shadow-sm mb-3 pt-2 px-1"> <h6>{contacto.email}</h6><h5 className="font-weight-bold dashboard-subtitle">{contacto.plan}</h5></li>
+                                        }
                                     })}
                                 </ul>
                                 <div className="d-flex justify-content-end">

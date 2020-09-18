@@ -8,7 +8,7 @@ const Login = props => {
     const history = useHistory();
 
     useEffect(() => {
-        if (store.currentUser !== null)history.push("/dashboard");
+        if (store.currentUser !== null) history.push("/dashboard");
         actions.mostrarUsuario()
 
     }, [store.currentUser]);
@@ -34,7 +34,11 @@ const Login = props => {
                 </div>
             </div>
             <div className="container mt-5">
-                <form className="text-center col-md-6 m-auto" onSubmit={(e) => actions.loginAction(e)}>
+                <form className="text-center col-md-6 m-auto" onSubmit={(e) => {
+                    actions.loginAction(e)
+
+                }}>
+
                     <div className="form-group">
                         <label htmlFor="usuario">Usuario</label>
                         <input
@@ -70,7 +74,7 @@ const Login = props => {
                             type="checkbox"
                             className="form-check-input"
                             disabled={!store.username ? true : ""}
-                            checked={store.flagRecordar? true : false}
+                            checked={store.flagRecordar ? true : false}
                             id="recordarPassword" onClick={e => actions.handleRecordar(e)}
                         />
                         <label className="form-check-label" htmlFor="recordarPassword">Recordar Usuario</label>
