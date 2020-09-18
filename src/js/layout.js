@@ -40,8 +40,7 @@ const Layout = () => {
                     <Route exact path='/contactos' component={Contactos} />
                     <Route exact path='/listado-edificios' component={ListadoEdificioAdm} />
                     <Route exact path='/dashboard' component={Dashboard} />
-                    <Route exact path='/recuperacion-password' component={RecuperacionContraseña} />
-
+                    <Route exact path='/recuperacion-password/:token' component={RecuperacionContraseña} />
                     <Route exact path='/crearedificio' component={CrearEdificios} />
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/' component={Home} />

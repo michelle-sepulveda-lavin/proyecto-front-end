@@ -10,8 +10,9 @@ const Login = props => {
 
     useEffect(() => {
         if (store.currentUser !== null) history.push("/");
+        actions.mostrarUsuario()
 
-    }, [store.currentUser, store.username]);
+    }, [store.currentUser]);
 
     return (
         <>
@@ -66,7 +67,13 @@ const Login = props => {
                         </p>
                     </div>
                     <div className="form-group form-check">
-                        <input type="checkbox" className="form-check-input" disabled={store.username == ""? "true" : ""} id="recordarPassword" onClick={e =>actions.handleRecordar(e)} />
+                        <input
+                            type="checkbox"
+                            className="form-check-input"
+                            disabled={!store.username ? true : ""}
+                            checked={store.flagRecordar? true : false}
+                            id="recordarPassword" onClick={e => actions.handleRecordar(e)}
+                        />
                         <label className="form-check-label" htmlFor="recordarPassword">Recordar Usuario</label>
                     </div>
 

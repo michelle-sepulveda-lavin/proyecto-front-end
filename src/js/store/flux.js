@@ -1,8 +1,9 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             apiURL: "http://localhost:5000",
-            username: '',
+            username: "",
             password: '',
             passwordConfirmacion: '',
             currentToken: "",
@@ -93,13 +94,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                     msgEmail: null
                 })
             },
-            handleSubmitContraseña: (e) => {
+            handleSubmitContraseña: async (e, parametros, history) => {
                 e.preventDefault()
-                const { passwordConfirmacion, password } = getStore();
-
-                if (password === passwordConfirmacion) {
-                    console.log("Funciona")
+                const { passwordConfirmacion, password, apiURL } = getStore();
+                if (password === passwordConfirmacion && password != "") {
+                    const resp = await fetch(`${apiURL}/reset-password`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Authorization': `Bearer ${parametros.token}`
+                        },
+                        body: JSON.stringify({ "password": passwordConfirmacion })
+                    });
+                    const data = await resp.json();
+                    history.push("/login")
                 }
+
             },
             handleRecordar: () => {
                 const { flagRecordar, username } = getStore();
@@ -115,6 +125,34 @@ const getState = ({ getStore, getActions, setStore }) => {
                     localStorage.setItem("usuario", JSON.stringify(username))
                 } else {
                     localStorage.setItem("usuario", JSON.stringify(""))
+                }
+            },
+
+            handleRecordar: (e) => {
+                const { flagRecordar, username } = getStore();
+                if (username !== "") {
+                    if (!flagRecordar) {
+                        localStorage.setItem("usuario", JSON.stringify(username))
+                        localStorage.setItem("recordando", JSON.stringify("true"))
+                        setStore({
+                            flagRecordar: true
+                        })
+                    } else {
+                        localStorage.clear()
+                        setStore({
+                            flagRecordar: false
+                        })
+                    }
+                }
+            },
+            mostrarUsuario: () => {
+                const bandera = localStorage.getItem("recordando")
+                const usuario = localStorage.getItem("usuario")
+                if (bandera) {
+                    setStore({
+                        username: usuario.replace(/['"]+/g, ''),
+                        flagRecordar: true
+                    })
                 }
             },
             getCurrentRol: () => {
@@ -145,46 +183,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 currentUser: null
                             })
                         },
-                        crearEdificio: async (aux) => {
-                            const resp = await fetch("http://localhost:5000/crearedificio", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify(aux)
-                            });
-                            const data = await resp.json();
-                            if (!resp.ok) {
-                                alert(data.msg);
-                            } else {
-                                alert(data.msg)
-                            }
+                        profile: () => {
+                            const { apiURL, currentUser: { access_token } } = getStore();
+            
+                            fetch(`${apiURL}/api/profile`, {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${access_token}` 
+                                }
+                            })
+                                .then(resp => resp.json())
+                                .then(data => console.log(data));
                         },
-                        /* 			logout: () => {
-                                        localStorage.removeItem("currentUser");
-                                        sessionStorage.removeItem("currentUser");
-                                        setStore({
-                                            currentUser: null
-                                        })
-                                    },
-                                    profile: () => {
-                                        const { apiURL, currentUser: { access_token } } = getStore();
-                        
-                                        fetch(`${apiURL}/api/profile`, {
-                                            method: 'GET',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                'Authorization': `Bearer ${access_token}` 
-                                            }
-                                        })
-                                            .then(resp => resp.json())
-                                            .then(data => console.log(data));
-                                    },
-                                    tieneSession: () => {
-                                        if (sessionStorage.getItem("currentUser")) {
-                                            setStore({
-                                                currentUser: JSON.parse(sessionStorage.getItem("currentUser"))
-                                            })
-                                        }
-                                    }, */
+                        tieneSession: () => {
+                            if (sessionStorage.getItem("currentUser")) {
+                                setStore({
+                                    currentUser: JSON.parse(sessionStorage.getItem("currentUser"))
+                                })
+                            }
+                        }, */
         }
     };
 };
