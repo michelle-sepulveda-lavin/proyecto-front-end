@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             passwordConfirmacion: '',
             currentToken: "",
             currentUser: null,
+            currentRol: null,
             error: null,
             success: null,
             profile: null,
@@ -115,6 +116,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } else {
                     localStorage.setItem("usuario", JSON.stringify(""))
                 }
+            },
+            getCurrentRol: () => {
+                const store = getStore();
+                if (localStorage.getItem("currentUser")) {
+                    const user = JSON.parse(localStorage.getItem("currentUser"));
+                    setStore({
+                        ...store,
+                        currentRol: user.user.rol.name
+                    })
+                }
+            },
+            getEdificiosData: async () => {
+                const store = getStore()
+                const response = await fetch('http://127.0.0.1:5000/crearedificio');
+                const data = await response.json()
+                setStore({
+                    ...store,
+                    edificios: data
+                })
+                console.log(data)
             }
 
             /* 			logout: () => {

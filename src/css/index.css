@@ -96,7 +96,6 @@ body {
   margin-top: 0.3em;
 }
 
-<<<<<<< HEAD
 .footer {
   position: relative;
   right: 0;
@@ -206,11 +205,29 @@ body {
 li {
   list-style: none;
 }
-=======
-.navegacionadm{
-  height: 100vh;
-  
-  
+.dashboard-num {
+  width: 10em;
+  height: 10em;
+  border-radius: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
->>>>>>> ceab090d67c377a2ea9e5ea0148d4d1a414cff2d
+.dashboard-prime-color {
+  background-color: #011638;
+  background-image: linear-gradient(160deg, #2163ce 10%, rgb(2, 1, 1) 100%);
+  background-size: cover;
+}
+
+.dashboard-secondary-color {
+  background-color: #ff1e00;
+  background-image: linear-gradient(160deg, #ff1e00 40%, rgb(2, 1, 1) 100%);
+  background-size: cover;
+}
+
+.dashboard-num p {
+  font-size: 6rem;
+  color: #ebecf1;
+}

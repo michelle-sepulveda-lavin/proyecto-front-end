@@ -1,40 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Sidebar from '../components/sidebar';
 import SidebarSuperAdmin from '../components/sidebarSuperAdmin';
+import { Context } from '../store/appContext';
 import SidebarAdmin from './SidebarAdmin';
 import SidebarConserje from './SidebarConserje';
 import SidebarUser from './SidebarUser';
 
 const SidebarPage = (props) => {
-    const [rol, setRol] = useState("superadmin")
+    const { store } = useContext(Context)
     return (
 
         <>
             <div id="wrapper" className="d-flex">
 
                 <Sidebar >
-                    {rol === "superadmin" ?
+                    {store.currentRol === "superAdministrador" ?
                         <SidebarSuperAdmin />
-                        : rol === "admin" ?
+                        : store.currentRol === "administrador" ?
                             <SidebarAdmin /> :
-                            rol === "conserje" ?
+                            store.currentRol === "conserje" ?
                                 <SidebarConserje /> :
-                                rol === "user" ?
+                                store.currentRol === "usuario" ?
                                     <SidebarUser /> :
-                                    <h1>Debes iniciar sesión</h1>
+                                    ""
                     }
-                    <span className="btn btn-success" onClick={() => {
-                        if (rol === "superadmin") {
-                            setRol("admin")
-                        } else if (rol === "admin") {
-                            setRol("conserje")
-                        } else if (rol === "conserje") {
-                            setRol("user")
-                        } else if (rol === "user") {
-                            setRol("superadmin")
-                        }
 
-                    }}>Rol</span>
                 </Sidebar>
 
                 <div id="content-wrapper" className="d-flex flex-column">
