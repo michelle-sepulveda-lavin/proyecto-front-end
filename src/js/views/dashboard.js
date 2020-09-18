@@ -13,9 +13,9 @@ const Dashboard = (props) => {
     return (
 
         <SidebarPage >
-            <h1 className="dashboard-title my-4 ml-md-4 text-center text-md-left">Dashboard</h1>
+            <h1 className="dashboard-title mt-4 ml-md-4 text-center text-md-left">Dashboard</h1>
             <div className="container-fluid">
-                <div className="card-dashboard shadow mb-3">
+                <div className=" mb-3">
 
                     {store.currentRol === "superAdministrador" ?
                         <DashboardSuperAdmin />

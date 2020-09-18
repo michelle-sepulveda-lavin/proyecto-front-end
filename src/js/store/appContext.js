@@ -22,6 +22,7 @@ const injectContext = PassedComponent => {
 		useEffect(() => {
 			state.actions.getCurrentRol();
 			state.actions.getEdificiosData()
+			state.actions.getContactData()
 		}, []);
 
 		return (

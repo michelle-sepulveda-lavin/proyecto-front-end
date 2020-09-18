@@ -1,5 +1,6 @@
 body {
   height: 100vh;
+  font-family: "Roboto", sans-serif;
 }
 .logo {
   height: 3em;
@@ -213,21 +214,28 @@ li {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-}
-
-.dashboard-prime-color {
   background-color: #011638;
   background-image: linear-gradient(160deg, #2163ce 10%, rgb(2, 1, 1) 100%);
-  background-size: cover;
-}
-
-.dashboard-secondary-color {
-  background-color: #ff1e00;
-  background-image: linear-gradient(160deg, #ff1e00 40%, rgb(2, 1, 1) 100%);
   background-size: cover;
 }
 
 .dashboard-num p {
   font-size: 6rem;
   color: #ebecf1;
+}
+
+.bg-dashboard {
+  background: #ffffff;
+}
+.btn-dashboard {
+  background: #011638;
+}
+.dashboard-text {
+  color: #5a5c69;
+}
+.dashboard-subtitle {
+  color: #011638;
+}
+#content-wrapper h1 {
+  color: #5a5c69;
 }

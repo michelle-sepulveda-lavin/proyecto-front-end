@@ -14,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             profile: null,
             edificios: [],
             msgEmail: null,
-            flagRecordar: false
+            flagRecordar: false,
+            contactos: []
         },
         actions: {
             handleChangeLogin: e => {
@@ -111,23 +112,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 
             },
-            handleRecordar: () => {
-                const { flagRecordar, username } = getStore();
-                if (username == "") {
-                    setStore({
-                        flagRecordar: false
-                    })
-                }
-                setStore({
-                    flagRecordar: !flagRecordar
-                })
-                if (!flagRecordar) {
-                    localStorage.setItem("usuario", JSON.stringify(username))
-                } else {
-                    localStorage.setItem("usuario", JSON.stringify(""))
-                }
-            },
-
             handleRecordar: (e) => {
                 const { flagRecordar, username } = getStore();
                 if (username !== "") {
@@ -172,6 +156,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({
                     ...store,
                     edificios: data
+                })
+            },
+            getContactData: async () => {
+                const store = getStore()
+                const response = await fetch('http://127.0.0.1:5000/api/info-contacto');
+                const data = await response.json()
+                setStore({
+                    ...store,
+                    contactos: data
                 })
                 console.log(data)
             }
