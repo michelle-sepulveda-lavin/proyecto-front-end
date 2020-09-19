@@ -66,7 +66,7 @@ const ModalModifyPlan = (props) => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label for="nuevo_plan3" className="d-block mb-3">Características</label>
+                                <label htmlFor="nuevo_plan3" className="d-block mb-3">Características</label>
                                 <div className="d-flex">
                                     <span className="btn btn-primary p-1 mr-3"
                                         onClick={() => {

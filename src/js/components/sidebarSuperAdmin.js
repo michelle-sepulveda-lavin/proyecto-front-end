@@ -16,6 +16,14 @@ const SidebarSuperAdmin = () => {
                 <li> <i className="fas fa-envelope-open-text"></i> <p>Contactos </p></li>
             </Link>
             <hr className="sidebar-divider"></hr>
+            <Link to={"/superAdmin/planes"} style={{ textDecoration: 'none', color: "#eeeeee" }}>
+                <li> <i className="fas fa-envelope-open-text"></i> <p>Planes </p></li>
+            </Link>
+            <hr className="sidebar-divider"></hr>
+            <Link to={"/allusuarios"} style={{ textDecoration: 'none', color: "#eeeeee" }}>
+                <li> <i className="fas fa-users"></i> <p>Usuarios </p></li>
+            </Link>
+            <hr className="sidebar-divider"></hr>
         </>
     )
 };

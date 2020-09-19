@@ -6,7 +6,7 @@ import Login from './views/login';
 import Planes from './views/planes';
 import Footer from './components/footer';
 import ListadoEdificioAdm from './views/superAdmin/listadoEdificioAdm'
-import ModifyPlans from './views/planes-SA';
+import ModifyPlans from './views/superAdmin/planes-SA';
 import CrearEdificios from './views/superAdmin/crearEdificios';
 import SidebarPage from './components/SidebarPage';
 import Dashboard from './views/dashboard';
@@ -21,6 +21,7 @@ import PaqueteriaConserje from './views/conserjes/paqueteriaConserje';
 import GastosConserje from './views/conserjes/gastosConserje';
 import GastosUser from './views/user/gastosUser';
 import RecuperacionContraseña from './views/recuperacionContraseña';
+import Usuarios from './views/superAdmin/usuarios';
 
 
 const Layout = () => {
@@ -28,6 +29,7 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/allusuarios' component={Usuarios} />
                     <Route exact path='/usuario/gastos-comunes' component={GastosUser} />
                     <Route exact path='/conserje/gastos-comunes' component={GastosConserje} />
                     <Route exact path='/conserje/paqueteria' component={PaqueteriaConserje} />

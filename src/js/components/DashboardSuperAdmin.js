@@ -7,10 +7,10 @@ const DashboardSuperAdmin = (props) => {
 
     const { store } = useContext(Context)
 
-    const planesMensuales = store.contactos.filter((contactos) => {
+    const planesMensuales = store.contactos.length > 0 && store.contactos.filter((contactos) => {
         return contactos.plan === "Plan mensual"
     })
-    const planesAnuales = store.contactos.filter((contactos) => {
+    const planesAnuales = store.contactos.length > 0 && store.contactos.filter((contactos) => {
         return contactos.plan === "Plan Anual"
     })
 
@@ -59,7 +59,7 @@ const DashboardSuperAdmin = (props) => {
                                 <h2 className="card-title text-center">Clientes a contactar</h2>
                                 <h5>Emails más recientes:</h5>
                                 <ul className="p-0 mt-3 text-center">
-                                    {store.contactos.slice(0).reverse().map((contacto, index) => {
+                                    {store.contactos.length > 0 && store.contactos.slice(0).reverse().map((contacto, index) => {
                                         if (index < 3) {
                                             return <li key={index} className="card shadow-sm mb-3 pt-2 px-1"> <h6>{contacto.email}</h6><h5 className="font-weight-bold dashboard-subtitle">{contacto.plan}</h5></li>
                                         }

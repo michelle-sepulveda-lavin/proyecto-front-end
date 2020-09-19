@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             edificios: [],
             msgEmail: null,
             flagRecordar: false,
+            flagModal: false,
             contactos: []
         },
         actions: {
@@ -25,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             loginAction: async (e) => {
                 e.preventDefault();
-                const { username, password, apiURL, currentRol } = getStore();
+                const { username, password, apiURL} = getStore();
                 const resp = await fetch(`${apiURL}/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -179,29 +180,45 @@ const getState = ({ getStore, getActions, setStore }) => {
                     currentUser: null
                 })
                 history.push("/")
-            }
+            },
+            sesionIniciada: () =>{
+                if (localStorage.getItem("currentUser") !== null){
+                    const usuario = JSON.parse(localStorage.getItem("currentUser"))
+                    setStore({
+                        currentUser: usuario.user.email,
+                        currentRol: usuario.user.rol.name
+                    })
+                }
+            },
+            activarModal: () =>{
+                setStore({
+                    flagModal: true
+                })
+            },
+            crearUsuario: async (e, datos, history) =>{
+                e.preventDefault()
+                const {apiURL} = getStore();
+                const resp = await fetch(`${apiURL}/register`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(datos)
+                });
+                const data = await resp.json();
+                if(data.msg){
+                    setStore({
+                        error: data.msg
+                    })
+                }else{
+                    alert("usuario creado")
+                    setStore({
+                        flagModal: false
+                    })
+                    history.push('/allusuarios')
 
-            /* 			
-                        profile: () => {
-                            const { apiURL, currentUser: { access_token } } = getStore();
-            
-                            fetch(`${apiURL}/api/profile`, {
-                                method: 'GET',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${access_token}` 
-                                }
-                            })
-                                .then(resp => resp.json())
-                                .then(data => console.log(data));
-                        },
-                        tieneSession: () => {
-                            if (sessionStorage.getItem("currentUser")) {
-                                setStore({
-                                    currentUser: JSON.parse(sessionStorage.getItem("currentUser"))
-                                })
-                            }
-                        }, */
+                }
+            }
         }
     };
 };
