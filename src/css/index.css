@@ -75,13 +75,12 @@ body {
 }
 .boton-a-inicio {
   font-size: 1.4em;
-  width: 7em;
+
   height: 2em;
   border: 1px solid #002b3b;
   border-radius: 20px;
   padding: 10px;
   cursor: pointer;
-  display: block;
   line-height: 0.5em;
   text-align: center;
   color: #000;
@@ -238,4 +237,35 @@ li {
 }
 #content-wrapper h1 {
   color: #5a5c69;
+}
+.contenedor-edificio {
+  width: 80%;
+  font-size: 90%;
+}
+.contenedor-edificio i {
+  font-size: 1.9rem;
+}
+.contenedor-edificio .fa-pencil-alt,
+.contenedor-edificio .fa-times,
+.contenedor-edificio .fa-trash-alt,
+.contenedor-edificio .fa-check {
+  font-size: 1.2rem;
+}
+.contenedor-edificio h5 {
+  font-size: 100%;
+  font-weight: bold;
+}
+.edificio-color-1 {
+  color: #00a74b;
+}
+.edificio-color-2 {
+  color: #01a4a7;
+}
+
+.edificio-color-3 {
+  color: #16d39a;
+}
+
+.edificio-color-4 {
+  color: #022d72;
 }
