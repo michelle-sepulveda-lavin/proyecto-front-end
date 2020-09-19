@@ -33,24 +33,24 @@ const ModalCreacionUser = props => {
                             <form onSubmit={e => actions.crearUsuario(e, datos, history)}>
                                 <div className="form-group">
                                     <label htmlFor="username">Nombre Usuario</label>
-                                    <input type="text" className="form-control" name="username" value={datos.username ? datos.username : ""} onChange={e => handleDatos(e)} />
+                                    <input type="text" className="form-control" name="username"  onChange={e => handleDatos(e)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email</label>
-                                    <input type="email" className="form-control" name="email" value={datos.email ? datos.email : ""} onChange={e => handleDatos(e)} />
+                                    <input type="email" className="form-control" name="email"  onChange={e => handleDatos(e)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
-                                    <input type="password" className="form-control" name="password" value={datos.password ? datos.password : ""} onChange={e => handleDatos(e)} />
+                                    <input type="password" className="form-control" name="password"  onChange={e => handleDatos(e)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="rol_id">Rol</label>
                                     <select name="rol_id" className="form-control" onChange={e => handleDatos(e)}>
                                         <option disabled selected>Seleccionar</option>
-                                        <option value="1">Super Administrador</option>
-                                        <option value="2" >Administrador</option>
-                                        <option value="3">Conserje</option>
-                                        <option value="4">Usuario</option>
+                                        <option value="superAdministrador">Super Administrador</option>
+                                        <option value="administrador" >Administrador</option>
+                                        <option value="conserje">Conserje</option>
+                                        <option value="usuario">Usuario</option>
                                     </select>
                                 </div>
                                 <div className="form-group d-flex justify-content-around">
