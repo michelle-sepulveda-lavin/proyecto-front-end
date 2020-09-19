@@ -46,7 +46,7 @@ const Contactos = () => {
                                                     <td>{contacto.plan}</td>
                                                     <td>{contacto.phone}</td>
                                                     <td>
-                                                        <span className="btn btn-warning" onClick={() => {
+                                                        <span className="btn btn-danger" onClick={() => {
                                                             deleteContact(contacto.email)
                                                         }}>Borrar</span></td>
                                                 </tr>
@@ -55,7 +55,8 @@ const Contactos = () => {
                                 })}
                             </tbody>
                         </table>
-                        <p>Hay {store.contactos.length > 10 ? store.contactos.length - 10 : ""} clientes más por contactar</p>
+                        {store.contactos.length > 0 &&
+                            <p>Hay {store.contactos.length > 10 ? store.contactos.length - 10 : ""} clientes más por contactar</p>}
                     </div>
                 </div>
             </div>

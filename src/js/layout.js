@@ -22,6 +22,8 @@ import GastosConserje from './views/conserjes/gastosConserje';
 import GastosUser from './views/user/gastosUser';
 import RecuperacionContraseña from './views/recuperacionContraseña';
 import Usuarios from './views/superAdmin/usuarios';
+import DetalleEdificio from './views/superAdmin/detalleEdificio';
+
 
 
 const Layout = () => {
@@ -41,6 +43,7 @@ const Layout = () => {
                     <Route exact path='/conserjes' component={Conserjes} />
                     <Route exact path='/contactos' component={Contactos} />
                     <Route exact path='/listado-edificios' component={ListadoEdificioAdm} />
+                    <Route exact path='/listado-edificios/:id' component={DetalleEdificio} />
                     <Route exact path='/dashboard' component={Dashboard} />
                     <Route exact path='/recuperacion-password/:token' component={RecuperacionContraseña} />
                     <Route exact path='/crearedificio' component={CrearEdificios} />

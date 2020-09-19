@@ -171,7 +171,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     ...store,
                     contactos: data
                 })
-                console.log(data)
+
             },
             handleClose: (history) => {
                 localStorage.removeItem("currentUser")
