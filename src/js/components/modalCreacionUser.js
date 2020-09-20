@@ -3,6 +3,9 @@ import { Context } from '../store/appContext';
 
 const ModalCreacionUser = props => {
     const { store, actions } = useContext(Context);
+    const limpiarFormulario = (e) =>{
+        e.target.reset()
+    }
 
     return (
         <>
@@ -23,10 +26,13 @@ const ModalCreacionUser = props => {
                                     {store.error}
                                 </div>
                             }
-                            <form onSubmit={e => actions.crearUsuario(e)}>
+                            <form onSubmit={e => {
+                                actions.crearUsuario(e) 
+                                limpiarFormulario(e)
+                                }}>
                                 <div className="form-group">
                                     <label htmlFor="username">Nombre Usuario</label>
-                                    <input type="text" className="form-control" name="username" onChange={e => actions.handleChangeLogin(e)} />
+                                    <input type="text" className="form-control" name="username" onChange={e => {actions.handleChangeLogin(e)}} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email</label>
