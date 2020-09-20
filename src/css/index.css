@@ -248,6 +248,7 @@ li {
 }
 #content-wrapper h1 {
   color: #5a5c69;
+  text-align: center;
 }
 .contenedor-edificio {
   width: 80%;

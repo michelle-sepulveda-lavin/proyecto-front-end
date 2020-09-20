@@ -179,11 +179,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore()
                 const response = await fetch('http://127.0.0.1:5000/api/info-contacto');
                 const data = await response.json()
-                setStore({
-                    ...store,
-                    contactos: data
-                })
-
+                if (data.msg !== "empty list") {
+                    setStore({
+                        ...store,
+                        contactos: data
+                    })
+                } else {
+                    setStore({
+                        ...store,
+                        contactos: []
+                    })
+                }
             },
             handleClose: (history) => {
                 localStorage.removeItem("currentUser")
@@ -206,21 +212,22 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getContratos: () => {
                 const { edificios, currentDate, contratos } = getStore();
-                edificios.map((edificio) => {
-                    const fechaContrato = new Date(edificio.termino_contrato)
-                    const mesContrato = fechaContrato.getMonth()
-                    const mesActual = currentDate.getMonth();
-                    const proximoVencer = (mesContrato - mesActual) <= 1 ? true : false;
+                if (edificios.length > 0) {
+                    edificios.map((edificio) => {
+                        const fechaContrato = new Date(edificio.termino_contrato)
+                        const mesContrato = fechaContrato.getMonth()
+                        const mesActual = currentDate.getMonth();
+                        const proximoVencer = (mesContrato - mesActual) <= 1 ? true : false;
 
-                    if (currentDate > fechaContrato) {
-                        contratos.vencidos.push(edificio)
-                    } else if (currentDate < fechaContrato && proximoVencer) {
-                        contratos.porVencer.push(edificio)
-                    } else {
-                        contratos.vigentes.push(edificio)
-                    }
-                })
-
+                        if (currentDate > fechaContrato) {
+                            contratos.vencidos.push(edificio)
+                        } else if (currentDate < fechaContrato && proximoVencer) {
+                            contratos.porVencer.push(edificio)
+                        } else {
+                            contratos.vigentes.push(edificio)
+                        }
+                    })
+                }
             },
             sesionIniciada: () => {
                 if (localStorage.getItem("currentUser") !== null) {

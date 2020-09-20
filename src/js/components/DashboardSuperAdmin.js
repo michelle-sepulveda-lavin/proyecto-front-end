@@ -54,10 +54,15 @@ const DashboardSuperAdmin = () => {
                             <h5>Emails más recientes:</h5>
                             <ul className="p-0 mt-3 text-center">
                                 {store.contactos.length > 0 && store.contactos.slice(0).reverse().map((contacto, index) => {
-                                    if (index < 3) {
+                                    if (index < 3 && Object.keys(contacto).some((k) => {
+                                        return contacto[k] === true;
+                                    })) {
                                         return <li key={index} className="card shadow-sm mb-3 pt-2 px-1"> <h6>{contacto.email}</h6><h5 className="font-weight-bold dashboard-subtitle">{contacto.plan}</h5></li>
                                     }
                                 })}
+                                {!store.contactos.includes(true)
+                                    && <p>No hay correos sin contactar</p>}
+
                             </ul>
                             <div className="d-flex justify-content-end">
                                 <Link to={"/contactos"} style={{ textDecoration: 'none', color: "#ffffff" }} className=" btn btn-dashboard mt-2">Ver todos </Link>
@@ -67,11 +72,11 @@ const DashboardSuperAdmin = () => {
                                 <div className="row text-center">
                                     <div className="col-md-6">
                                         <h5 className="mb-3">Plan Anual</h5>
-                                        <div className="dashboard-num dashboard-prime-color my-3 shadow-sm"><p>{planesAnuales.length}</p></div>
+                                        <div className="dashboard-num dashboard-prime-color my-3 shadow-sm"><p>{planesAnuales ? planesAnuales.length : "0"}</p></div>
                                     </div>
                                     <div className="col-md-6">
                                         <h5 className="mb-3">Plan Mensual</h5>
-                                        <div className="dashboard-num dashboard-prime-color my-3 shadow-sm "><p>{planesMensuales.length}</p></div>
+                                        <div className="dashboard-num dashboard-prime-color my-3 shadow-sm "><p>{planesMensuales ? planesMensuales.length : "0"}</p></div>
                                     </div>
                                 </div>
                             </div>

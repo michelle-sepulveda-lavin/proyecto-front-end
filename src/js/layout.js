@@ -24,6 +24,7 @@ import RecuperacionContraseña from './views/recuperacionContraseña';
 import Usuarios from './views/superAdmin/usuarios';
 import DetalleEdificio from './views/superAdmin/detalleEdificio';
 import Contratos from './views/superAdmin/contratos';
+import Contactados from './views/superAdmin/contactados';
 
 
 
@@ -43,6 +44,7 @@ const Layout = () => {
                     <Route exact path='/admin/boletines' component={BoletinesAdmin} />
                     <Route exact path='/admin/departamentos' component={DepartamentosAdmin} />
                     <Route exact path='/conserjes' component={Conserjes} />
+                    <Route exact path='/contactados' component={Contactados} />
                     <Route exact path='/contactos' component={Contactos} />
                     <Route exact path='/listado-edificios' component={ListadoEdificioAdm} />
                     <Route exact path='/listado-edificios/:id' component={DetalleEdificio} />
