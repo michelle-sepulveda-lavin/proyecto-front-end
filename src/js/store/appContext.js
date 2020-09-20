@@ -24,6 +24,7 @@ const injectContext = PassedComponent => {
 			state.actions.getEdificiosData()
 			state.actions.getContactData()
 			state.actions.getCurrentDate()
+			state.actions.sesionIniciada()
 		}, []);
 
 		return (

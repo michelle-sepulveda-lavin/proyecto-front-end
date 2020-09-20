@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
@@ -29,7 +29,7 @@ const RecuperacionContraseña = () => {
                         <div className="col-sm-8">
                             <input type="password"
                                 className={
-                                    "form-control" + (store.passwordConfirmacion != "" && store.password != store.passwordConfirmacion ? " is-invalid" : "")
+                                    "form-control" + (store.passwordConfirmacion !== "" && store.password !== store.passwordConfirmacion ? " is-invalid" : "")
                                 } name="passwordConfirmacion"
                                 placeholder="Contraseña"
                                 onChange={e => actions.handleChangeLogin(e)} />
