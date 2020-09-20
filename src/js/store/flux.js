@@ -27,6 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             flagModal: false,
             contactos: [],
             allUsuarios: [],
+            archivoCSV: null,
         },
         actions: {
             handleChangeLogin: e => {
@@ -71,10 +72,19 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             crearEdificio: async (e, aux) => {
                 e.preventDefault()
+                const {archivoCSV} = getStore();
+                const dataEdificio = Object.entries(aux);
+                const formData = new FormData();
+                dataEdificio.map((dato)=> {
+                    formData.append(dato[0],dato[1])
+                    
+                })
+                formData.append("archivoCSV", archivoCSV)
+                
                 const resp = await fetch("http://localhost:5000/crearedificio", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(aux)
+                    headers: { },
+                    body: formData
                 });
                 const data = await resp.json();
                 const { msg } = data;
@@ -206,7 +216,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getContratos: () => {
                 const { edificios, currentDate, contratos } = getStore();
-                edificios.map((edificio) => {
+                edificios.length > 0 && edificios.map((edificio) => {
                     const fechaContrato = new Date(edificio.termino_contrato)
                     const mesContrato = fechaContrato.getMonth()
                     const mesActual = currentDate.getMonth();
@@ -288,6 +298,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                 }
             },
+            cargarCsv: e => {
+                setStore({
+                    [e.target.name]: e.target.files[0]
+                })
+            }
         }
     };
 };

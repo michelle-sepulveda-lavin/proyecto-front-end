@@ -30,10 +30,10 @@ const CrearEdificios = () => {
                 }
                 <div className="container mt-4 py-4">
                     <form className="col-12 col-md-6 m-auto border shadow py-5" onSubmit={e => { actions.crearEdificio(e, state) }}>
-                        {/* <div className="form-group">
+                        <div className="form-group">
                             <label htmlFor="archivoCSV">Archivo CSV</label>
-                            <input className="form-control-file" type="file" id="archivoCSV" />
-                        </div> */}
+                            <input className="form-control-file" type="file" name="archivoCSV" onChange={actions.cargarCsv}/>
+                        </div>
                         <div className="form-group">
                             <label htmlFor="nombre_edificio">Nombre edificio</label>
                             <input type="text" className="form-control" id="nombre_edificio" onChange={e => { handleChange(e) }} />
