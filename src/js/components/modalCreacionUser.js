@@ -38,23 +38,27 @@ const ModalCreacionUser = props => {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="rol_id">Rol</label>
-                                    <select name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
-                                        <option selected disabled >Seleccionar</option>
+                                    <select defaultValue={'default'} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
+                                        <option value="default" disabled>Seleccionar</option>
                                         <option value="superAdministrador">Super Administrador</option>
                                         <option value="administrador" >Administrador</option>
                                         <option value="conserje">Conserje</option>
                                         <option value="usuario">Usuario</option>
                                     </select>
                                 </div>
-                                <div className="form-group d-flex justify-content-around">
-                                    <button className="btn btn-primary">Crear</button>
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={actions.cerrarModal}>Cerrar</button>
+                                <div className="form-group">
+                                    <label htmlFor="edificio_rol">Edificio id</label>
+                                    <input type="number" className="form-control" name="edificio_rol" onChange={e => actions.handleChangeLogin(e)} />
                                 </div>
+                            <div className="form-group d-flex justify-content-around">
+                                <button className="btn btn-primary">Crear</button>
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={actions.cerrarModal}>Cerrar</button>
+                            </div>
                             </form>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </>
     )
 };
