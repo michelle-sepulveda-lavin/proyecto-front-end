@@ -92,7 +92,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     alert(data.msg)
 
                 }
-                else if (msg !== undefined) {
+                else if (msg !== undefined ) {
                     setStore({
                         error: msg
                     })

@@ -9,9 +9,9 @@ const ListadoUsuarios = () => {
                 <div className="col">
                     <form onSubmit={e => actions.getUsuarios(e)} >
                         <div className="form-group text-center">
-                            <label htmlFor="filtroUsuarios m-2">Filtro busqueda</label>
-                            <select name="rol_id" className="form-control m-auto col-md-6 " onChange={e => actions.handleChangeLogin(e)}>
-                                <option selected disabled>Seleccionar</option>
+                            <label htmlFor="rol_id m-2">Filtro busqueda</label>
+                            <select  defaultValue={'default'} name="rol_id" className="form-control m-auto col-md-6 " onChange={e => actions.handleChangeLogin(e)}>
+                                <option value="default" disabled>Seleccionar</option>
                                 <option value="superAdministrador">Super Administradores</option>
                                 <option value="administrador">Administradores</option>
                                 <option value="conserje">Conserje</option>
@@ -25,7 +25,7 @@ const ListadoUsuarios = () => {
 
             <div className="row mt-5">
                 <div className="col">
-                    <table className="table table-bordered table-responsive-lg">
+                    <table className="table table-bordered table-responsive-md">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">N°</th>

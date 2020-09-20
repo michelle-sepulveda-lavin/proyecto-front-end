@@ -42,10 +42,10 @@ const CrearEdificios = () => {
                             <label htmlFor="direccion">Direccion</label>
                             <input type="text" className="form-control" id="direccion" onChange={e => { handleChange(e) }} />
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label htmlFor="nombre_administrador">Nombre administrador</label>
                             <input type="text" className="form-control" id="nombre_administrador" onChange={e => { handleChange(e) }} />
-                        </div>
+                        </div> */}
                         <div className="form-group">
                             <label htmlFor="telefono">Telefono </label>
                             <input type="tel" className="form-control" id="telefono" onChange={e => { handleChange(e) }} />
@@ -82,10 +82,10 @@ const CrearEdificios = () => {
                             <label htmlFor="plan_id">Plan Id</label>
                             <input type="number" className="form-control" id="plan_id" onChange={e => { handleChange(e) }} />
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label htmlFor="username_id">Usuario Id</label>
                             <input type="number" className="form-control" id="username_id" onChange={e => { handleChange(e) }} />
-                        </div>
+                        </div> */}
                         <div className="form-group">
                             <label htmlFor="dia_vencimiento">Dia vencimiento gastos comunes</label>
                             <input type="number" className="form-control" id="dia_vencimiento" onChange={e => { handleChange(e) }} />
