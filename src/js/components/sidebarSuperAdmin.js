@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const SidebarSuperAdmin = () => {
+
     return (
         <>
             <Link to={"/listado-edificios"} style={{ textDecoration: 'none', color: "#eeeeee" }}>

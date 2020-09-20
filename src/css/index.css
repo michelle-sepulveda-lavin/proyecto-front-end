@@ -218,8 +218,19 @@ li {
   background-size: cover;
 }
 
+.dashboard-num-2 {
+  width: 5em;
+  height: 5em;
+  border-radius: 90%;
+}
+
 .dashboard-num p {
   font-size: 6rem;
+  color: #ebecf1;
+}
+
+.dashboard-num-2 p {
+  font-size: 3.2rem;
   color: #ebecf1;
 }
 
@@ -255,17 +266,22 @@ li {
   font-size: 100%;
   font-weight: bold;
 }
-.edificio-color-1 {
-  color: #00a74b;
-}
-.edificio-color-2 {
-  color: #01a4a7;
-}
-
-.edificio-color-3 {
-  color: #16d39a;
-}
 
 .edificio-color-4 {
   color: #022d72;
+}
+.dashboard-green {
+  background-color: #02af10;
+  background-image: linear-gradient(160deg, #02ad10 10%, #012704 100%);
+  background-size: cover;
+}
+.dashboard-yellow {
+  background-color: #d4d100;
+  background-image: linear-gradient(160deg, #fffb00 10%, #8f7502 100%);
+  background-size: cover;
+}
+.dashboard-red {
+  background-color: #f10000;
+  background-image: linear-gradient(160deg, #e40303 10%, #310000 100%);
+  background-size: cover;
 }

@@ -22,6 +22,7 @@ import GastosConserje from './views/conserjes/gastosConserje';
 import GastosUser from './views/user/gastosUser';
 import RecuperacionContraseña from './views/recuperacionContraseña';
 import DetalleEdificio from './views/superAdmin/detalleEdificio';
+import Contratos from './views/superAdmin/contratos';
 
 
 
@@ -30,6 +31,7 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/contratos' component={Contratos} />
                     <Route exact path='/usuario/gastos-comunes' component={GastosUser} />
                     <Route exact path='/conserje/gastos-comunes' component={GastosConserje} />
                     <Route exact path='/conserje/paqueteria' component={PaqueteriaConserje} />

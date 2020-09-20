@@ -23,6 +23,7 @@ const injectContext = PassedComponent => {
 			state.actions.getCurrentRol();
 			state.actions.getEdificiosData()
 			state.actions.getContactData()
+			state.actions.getCurrentDate()
 		}, []);
 
 		return (

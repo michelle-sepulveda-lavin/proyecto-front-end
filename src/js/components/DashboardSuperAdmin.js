@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
 
-const DashboardSuperAdmin = (props) => {
+const DashboardSuperAdmin = () => {
 
-    const { store } = useContext(Context)
+    const { store, actions } = useContext(Context)
+
+
 
     const planesMensuales = store.contactos.length > 0 && store.contactos.filter((contactos) => {
         return contactos.plan === "Plan mensual"
@@ -16,13 +18,16 @@ const DashboardSuperAdmin = (props) => {
 
     const [lastContacts, setLastContacts] = useState([])
 
+    const nuevaFecha = store.edificios.length > 0 && new Date(store.edificios[0].termino_contrato)
+
+
     return (<>
 
 
         <div className="container dashboard-text">
             <div className="row row-cols-1 row-cols-md-2 mt-2">
                 <div className="col mb-4">
-                    <div className="card shadow-sm bg-dashboard">
+                    <div className="card h-100 shadow-sm bg-dashboard">
                         <div className="card-body">
                             <h2 className="card-title text-center " >Edificios</h2>
                             <h5 className="mt-3">Edificios administrados</h5>
@@ -41,48 +46,54 @@ const DashboardSuperAdmin = (props) => {
                     </div>
                 </div>
                 <div className="col mb-4">
-                    <div className="d-flex flex-column">
-                        <div className="card mb-4 shadow-sm bg-dashboard">
-                            <div className="card-body">
-                                <h2 className="card-title">Contratos</h2>
-                                <ul>
-                                    <li>Próximos a Vencer</li>
-                                    <li>Vigentes</li>
-                                    <li>Vencidos</li>
-                                </ul>
+
+
+                    <div className="card h-100 mb-4 shadow-sm bg-dashboard">
+                        <div className="card-body">
+                            <h2 className="card-title text-center">Clientes a contactar</h2>
+                            <h5>Emails más recientes:</h5>
+                            <ul className="p-0 mt-3 text-center">
+                                {store.contactos.length > 0 && store.contactos.slice(0).reverse().map((contacto, index) => {
+                                    if (index < 3) {
+                                        return <li key={index} className="card shadow-sm mb-3 pt-2 px-1"> <h6>{contacto.email}</h6><h5 className="font-weight-bold dashboard-subtitle">{contacto.plan}</h5></li>
+                                    }
+                                })}
+                            </ul>
+                            <div className="d-flex justify-content-end">
+                                <Link to={"/contactos"} style={{ textDecoration: 'none', color: "#ffffff" }} className=" btn btn-dashboard mt-2">Ver todos </Link>
                             </div>
-                        </div>
-                    </div>
-                    <div className="">
-                        <div className="card mb-4 shadow-sm bg-dashboard">
-                            <div className="card-body">
-                                <h2 className="card-title text-center">Clientes a contactar</h2>
-                                <h5>Emails más recientes:</h5>
-                                <ul className="p-0 mt-3 text-center">
-                                    {store.contactos.length > 0 && store.contactos.slice(0).reverse().map((contacto, index) => {
-                                        if (index < 3) {
-                                            return <li key={index} className="card shadow-sm mb-3 pt-2 px-1"> <h6>{contacto.email}</h6><h5 className="font-weight-bold dashboard-subtitle">{contacto.plan}</h5></li>
-                                        }
-                                    })}
-                                </ul>
-                                <div className="d-flex justify-content-end">
-                                    <Link to={"/contactos"} style={{ textDecoration: 'none', color: "#ffffff" }} className=" btn btn-dashboard mt-2">Ver todos </Link>
-                                </div>
-                                <div className="mt-3">
-                                    <h3 className="text-center mb-3">Planes solicitados</h3>
-                                    <div className="row text-center">
-                                        <div className="col-md-6">
-                                            <h5>Plan Anual</h5>
-                                            <div className="dashboard-num dashboard-prime-color my-3 shadow-sm"><p>{planesAnuales.length}</p></div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <h5>Plan Mensual</h5>
-                                            <div className="dashboard-num dashboard-prime-color my-3 shadow-sm "><p>{planesMensuales.length}</p></div>
-                                        </div>
+                            <div className="mt-5">
+                                <h3 className="text-center mb-5">Planes solicitados</h3>
+                                <div className="row text-center">
+                                    <div className="col-md-6">
+                                        <h5 className="mb-3">Plan Anual</h5>
+                                        <div className="dashboard-num dashboard-prime-color my-3 shadow-sm"><p>{planesAnuales.length}</p></div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <h5 className="mb-3">Plan Mensual</h5>
+                                        <div className="dashboard-num dashboard-prime-color my-3 shadow-sm "><p>{planesMensuales.length}</p></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                </div>
+            </div>
+            <div className="card mb-4 shadow-sm bg-dashboard">
+                <div className="card-body">
+                    <h2 className="card-title text-center">Contratos</h2>
+                    <ul className="p-0 mt-5 justify-content-center row">
+                        <li className="d-flex mb-3 text-dark align-items-center justify-content-center row col-md-4"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-yellow"><p className="pt-3">{store.contratos.porVencer.length}</p></span></div> </div> <div className="col col-lg-6 text-center"><h4 >Próximos a Vencer</h4> </div></li>
+
+                        <li className="d-flex mb-3 col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-red"><p className="pt-3">{store.contratos.vencidos.length}</p></span> </div></div> <div className="col col-lg-6 text-center text-dark"><h4 >Vencidos</h4> </div></li>
+
+
+                        <li className="d-flex col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-green"><p className="pt-3">{store.contratos.vigentes.length}</p></span> </div></div> <div className="col col-lg-6 text-center"><h4 className="text-dark">Vigentes</h4> </div></li>
+
+                    </ul>
+                    <div className="d-flex justify-content-center">
+                        <Link to={"/contratos"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-4">Ver detalle </Link>
                     </div>
                 </div>
             </div>

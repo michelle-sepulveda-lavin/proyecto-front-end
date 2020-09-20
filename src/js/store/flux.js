@@ -15,7 +15,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             edificios: [],
             msgEmail: null,
             flagRecordar: false,
-            contactos: []
+            contactos: [],
+            currentDate: null,
+            contratos: {
+                vigentes: [],
+                porVencer: [],
+                vencidos: []
+            }
         },
         actions: {
             handleChangeLogin: e => {
@@ -155,12 +161,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getEdificiosData: async () => {
                 const store = getStore()
+                const { getContratos } = getActions()
                 const response = await fetch('http://127.0.0.1:5000/crearedificio');
                 const data = await response.json()
                 setStore({
                     ...store,
                     edificios: data
                 })
+                getContratos()
             },
             getContactData: async () => {
                 const store = getStore()
@@ -179,6 +187,35 @@ const getState = ({ getStore, getActions, setStore }) => {
                     currentUser: null
                 })
                 history.push("/")
+            },
+            getCurrentDate: () => {
+                const { currentDate } = getStore();
+                var q = new Date();
+                var m = q.getMonth();
+                var d = q.getDate();
+                var y = q.getFullYear();
+                var date = new Date(y, m, d);
+                setStore({
+                    currentDate: date
+                })
+            },
+            getContratos: () => {
+                const { edificios, currentDate, contratos } = getStore();
+                edificios.map((edificio) => {
+                    const fechaContrato = new Date(edificio.termino_contrato)
+                    const mesContrato = fechaContrato.getMonth()
+                    const mesActual = currentDate.getMonth();
+                    const proximoVencer = (mesContrato - mesActual) <= 1 ? true : false;
+
+                    if (currentDate > fechaContrato) {
+                        contratos.vencidos.push(edificio)
+                    } else if (currentDate < fechaContrato && proximoVencer) {
+                        contratos.porVencer.push(edificio)
+                    } else {
+                        contratos.vigentes.push(edificio)
+                    }
+                })
+
             }
 
             /* 			
