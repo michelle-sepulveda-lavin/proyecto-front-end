@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
 const Sidebar = (props) => {
-    const {actions} = useContext(Context)
+    const { store, actions } = useContext(Context)
     const history = useHistory()
     return (
         <>
@@ -21,9 +21,16 @@ const Sidebar = (props) => {
                 </Link>
                 < hr className="sidebar-divider"></hr>
                 {props.children}
-                <Link to="/" style={{ textDecoration: 'none', color: "#eeeeee" }} onClick={()=>actions.handleClose(history)}>
-                    <i className="fas fa-power-off"></i><p>Cerrar sesion</p>
-                </Link>
+                {
+                    !!store.currentRol ?
+                        <Link to="/" style={{ textDecoration: 'none', color: "#eeeeee" }} onClick={() => actions.handleClose(history)}>
+                            <i className="fas fa-power-off"></i><p>Cerrar sesion</p>
+                        </Link>
+                        :
+                        <Link to="/login" style={{ textDecoration: 'none', color: "#eeeeee" }} onClick={() => actions.handleClose(history)}>
+                            <i className="fas fa-sign-in-alt"></i><p>Iniciar sesion</p>
+                        </Link>
+                }
             </ul>
 
         </>

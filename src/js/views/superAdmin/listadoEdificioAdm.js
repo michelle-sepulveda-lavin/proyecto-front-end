@@ -12,8 +12,8 @@ const ListadoEdificioAdm = () => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 col-md-9 mx-auto">
-                            <table class="table table-responsive  border">
-                                <thead class="thead-dark text-center">
+                            <table className="table table-responsive  border">
+                                <thead className="thead-dark text-center">
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Nombre</th>

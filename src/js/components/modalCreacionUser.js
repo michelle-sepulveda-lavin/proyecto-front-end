@@ -1,22 +1,15 @@
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
 
 const ModalCreacionUser = props => {
-    const { store, actions } = useContext(Context)
-    const history = useHistory();
-    const [datos, setDatos] = useState({});
-    const handleDatos = e => {
-        setDatos({ ...datos, [e.target.name]: e.target.value.toLowerCase() })
-    }
-
+    const { store, actions } = useContext(Context);
 
     return (
         <>
             <div
                 className="modal"
                 tabIndex="-1"
-                style={{display: store.flagModal? "inline-block" :"none"}}
+                style={{ display: store.flagModal ? "inline-block" : "none" }}
             >
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -30,23 +23,23 @@ const ModalCreacionUser = props => {
                                     {store.error}
                                 </div>
                             }
-                            <form onSubmit={e => actions.crearUsuario(e, datos, history)}>
+                            <form onSubmit={e => actions.crearUsuario(e)}>
                                 <div className="form-group">
                                     <label htmlFor="username">Nombre Usuario</label>
-                                    <input type="text" className="form-control" name="username"  onChange={e => handleDatos(e)} />
+                                    <input type="text" className="form-control" name="username" onChange={e => actions.handleChangeLogin(e)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email</label>
-                                    <input type="email" className="form-control" name="email"  onChange={e => handleDatos(e)} />
+                                    <input type="email" className="form-control" name="email" onChange={e => actions.handleChangeLogin(e)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
-                                    <input type="password" className="form-control" name="password"  onChange={e => handleDatos(e)} />
+                                    <input type="password" className="form-control" name="password" onChange={e => actions.handleChangeLogin(e)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="rol_id">Rol</label>
-                                    <select name="rol_id" className="form-control" onChange={e => handleDatos(e)}>
-                                        <option disabled selected>Seleccionar</option>
+                                    <select name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
+                                        <option selected disabled >Seleccionar</option>
                                         <option value="superAdministrador">Super Administrador</option>
                                         <option value="administrador" >Administrador</option>
                                         <option value="conserje">Conserje</option>
@@ -55,7 +48,7 @@ const ModalCreacionUser = props => {
                                 </div>
                                 <div className="form-group d-flex justify-content-around">
                                     <button className="btn btn-primary">Crear</button>
-                                    <button type="button" className="btn btn-secondary d-flex jsutify-content-end" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={actions.cerrarModal}>Cerrar</button>
                                 </div>
                             </form>
                         </div>

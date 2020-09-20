@@ -5,6 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             apiURL: "http://localhost:5000",
             username: "",
             password: '',
+            email: " ",
+            rol_id: "",
             passwordConfirmacion: '',
             currentToken: "",
             currentUser: null,
@@ -16,7 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             msgEmail: null,
             flagRecordar: false,
             flagModal: false,
-            contactos: []
+            contactos: [],
+            allUsuarios: [],
         },
         actions: {
             handleChangeLogin: e => {
@@ -26,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             loginAction: async (e) => {
                 e.preventDefault();
-                const { username, password, apiURL} = getStore();
+                const { username, password, apiURL } = getStore();
                 const resp = await fetch(`${apiURL}/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -102,7 +105,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             handleSubmitContraseña: async (e, parametros, history) => {
                 e.preventDefault()
                 const { passwordConfirmacion, password, apiURL } = getStore();
-                if (password === passwordConfirmacion && password != "") {
+                if (password === passwordConfirmacion && password !== "") {
                     const resp = await fetch(`${apiURL}/reset-password`, {
                         method: "POST",
                         headers: {
@@ -181,8 +184,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
                 history.push("/")
             },
-            sesionIniciada: () =>{
-                if (localStorage.getItem("currentUser") !== null){
+            sesionIniciada: () => {
+                if (localStorage.getItem("currentUser") !== null) {
                     const usuario = JSON.parse(localStorage.getItem("currentUser"))
                     setStore({
                         currentUser: usuario.user.email,
@@ -190,35 +193,63 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                 }
             },
-            activarModal: () =>{
+            activarModal: () => {
                 setStore({
                     flagModal: true
                 })
             },
-            crearUsuario: async (e, datos, history) =>{
+            crearUsuario: async (e) => {
                 e.preventDefault()
-                const {apiURL} = getStore();
+                const { apiURL, username, password, email, rol_id } = getStore();
                 const resp = await fetch(`${apiURL}/register`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(datos)
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        email: email,
+                        rol_id: rol_id
+                    })
                 });
                 const data = await resp.json();
-                if(data.msg){
+                if (data.msg) {
                     setStore({
                         error: data.msg
                     })
-                }else{
+                } else {
                     alert("usuario creado")
                     setStore({
-                        flagModal: false
-                    })
-                    history.push('/allusuarios')
-
+                        flagModal: false,
+                        username: "",
+                        password: "",
+                        email: "",
+                        rol_id: ""
+                    });
                 }
-            }
+            },
+            cerrarModal: () => {
+                setStore({ flagModal: false })
+            },
+            getUsuarios: async (e) => {
+                e.preventDefault()
+                setStore({
+                    allUsuarios: []
+                })
+                const { apiURL, rol_id } = getStore();
+                const resp = await fetch(`${apiURL}/register/${rol_id}`)
+                const data = await resp.json();
+                const { msg } = data
+
+                if (msg !== undefined) {
+                    setStore({ error: msg })
+                }else{
+                    setStore({
+                        allUsuarios: data
+                    })
+                }
+            },
         }
     };
 };
