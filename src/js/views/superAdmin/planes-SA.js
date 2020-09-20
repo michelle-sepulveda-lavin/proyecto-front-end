@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ModalDeletePlan from '../../components/modalDeletePlan';
 import ModalModifyPlan from '../../components/modalModifyPlan';
 import SidebarPage from '../../components/SidebarPage';
+import { Context } from '../../store/appContext';
 
 
 const ModifyPlans = () => {
 
+    const { actions } = useContext(Context)
     const inputCaracteristica = useRef(null)
 
     const getData = async () => {
@@ -25,6 +27,7 @@ const ModifyPlans = () => {
         const data = await response.json()
         console.log(data)
         getData()
+        actions.getPlanes()
     }
 
     useEffect(() => {
@@ -244,7 +247,7 @@ const ModifyPlans = () => {
                                                         if (newPlan.body.length > 2) {
                                                             addPlan(newPlan)
                                                             setCreatePlan(false)
-                                                            
+
                                                         } else {
                                                             alert('Deben haber al menos 3 características')
                                                         }

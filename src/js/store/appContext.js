@@ -20,6 +20,7 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
+			state.actions.getPlanes()
 			state.actions.getCurrentRol();
 			state.actions.getEdificiosData()
 			state.actions.getContactData()

@@ -8,13 +8,8 @@ const DashboardSuperAdmin = () => {
     const { store, actions } = useContext(Context)
 
 
-
-    const planesMensuales = store.contactos.length > 0 && store.contactos.filter((contactos) => {
-        return contactos.plan === "Plan mensual"
-    })
-    const planesAnuales = store.contactos.length > 0 && store.contactos.filter((contactos) => {
-        return contactos.plan === "Plan Anual"
-    })
+    const planesMensuales = []
+    const planesAnuales = []
 
     const [lastContacts, setLastContacts] = useState([])
 
@@ -69,15 +64,16 @@ const DashboardSuperAdmin = () => {
                             </div>
                             <div className="mt-5">
                                 <h3 className="text-center mb-5">Planes solicitados</h3>
-                                <div className="row text-center">
-                                    <div className="col-md-6">
-                                        <h5 className="mb-3">Plan Anual</h5>
-                                        <div className="dashboard-num dashboard-prime-color my-3 shadow-sm"><p>{planesAnuales ? planesAnuales.length : "0"}</p></div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <h5 className="mb-3">Plan Mensual</h5>
-                                        <div className="dashboard-num dashboard-prime-color my-3 shadow-sm "><p>{planesMensuales ? planesMensuales.length : "0"}</p></div>
-                                    </div>
+                                <div className="row text-center row-cols-md-2">
+                                    {store.planes.map((plan) => {
+                                        return (
+                                            <div className="col">
+                                                <h5 className="mb-3">{plan.name}</h5>
+                                                <div className="dashboard-num dashboard-prime-color my-3 shadow-sm"><p>{store.contactos.filter((contacto) => contacto.plan === plan.name).length}</p></div>
+                                            </div>
+                                        )
+                                    })}
+
                                 </div>
                             </div>
                         </div>

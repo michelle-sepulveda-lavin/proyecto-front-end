@@ -28,6 +28,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             contactos: [],
             allUsuarios: [],
             archivoCSV: null,
+            planes: []
         },
         actions: {
             handleChangeLogin: e => {
@@ -179,11 +180,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { getContratos } = getActions()
                 const response = await fetch('http://127.0.0.1:5000/crearedificio');
                 const data = await response.json()
-                setStore({
-                    ...store,
-                    edificios: data
-                })
-                getContratos()
+                if (!data.msg) {
+                    setStore({
+                        ...store,
+                        edificios: data
+                    })
+                    getContratos()
+                }
             },
             getContactData: async () => {
                 const store = getStore()
@@ -309,6 +312,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({
                     [e.target.name]: e.target.files[0]
                 })
+            },
+            getPlanes: async () => {
+                const { planes } = getStore()
+                const response = await fetch('http://127.0.0.1:5000/api/planes');
+                const data = await response.json()
+                if (!data.msg) {
+                    setStore({
+                        planes: data
+                    })
+                }
             }
         }
     };
