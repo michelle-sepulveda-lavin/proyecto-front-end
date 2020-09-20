@@ -177,11 +177,11 @@ const DetalleEdificio = () => {
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Administrador</h5>
-                                        <p className="card-text">{edificio && modify === false ? edificio.nombre_administrador : edificio && modify === true ? (
+                                        <p className="card-text">{edificio && modify === false && edificio.nombre_administrador ? edificio.nombre_administrador : edificio && modify === true && edificio.nombre_administrador ? (
                                             <input className="mt-2" name="nombre_administrador" value={edificioModificado.nombre_administrador}
                                                 onChange={handleInput}
                                             ></input>
-                                        ) : ""}</p>
+                                        ) : "Aún no asignado"}</p>
                                     </div>
                                 </div>
                             </div>

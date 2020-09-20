@@ -72,18 +72,18 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             crearEdificio: async (e, aux) => {
                 e.preventDefault()
-                const {archivoCSV} = getStore();
+                const { archivoCSV } = getStore();
                 const dataEdificio = Object.entries(aux);
                 const formData = new FormData();
-                dataEdificio.map((dato)=> {
-                    formData.append(dato[0],dato[1])
-                    
+                dataEdificio.map((dato) => {
+                    formData.append(dato[0], dato[1])
+
                 })
                 formData.append("archivoCSV", archivoCSV)
-                
+
                 const resp = await fetch("http://localhost:5000/crearedificio", {
                     method: "POST",
-                    headers: { },
+                    headers: {},
                     body: formData
                 });
                 const data = await resp.json();
@@ -92,7 +92,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     alert(data.msg)
 
                 }
-                else if (msg !== undefined ) {
+                else if (msg !== undefined) {
                     setStore({
                         error: msg
                     })
@@ -189,11 +189,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore()
                 const response = await fetch('http://127.0.0.1:5000/api/info-contacto');
                 const data = await response.json()
-                setStore({
-                    ...store,
-                    contactos: data
-                })
-
+                if (data.msg !== "empty list") {
+                    setStore({
+                        ...store,
+                        contactos: data
+                    })
+                } else {
+                    setStore({
+                        ...store,
+                        contactos: []
+                    })
+                }
             },
             handleClose: (history) => {
                 localStorage.removeItem("currentUser")
@@ -216,20 +222,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getContratos: () => {
                 const { edificios, currentDate, contratos } = getStore();
-                edificios.length > 0 && edificios.map((edificio) => {
-                    const fechaContrato = new Date(edificio.termino_contrato)
-                    const mesContrato = fechaContrato.getMonth()
-                    const mesActual = currentDate.getMonth();
-                    const proximoVencer = (mesContrato - mesActual) <= 1 ? true : false;
+                edificios.length > 0 &&
+                    edificios.map((edificio) => {
+                        const fechaContrato = new Date(edificio.termino_contrato)
+                        const mesContrato = fechaContrato.getMonth()
+                        const mesActual = currentDate.getMonth();
+                        const proximoVencer = (mesContrato - mesActual) <= 1 ? true : false;
 
-                    if (currentDate > fechaContrato) {
-                        contratos.vencidos.push(edificio)
-                    } else if (currentDate < fechaContrato && proximoVencer) {
-                        contratos.porVencer.push(edificio)
-                    } else {
-                        contratos.vigentes.push(edificio)
-                    }
-                })
+                        if (currentDate > fechaContrato) {
+                            contratos.vencidos.push(edificio)
+                        } else if (currentDate < fechaContrato && proximoVencer) {
+                            contratos.porVencer.push(edificio)
+                        } else {
+                            contratos.vigentes.push(edificio)
+                        }
+                    })
 
             },
             sesionIniciada: () => {
