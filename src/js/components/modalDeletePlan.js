@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 
 
 const ModalDeletePlan = props => {
+    const { actions } = useContext(Context)
     const deletePlan = async () => {
         const response = await fetch(`http://127.0.0.1:5000/api/planes/${props.id}`, {
             method: "DELETE",
@@ -12,6 +14,7 @@ const ModalDeletePlan = props => {
         const data = await response.json()
         console.log(data)
         props.getData()
+        actions.getPlanes()
         props.close()
     }
     return (
