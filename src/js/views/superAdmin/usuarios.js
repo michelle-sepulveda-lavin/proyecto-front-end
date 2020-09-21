@@ -13,7 +13,7 @@ const Usuarios = () => {
                     <h1 className="text-center">Listado de usuarios</h1>
                 </div>
                 <div className="col d-flex justify-content-center">
-                    <button type="button" className="btn btn-primary my-3" data-toggle="modal" data-target="#staticBackdrop" onClick={actions.activarModal} >
+                    <button type="button" className="btn btn-primary my-3" data-toggle="modal" data-target="#modalCreacionUser" onClick={actions.activarModal} >
                         Crear Usuario
                     </button>
                     <ModalCreacionUser />

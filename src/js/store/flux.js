@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             password: '',
             email: " ",
             rol_id: "",
+            edificio_id: "",
             passwordConfirmacion: '',
             currentToken: "",
             currentUser: null,
@@ -116,7 +117,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             resetMsg: () => {
                 setStore({
-                    msgEmail: null
+                    msgEmail: null,
+                    success: null
                 })
             },
             handleSubmitContraseña: async (e, parametros, history) => {
@@ -255,7 +257,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             crearUsuario: async (e) => {
                 e.preventDefault()
-                const { apiURL, username, password, email, rol_id } = getStore();
+                const { apiURL, username, password, email, rol_id, edificio_rol } = getStore();
                 const resp = await fetch(`${apiURL}/register`, {
                     method: "POST",
                     headers: {
@@ -265,7 +267,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                         username: username,
                         password: password,
                         email: email,
-                        rol_id: rol_id
+                        rol_id: rol_id,
+                        edificio_id: edificio_rol
                     })
                 });
                 const data = await resp.json();
@@ -303,6 +306,73 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         allUsuarios: data
                     })
+                }
+            },
+            guardarIndex: (i) => {
+                const { allUsuarios } = getStore();
+                setStore({
+                    edificio_id: allUsuarios[i].edificio_id,
+                    username: allUsuarios[i].username,
+                    email: allUsuarios[i].email
+                })
+            },
+            postUsuarios: async (e, i) => {
+                e.preventDefault()
+                const { email, edificio_id, apiURL } = getStore();
+                const resp = await fetch(`${apiURL}/register`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        edificio_id: edificio_id
+                    })
+                })
+                const data = await resp.json();
+                const { msg } = data 
+
+                if (msg !== undefined) {
+                    if(msg === "usuario actualizado correctamente"){
+                        setStore({
+                            success: msg,
+                            email: "",
+                            edificio_id: "",
+                            username: "",
+                            edificio_id: ""
+                        })
+                        getActions().getUsuarios(e)
+
+                    }else{
+                        setStore({ error: msg })
+                    }
+                }
+            },
+            deleteUsuarios: async (e, i) => {
+                e.preventDefault()
+                const { allUsuarios, apiURL } = getStore();
+                const eliminado = allUsuarios[i].id
+
+                const resp = await fetch(`${apiURL}/register/${eliminado}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+                const data = await resp.json();
+                const { msg } = data
+
+                if (msg !== undefined) {
+                    if (msg === "usuario eliminado correctamente") {
+                        setStore({ success: msg })
+                        alert("Usuario eliminado correctamente")
+                        getActions().getUsuarios(e)
+                    }
+                    else {
+                        setStore({ error: msg })
+                    }
+                } else {
+                    console.log("ok")
                 }
             },
             cargarCsv: e => {
