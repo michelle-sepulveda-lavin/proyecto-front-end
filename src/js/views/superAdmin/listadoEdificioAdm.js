@@ -31,7 +31,7 @@ const ListadoEdificioAdm = () => {
 
                                             return (
                                                 <>
-                                                    <tr>
+                                                    <tr key={index}>
                                                         <th scope="row">{edificio.id}</th>
                                                         <td>{edificio.nombre_edificio}</td>
                                                         <td>{edificio.direccion}</td>

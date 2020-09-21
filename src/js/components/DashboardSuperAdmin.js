@@ -65,9 +65,9 @@ const DashboardSuperAdmin = () => {
                             <div className="mt-5">
                                 <h3 className="text-center mb-5">Planes solicitados</h3>
                                 <div className="row text-center row-cols-md-2">
-                                    {store.planes.map((plan) => {
+                                    {store.planes.map((plan, index) => {
                                         return (
-                                            <div className="col">
+                                            <div key={index} className="col">
                                                 <h5 className="mb-3">{plan.name}</h5>
                                                 <div className="dashboard-num dashboard-prime-color my-3 shadow-sm"><p>{store.contactos.filter((contacto) => contacto.plan === plan.name).length}</p></div>
                                             </div>

@@ -25,6 +25,7 @@ import Usuarios from './views/superAdmin/usuarios';
 import DetalleEdificio from './views/superAdmin/detalleEdificio';
 import Contratos from './views/superAdmin/contratos';
 import Contactados from './views/superAdmin/contactados';
+import ModalCrearConserje from './components/modalCrearConserje';
 
 
 
@@ -33,6 +34,7 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/crearconserje' component={ModalCrearConserje} />
                     <Route exact path='/contratos' component={Contratos} />
                     <Route exact path='/allusuarios' component={Usuarios} />
                     <Route exact path='/usuario/gastos-comunes' component={GastosUser} />
