@@ -10,6 +10,7 @@ const ModalCreacionUser = props => {
     return (
         <>
             <div
+                /* id="modalCreacionUser" */
                 className="modal"
                 tabIndex="-1"
                 style={{ display: store.flagModal ? "inline-block" : "none" }}
@@ -61,10 +62,10 @@ const ModalCreacionUser = props => {
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={actions.cerrarModal}>Cerrar</button>
                             </div>
                             </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </>
     )
 };
