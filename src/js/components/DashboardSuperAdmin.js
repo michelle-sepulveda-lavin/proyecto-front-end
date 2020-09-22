@@ -1,12 +1,32 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
 
 const DashboardSuperAdmin = () => {
-
+    const [avatar, setAvatar] = useState(null)
     const { store, actions } = useContext(Context)
+    const getAvatar = async (avatar) => {
+        try {
+            const resp = await fetch(`http://127.0.0.1:5000/avatares/${avatar}`)
+            const data = await resp.json()
 
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+    const getConserje = async (id) => {
+        const resp = await fetch(`http://127.0.0.1:5000/conserjes/${id}`)
+        const data = await resp.json()
+        setAvatar(data)
+    }
+
+
+    useEffect(() => {
+        getAvatar("Screenshot.png")
+        getConserje(1)
+    }, [])
 
     const planesMensuales = []
     const planesAnuales = []
@@ -26,7 +46,8 @@ const DashboardSuperAdmin = () => {
                         <div className="card-body">
                             <h2 className="card-title text-center " >Edificios</h2>
                             <h5 className="mt-3">Edificios administrados</h5>
-                            <div className="dashboard-num my-5 shadow-sm dashboard-prime-color"><p>{store.edificios.length}</p></div>
+                            <div className="dashboard-num my-5 shadow-sm dashboard-prime-color" onClick={() => console.log(avatar)
+                            }><p>{store.edificios.length}</p></div>
                             <h5>Últimos agregados</h5>
                             <ul className="p-0">
                                 {store.edificios.length > 0 && store.edificios.slice(0).reverse().map((edificio, index) => {

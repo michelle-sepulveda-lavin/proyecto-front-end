@@ -286,3 +286,44 @@ li {
   background-image: linear-gradient(160deg, #e40303 10%, #310000 100%);
   background-size: cover;
 }
+.avatar-img {
+  width: 12em;
+  height: 12em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 1em;
+  margin-top: 1em;
+  background: rgb(245, 245, 245);
+  z-index: 2;
+  overflow: hidden;
+}
+.avatar-img img {
+  height: 120%;
+  width: auto;
+}
+
+.icons-conserje {
+  z-index: 3;
+  font-size: 1.2em;
+  color: #e7e5e5;
+}
+
+.icons-conserje i {
+  cursor: pointer;
+}
+
+.fondo-avatar {
+  background: #001e3b;
+  width: 100%;
+  height: 10em;
+  top: 0;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0px 0px 12px -1px #000 inset;
+}
+.header-conserje {
+  z-index: 2;
+}
