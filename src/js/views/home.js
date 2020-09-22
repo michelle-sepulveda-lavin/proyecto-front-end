@@ -22,9 +22,19 @@ const Home = () => {
                     </div>
                     <div>
                         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+<<<<<<< HEAD
+
+                            <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
+
+                                <li className="d-block">
+                                    <Link to="./login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
+                                </li>
+                                <li className="d-block mt-2 mt-md-0">
+=======
 
                             <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
                                 <li className="d-block mr-2">
+>>>>>>> 792ffd2cd629c6e2a3db8bd5dd76f8c79bfc4e17
                                     <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
 
                                 </li>

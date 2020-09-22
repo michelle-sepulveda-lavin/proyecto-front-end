@@ -205,6 +205,11 @@ body {
 li {
   list-style: none;
 }
+
+.navegacionadm {
+  height: 100vh;
+}
+
 .dashboard-num {
   width: 10em;
   height: 10em;

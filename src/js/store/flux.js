@@ -18,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             edificios: [],
             msgEmail: null,
             flagRecordar: false,
+
             contactos: [],
             currentDate: null,
             contratos: {
