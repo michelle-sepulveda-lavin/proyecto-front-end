@@ -7,11 +7,11 @@ const Login = props => {
     const { store, actions } = useContext(Context);
     const history = useHistory();
 
-
     useEffect(() => {
-        if (store.currentUser !== null) history.push("/");
+        if (store.currentUser !== null) history.push("/dashboard");
+        actions.mostrarUsuario()
 
-    }, [store.currentUser, store.username]);
+    }, [store.currentUser]);
 
     return (
         <>
@@ -34,7 +34,11 @@ const Login = props => {
                 </div>
             </div>
             <div className="container mt-5">
-                <form className="text-center col-md-6 m-auto" onSubmit={(e) => actions.loginAction(e, history)}>
+                <form className="text-center col-md-6 m-auto" onSubmit={(e) => {
+                    actions.loginAction(e)
+
+                }}>
+
                     <div className="form-group">
                         <label htmlFor="usuario">Usuario</label>
                         <input
@@ -66,7 +70,13 @@ const Login = props => {
                         </p>
                     </div>
                     <div className="form-group form-check">
-                        <input type="checkbox" className="form-check-input" disabled={store.username == ""? "true" : ""} id="recordarPassword" onClick={e =>actions.handleRecordar(e)} />
+                        <input
+                            type="checkbox"
+                            className="form-check-input"
+                            disabled={!store.username ? true : ""}
+                            checked={store.flagRecordar ? true : false}
+                            id="recordarPassword" onClick={e => actions.handleRecordar(e)}
+                        />
                         <label className="form-check-label" htmlFor="recordarPassword">Recordar Usuario</label>
                     </div>
 

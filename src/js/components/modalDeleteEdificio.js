@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 
-const ModalDeletePlan = props => {
-    const { actions } = useContext(Context)
-    const deletePlan = async () => {
-        const response = await fetch(`http://127.0.0.1:5000/api/planes/${props.id}`, {
+const ModalDeleteEdificio = props => {
+    const deleteEdificio = async () => {
+        const response = await fetch(`http://127.0.0.1:5000/crearedificio/${props.id}`, {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
@@ -13,10 +13,16 @@ const ModalDeletePlan = props => {
         })
         const data = await response.json()
         console.log(data)
-        props.getData()
-        actions.getPlanes()
-        props.close()
+        actions.getEdificiosData()
+        setCustomAlert("borrado")
+        setTimeout(() => {
+            history.push("/listado-edificios")
+        }, 1500);
+
     }
+    const { actions } = useContext(Context)
+    const history = useHistory()
+    const [customAlert, setCustomAlert] = useState("")
     return (
         <div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none" }}>
             <div className="modal-dialog" role="document">
@@ -36,6 +42,9 @@ const ModalDeletePlan = props => {
                     </div>
                     <div className="modal-body">
                         <p>Advertencia: esta acción será permanente</p>
+                        <div className={"alert alert-danger " + (customAlert === "borrado" ? "d-block" : "d-none")} role="alert">
+                            El edificio fue borrado
+                                                            </div>
                     </div>
                     <div className="modal-footer">
                         <button
@@ -43,13 +52,13 @@ const ModalDeletePlan = props => {
                             className="btn btn-secondary"
                             onClick={props.close}
                         >
-                            Atrás
+                            Cancelar
 						</button>
                         <button
                             type="button"
                             className="btn btn-danger"
                             data-dismiss="modal"
-                            onClick={deletePlan}
+                            onClick={deleteEdificio}
                         >
                             Borrar
 						</button>
@@ -60,4 +69,4 @@ const ModalDeletePlan = props => {
     );
 };
 
-export default ModalDeletePlan;
+export default ModalDeleteEdificio;

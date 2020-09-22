@@ -1,120 +1,56 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import SidebarPage from '../../components/SidebarPage';
+import { Context } from '../../store/appContext';
 
 const ListadoEdificioAdm = () => {
+    const { store, actions } = useContext(Context)
     return (
         <>
             <SidebarPage>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <a className="navbar-brand" href="/">Logo</a>
-                </nav>
-                <div className="text-center mt-5">
-                    <h1>Listado Edificios</h1>
-                </div>
-                <div className="container">
-                    <div className="card mt-5">
-                        <div className="row">
-                            <div className="col-sm">
-                                <div className="card-body">
-                                    <h5 className="card-title">Nombre Edificio</h5>
-                                    <ul className="list-group">
-                                        <div className="col">
-                                            <li className="list-group-item">Cras justo odio</li>
-                                            <li className="list-group-item">Dapibus ac facilisis in</li>
-                                            <li className="list-group-item">Morbi leo risus</li>
-                                            <li className="list-group-item">Porta ac consectetur ac</li>
-                                            <li className="list-group-item">Vestibulum at eros</li>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="col-sm">
-                                <div className="card-body">
-                                    <h5 className="card-title">Nombre Administrador</h5>
-                                    <ul className="list-group">
-                                        <li className="list-group-item">Cras justo odio</li>
-                                        <li className="list-group-item">Dapibus ac facilisis in</li>
-                                        <li className="list-group-item">Morbi leo risus</li>
-                                        <li className="list-group-item">Porta ac consectetur ac</li>
-                                        <li className="list-group-item">Vestibulum at eros</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="col-sm">
-                                <div className="card-body">
-                                    <h5 className="card-title">Dirección</h5>
-                                    <ul className="list-group">
-                                        <li className="list-group-item">Cras justo odio</li>
-                                        <li className="list-group-item">Dapibus ac facilisis in</li>
-                                        <li className="list-group-item">Morbi leo risus</li>
-                                        <li className="list-group-item">Porta ac consectetur ac</li>
-                                        <li className="list-group-item">Vestibulum at eros</li>
-                                    </ul>
-                                </div>
-                            </div>
+                <h1 className="py-3 pl-3">Listado de edificios</h1>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-12 col-md-9 mx-auto">
+                            <table className="table table-responsive  border">
+                                <thead className="thead-dark text-center">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Dirección</th>
+                                        <th scope="col">Correo</th>
+                                        <th scope="col">Teléfono</th>
+                                        <th scope="col">Contrato Hasta</th>
+                                        <th scope="col"></th>
 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {store.edificios.length > 0 && store.edificios.map((edificio, index) => {
+                                        if (index < 10) {
+
+                                            return (
+                                                <>
+                                                    <tr key={index}>
+                                                        <th scope="row">{edificio.id}</th>
+                                                        <td>{edificio.nombre_edificio}</td>
+                                                        <td>{edificio.direccion}</td>
+                                                        <td>{edificio.correo}</td>
+                                                        <td>{edificio.telefono}</td>
+                                                        <td>{edificio.termino_contrato}</td>
+                                                        <td>
+                                                            <Link to={`/listado-edificios/${edificio.id}`}>
+                                                                <span className="btn btn-warning" >Detalle</span> </Link> </td>
+                                                    </tr>
+                                                </>)
+                                        }
+                                    })}
+                                </tbody>
+                            </table>
+                            <Link to="./crearedificio"> <div className="btn btn-success mb-4"> Crear edificio nuevo</div> </Link>
                         </div>
                     </div>
                 </div>
-
-
-
-
-                <div className="container">
-                    <div className="card">
-                        <div className="row">
-                            <div className="col-sm">
-                                <div className="card-body">
-                                    This is some text within a card body.
-                            </div>
-                            </div>
-                            <div className="col-sm">
-                                <div className="card-body">
-                                    This is some text within a card body.
-                            </div>
-                            </div>
-                            <div className="col-sm">
-                                <div className="card-body">
-                                    This is some text within a card body.
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className="card-group">
-                    <div className="card">
-
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                    <div className="card">
-
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                            <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                    <div className="card">
-
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                            <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
 
 
             </SidebarPage>

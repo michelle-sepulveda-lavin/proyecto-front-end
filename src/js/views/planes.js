@@ -7,7 +7,9 @@ const Planes = () => {
     const getData = async () => {
         const response = await fetch('http://127.0.0.1:5000/api/planes');
         const data = await response.json()
-        setPlanes(data)
+        if (!data.msg) {
+            setPlanes(data)
+        }
     }
     useEffect(() => {
         getData()

@@ -1,44 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import DashboardAdmin from '../components/DashboardAdmin';
 import DashboardConserje from '../components/DashboardConserje';
 import DashboardSuperAdmin from '../components/DashboardSuperAdmin';
 import DashboardUser from '../components/DashboardUser';
 import SidebarPage from '../components/SidebarPage';
+import { Context } from '../store/appContext';
 
 
 
 const Dashboard = (props) => {
-    const [rol, setRol] = useState("superadmin")
+    const { store } = useContext(Context)
     return (
 
         <SidebarPage >
-            <h1 className="dashboard-title my-4 ml-md-4 text-center text-md-left">Dashboard</h1>
+            <h1 className="dashboard-title mt-4 ml-md-4 text-center text-md-left">Dashboard</h1>
             <div className="container-fluid">
-                <div className="card-dashboard shadow">
+                <div className=" mb-3">
 
-                    {rol === "superadmin" ?
+                    {store.currentRol === "superAdministrador" ?
                         <DashboardSuperAdmin />
-                        : rol === "admin" ?
+                        : store.currentRol === "administrador" ?
                             <DashboardAdmin /> :
-                            rol === "conserje" ?
+                            store.currentRol === "conserje" ?
                                 <DashboardConserje /> :
-                                rol === "user" ?
+                                store.currentRol === "usuario" ?
                                     <DashboardUser /> :
                                     <h1>Debes iniciar sesión</h1>
                     }
                 </div>
-                <span className="btn btn-success" onClick={() => {
-                    if (rol === "superadmin") {
-                        setRol("admin")
-                    } else if (rol === "admin") {
-                        setRol("conserje")
-                    } else if (rol === "conserje") {
-                        setRol("user")
-                    } else if (rol === "user") {
-                        setRol("superadmin")
-                    }
 
-                }}>Rol</span>
             </div>
         </SidebarPage>
     )

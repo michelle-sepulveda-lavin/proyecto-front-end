@@ -1,5 +1,6 @@
 body {
   height: 100vh;
+  font-family: "Roboto", sans-serif;
 }
 .logo {
   height: 3em;
@@ -69,18 +70,17 @@ body {
   border-top: 0.9px solid rgba(46, 46, 46, 0.123);
 }
 .planes-titulo {
-  font-size: 4rem;
+  font-size: 2.6rem;
   color: #0087bd;
 }
 .boton-a-inicio {
   font-size: 1.4em;
-  width: 7em;
+
   height: 2em;
   border: 1px solid #002b3b;
   border-radius: 20px;
   padding: 10px;
   cursor: pointer;
-  display: block;
   line-height: 0.5em;
   text-align: center;
   color: #000;
@@ -205,9 +205,93 @@ body {
 li {
   list-style: none;
 }
+<<<<<<< HEAD
 .navegacionadm{
   height: 100vh;
   
   
 }
 
+=======
+.dashboard-num {
+  width: 10em;
+  height: 10em;
+  border-radius: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-color: #011638;
+  background-image: linear-gradient(160deg, #2163ce 10%, rgb(2, 1, 1) 100%);
+  background-size: cover;
+}
+
+.dashboard-num-2 {
+  width: 5em;
+  height: 5em;
+  border-radius: 90%;
+}
+
+.dashboard-num p {
+  font-size: 6rem;
+  color: #ebecf1;
+}
+
+.dashboard-num-2 p {
+  font-size: 3.2rem;
+  color: #ebecf1;
+}
+
+.bg-dashboard {
+  background: #ffffff;
+}
+.btn-dashboard {
+  background: #011638;
+}
+.dashboard-text {
+  color: #5a5c69;
+}
+.dashboard-subtitle {
+  color: #011638;
+}
+#content-wrapper h1 {
+  color: #5a5c69;
+  text-align: center;
+}
+.contenedor-edificio {
+  width: 80%;
+  font-size: 90%;
+}
+.contenedor-edificio i {
+  font-size: 1.9rem;
+}
+.contenedor-edificio .fa-pencil-alt,
+.contenedor-edificio .fa-times,
+.contenedor-edificio .fa-trash-alt,
+.contenedor-edificio .fa-check {
+  font-size: 1.2rem;
+}
+.contenedor-edificio h5 {
+  font-size: 100%;
+  font-weight: bold;
+}
+
+.edificio-color-4 {
+  color: #022d72;
+}
+.dashboard-green {
+  background-color: #02af10;
+  background-image: linear-gradient(160deg, #02ad10 10%, #012704 100%);
+  background-size: cover;
+}
+.dashboard-yellow {
+  background-color: #d4d100;
+  background-image: linear-gradient(160deg, #fffb00 10%, #8f7502 100%);
+  background-size: cover;
+}
+.dashboard-red {
+  background-color: #f10000;
+  background-image: linear-gradient(160deg, #e40303 10%, #310000 100%);
+  background-size: cover;
+}
+>>>>>>> 792ffd2cd629c6e2a3db8bd5dd76f8c79bfc4e17

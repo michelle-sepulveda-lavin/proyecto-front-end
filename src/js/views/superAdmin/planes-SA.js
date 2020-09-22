@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ModalDeletePlan from '../components/modalDeletePlan';
-import ModalModifyPlan from '../components/modalModifyPlan';
+import ModalDeletePlan from '../../components/modalDeletePlan';
+import ModalModifyPlan from '../../components/modalModifyPlan';
+import SidebarPage from '../../components/SidebarPage';
+import { Context } from '../../store/appContext';
 
 
 const ModifyPlans = () => {
 
+    const { actions } = useContext(Context)
     const inputCaracteristica = useRef(null)
 
     const getData = async () => {
@@ -24,6 +27,7 @@ const ModifyPlans = () => {
         const data = await response.json()
         console.log(data)
         getData()
+        actions.getPlanes()
     }
 
     useEffect(() => {
@@ -78,13 +82,19 @@ const ModifyPlans = () => {
             <Link to="./login" style={{ textDecoration: 'none' }}> <span className="boton-a-inicio shadow ml-4 mt-5"> <i className="fas fa-arrow-circle-left"></i> Login</span> </Link>
 
         </> : (
-                <>
-
-                    <img src="https://richardgarcia.net/wp-content/uploads/2019/02/zOOM-LOGOS-PNG.png" alt="logo" className="logo" />
-
-                    <h1 className="text-center planes-titulo">NUESTROS PLANES</h1>
-
+                <SidebarPage>
                     <div className="container-fluid my-5">
+                        <div className="mx-auto text-center">
+                            <h1 className="text-center planes-titulo mb-5">NUESTROS PLANES</h1>
+                            <button className="btn btn-warning mb-5" onClick={() => {
+                                if (!createPlan) {
+                                    setCreatePlan(true)
+                                } else {
+                                    setCreatePlan(false)
+                                }
+
+                            }}>Crear Nuevo Plan</button>
+                        </div>
 
                         <div className="row row-cols-1 row-cols-md-2 d-flex justify-content-center">
 
@@ -145,16 +155,6 @@ const ModifyPlans = () => {
                                 )
 
                             })}
-                            <div className="mx-auto text-center">
-                                <button className="btn btn-warning" onClick={() => {
-                                    if (!createPlan) {
-                                        setCreatePlan(true)
-                                    } else {
-                                        setCreatePlan(false)
-                                    }
-
-                                }}>Crear Nuevo Plan</button>
-                            </div>
                         </div>
 
 
@@ -178,25 +178,25 @@ const ModifyPlans = () => {
                                     <div className="modal-body">
                                         <form>
                                             <div className="form-group">
-                                                <label for="nuevo-plan">Nombre del plan</label>
+                                                <label htmlFor="nuevo-plan">Nombre del plan</label>
                                                 <input type="text" value={newPlan.name} className="form-control" id="formGroupExampleInput" name="name" placeholder="Plan"
                                                     onChange={handleInput}
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label for="nuevo_plan2">Precio</label>
+                                                <label htmlFor="nuevo_plan2">Precio</label>
                                                 <input type="number" value={newPlan.price} className="form-control" name="price" id="formGroupExampleInput2" placeholder="Precio del plan"
                                                     onChange={handleInput}
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label for="nuevo_plan3">Frecuencia</label>
+                                                <label htmlFor="nuevo_plan3">Frecuencia</label>
                                                 <input type="text" value={newPlan.frecuencia} className="form-control" name="frecuencia" id="formGroupExampleInput2" placeholder="Mensual/Semestral/Anual"
                                                     onChange={handleInput}
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label for="nuevo_plan3" className="d-block mb-3">Características</label>
+                                                <label htmlFor="nuevo_plan3" className="d-block mb-3">Características</label>
                                                 <div className="d-flex">
                                                     <span className="btn btn-primary p-1 mr-3"
                                                         onClick={() => {
@@ -231,10 +231,9 @@ const ModifyPlans = () => {
                                                 className="btn btn-secondary"
                                                 onClick={() => {
                                                     setCreatePlan(false)
-                                                }}
-                                            >
+                                                }}>
                                                 Atrás
-						</button>
+						                    </button>
                                             <button
                                                 type="button"
                                                 className="btn btn-success"
@@ -248,27 +247,23 @@ const ModifyPlans = () => {
                                                         if (newPlan.body.length > 2) {
                                                             addPlan(newPlan)
                                                             setCreatePlan(false)
+
                                                         } else {
                                                             alert('Deben haber al menos 3 características')
                                                         }
                                                     }
                                                 }
-                                                }
-                                            >
+                                                }>
                                                 Guardar cambios
-						</button>
+						                    </button>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-
-
-
-                        <Link to="./" style={{ textDecoration: 'none' }}> <span className="boton-a-inicio shadow mt-5"> <i className="fas fa-arrow-circle-left"></i> Ir al inicio</span> </Link>
                     </div>
-                </>
+                </SidebarPage>
             )
     )
 };
