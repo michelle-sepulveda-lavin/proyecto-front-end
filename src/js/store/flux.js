@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             edificios: [],
             msgEmail: null,
             flagRecordar: false,
+
             contactos: [],
             currentDate: null,
             contratos: {
@@ -36,7 +37,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             departamentoUsuarios: [],
             departamentosPorPiso: [],
             departamentoEstado: [],
-            usuariosEdificio: []
+            usuariosEdificio: [],
+            crearConserje: {
+                error: null,
+                avatar: null
+            },
+            currentEdificio: null,
+            roles: [],
+            conserjes: []
         },
         actions: {
             handleChangeLogin: e => {
@@ -236,7 +244,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.removeItem("currentUser")
                 setStore({
                     currentRol: null,
-                    currentUser: null
+                    currentUser: null,
+                    currentEdificio: null,
+                    conserjes: []
                 })
                 history.push("/")
             },
@@ -607,7 +617,125 @@ const getState = ({ getStore, getActions, setStore }) => {
                             success: "Departamento actualizado exitosamente"
                         })
                     } */
+                },
+            crearConserje: async (e, aux) => {
+                const actions = getActions()
+                const store = getStore()
+                const { crearConserje, currentEdificio, roles, apiURL } = getStore()
+                e.preventDefault()
+                const conserjeIndex = roles.length > 0 && (roles.map((rol) => rol.rol).indexOf('conserje'));
 
+                const formData = new FormData();
+                if (aux.email !== undefined && aux.email !== "") {
+                    formData.append("email", aux.email);
+                }
+                if (aux.password !== undefined && aux.password !== "") {
+                    formData.append("password", aux.password);
+                }
+
+                if (aux.avatar !== undefined && aux.avatar !== "") {
+                    formData.append("avatar", aux.avatar)
+
+                }
+
+                formData.append("username", aux.username);
+
+                formData.append("edificios_id", currentEdificio)
+                formData.append("rol_id", roles[conserjeIndex].id)
+                formData.append("nombre", aux.nombre);
+                formData.append("telefono", aux.telefono);
+                formData.append("turno", aux.turno);
+
+
+                try {
+                    const resp = await fetch("http://localhost:5000/conserjes", {
+                        method: "POST",
+                        headers: {},
+                        body: formData
+                    });
+                    const data = await resp.json();
+                    console.log(data)
+                    const { msg } = data;
+                    if (resp.ok) {
+                        alert(data.msg)
+                        setStore({
+                            crearConserje: { ...crearConserje, error: null }
+                        })
+                    }
+                    else if (msg !== undefined) {
+                        setStore({
+                            crearConserje: { ...crearConserje, error: msg }
+                        })
+                    }
+                    actions.getConserjes(store.currentEdificio)
+
+                }
+                catch (error) {
+                    console.log(error)
+                }
+                console.log(aux.email)
+            },
+            getCurrentEdificio: () => {
+                const { currentEdificio } = getStore();
+                if (localStorage.getItem("currentUser")) {
+                    const user = JSON.parse(localStorage.getItem("currentUser"));
+                    setStore({
+                        currentEdificio: user.user.edificio
+                    })
+                }
+            },
+            getRoles: async () => {
+                const { roles } = getStore()
+
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/roles');
+                    const data = await response.json()
+                    console.log(data)
+                    setStore({
+                        roles: data
+                    })
+
+                }
+                catch (error) {
+                    console.log(error)
+                }
+
+            },
+            getConserjes: async (id) => {
+                const { conserjes, apiURL } = getStore()
+                try {
+                    if (id !== null && id !== undefined) {
+                        const response = await fetch(`${apiURL}/conserjes/edificio/${id}`);
+                        const data = await response.json()
+                        console.log(data)
+                        if (response.ok) {
+                            setStore({
+                                conserjes: data
+                            })
+                        }
+                    }
+                }
+                catch (error) {
+                    console.log(error)
+                }
+            },
+            cambiarEstadoConserje: async (id, estado) => {
+                const { apiURL, currentEdificio } = getStore()
+                const actions = getActions()
+                try {
+                    const response = await fetch(`${apiURL}/conserjes/${id}`, {
+                        method: "PATCH",
+                        body: JSON.stringify({ estado_conserje: estado }),
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' }
+                    })
+                    const data = await response.json()
+                    console.log(data)
+                    actions.getConserjes(currentEdificio)
+                }
+
+                catch (error) {
+                    console.log(error)
+                }
             }
         }
 

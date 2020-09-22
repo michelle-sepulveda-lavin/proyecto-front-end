@@ -3,6 +3,14 @@ import React from 'react';
 const DashboardAdm = () => {
     return (
         <>
+<<<<<<< HEAD
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="/">Logo</a>
+            </nav>
+
+=======
+>>>>>>> 792ffd2cd629c6e2a3db8bd5dd76f8c79bfc4e17
             
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <a className="navbar-brand" href="/">Logo</a>
