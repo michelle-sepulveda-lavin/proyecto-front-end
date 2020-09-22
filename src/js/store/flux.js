@@ -12,6 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             currentToken: "",
             currentUser: null,
             currentRol: null,
+            currentEdificio: null,
+            currentEdificioID: null,
             error: null,
             success: null,
             profile: null,
@@ -29,7 +31,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             contactos: [],
             allUsuarios: [],
             archivoCSV: null,
-            planes: []
+            planes: [],
+            departamentos: [],
+            departamentoUsuarios: [],
+            departamentosPorPiso: [],
+            departamentoEstado: [],
+            usuariosEdificio: []
         },
         actions: {
             handleChangeLogin: e => {
@@ -68,7 +75,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     /* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
                     const user = JSON.parse(localStorage.getItem("currentUser"));
                     setStore({
-                        currentRol: user.user.rol.name
+                        currentRol: user.user.rol.name,
+                        currentEdificio: user.user.edificio
                     })
                 }
             },
@@ -177,6 +185,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                 }
             },
+            getCurrentEdificio: async () => {
+                const { apiURL } = getStore();
+                if (localStorage.getItem("currentUser")) {
+                    const user = JSON.parse(localStorage.getItem("currentUser"));
+                    const idEdificio = user.user.edificio
+                    setStore({
+                        currentEdificioID: idEdificio
+                    })
+                    const response = await fetch(`${apiURL}/crearedificio/${idEdificio}`);
+                    const data = await response.json()
+                    if (!data.msg) {
+                        setStore({
+                            currentEdificio: data
+                        })
+
+                    }
+                }
+            },
             getEdificiosData: async () => {
                 const store = getStore()
                 const { getContratos } = getActions()
@@ -260,7 +286,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             crearUsuario: async (e) => {
                 e.preventDefault()
-                const { apiURL, username, password, email, rol_id, edificio_rol } = getStore();
+                const { apiURL, username, password, email, rol_id, edificio_id } = getStore();
                 const resp = await fetch(`${apiURL}/register`, {
                     method: "POST",
                     headers: {
@@ -271,7 +297,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         password: password,
                         email: email,
                         rol_id: rol_id,
-                        edificio_id: edificio_rol
+                        edificio_id: edificio_id
                     })
                 });
                 const data = await resp.json();
@@ -333,10 +359,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                 })
                 const data = await resp.json();
-                const { msg } = data 
+                const { msg } = data
 
                 if (msg !== undefined) {
-                    if(msg === "usuario actualizado correctamente"){
+                    if (msg === "usuario actualizado correctamente") {
                         setStore({
                             success: msg,
                             email: "",
@@ -346,7 +372,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         })
                         getActions().getUsuarios(e)
 
-                    }else{
+                    } else {
                         setStore({ error: msg })
                     }
                 }
@@ -392,9 +418,200 @@ const getState = ({ getStore, getActions, setStore }) => {
                         planes: data
                     })
                 }
+            },
+            handleDepartamentos: async (e, modelInfo) => {
+                e.preventDefault()
+                const { apiURL, currentEdificio } = getStore();
+                const resp = await fetch(`${apiURL}/info-departamento/${currentEdificio.id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(modelInfo)
+                });
+                const data = await resp.json();
+                const { msg } = data
+
+                if (!resp.ok) {
+                    alert(resp.ok)
+                } else {
+                    alert("ok")
+                    getActions().getDepartamentos()
+                }
+            },
+            getDepartamentos: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const response = await fetch(`${apiURL}/info-departamento/${currentEdificioID}`)
+                const data = await response.json()
+                if (!data) {
+                    alert(data)
+                } else {
+                    setStore({
+                        departamentos: data
+                    })
+                }
+            },
+            deleteModeloDpto: async (i) => {
+                const { apiURL, departamentos } = getStore();
+                const eliminado = departamentos[i].id
+                const resp = await fetch(`${apiURL}/info-departamento/${eliminado}}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                });
+                const data = await resp.json();
+                if (!resp.ok) {
+                    alert(resp.ok)
+                } else {
+                    alert("ok")
+                    getActions().getDepartamentos()
+                }
+            },
+            postDptoUsuario: async (e, info) => {
+                e.preventDefault()
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/departamentoUsuarioEdificio/${currentEdificioID}`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(info)
+                });
+                const data = await resp.json();
+                const { msg } = data;
+
+                if (msg !== undefined) {
+                    if (msg == "departamento de usuario creado exitosamente") {
+                        setStore({
+                            success: msg
+                        })
+                        alert(msg)
+                        getActions().getDptosUsuarios()
+                    } else {
+                        setStore({
+                            error: msg
+                        })
+                    }
+                }
+            },
+            getDptosUsuarios: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const response = await fetch(`${apiURL}/departamentoUsuarioEdificio/${currentEdificioID}`)
+                const data = await response.json()
+                const { msg } = data;
+                if (msg !== undefined) {
+                    setStore({
+                        error: msg
+                    })
+                } else {
+                    setStore({
+                        departamentoUsuarios: data
+                    })
+                }
+            },
+            deleteUsuarioDpto: async (i) => {
+                const { apiURL, departamentoUsuarios } = getStore();
+                const eliminado = departamentoUsuarios[i].id
+                const resp = await fetch(`${apiURL}/departamentoUsuarioEdificio/${eliminado}}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                });
+                const data = await resp.json();
+                if (data.msg !== "El departamento ha sido eliminado exitosamente") {
+                    alert(data.msg)
+                } else {
+                    alert("Eliminado")
+                    getActions().getDptosUsuarios()
+                }
+            },
+            filtradoPiso: (piso) => {
+                const { departamentoUsuarios } = getStore();
+                setStore({
+                    departamentoEstado: []
+                })
+                if (piso !== "todos") {
+                    const auxiliar = departamentoUsuarios.filter((dpto, index) => {
+                        return (dpto.piso == piso)
+                    })
+                    setStore({
+                        departamentosPorPiso: auxiliar
+                    })
+                } else if (piso === "todos") {
+                    setStore({
+                        departamentosPorPiso: departamentoUsuarios
+                    })
+                }
+
+            },
+            getUsuariosDelEdificio: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/usuarios-edificio/${currentEdificioID}`)
+                const data = await resp.json()
+                const { msg } = data;
+                if (msg !== undefined) {
+                    setStore({
+                        error: msg
+                    })
+                } else {
+                    setStore({
+                        usuariosEdificio: data
+                    })
+                }
+            },
+            filtradoEstado: (estado) => {
+                const { departamentoUsuarios } = getStore();
+                setStore({
+                    departamentosPorPiso: []
+                })
+                if (estado !== "todos") {
+                    const auxiliar = departamentoUsuarios.filter((dpto) => {
+                        return (dpto.estado == estado)
+                    })
+                    setStore({
+                        departamentoEstado: auxiliar
+                    })
+                } else if (estado === "todos") {
+                    setStore({
+                        departamentoEstado: departamentoUsuarios
+                    })
+                }
+
+            },
+            limpiarCamposFiltrado: () => {
+                setStore({
+                    departamentoEstado: [],
+                    departamentosPorPiso: []
+                })
+            },
+            addResidente: async (e,index, residente) => {
+                e.preventDefault()
+                setStore({ success : null})
+                const { apiURL, departamentosPorPiso } = getStore();
+                console.log(index)
+                /* const dptoEditar = departamentosPorPiso[index].id
+                const resp = await fetch(`${apiURL}/add-residente/${dptoEditar}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(residente)
+                })
+                const data = await resp.json()
+                if(data.msg !== undefined)
+                alert(data.msg)
+                    if(data.msg === "Departamento actualizado exitosamente"){
+                        setStore({
+                            success: "Departamento actualizado exitosamente"
+                        })
+                    } */
+
             }
         }
-    };
+
+    }
 };
 
 export default getState;
