@@ -3,19 +3,16 @@ import React from 'react';
 const DashboardAdm = () => {
     return (
         <>
-<<<<<<< HEAD
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="/">Logo</a>
             </nav>
 
-=======
             
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <a className="navbar-brand" href="/">Logo</a>
                 </nav>
             
->>>>>>> ceab090d67c377a2ea9e5ea0148d4d1a414cff2d
             <div className="container">
                 <div className="row row-cols-1 row-cols-md-2 mt-5">
                     <div className="col mb-4">

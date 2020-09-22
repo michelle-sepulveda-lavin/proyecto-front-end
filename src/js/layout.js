@@ -5,7 +5,7 @@ import Home from './views/home'
 import Login from './views/login';
 import Planes from './views/planes';
 import Footer from './components/footer';
-import NavegacionAdm from './components/navegacionAdm';
+
 import ListadoEdificioAdm from './views/superAdmin/listadoEdificioAdm'
 import ModifyPlans from './views/planes-SA';
 import CrearEdificios from './views/superAdmin/crearEdificios';
@@ -22,6 +22,7 @@ import PaqueteriaConserje from './views/conserjes/paqueteriaConserje';
 import GastosConserje from './views/conserjes/gastosConserje';
 import GastosUser from './views/user/gastosUser';
 import RecuperacionContraseña from './views/recuperacionContraseña';
+import BoletinAdm from './views/boletinAdm';
 
 
 const Layout = () => {
@@ -29,6 +30,7 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/BoletinAdm' component={BoletinAdm} />
                     <Route exact path='/usuario/gastos-comunes' component={GastosUser} />
                     <Route exact path='/conserje/gastos-comunes' component={GastosConserje} />
                     <Route exact path='/conserje/paqueteria' component={PaqueteriaConserje} />
@@ -41,7 +43,7 @@ const Layout = () => {
                     <Route exact path='/contactos' component={Contactos} />
                     <Route exact path='/listado-edificios' component={ListadoEdificioAdm} />
                     <Route exact path='/dashboard' component={Dashboard} />
-                    <Route exact path='/navegacionAdm' component={NavegacionAdm} />
+
                     <Route exact path='/recuperacion-password' component={RecuperacionContraseña} />
 
                     <Route exact path='/crearedificio' component={CrearEdificios} />

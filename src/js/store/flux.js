@@ -12,7 +12,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             profile: null,
             edificios: [],
             msgEmail: null,
-            flagRecordar: false
+            flagRecordar: false,
+            asunto: null,
+            body: null
         },
         actions: {
             handleChangeLogin: e => {

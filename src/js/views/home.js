@@ -13,18 +13,18 @@ const Home = () => {
                     <span className="titulo-navbar align-self-center font-weight-bold ">Edificios Felices</span>
                     <div className="d-inline float-right">
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
+                            <span className="navbar-toggler-icon"></span>
                         </button>
                     </div>
                     <div>
-                        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                        <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
 
-                            <ul class="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
+                            <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
 
-                                <li class="d-block">
+                                <li className="d-block">
                                     <Link to="./login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
                                 </li>
-                                <li class="d-block mt-2 mt-md-0">
+                                <li className="d-block mt-2 mt-md-0">
                                     <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
 
                                 </li>
