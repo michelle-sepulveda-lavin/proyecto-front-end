@@ -31,6 +31,7 @@ const DepartamentosAdmin = () => {
         actions.getEdificioCompleto()
         actions.getDepartamentos()
         actions.getDptosUsuarios()
+        
     },[])
     return (
         <SidebarPage>
@@ -47,7 +48,7 @@ const DepartamentosAdmin = () => {
                         <Link to="/admin/inicializacion-dptos" className="btn btn-warning">Modelo de Departamentos</Link>
                     </div>
                     <div className="col-md-2 m-1">
-                        <Link to="/admin/inicializacion-pisos" className="btn btn-warning">Estructura del Edificio</Link>
+                        <Link to="/admin/inicializacion-pisos" className="btn btn-warning">Editar/Creacion Departamentos</Link>
                     </div>
                 </div>
             </div>

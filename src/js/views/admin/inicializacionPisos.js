@@ -38,8 +38,8 @@ const InicializacionPisos = () => {
         actions.getDepartamentos()
         actions.getDptosUsuarios()
         actions.getUsuariosDelEdificio()
-        actions.usuariosSinAsignar()
-
+        actions.usuariosNoAsignados()
+        
     }, []);
     return (
         <>
@@ -55,8 +55,8 @@ const InicializacionPisos = () => {
                         <p>Departamentos totales {!!store.edificioCompleto && store.edificioCompleto.numero_departamentos}</p>
                     </div>
                     <div className="col-md-6 border">
-                        <p>Pisos por completar {!!store.edificioCompleto && store.edificioCompleto.numero_pisos}</p>
-                        <p>Departamentos por asignar {!!store.edificioCompleto && store.edificioCompleto.numero_departamentos}</p>
+                        <p>Pisos inicializados: {pisos.length > 0 ? pisos.length : <button className="btn btn-outline-info" onClick={contadorPisos}>Ver</button>}</p>
+                        <p>Departamentos Creados: {!!store.contadorUsuarios && (store.contadorUsuarios )}</p>
                     </div>
                 </div>
             </div>
@@ -102,14 +102,14 @@ const InicializacionPisos = () => {
                                 <td>
 
                                     {
-                                        store.finalUserBuilding.length > 0 ?
+                                        !!store.usuariosEdificioNoAsignados ?
                                             <>
                                                 <label className="sr-only" htmlFor="residente">Residente</label>
-                                                <select defaultValue={'null'} className="form-control form-control-sm" name="residente" onClick={e => handleChange(e)}>
+                                                <select defaultValue={'null'} className="form-control form-control-sm" name="residente" onChange={e => handleChange(e)}>
                                                     <option value="null" disabled>Seleccionar</option>
                                                     {
-                                                        !!store.usuariosEdificio &&
-                                                        store.usuariosEdificio.map((user, index) => {
+                                                        !!store.usuariosEdificioNoAsignados &&
+                                                        store.usuariosEdificioNoAsignados.map((user, index) => {
                                                             return (
                                                                 user.rol.name === "usuario" &&
                                                                 <option value={user.id} key={index}>{user.username}</option>

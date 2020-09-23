@@ -45,6 +45,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             conserjes: [],
             finalUserBuilding: [],
             departamentoModificar: null,
+            usuariosEdificioNoAsignados: null,
+            contadorUsuarios: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -517,9 +519,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                         error: msg
                     })
                 } else {
+
                     setStore({
-                        departamentoUsuarios: data
+                        departamentoUsuarios: data,
                     })
+                    getActions().usuariosNoAsignados()
+                    await setStore({
+                        contadorUsuarios: getStore().departamentoUsuarios.length 
+                    })
+                    
                 }
             },
             deleteUsuarioDpto: async (i) => {
@@ -571,7 +579,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         usuariosEdificio: data
                     })
-                    getActions().usuariosSinAsignar()
+                    getActions().usuariosparaAsignar()
                 }
             },
             filtradoEstado: (estado) => {
@@ -741,7 +749,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error)
                 }
             },
-            usuariosSinAsignar: () => {
+            usuariosparaAsignar: () => {
                 const { usuariosEdificio } = getStore();
                 if (!!usuariosEdificio) {
                     const aux = usuariosEdificio.filter((user) => {
@@ -752,13 +760,35 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         finalUserBuilding: aux
                     })
+                    getActions().usuariosNoAsignados()
                 }
             },
             dptoModificar: (numero) => {
                 setStore({
                     departamentoModificar: numero
                 })
+            },
+            usuariosNoAsignados: () =>{
+                const {departamentoUsuarios, finalUserBuilding} = getStore();
+                if(!!departamentoUsuarios){
+                    const aux = departamentoUsuarios.filter((dpto)=>{
+                        return dpto.residente.id != null
+                    })
+                    const aux2 = aux.map((dpto)=>{
+                        /* return {"id": dpto.residente.id, "name": dpto.residente.name, "email": dpto.residente.email} */
+                        return dpto.residente.name
+                    })
+
+                    const aux3 = finalUserBuilding.filter((dpto)=>{
+                        return !aux2.includes(dpto.username)
+                    })
+                    setStore({
+                        usuariosEdificioNoAsignados: aux3
+                    })
+
+                }
             }
+
         }
 
     }

@@ -23,8 +23,8 @@ const ModalAddUser = (props) => {
                                     <select defaultValue={'default'} className="form-control" name="residente" onClick={e => setInfo({...info,"residente": e.target.value })}>
                                         <option value="default" disabled>Seleccionar</option>
                                         {
-                                            !!store.usuariosEdificio &&
-                                            store.usuariosEdificio.map((user, index) => {
+                                            !!store.usuariosEdificioNoAsignados &&
+                                            store.usuariosEdificioNoAsignados.map((user, index) => {
                                                 return (
                                                     <option value={user.id} key={index}>{user.username}</option>
                                                 )
