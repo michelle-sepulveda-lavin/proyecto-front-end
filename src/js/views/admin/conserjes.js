@@ -1,10 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import BorrarConserje from '../../components/modalBorrarConserje';
 import ModalCrearConserje from '../../components/modalCrearConserje';
 import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
 const Conserjes = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     const [show, setShow] = useState(false)
     const { store, actions } = useContext(Context)
     const [borrar, setBorrar] = useState(false)
@@ -100,7 +103,7 @@ const Conserjes = () => {
 
                                         <div key={index} className="col mb-4">
 
-                                            <div className="card shadow-sm h-100">
+                                            <div className="card rounded shadow-sm h-100">
 
 
                                                 <div className="text-right icons-conserje">
@@ -136,7 +139,7 @@ const Conserjes = () => {
                                                         {modify && idToModify === conserje.id ?
                                                             (<input className="d-inline" defaultValue={conserje.nombre} name="nombre" onChange={handleInputConserje} />) :
                                                             conserje.nombre}</strong></h5>
-                                                    <ul className="pl-0 mb-0 border-top pt-3">
+                                                    <ul className="pl-0 mb-0 border-top border-info pt-3">
                                                         <li> <i class="fas fa-phone mr-1 mb-2"> </i> <strong>Teléfono: </strong>
                                                             {modify && idToModify === conserje.id ?
                                                                 (<input className="d-inline" defaultValue={conserje.telefono} name="telefono" onChange={handleInputConserje} />) :

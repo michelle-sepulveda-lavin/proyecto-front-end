@@ -27,7 +27,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 vencidos: []
             },
             flagModal: false,
-            contactos: [],
             allUsuarios: [],
             archivoCSV: null,
             planes: [],
@@ -508,7 +507,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL, currentEdificio } = getStore()
                 const actions = getActions()
                 try {
-                    const response = await fetch(`${apiURL}/conserjes/${id}`, {
+                    const response = await fetch(`${apiURL}/conserjes/estado-conserje/${id}`, {
                         method: "PATCH",
                         body: JSON.stringify({ estado_conserje: estado }),
                         headers: { 'Content-type': 'application/json; charset=UTF-8' }

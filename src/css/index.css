@@ -163,9 +163,7 @@ body {
 .navbar-item {
   margin-top: 1em;
 }
-.flex-column {
-  flex-direction: column !important;
-}
+
 #content-wrapper {
   background-color: #f8f9fc;
   width: 100%;
@@ -331,4 +329,13 @@ li {
 }
 .header-conserje {
   z-index: 2;
+}
+.w-40 {
+  width: 40%;
+}
+.conserjes-activos {
+  font-size: 1.1rem;
+}
+.prueba {
+  background: #f9fbff;
 }
