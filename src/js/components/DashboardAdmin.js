@@ -15,7 +15,7 @@ const DashboardAdmin = (props) => {
 
                     </div>
 
-                    {
+                    {store.conserjes.lenght > 0 &&
                         store.conserjes.map((conserje, index) => {
                             if (conserje.estado === true) {
                                 return (

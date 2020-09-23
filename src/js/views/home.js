@@ -22,34 +22,28 @@ const Home = () => {
                     </div>
                     <div>
                         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-
                             <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
+                                <li className="d-block mr-2">
+                                    <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
 
-
-                                <li className="d-block mt-2 mt-md-0">
-
-                                    <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
-                                        <li className="d-block mr-2">
-                                            <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
-
-                                        </li>
-                                        {
-                                            !!store.currentRol ?
-                                                <>
-                                                    <li className="d-block">
-                                                        <Link to="/dashboard" className=" btn btn-success mr-1" role="button">Dashboard</Link>
-                                                    </li>
-                                                    <li className="d-block" >
-                                                        <Link to="/" className=" btn btn-secondary mr-1" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-2"></i>Cerrar sesion</Link>
-                                                    </li>
-                                                </>
-                                                :
-                                                <li className="d-block">
-                                                    <Link to="/login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
-                                                </li>
-                                        }
-                                    </ul>
                                 </li>
+                                {
+                                    !!store.currentRol ?
+                                        <>
+                                            <li className="d-block">
+                                                <Link to="/dashboard" className=" btn btn-success mr-1" role="button">Dashboard</Link>
+                                            </li>
+                                            <li className="d-block" >
+                                                <Link to="/" className=" btn btn-secondary mr-1" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-2"></i>Cerrar sesion</Link>
+                                            </li>
+                                        </>
+                                        :
+                                        <li className="d-block">
+                                            <Link to="/login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
+                                        </li>
+                                }
+
+
                             </ul>
                         </div>
                     </div>

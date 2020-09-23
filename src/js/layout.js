@@ -28,6 +28,8 @@ import DetalleEdificio from './views/superAdmin/detalleEdificio';
 import Contratos from './views/superAdmin/contratos';
 import Contactados from './views/superAdmin/contactados';
 import ModalCrearConserje from './components/modalCrearConserje';
+import InicializacionDptos from './views/admin/inicializacionDptos';
+import InicializacionPisos from './views/admin/inicializacionPisos';
 
 
 
@@ -36,6 +38,8 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/admin/inicializacion-pisos' component={InicializacionPisos} />
+                    <Route exact path='/admin/inicializacion-dptos' component={InicializacionDptos} />
                     <Route exact path='/BoletinAdm' component={BoletinAdm} />
                     <Route exact path='/contratos' component={Contratos} />
                     <Route exact path='/allusuarios' component={Usuarios} />
