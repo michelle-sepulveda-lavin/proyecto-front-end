@@ -9,18 +9,18 @@ const DashboardAdmin = (props) => {
         <div className="container-fluid">
             <div className="row justify-content-center">
 
-                <div className="col  col-md-6 rounded-lg row p-3 justify-content-center">
+                <div className="col  col-md-6 border rounded-lg row p-3 justify-content-center">
                     <div className="">
                         <h3>Conserjes Activos</h3>
 
                     </div>
 
-                    {store.conserjes.lenght > 0 &&
+                    {store.conserjes.length > 0 &&
                         store.conserjes.map((conserje, index) => {
                             if (conserje.estado === true) {
                                 return (
 
-                                    <div class="card mb-4 p-2 border-0 prueba shadow-sm ">
+                                    <div class="card mb-4 p-2 prueba shadow-sm ">
                                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
                                             <div className="w-75 d-flex align-items-center" >
 
