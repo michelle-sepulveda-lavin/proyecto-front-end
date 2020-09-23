@@ -31,6 +31,8 @@ const DepartamentosAdmin = () => {
         actions.getEdificioCompleto()
         actions.getDepartamentos()
         actions.getDptosUsuarios()
+        actions.getBodegasDelEdificio()
+        actions.getEstacionamientosDelEdificio()
         
     },[])
     return (
