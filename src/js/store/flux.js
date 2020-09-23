@@ -46,7 +46,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             finalUserBuilding: [],
             departamentoModificar: null,
             usuariosEdificioNoAsignados: null,
-            contadorUsuarios: null
+            contadorUsuarios: null,
+            bodegasEdificio: null,
+            estacionamientoEdificios: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -457,11 +459,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL, currentEdificioID } = getStore();
                 const response = await fetch(`${apiURL}/info-departamento/${currentEdificioID}`)
                 const data = await response.json()
-                if (!data) {
-                    alert(data)
-                } else {
+                const { msg } = data
+                if (msg == undefined) {
                     setStore({
                         departamentos: data
+                    })
+                } else {
+                    setStore({
+                        error: msg
                     })
                 }
             },
@@ -525,9 +530,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                     getActions().usuariosNoAsignados()
                     await setStore({
-                        contadorUsuarios: getStore().departamentoUsuarios.length 
+                        contadorUsuarios: getStore().departamentoUsuarios.length
                     })
-                    
+
                 }
             },
             deleteUsuarioDpto: async (i) => {
@@ -625,7 +630,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         setStore({
                             success: "Departamento actualizado exitosamente"
                         })
-                        
+
                     }
                 }
 
@@ -768,18 +773,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                     departamentoModificar: numero
                 })
             },
-            usuariosNoAsignados: () =>{
-                const {departamentoUsuarios, finalUserBuilding} = getStore();
-                if(!!departamentoUsuarios){
-                    const aux = departamentoUsuarios.filter((dpto)=>{
+            usuariosNoAsignados: () => {
+                const { departamentoUsuarios, finalUserBuilding } = getStore();
+                if (!!departamentoUsuarios) {
+                    const aux = departamentoUsuarios.filter((dpto) => {
                         return dpto.residente.id != null
                     })
-                    const aux2 = aux.map((dpto)=>{
+                    const aux2 = aux.map((dpto) => {
                         /* return {"id": dpto.residente.id, "name": dpto.residente.name, "email": dpto.residente.email} */
                         return dpto.residente.name
                     })
 
-                    const aux3 = finalUserBuilding.filter((dpto)=>{
+                    const aux3 = finalUserBuilding.filter((dpto) => {
                         return !aux2.includes(dpto.username)
                     })
                     setStore({
@@ -787,9 +792,77 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
 
                 }
-            }
+            },
+            handleBodegas: async (e, modelInfo) => {
+                e.preventDefault()
+                const { apiURL, edificioCompleto } = getStore();
+                const resp = await fetch(`${apiURL}/add-bodega/${edificioCompleto.id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(modelInfo)
+                });
+                const data = await resp.json();
+                const { msg } = data
 
+                if (!resp.ok) {
+                    alert(msg)
+                } else {
+                    alert("ok")
+                }
+            },
+            handleEstacionamiento: async (e, modelInfo) => {
+                e.preventDefault()
+                const { apiURL, edificioCompleto } = getStore();
+                const resp = await fetch(`${apiURL}/add-estacionamiento/${edificioCompleto.id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(modelInfo)
+                });
+                const data = await resp.json();
+                const { msg } = data
+
+                if (!resp.ok) {
+                    alert(msg)
+                } else {
+                    alert("ok")
+                }
+            },
+            getBodegasDelEdificio: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/bodegas/${currentEdificioID}`)
+                const data = await resp.json()
+                const { msg } = data;
+                if (msg !== undefined) {
+                    setStore({
+                        error: msg
+                    })
+                } else {
+                    setStore({
+                        bodegasEdificio: data
+                    })
+                }
+            },
+            getEstacionamientosDelEdificio: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/estacionamientos/${currentEdificioID}`)
+                const data = await resp.json()
+                const { msg } = data;
+                if (msg !== undefined) {
+                    setStore({
+                        error: msg
+                    })
+                } else {
+                    setStore({
+                        estacionamientoEdificios: data
+                    })
+                }
+            }
         }
+
 
     }
 };
