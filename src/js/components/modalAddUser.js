@@ -17,12 +17,11 @@ const ModalAddUser = (props) => {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={(e) => actions.addResidente(e, props.index, info)}>
+                            <form onSubmit={(e) => actions.addResidente(e, info)}>
                                 <div className="form-group">
                                     <label htmlFor="residente">Residente</label>
                                     <select defaultValue={'default'} className="form-control" name="residente" onClick={e => setInfo({...info,"residente": e.target.value })}>
                                         <option value="default" disabled>Seleccionar</option>
-                                        <option value="vacio">Vacio</option>
                                         {
                                             !!store.usuariosEdificio &&
                                             store.usuariosEdificio.map((user, index) => {

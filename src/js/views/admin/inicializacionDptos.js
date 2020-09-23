@@ -19,7 +19,7 @@ const InicializacionDptos = () => {
     }
 
     useEffect(() => {
-        actions.getCurrentEdificio()
+        actions.getEdificioCompleto()
         actions.getDepartamentos()
 
     }, [])

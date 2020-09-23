@@ -28,19 +28,18 @@ const DepartamentosAdmin = () => {
     }
 
     useEffect(() => {
-        actions.getCurrentEdificio()
+        actions.getEdificioCompleto()
         actions.getDepartamentos()
         actions.getDptosUsuarios()
-        actions.getUsuariosDelEdificio()
-    }, [])
+    },[])
     return (
         <SidebarPage>
             <div className="container">
                 <div className="row">
                     <div className="col-md-6 m-auto">
                         <h1>Departamentos</h1>
-                        <h4 className="text-center mt-3">Edificio: {!!store.currentEdificio ? store.currentEdificio.nombre_edificio : "cargando"}</h4>
-                        <h6 className="text-center mt-3">Direccion: {!!store.currentEdificio ? store.currentEdificio.direccion : "cargando"}</h6>
+                        <h4 className="text-center mt-3">Edificio: {!!store.edificioCompleto ? store.edificioCompleto.nombre_edificio : "cargando"}</h4>
+                        <h6 className="text-center mt-3">Direccion: {!!store.edificioCompleto ? store.edificioCompleto.direccion : "cargando"}</h6>
                     </div>
                 </div>
                 <div className="row mt-5 d-flex justify-content-center">

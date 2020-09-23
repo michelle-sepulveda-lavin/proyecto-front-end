@@ -30,6 +30,7 @@ const ModalCreacionUser = props => {
                             <form onSubmit={e => {
                                 actions.crearUsuario(e)
                                 limpiarFormulario(e)
+                                actions.levantaBanderaUsuarios()
                             }}>
                                 <div className="form-group">
                                     <label htmlFor="username">Nombre Usuario</label>
@@ -73,7 +74,7 @@ const ModalCreacionUser = props => {
                                                 <label htmlFor="edificio_id">Edificio</label>
                                                 <select defaultValue={'default'} name="edificio_id" className="form-control" onClick={e => actions.handleChangeLogin(e)}>
                                                     <option value="default" disabled>Seleccionar</option>
-                                                    <option value={store.currentEdificioID}>{!!store.currentEdificio && store.currentEdificio.nombre_edificio}</option>
+                                                    <option value={store.currentEdificioID}>{!!store.edificioCompleto && store.edificioCompleto.nombre_edificio}</option>
 
 
                                                 </select>

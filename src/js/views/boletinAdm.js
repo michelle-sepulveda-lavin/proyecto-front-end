@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../../css/boletines.css'
 import BoletinTable from '../components/BoletinTable';
 import { v4 as uuidv4 } from 'uuid';
 import AddBoletin from '../components/AddBoletin';

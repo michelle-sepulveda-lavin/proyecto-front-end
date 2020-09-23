@@ -34,10 +34,12 @@ const InicializacionPisos = () => {
     };
 
     useEffect(() => {
-        actions.getCurrentEdificio()
+        actions.getEdificioCompleto()
         actions.getDepartamentos()
         actions.getDptosUsuarios()
         actions.getUsuariosDelEdificio()
+        actions.usuariosSinAsignar()
+
     }, []);
     return (
         <>
@@ -49,19 +51,23 @@ const InicializacionPisos = () => {
                 </div>
                 <div className="row border">
                     <div className="col-md-6 border">
-                        <p>Pisos totales {!!store.currentEdificio && store.currentEdificio.numero_pisos}</p>
-                        <p>Departamentos totales {!!store.currentEdificio && store.currentEdificio.numero_departamentos}</p>
+                        <p>Pisos totales {!!store.edificioCompleto && store.edificioCompleto.numero_pisos}</p>
+                        <p>Departamentos totales {!!store.edificioCompleto && store.edificioCompleto.numero_departamentos}</p>
                     </div>
                     <div className="col-md-6 border">
-                        <p>Pisos por completar {!!store.currentEdificio && store.currentEdificio.numero_pisos}</p>
-                        <p>Departamentos por asignar {!!store.currentEdificio && store.currentEdificio.numero_departamentos}</p>
+                        <p>Pisos por completar {!!store.edificioCompleto && store.edificioCompleto.numero_pisos}</p>
+                        <p>Departamentos por asignar {!!store.edificioCompleto && store.edificioCompleto.numero_departamentos}</p>
                     </div>
                 </div>
             </div>
             <div className="container my-5 d-flex justify-content-center">
                 <div className="row ">
                     <div className="col">
-                        <button type="button" className="btn btn-success" data-toggle="modal" data-target="#modalCreacionUser" onClick={actions.activarModal} >
+                        <button type="button" className="btn btn-success" data-toggle="modal" data-target="#modalCreacionUser"
+                            onClick={() => {
+                                actions.activarModal()
+                                actions.resetMsg()
+                            }} >
                             Crear Usuario
                         </button>
                         <ModalCreacionUser />
@@ -94,21 +100,31 @@ const InicializacionPisos = () => {
                                 <td><label className="sr-only" htmlFor="numero_departamento">N° Departamento</label>
                                     <input type="text" className="form-control mb-2 mr-sm-2" name="numero_departamento" onChange={e => handleChange(e)} /></td>
                                 <td>
-                                    {/* <label className="sr-only" htmlFor="residente">Residente</label>
-                                    <input type="text" className="form-control mb-2 mr-sm-2" name="residente" onChange={e => handleChange(e)} /> */}
-                                    <label className="sr-only" htmlFor="residente">Residente</label>
-                                    <select defaultValue={'default'} className="form-control form-control-sm" name="residente" onClick={e => handleChange(e)}>
-                                        <option value="default" disabled>Seleccionar</option>
-                                        {
-                                            !!store.usuariosEdificio &&
-                                            store.usuariosEdificio.map((user, index) => {
-                                                return (
-                                                    user.rol.name === "usuario" &&
-                                                    <option value={user.id} key={index}>{user.username}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
+
+                                    {
+                                        store.finalUserBuilding.length > 0 ?
+                                            <>
+                                                <label className="sr-only" htmlFor="residente">Residente</label>
+                                                <select defaultValue={'null'} className="form-control form-control-sm" name="residente" onClick={e => handleChange(e)}>
+                                                    <option value="null" disabled>Seleccionar</option>
+                                                    {
+                                                        !!store.usuariosEdificio &&
+                                                        store.usuariosEdificio.map((user, index) => {
+                                                            return (
+                                                                user.rol.name === "usuario" &&
+                                                                <option value={user.id} key={index}>{user.username}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
+                                            </>
+                                            :
+                                            <>
+                                                <label className="sr-only" htmlFor="residente">Residente</label>
+                                                <input type="text" className="form-control mb-2 mr-sm-2" name="residente" disabled />
+                                            </>
+                                    }
+
                                 </td>
                                 <td><label className="sr-only" htmlFor="bodega">Bodega</label>
                                     <select defaultValue={'default'} className="form-control form-control-sm" name="bodega" onChange={e => handleChange(e)}>
@@ -134,7 +150,7 @@ const InicializacionPisos = () => {
                                     </select>
                                 </td>
                                 <td><label className="sr-only" htmlFor="edificio_id">Edificio</label>
-                                    <input type="text" className="form-control mb-2 mr-sm-2" name="edificio_id" readOnly value={!!store.currentEdificio && store.currentEdificio.nombre_edificio} onChange={e => handleChange(e)} /></td>
+                                    <input type="text" className="form-control mb-2 mr-sm-2" name="edificio_id" readOnly value={!!store.edificioCompleto && store.edificioCompleto.nombre_edificio} onChange={e => handleChange(e)} /></td>
                                 <td><label className="sr-only" htmlFor="modelo_id">Modelo</label>
                                     <select defaultValue={'default'} className="form-control form-control-sm" name="modelo_id" onChange={e => handleChange(e)}>
                                         <option value="default" disabled>Seleccionar</option>
@@ -206,34 +222,62 @@ const InicializacionPisos = () => {
                             </thead>
                             <tbody>
                                 {
-                                    !!store.departamentosPorPiso &&
-                                    store.departamentosPorPiso.map((dpto, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <th scope="row">{index + 1}</th>
-                                                <td>{dpto.numero_departamento}</td>
-                                                <td className="text-center">{dpto.residente.name}</td>
-                                                <td>{dpto.bodega}</td>
-                                                <td>{dpto.estacionamiento}</td>
-                                                <td>{dpto.piso}</td>
-                                                <td>{dpto.estado}</td>
-                                                <td>{dpto.edificio.name}</td>
-                                                <td>{dpto.modelo.name}</td>
-                                                <td>
-                                                    <i className="fas fa-trash-alt btn" onClick={() => {
-                                                        actions.deleteUsuarioDpto(index)
-                                                    }}></i>
-                                                </td>
-                                                <td>
-                                                    {/* <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addUser">
-                                                        <i className="fas fa-pencil-alt cursor-pointer" ></i>
-                                                    </button>
-                                                    <ModalAddUser index={index} /> */}
-                                                </td>
-                                            </tr>
-
+                                    store.departamentosPorPiso.length > 0 ?
+                                        (store.departamentosPorPiso.map((dpto, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <th scope="row">{index + 1}</th>
+                                                    <td>{dpto.numero_departamento}</td>
+                                                    <td className="text-center">{dpto.residente.name}</td>
+                                                    <td>{dpto.bodega}</td>
+                                                    <td>{dpto.estacionamiento}</td>
+                                                    <td>{dpto.piso}</td>
+                                                    <td>{dpto.estado}</td>
+                                                    <td>{dpto.edificio.name}</td>
+                                                    <td>{dpto.modelo.name}</td>
+                                                    <td>
+                                                        <i className="fas fa-trash-alt btn" onClick={() => {
+                                                            actions.deleteUsuarioDpto(index)
+                                                        }}></i>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addUser" onClick={()=>actions.dptoModificar(dpto.id)}>
+                                                            <i className="fas fa-pencil-alt cursor-pointer"></i>
+                                                        </button>
+                                                        <ModalAddUser/>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
                                         )
-                                    })
+                                        :
+                                        (store.departamentoUsuarios.map((dpto, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <th scope="row">{index + 1}</th>
+                                                    <td>{dpto.numero_departamento}</td>
+                                                    <td className="text-center">{dpto.residente.name}</td>
+                                                    <td>{dpto.bodega}</td>
+                                                    <td>{dpto.estacionamiento}</td>
+                                                    <td>{dpto.piso}</td>
+                                                    <td>{dpto.estado}</td>
+                                                    <td>{dpto.edificio.name}</td>
+                                                    <td>{dpto.modelo.name}</td>
+                                                    <td>
+                                                        <i className="fas fa-trash-alt btn" onClick={() => {
+                                                            actions.deleteUsuarioDpto(index)
+                                                        }}></i>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addUser" onClick={()=>actions.dptoModificar(dpto.id)}>
+                                                            <i className="fas fa-pencil-alt cursor-pointer"></i>
+                                                        </button>
+                                                        <ModalAddUser />
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        )
                                 }
                             </tbody>
                         </table>

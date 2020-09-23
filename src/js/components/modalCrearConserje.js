@@ -45,7 +45,6 @@ const ModalCrearConserje = props => {
                                 actions.crearConserje(e, state)
                                 if (store.crearConserje.error === null) {
                                     limpiarFormulario(e)
-                                    props.setShow(false)
                                 }
 
                             }}>

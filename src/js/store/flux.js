@@ -14,13 +14,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             currentRol: null,
             currentEdificio: null,
             currentEdificioID: null,
+            edificioCompleto: null,
             error: null,
             success: null,
             profile: null,
             edificios: [],
             msgEmail: null,
             flagRecordar: false,
-
             contactos: [],
             currentDate: null,
             contratos: {
@@ -29,7 +29,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 vencidos: []
             },
             flagModal: false,
-            contactos: [],
             allUsuarios: [],
             archivoCSV: null,
             planes: [],
@@ -42,9 +41,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 error: null,
                 avatar: null
             },
-            currentEdificio: null,
             roles: [],
-            conserjes: []
+            conserjes: [],
+            finalUserBuilding: [],
+            departamentoModificar: null,
         },
         actions: {
             handleChangeLogin: e => {
@@ -135,7 +135,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             resetMsg: () => {
                 setStore({
                     msgEmail: null,
-                    success: null
+                    success: null,
+                    error: null
                 })
             },
             handleSubmitContraseña: async (e, parametros, history) => {
@@ -193,7 +194,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                 }
             },
-            getCurrentEdificio: async () => {
+            getEdificioCompleto: async () => {
                 const { apiURL } = getStore();
                 if (localStorage.getItem("currentUser")) {
                     const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -205,7 +206,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json()
                     if (!data.msg) {
                         setStore({
-                            currentEdificio: data
+                            edificioCompleto: data
                         })
 
                     }
@@ -245,7 +246,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({
                     currentRol: null,
                     currentUser: null,
-                    currentEdificio: null,
+                    edificioCompleto: null,
                     conserjes: []
                 })
                 history.push("/")
@@ -324,6 +325,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         email: "",
                         rol_id: ""
                     });
+                    getActions().getUsuariosDelEdificio()
                 }
             },
             cerrarModal: () => {
@@ -431,8 +433,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             handleDepartamentos: async (e, modelInfo) => {
                 e.preventDefault()
-                const { apiURL, currentEdificio } = getStore();
-                const resp = await fetch(`${apiURL}/info-departamento/${currentEdificio.id}`, {
+                const { apiURL, edificioCompleto } = getStore();
+                const resp = await fetch(`${apiURL}/info-departamento/${edificioCompleto.id}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -569,6 +571,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         usuariosEdificio: data
                     })
+                    getActions().usuariosSinAsignar()
                 }
             },
             filtradoEstado: (estado) => {
@@ -596,13 +599,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                     departamentosPorPiso: []
                 })
             },
-            addResidente: async (e,index, residente) => {
+            addResidente: async (e, residente) => {
                 e.preventDefault()
-                setStore({ success : null})
-                const { apiURL, departamentosPorPiso } = getStore();
-                console.log(index)
-                /* const dptoEditar = departamentosPorPiso[index].id
-                const resp = await fetch(`${apiURL}/add-residente/${dptoEditar}`, {
+                setStore({ success: null })
+                const { apiURL, departamentoModificar } = getStore();
+                const resp = await fetch(`${apiURL}/add-residente/${departamentoModificar}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -610,14 +611,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                     body: JSON.stringify(residente)
                 })
                 const data = await resp.json()
-                if(data.msg !== undefined)
-                alert(data.msg)
-                    if(data.msg === "Departamento actualizado exitosamente"){
+                if (data.msg !== undefined) {
+                    alert(data.msg)
+                    if (data.msg === "Departamento actualizado exitosamente") {
                         setStore({
                             success: "Departamento actualizado exitosamente"
                         })
-                    } */
-                },
+                        
+                    }
+                }
+
+            },
             crearConserje: async (e, aux) => {
                 const actions = getActions()
                 const store = getStore()
@@ -736,6 +740,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                 catch (error) {
                     console.log(error)
                 }
+            },
+            usuariosSinAsignar: () => {
+                const { usuariosEdificio } = getStore();
+                if (!!usuariosEdificio) {
+                    const aux = usuariosEdificio.filter((user) => {
+                        return (
+                            user.rol.name === "usuario"
+                        )
+                    })
+                    setStore({
+                        finalUserBuilding: aux
+                    })
+                }
+            },
+            dptoModificar: (numero) => {
+                setStore({
+                    departamentoModificar: numero
+                })
             }
         }
 
