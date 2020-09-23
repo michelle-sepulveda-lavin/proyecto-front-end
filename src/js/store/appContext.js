@@ -29,7 +29,6 @@ const injectContext = PassedComponent => {
 			state.actions.sesionIniciada()
 			state.actions.getCurrentEdificio()
 			state.actions.getConserjes()
-
 		}, []);
 
 		useEffect(() => {

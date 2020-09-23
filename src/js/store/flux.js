@@ -45,6 +45,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             conserjes: [],
             finalUserBuilding: [],
             departamentoModificar: null,
+            bodegaM2: 10,
+            estacionamientoM2: 15
         },
         actions: {
             handleChangeLogin: e => {
@@ -492,7 +494,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 const data = await resp.json();
                 const { msg } = data;
-
+                console.log(data)
                 if (msg !== undefined) {
                     if (msg == "departamento de usuario creado exitosamente") {
                         setStore({
@@ -617,7 +619,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         setStore({
                             success: "Departamento actualizado exitosamente"
                         })
-                        
+
                     }
                 }
 
@@ -694,7 +696,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const response = await fetch('http://127.0.0.1:5000/roles');
                     const data = await response.json()
-                    console.log(data)
                     setStore({
                         roles: data
                     })
@@ -711,7 +712,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (id !== null && id !== undefined) {
                         const response = await fetch(`${apiURL}/conserjes/edificio/${id}`);
                         const data = await response.json()
-                        console.log(data)
                         if (response.ok) {
                             setStore({
                                 conserjes: data
@@ -758,7 +758,60 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({
                     departamentoModificar: numero
                 })
+            },
+            getTotalM2: (modelos) => {
+                const { departamentos, edificioCompleto, bodegaM2, estacionamientoM2 } = getStore()
+                const totalModelos = []
+                const totalBodega = edificioCompleto.total_bodegas * bodegaM2;
+                const totalEstacionamiento = edificioCompleto.total_estacionamientos * estacionamientoM2;
+
+
+                if (departamentos.length > 0) {
+                    modelos.map((modelo) => {
+                        totalModelos.push(modelo.cantidad_total * modelo.total)
+                    })
+                    const totalEdificio = totalModelos.reduce((a, b) => a + b) + totalBodega + totalEstacionamiento;
+                    return totalEdificio
+                } else {
+                    return null
+                }
+
+            },
+            calculoPorcentajeGastoComunDepto: (depto, montoGastos) => {
+                console.log(depto)
+
+                const { getTotalM2 } = getActions()
+                const { departamentos, bodegaM2, estacionamientoM2 } = getStore()
+                const totalM2edificio = getTotalM2(departamentos)
+                let tamañoDepto = departamentos.filter(depart => depart.id === depto.modelo.id)[0].total
+                if (depto.bodega === "si" && depto.estacionamiento === "si") {
+                    tamañoDepto += (bodegaM2 + estacionamientoM2)
+                }
+                else if (depto.estacionamiento === "si" && depto.bodega === "no") {
+                    tamañoDepto += estacionamientoM2
+                } else if (depto.estacionamiento === "no" && depto.bodega === "si") {
+                    tamañoDepto += bodegaM2
+                }
+                if (!!totalM2edificio) {
+                    const porcentaje = (tamañoDepto / totalM2edificio) * 100
+                    console.log(porcentaje)
+                    console.log(tamañoDepto)
+                    const montoTotal = (parseFloat(montoGastos) * porcentaje)
+                    console.log(montoTotal)
+                    return montoTotal
+                }
+                return ("problema con FETCH")
+
+            },
+            calculoGastoPromedio: (monto) => {
+                const { edificioCompleto } = getStore()
+
+                const promedio = monto / edificioCompleto.numero_departamentos
+
+                return promedio
+
             }
+
         }
 
     }

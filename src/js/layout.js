@@ -30,6 +30,7 @@ import Contactados from './views/superAdmin/contactados';
 import ModalCrearConserje from './components/modalCrearConserje';
 import InicializacionDptos from './views/admin/inicializacionDptos';
 import InicializacionPisos from './views/admin/inicializacionPisos';
+import SubirGastos from './components/subirGastos';
 
 
 
@@ -38,6 +39,7 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/admin/subir-gastos' component={SubirGastos} />
                     <Route exact path='/admin/inicializacion-pisos' component={InicializacionPisos} />
                     <Route exact path='/admin/inicializacion-dptos' component={InicializacionDptos} />
                     <Route exact path='/BoletinAdm' component={BoletinAdm} />

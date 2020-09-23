@@ -4,14 +4,22 @@ import { Context } from '../store/appContext';
 
 
 const DashboardAdmin = (props) => {
-    const { store } = useContext(Context)
+    const { store, actions } = useContext(Context)
+    const monto = 1000000
+
     return (
         <div className="container-fluid">
+            <h1 className="text-center mt-3 mb-4">Edificio {!!store.edificioCompleto ? store.edificioCompleto.nombre_edificio : ""} </h1>
             <div className="row justify-content-center">
 
-                <div className="col  col-md-6 border rounded-lg row p-3 justify-content-center">
+                <div className="col  col-md-6 border shadow-sm rounded-lg row p-3 justify-content-center">
                     <div className="">
-                        <h3>Conserjes Activos</h3>
+                        <h3 onClick={() => {
+
+                            store.departamentoUsuarios.map((depa) => {
+                                actions.calculoPorcentajeGastoComunDepto(depa, monto)
+                            })
+                        }}>Conserjes Activos</h3>
 
                     </div>
 
@@ -55,9 +63,10 @@ const DashboardAdmin = (props) => {
 
 
                     }
-
-                    <Link to="/conserjes"><button className="btn btn-dashboard text-light"> Ver todos</button></Link>
-
+                    {}
+                    <div>
+                        <Link to="/conserjes"><button className="ml-3 btn btn-dashboard text-light"> Ver todos</button></Link>
+                    </div>
                 </div>
                 <div className="col-12 col-md-6">
 
