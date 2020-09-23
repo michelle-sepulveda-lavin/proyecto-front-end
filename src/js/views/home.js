@@ -21,7 +21,7 @@ const Home = () => {
                         </button>
                     </div>
                     <div>
-                        <div className="collapse navbar-collapse" id="navbarTogglerDemo01">                           
+                        <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                             <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
                                 <li className="d-block mr-2">
                                     <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
@@ -42,6 +42,8 @@ const Home = () => {
                                             <Link to="/login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
                                         </li>
                                 }
+
+
                             </ul>
                         </div>
                     </div>

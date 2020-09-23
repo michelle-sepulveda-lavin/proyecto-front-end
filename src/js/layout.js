@@ -41,7 +41,6 @@ const Layout = () => {
                     <Route exact path='/admin/inicializacion-pisos' component={InicializacionPisos} />
                     <Route exact path='/admin/inicializacion-dptos' component={InicializacionDptos} />
                     <Route exact path='/BoletinAdm' component={BoletinAdm} />
-                    <Route exact path='/crearconserje' component={ModalCrearConserje} />
                     <Route exact path='/contratos' component={Contratos} />
                     <Route exact path='/allusuarios' component={Usuarios} />
                     <Route exact path='/usuario/gastos-comunes' component={GastosUser} />

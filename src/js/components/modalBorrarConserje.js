@@ -13,6 +13,7 @@ const BorrarConserje = props => {
         })
         const data = await response.json()
         console.log(data)
+        actions.getConserjes(store.currentEdificio)
         props.setBorrar(false)
     }
     return (
