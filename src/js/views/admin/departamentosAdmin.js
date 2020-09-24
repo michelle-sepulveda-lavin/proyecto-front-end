@@ -8,16 +8,13 @@ const DepartamentosAdmin = () => {
     const [pisos, setPisos] = useState([]);
     const [numero, setNumero] = useState()
     const [departamentoNumero, setdepartamentoNumero] = useState()
+
     const contadorPisos = () => {
-        store.departamentoUsuarios.map((dpto) => {
-            if (pisos.length > 0) {
-                if (!pisos.includes(dpto.piso)) {
-                    setPisos([...pisos, pisos.push(dpto.piso)])
-                }
-            } else {
-                setPisos([pisos.push(dpto.piso)])
-            }
+        const auxiliar = store.departamentoUsuarios.map((dpto)=>{
+            return dpto.piso
         })
+        const aux2 = [...new Set(auxiliar)]
+        setPisos(aux2)
     }
     const buscaDpto = () => {
         const aux = store.departamentoUsuarios.filter((dpto) => {
@@ -72,7 +69,7 @@ const DepartamentosAdmin = () => {
                                 </a>
                                 {
                                     !!pisos &&
-                                    pisos.map((piso, index) => {
+                                    pisos.sort(function(a, b){return a - b}).map((piso, index) => {
                                         return (
                                             <a className="dropdown-item" key={index} onClick={() => actions.filtradoPiso(piso)}>
                                                 {piso}

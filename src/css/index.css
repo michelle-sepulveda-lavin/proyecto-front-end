@@ -339,3 +339,9 @@ li {
 .prueba {
   background: #f9fbff;
 }
+
+.dashboard-blue {
+  background-color: #121975;
+  background-image: linear-gradient(160deg, #0312e4 10%, #010031 100%);
+  background-size: cover;
+}
