@@ -54,7 +54,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             gastosComunes: [],
             crearGastoComun: { error: null },
             montosTotalesMes: [],
-            gastosComunesMesActual: []
+            gastosComunesMesActual: [],
+            errorLogin: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -80,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 if (msg !== undefined) {
                     setStore({
-                        error: msg
+                        errorLogin: msg
                     })
                 } else {
                     setStore({
@@ -254,10 +255,49 @@ const getState = ({ getStore, getActions, setStore }) => {
             handleClose: (history) => {
                 localStorage.removeItem("currentUser")
                 setStore({
-                    currentRol: null,
+                    username: "",
+                    password: '',
+                    email: " ",
+                    rol_id: "",
+                    edificio_id: "",
+                    passwordConfirmacion: '',
+                    currentToken: "",
                     currentUser: null,
+                    currentRol: null,
+                    currentEdificio: null,
+                    currentEdificioID: null,
                     edificioCompleto: null,
-                    conserjes: []
+                    error: null,
+                    success: null,
+                    profile: null,
+                    edificios: [],
+                    msgEmail: null,
+                    contactos: [],
+                    contratos: {
+                        vigentes: [],
+                        porVencer: [],
+                        vencidos: []
+                    },
+                    allUsuarios: [],
+                    archivoCSV: null,
+                    departamentos: [],
+                    departamentoUsuarios: [],
+                    departamentosPorPiso: [],
+                    departamentoEstado: [],
+                    usuariosEdificio: [],
+                    crearConserje: {
+                        error: null,
+                        avatar: null
+                    },
+                    roles: [],
+                    conserjes: [],
+                    finalUserBuilding: [],
+                    departamentoModificar: null,
+                    usuariosEdificioNoAsignados: null,
+                    contadorUsuarios: null,
+                    bodegasEdificio: null,
+                    estacionamientoEdificios: null,
+                    errorLogin: null
                 })
                 history.push("/")
             },
@@ -479,6 +519,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             deleteModeloDpto: async (i) => {
                 const { apiURL, departamentos } = getStore();
                 const eliminado = departamentos[i].id
+                console.log(eliminado)
                 const resp = await fetch(`${apiURL}/info-departamento/${eliminado}}`, {
                     method: "DELETE",
                     headers: {
@@ -861,6 +902,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             handleBodegas: async (e, modelInfo) => {
                 e.preventDefault()
                 const { apiURL, edificioCompleto } = getStore();
+                modelInfo.cantidad_total = edificioCompleto.total_bodegas
                 const resp = await fetch(`${apiURL}/add-bodega/${edificioCompleto.id}`, {
                     method: "POST",
                     headers: {
@@ -880,6 +922,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             handleEstacionamiento: async (e, modelInfo) => {
                 e.preventDefault()
                 const { apiURL, edificioCompleto } = getStore();
+                modelInfo.cantidad_total = edificioCompleto.total_estacionamientos
                 const resp = await fetch(`${apiURL}/add-estacionamiento/${edificioCompleto.id}`, {
                     method: "POST",
                     headers: {
@@ -998,7 +1041,39 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setData(data)
 
             },
+            deleteBodegaEdificio: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/delete-bodega-edificio/${currentEdificioID}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data = await resp.json()
+                if (resp.ok) {
+                    getActions().getBodegasDelEdificio()
+                    alert(data.msg)
+                } else {
+                    alert(data.msg)
+                }
+            },
+            deleteEstacionamientoEdificio: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/delete-estacionamiento-edificio/${currentEdificioID}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data = await resp.json()
+                if (resp.ok) {
+                    getActions().getEstacionamientosDelEdificio()
+                    alert(data.msg)
+                } else {
+                    alert(data.msg)
+                }
 
+            }
         }
 
 

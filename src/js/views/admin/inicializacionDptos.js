@@ -17,7 +17,12 @@ const InicializacionDptos = () => {
     const limpiarState = () => {
         setModelInfo({})
     }
-
+    const sumaUnidades = () => {
+        const numero = store.departamentos.map((dpto) => {
+            return dpto.cantidad_total
+        }).reduce((result, number) => result + number, 0);
+        return numero
+    }
     useEffect(() => {
         actions.getEdificioCompleto()
         actions.getDepartamentos()
@@ -37,53 +42,69 @@ const InicializacionDptos = () => {
             </div>
             <div className="container border">
                 <div className="row">
-                    <div className="col">
+                    <div className="col-md-8">
                         <h5>Modelo</h5>
                     </div>
+                    <div className="col-md-4 bg-warning">
+                        <span>
+                            Total unidades:
+                            </span>
+                        <span>
+                            {!!store.departamentos && sumaUnidades()}
+                        </span>
+                        <span>/{!!store.edificioCompleto && store.edificioCompleto.numero_departamentos}</span>
+                    </div>
+
                 </div>
-                <div className="row pt-3">
-                    <form className="d-flex flex-wrap" onSubmit={e => {
-                        actions.handleDepartamentos(e, modelInfo)
-                        limpiarFormulario(e)
-                        limpiarState()
-                    }}>
-                        <div className="col-md-2">
-                            <div className="form-group">
-                                <label htmlFor="modelo">Modelo</label>
-                                <input type="text" className="form-control" name="modelo" onChange={e => handleChange(e)} />
-                            </div>
+                {
+                    !!store.edificioCompleto &&
+                        sumaUnidades() === store.edificioCompleto.numero_departamentos ?
+                        <p></p>
+                        :
+                        <div className="row pt-3">
+                            <form className="d-flex flex-wrap" onSubmit={e => {
+                                actions.handleDepartamentos(e, modelInfo)
+                                limpiarFormulario(e)
+                                limpiarState()
+                            }}>
+                                <div className="col-md-2">
+                                    <div className="form-group">
+                                        <label htmlFor="modelo">Modelo</label>
+                                        <input type="text" className="form-control" name="modelo" onChange={e => handleChange(e)} />
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="form-group">
+                                        <label htmlFor="total">Superficie total</label>
+                                        <input type="number" className="form-control" name="total" onChange={e => handleChange(e)} />
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="form-group">
+                                        <label htmlFor="interior">Superficie interior</label>
+                                        <input type="number" className="form-control" name="interior" onChange={e => handleChange(e)} />
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="form-group">
+                                        <label htmlFor="terraza">Superficie terraza</label>
+                                        <input type="number" className="form-control" name="terraza" onChange={e => handleChange(e)} />
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="form-group">
+                                        <label htmlFor="cantidad_total">Total Unidades</label>
+                                        <input type="number" className="form-control" name="cantidad_total" onChange={e => handleChange(e)} />
+                                    </div>
+                                </div>
+                                <div className="col-md-2 my-auto">
+                                    <div className="form-group my-auto">
+                                        <button type="submit" className="btn btn-primary">Añadir</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div className="col-md-2">
-                            <div className="form-group">
-                                <label htmlFor="total">Superficie total</label>
-                                <input type="number" className="form-control" name="total" onChange={e => handleChange(e)} />
-                            </div>
-                        </div>
-                        <div className="col-md-2">
-                            <div className="form-group">
-                                <label htmlFor="interior">Superficie interior</label>
-                                <input type="number" className="form-control" name="interior" onChange={e => handleChange(e)} />
-                            </div>
-                        </div>
-                        <div className="col-md-2">
-                            <div className="form-group">
-                                <label htmlFor="terraza">Superficie terraza</label>
-                                <input type="number" className="form-control" name="terraza" onChange={e => handleChange(e)} />
-                            </div>
-                        </div>
-                        <div className="col-md-2">
-                            <div className="form-group">
-                                <label htmlFor="cantidad_total">Total Unidades</label>
-                                <input type="number" className="form-control" name="cantidad_total" onChange={e => handleChange(e)} />
-                            </div>
-                        </div>
-                        <div className="col-md-2 my-auto">
-                            <div className="form-group my-auto">
-                                <button type="submit" className="btn btn-primary">Añadir</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                }
                 <div className="row mt-5">
                     <div className="col-12">
                         <table className="table table-bordered table-responsive-md">
@@ -113,24 +134,12 @@ const InicializacionDptos = () => {
                                                 <td>{dpto.terraza}</td>
                                                 <td>{dpto.cantidad_total}</td>
                                                 <td><i className="fas fa-trash-alt btn" onClick={() => {
-                                                    console.log(index)
                                                     actions.deleteModeloDpto(index)
                                                 }}></i></td>
                                             </tr>
                                         )
                                     })
                                 }
-                                {/*                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><button onClick={cuentaDepartamentos}>Contar</button></td>
-                                    <td className="bg-info text-white">Total</td>
-                                    <td>{
-
-                                    }
-                                    </td>
-                                </tr> */}
                             </tbody>
                         </table>
                     </div>
@@ -147,25 +156,18 @@ const InicializacionDptos = () => {
                 </div>
                 <div className="row pt-3">
                     <form
-                        className="d-flex flex-row"
                         onSubmit={(e) => {
                             actions.handleBodegas(e, modelInfo)
                             limpiarFormulario(e)
                             limpiarState()
                         }} >
-                        <div className="col-md-4">
+                        <div className="col">
                             <div className="form-group">
                                 <label htmlFor="total_superficie">Superficie total</label>
                                 <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
                             </div>
                         </div>
-                        <div className="col-md-4">
-                            <div className="form-group">
-                                <label htmlFor="cantidad_total">Total Unidades</label>
-                                <input type="number" className="form-control" name="cantidad_total" onChange={e => handleChange(e)} />
-                            </div>
-                        </div>
-                        <div className="col-md-2 my-auto">
+                        <div className="col-md-2">
                             <div className="form-group my-auto">
                                 <button type="submit" className="btn btn-primary">Añadir</button>
                             </div>
@@ -173,12 +175,11 @@ const InicializacionDptos = () => {
                     </form>
                 </div>
                 <div className="row mt-5">
-                    <div className="col-12">
-                        <table className="table table-bordered table-responsive-md">
+                    <div className="col">
+                        <table className="table table-bordered">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">Superficie total</th>
-                                    <th scope="col">Total Bodegas</th>
                                     <th scope="col">Borrar</th>
 
                                 </tr>
@@ -186,13 +187,10 @@ const InicializacionDptos = () => {
                             <tbody>
                                 {
                                     !!store.bodegasEdificio &&
-                                            <tr >
-                                                <td>{store.bodegasEdificio.total_superficie}</td>
-                                                <td>{store.bodegasEdificio.cantidad_total}</td>
-                                                {/* <td><i className="fas fa-trash-alt btn" onClick={() => {
-                                                    actions.deleteModeloDpto(index)
-                                                }}></i></td> */}
-                                            </tr>
+                                    <tr >
+                                        <td>{store.bodegasEdificio.total_superficie}</td>
+                                        <td><i className="fas fa-trash-alt btn" onClick={actions.deleteBodegaEdificio}></i></td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -209,22 +207,15 @@ const InicializacionDptos = () => {
                 </div>
                 <div className="row pt-3">
                     <form
-                        className="d-flex flex-row"
                         onSubmit={(e) => {
                             actions.handleEstacionamiento(e, modelInfo)
                             limpiarFormulario(e)
                             limpiarState()
                         }} >
-                        <div className="col-md-4">
+                        <div className="col">
                             <div className="form-group">
                                 <label htmlFor="total_superficie">Superficie total</label>
                                 <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="form-group">
-                                <label htmlFor="cantidad_total">Total Unidades</label>
-                                <input type="number" className="form-control" name="cantidad_total" onChange={e => handleChange(e)} />
                             </div>
                         </div>
                         <div className="col-md-2 my-auto">
@@ -236,11 +227,10 @@ const InicializacionDptos = () => {
                 </div>
                 <div className="row mt-5">
                     <div className="col-12">
-                        <table className="table table-bordered table-responsive-md">
+                        <table className="table table-bordered">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">Superficie total</th>
-                                    <th scope="col">Total Estacionamientos</th>
                                     <th scope="col">Borrar</th>
 
                                 </tr>
@@ -248,15 +238,10 @@ const InicializacionDptos = () => {
                             <tbody>
                                 {
                                     !!store.estacionamientoEdificios &&
-
-                                            <tr>
-                                                <td>{store.estacionamientoEdificios.total_superficie}</td>
-                                                <td>{store.estacionamientoEdificios.cantidad_total}</td>
-                                                {/* <td><i className="fas fa-trash-alt btn" onClick={() => {
-                                                    console.log(index)
-                                                    actions.deleteModeloDpto(index)
-                                                }}></i></td> */}
-                                            </tr>
+                                    <tr>
+                                        <td>{store.estacionamientoEdificios.total_superficie}</td>
+                                        <td><i className="fas fa-trash-alt btn" onClick={actions.deleteEstacionamientoEdificio}></i></td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

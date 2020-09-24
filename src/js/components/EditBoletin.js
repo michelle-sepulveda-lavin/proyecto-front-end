@@ -48,7 +48,7 @@ const EditBoletin = (props) => {
                 <div>
                     {errors?.body?.message}
                 </div>
-                <button>Editar Boletin</button>
+                <button >Editar Boletin</button>
             </form>
         </>
     )

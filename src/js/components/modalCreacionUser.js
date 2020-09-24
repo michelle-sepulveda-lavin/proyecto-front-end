@@ -49,7 +49,7 @@ const ModalCreacionUser = props => {
                                         !!store.currentEdificioID ?
                                             <>
                                                 <label htmlFor="rol_id">Rol</label>
-                                                <select defaultValue={'default'} name="rol_id" className="form-control" onClick={e => actions.handleChangeLogin(e)}>
+                                                <select defaultValue={'default'} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
                                                     <option value="default" disabled>Seleccionar</option>
                                                     <option value="usuario">Usuario</option>
                                                 </select>
@@ -72,7 +72,7 @@ const ModalCreacionUser = props => {
                                         !!store.currentEdificioID ?
                                             <>
                                                 <label htmlFor="edificio_id">Edificio</label>
-                                                <select defaultValue={'default'} name="edificio_id" className="form-control" onClick={e => actions.handleChangeLogin(e)}>
+                                                <select defaultValue={'default'} name="edificio_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
                                                     <option value="default" disabled>Seleccionar</option>
                                                     <option value={store.currentEdificioID}>{!!store.edificioCompleto && store.edificioCompleto.nombre_edificio}</option>
 
