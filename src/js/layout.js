@@ -5,7 +5,6 @@ import Home from './views/home'
 import Login from './views/login';
 import Planes from './views/planes';
 import Footer from './components/footer';
-
 import ListadoEdificioAdm from './views/superAdmin/listadoEdificioAdm'
 import ModifyPlans from './views/superAdmin/planes-SA';
 import CrearEdificios from './views/superAdmin/crearEdificios';
@@ -28,7 +27,8 @@ import DetalleEdificio from './views/superAdmin/detalleEdificio';
 import Contratos from './views/superAdmin/contratos';
 import Contactados from './views/superAdmin/contactados';
 import ModalCrearConserje from './components/modalCrearConserje';
-
+import InicializacionDptos from './views/admin/inicializacionDptos';
+import InicializacionPisos from './views/admin/inicializacionPisos';
 
 
 
@@ -37,9 +37,9 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
-                    
-                    <Route exact path='/BoletinAdm' component={BoletinAdm} />
-                    <Route exact path='/crearconserje' component={ModalCrearConserje} />
+                    <Route exact path='/admin/inicializacion-pisos' component={InicializacionPisos} />
+                    <Route exact path='/admin/inicializacion-dptos' component={InicializacionDptos} />
+                    <Route exact path='/boletinAdm' component={BoletinAdm} />
                     <Route exact path='/contratos' component={Contratos} />
                     <Route exact path='/allusuarios' component={Usuarios} />
                     <Route exact path='/usuario/gastos-comunes' component={GastosUser} />
@@ -56,7 +56,6 @@ const Layout = () => {
                     <Route exact path='/listado-edificios' component={ListadoEdificioAdm} />
                     <Route exact path='/listado-edificios/:id' component={DetalleEdificio} />
                     <Route exact path='/dashboard' component={Dashboard} />
-
                     <Route exact path='/recuperacion-password/:token' component={RecuperacionContraseña} />
                     <Route exact path='/crearedificio' component={CrearEdificios} />
                     <Route exact path='/login' component={Login} />

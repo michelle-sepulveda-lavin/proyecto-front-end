@@ -43,7 +43,7 @@ const BoletinAdm = () => {
         setCurrentBoletin({
             id: edit_boletin.id, asunto: edit_boletin.asunto, body: edit_boletin.body
         })
-    } 
+    }
 
     const updateBoletin = (id, updateBoletin) => {
         setEditing(true);
@@ -53,17 +53,17 @@ const BoletinAdm = () => {
     return (
         <>
             <div className="container">
-                
-                <div className="flex-row prueba">
+
+                <div className="flex-row">
                     <div className="flex-large">
 
                         {
                             editing ? (
                                 <div>
                                     <h2>Editar Boletin</h2>
-                                    <EditBoletin 
-                                    currentBoletin={currentBoletin}
-                                    updateBoletin={updateBoletin}
+                                    <EditBoletin
+                                        currentBoletin={currentBoletin}
+                                        updateBoletin={updateBoletin}
                                     />
                                 </div>
                             ) : (
@@ -77,11 +77,11 @@ const BoletinAdm = () => {
                     </div>
                     <div className="flex-large">
                         <h2>Boletines</h2>
-                        <BoletinTable 
-                        boletin={boletin} 
-                        deleteboletin={deleteboletin} 
-                         
-                        editRow={editRow}/>
+                        <BoletinTable
+                            boletin={boletin}
+                            deleteboletin={deleteboletin}
+
+                            editRow={editRow} />
                     </div>
                 </div>
             </div>

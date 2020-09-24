@@ -20,13 +20,27 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
+			state.actions.getRoles()
 			state.actions.getPlanes()
 			state.actions.getCurrentRol();
 			state.actions.getEdificiosData()
 			state.actions.getContactData()
 			state.actions.getCurrentDate()
 			state.actions.sesionIniciada()
+			state.actions.getCurrentEdificio()
+			state.actions.getConserjes()
+
 		}, []);
+
+		useEffect(() => {
+			state.actions.getConserjes(state.store.currentEdificio)
+
+		}, [state.store.currentEdificio])
+
+		useEffect(() => {
+			state.actions.getCurrentEdificio()
+
+		}, [state.store.currentRol])
 
 		return (
 			<Context.Provider value={state}>
