@@ -228,7 +228,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { getContratos } = getActions()
                 const response = await fetch('http://127.0.0.1:5000/crearedificio');
                 const data = await response.json()
-                if (!data.msg) {
+                if (response.ok) {
                     setStore({
                         ...store,
                         edificios: data

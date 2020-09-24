@@ -17,7 +17,12 @@ const GastosAdmin = () => {
 
                 <div className="container mt-4 ">
                     {store.montosTotalesMes.length > 0 &&
-                        <Link to="/admin/gastos-departamentos"> <button className="btn btn-success">Ver gastos por departamento</button> </Link>}
+                        <>
+                            <Link to="/admin/gastos-departamentos"> <button className="btn btn-success">Ver gastos por mes</button> </Link>
+                            <Link to="/admin/gastos-depto-actual"> <button className="btn btn-success">Ver gastos por mes</button> </Link>
+                        </>
+                    }
+
                     <div className="row mx-auto mt-4">
                         <div className="col-12 col-md-9 mx-auto overflow-auto pb-4">
                             {store.montosTotalesMes.length > 0 &&
