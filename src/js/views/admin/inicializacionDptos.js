@@ -21,6 +21,8 @@ const InicializacionDptos = () => {
     useEffect(() => {
         actions.getEdificioCompleto()
         actions.getDepartamentos()
+        actions.getBodegasDelEdificio()
+        actions.getEstacionamientosDelEdificio()
 
     }, [])
 
@@ -33,13 +35,18 @@ const InicializacionDptos = () => {
                     </div>
                 </div>
             </div>
-            <div className="container">
-                <form className="mt-5" onSubmit={e => {
-                    actions.handleDepartamentos(e, modelInfo)
-                    limpiarFormulario(e)
-                    limpiarState()
-                }}>
-                    <div className="row border pt-3">
+            <div className="container border">
+                <div className="row">
+                    <div className="col">
+                        <h5>Modelo</h5>
+                    </div>
+                </div>
+                <div className="row pt-3">
+                    <form className="d-flex flex-wrap" onSubmit={e => {
+                        actions.handleDepartamentos(e, modelInfo)
+                        limpiarFormulario(e)
+                        limpiarState()
+                    }}>
                         <div className="col-md-2">
                             <div className="form-group">
                                 <label htmlFor="modelo">Modelo</label>
@@ -75,12 +82,10 @@ const InicializacionDptos = () => {
                                 <button type="submit" className="btn btn-primary">Añadir</button>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div className="container">
+                    </form>
+                </div>
                 <div className="row mt-5">
-                    <div className="col">
+                    <div className="col-12">
                         <table className="table table-bordered table-responsive-md">
                             <thead className="thead-dark">
                                 <tr>
@@ -131,6 +136,135 @@ const InicializacionDptos = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="container mt-5 border">
+                <div className="row">
+                    <div className="col">
+                        <h5>
+                            Bodegas
+                        </h5>
+                    </div>
+                </div>
+                <div className="row pt-3">
+                    <form
+                        className="d-flex flex-row"
+                        onSubmit={(e) => {
+                            actions.handleBodegas(e, modelInfo)
+                            limpiarFormulario(e)
+                            limpiarState()
+                        }} >
+                        <div className="col-md-4">
+                            <div className="form-group">
+                                <label htmlFor="total_superficie">Superficie total</label>
+                                <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className="form-group">
+                                <label htmlFor="cantidad_total">Total Unidades</label>
+                                <input type="number" className="form-control" name="cantidad_total" onChange={e => handleChange(e)} />
+                            </div>
+                        </div>
+                        <div className="col-md-2 my-auto">
+                            <div className="form-group my-auto">
+                                <button type="submit" className="btn btn-primary">Añadir</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div className="row mt-5">
+                    <div className="col-12">
+                        <table className="table table-bordered table-responsive-md">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">Superficie total</th>
+                                    <th scope="col">Total Bodegas</th>
+                                    <th scope="col">Borrar</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    !!store.bodegasEdificio &&
+                                            <tr >
+                                                <td>{store.bodegasEdificio.total_superficie}</td>
+                                                <td>{store.bodegasEdificio.cantidad_total}</td>
+                                                {/* <td><i className="fas fa-trash-alt btn" onClick={() => {
+                                                    actions.deleteModeloDpto(index)
+                                                }}></i></td> */}
+                                            </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div className="container border mt-5">
+                <div className="row">
+                    <div className="col">
+                        <h5>
+                            Estacionamientos
+                        </h5>
+                    </div>
+                </div>
+                <div className="row pt-3">
+                    <form
+                        className="d-flex flex-row"
+                        onSubmit={(e) => {
+                            actions.handleEstacionamiento(e, modelInfo)
+                            limpiarFormulario(e)
+                            limpiarState()
+                        }} >
+                        <div className="col-md-4">
+                            <div className="form-group">
+                                <label htmlFor="total_superficie">Superficie total</label>
+                                <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className="form-group">
+                                <label htmlFor="cantidad_total">Total Unidades</label>
+                                <input type="number" className="form-control" name="cantidad_total" onChange={e => handleChange(e)} />
+                            </div>
+                        </div>
+                        <div className="col-md-2 my-auto">
+                            <div className="form-group my-auto">
+                                <button type="submit" className="btn btn-primary">Añadir</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div className="row mt-5">
+                    <div className="col-12">
+                        <table className="table table-bordered table-responsive-md">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">Superficie total</th>
+                                    <th scope="col">Total Estacionamientos</th>
+                                    <th scope="col">Borrar</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    !!store.estacionamientoEdificios &&
+
+                                            <tr>
+                                                <td>{store.estacionamientoEdificios.total_superficie}</td>
+                                                <td>{store.estacionamientoEdificios.cantidad_total}</td>
+                                                {/* <td><i className="fas fa-trash-alt btn" onClick={() => {
+                                                    console.log(index)
+                                                    actions.deleteModeloDpto(index)
+                                                }}></i></td> */}
+                                            </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
             <div className="row my-5">
                 <div className="col-md-3 m-auto">
                     <Link to="/admin/departamentos" style={{ textDecoration: 'none' }}>

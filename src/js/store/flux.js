@@ -46,7 +46,15 @@ const getState = ({ getStore, getActions, setStore }) => {
             finalUserBuilding: [],
             departamentoModificar: null,
             bodegaM2: 10,
-            estacionamientoM2: 15
+            estacionamientoM2: 15,
+            usuariosEdificioNoAsignados: null,
+            contadorUsuarios: null,
+            bodegasEdificio: null,
+            estacionamientoEdificios: null,
+            gastosComunes: [],
+            crearGastoComun: { error: null },
+            montosTotalesMes: [],
+            gastosComunesMesActual: []
         },
         actions: {
             handleChangeLogin: e => {
@@ -457,11 +465,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL, currentEdificioID } = getStore();
                 const response = await fetch(`${apiURL}/info-departamento/${currentEdificioID}`)
                 const data = await response.json()
-                if (!data) {
-                    alert(data)
-                } else {
+                const { msg } = data
+                if (msg == undefined) {
                     setStore({
                         departamentos: data
+                    })
+                } else {
+                    setStore({
+                        error: msg
                     })
                 }
             },
@@ -519,9 +530,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                         error: msg
                     })
                 } else {
+
                     setStore({
-                        departamentoUsuarios: data
+                        departamentoUsuarios: data,
                     })
+                    getActions().usuariosNoAsignados()
+                    await setStore({
+                        contadorUsuarios: getStore().departamentoUsuarios.length
+                    })
+
                 }
             },
             deleteUsuarioDpto: async (i) => {
@@ -573,7 +590,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         usuariosEdificio: data
                     })
-                    getActions().usuariosSinAsignar()
+                    getActions().usuariosparaAsignar()
                 }
             },
             filtradoEstado: (estado) => {
@@ -741,7 +758,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error)
                 }
             },
-            usuariosSinAsignar: () => {
+            usuariosparaAsignar: () => {
                 const { usuariosEdificio } = getStore();
                 if (!!usuariosEdificio) {
                     const aux = usuariosEdificio.filter((user) => {
@@ -752,6 +769,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         finalUserBuilding: aux
                     })
+                    getActions().usuariosNoAsignados()
                 }
             },
             dptoModificar: (numero) => {
@@ -760,11 +778,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
             },
             getTotalM2: (modelos) => {
-                const { departamentos, edificioCompleto, bodegaM2, estacionamientoM2 } = getStore()
+                const { departamentos, edificioCompleto, bodegasEdificio, estacionamientoEdificios } = getStore()
                 const totalModelos = []
-                const totalBodega = edificioCompleto.total_bodegas * bodegaM2;
-                const totalEstacionamiento = edificioCompleto.total_estacionamientos * estacionamientoM2;
-
+                const totalBodega = edificioCompleto.total_bodegas * bodegasEdificio.total_superficie;
+                const totalEstacionamiento = edificioCompleto.total_estacionamientos * estacionamientoEdificios.total_superficie;
 
                 if (departamentos.length > 0) {
                     modelos.map((modelo) => {
@@ -777,28 +794,39 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 
             },
-            calculoPorcentajeGastoComunDepto: (depto, montoGastos) => {
-                console.log(depto)
-
-                const { getTotalM2 } = getActions()
-                const { departamentos, bodegaM2, estacionamientoM2 } = getStore()
+            calculoPorcentajeGastoComunDepto: (depto, montoGastos, depaID, comprobante, history) => {
+                const { getTotalM2, postGastosComunes } = getActions()
+                const { departamentos, bodegasEdificio, estacionamientoEdificios, gastosComunes, currentEdificio, currentDate } = getStore()
                 const totalM2edificio = getTotalM2(departamentos)
+
+                const mes = currentDate.getMonth()
+                const year = currentDate.getFullYear()
+
+                const formData = new FormData();
+                formData.append("month", mes)
+                formData.append("year", year)
+                formData.append("edificio_id", currentEdificio)
+                formData.append("montoTotal", montoGastos)
+                formData.append("departamento_id", depaID)
+                formData.append("comprobante", comprobante.comprobante)
+
+
                 let tamañoDepto = departamentos.filter(depart => depart.id === depto.modelo.id)[0].total
-                if (depto.bodega === "si" && depto.estacionamiento === "si") {
-                    tamañoDepto += (bodegaM2 + estacionamientoM2)
+                if (depto.bodega_id !== null && depto.estacionamiento_id !== null) {
+                    tamañoDepto += (bodegasEdificio.total_superficie + estacionamientoEdificios.total_superficie)
                 }
-                else if (depto.estacionamiento === "si" && depto.bodega === "no") {
-                    tamañoDepto += estacionamientoM2
-                } else if (depto.estacionamiento === "no" && depto.bodega === "si") {
-                    tamañoDepto += bodegaM2
+                else if (depto.estacionamiento_id !== null && depto.bodega_id === null) {
+                    tamañoDepto += estacionamientoEdificios.total_superficie
+                } else if (depto.estacionamiento_id === null && depto.bodega_id !== null) {
+                    tamañoDepto += bodegasEdificio.total_superficie
                 }
                 if (!!totalM2edificio) {
                     const porcentaje = (tamañoDepto / totalM2edificio) * 100
-                    console.log(porcentaje)
-                    console.log(tamañoDepto)
-                    const montoTotal = (parseFloat(montoGastos) * porcentaje)
-                    console.log(montoTotal)
-                    return montoTotal
+                    const montoGastoComun = (parseFloat(montoGastos) * porcentaje)
+                    formData.append("monto", montoGastoComun)
+                    gastosComunes.push(montoGastoComun)
+                    postGastosComunes(formData, history)
+                    return montoGastoComun
                 }
                 return ("problema con FETCH")
 
@@ -809,10 +837,170 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const promedio = monto / edificioCompleto.numero_departamentos
 
                 return promedio
+            },
+            usuariosNoAsignados: () => {
+                const { departamentoUsuarios, finalUserBuilding } = getStore();
+                if (!!departamentoUsuarios) {
+                    const aux = departamentoUsuarios.filter((dpto) => {
+                        return dpto.residente.id != null
+                    })
+                    const aux2 = aux.map((dpto) => {
+                        /* return {"id": dpto.residente.id, "name": dpto.residente.name, "email": dpto.residente.email} */
+                        return dpto.residente.name
+                    })
 
-            }
+                    const aux3 = finalUserBuilding.filter((dpto) => {
+                        return !aux2.includes(dpto.username)
+                    })
+                    setStore({
+                        usuariosEdificioNoAsignados: aux3
+                    })
+
+                }
+            },
+            handleBodegas: async (e, modelInfo) => {
+                e.preventDefault()
+                const { apiURL, edificioCompleto } = getStore();
+                const resp = await fetch(`${apiURL}/add-bodega/${edificioCompleto.id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(modelInfo)
+                });
+                const data = await resp.json();
+                const { msg } = data
+
+                if (!resp.ok) {
+                    alert(msg)
+                } else {
+                    alert("ok")
+                }
+            },
+            handleEstacionamiento: async (e, modelInfo) => {
+                e.preventDefault()
+                const { apiURL, edificioCompleto } = getStore();
+                const resp = await fetch(`${apiURL}/add-estacionamiento/${edificioCompleto.id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(modelInfo)
+                });
+                const data = await resp.json();
+                const { msg } = data
+
+                if (!resp.ok) {
+                    alert(msg)
+                } else {
+                    alert("ok")
+                }
+            },
+            getBodegasDelEdificio: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/bodegas/${currentEdificioID}`)
+                const data = await resp.json()
+                const { msg } = data;
+                if (msg !== undefined) {
+                    setStore({
+                        error: msg
+                    })
+                } else {
+                    setStore({
+                        bodegasEdificio: data
+                    })
+                }
+            },
+            getEstacionamientosDelEdificio: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/estacionamientos/${currentEdificioID}`)
+                const data = await resp.json()
+                const { msg } = data;
+                if (msg !== undefined) {
+                    setStore({
+                        error: msg
+                    })
+                } else {
+                    setStore({
+                        estacionamientoEdificios: data
+                    })
+                }
+            },
+            postGastosComunes: async (datos, history) => {
+                const { apiURL } = getStore();
+
+                const resp = await fetch(`${apiURL}/gastoscomunes`, {
+                    method: "POST",
+                    headers: {},
+                    body: datos
+                })
+
+                const data = await resp.json();
+
+                const { msg } = data;
+                if (!resp.ok) {
+                    setStore({
+                        crearGastoComun: { error: msg }
+                    })
+                } else {
+                    setStore({
+                        crearGastoComun: { error: msg }
+                    })
+                    setTimeout(() => {
+                        history.push("/admin/gastos-comunes")
+                    }, 2500);
+                }
+            },
+            getMontosTotales: async () => {
+                const { apiURL, currentEdificioID, montosTotalesMes } = getStore();
+                try {
+                    const resp = await fetch(`${apiURL}/montostotales/edificio/${currentEdificioID}`)
+                    const data = await resp.json()
+                    if (resp.ok) {
+                        setStore({
+                            montosTotalesMes: data
+                        })
+                    }
+                    const { msg } = data;
+                }
+                catch (error) {
+                    console.log(error)
+                }
+
+
+            },
+            getGastosMonthYear: async (month, year, setData) => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
+                const data = await resp.json()
+                const { msg } = data;
+                setData(data)
+            },
+            getGastosMesActual: async () => {
+                const { apiURL, currentEdificioID, currentDate, gastosComunesMesActual, montosTotalesMes } = getStore();
+
+                const month = currentDate.getMonth()
+                const year = currentDate.getFullYear()
+                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
+                const data = await resp.json()
+                const { msg } = data;
+                setStore({
+                    gastosComunesMesActual: data
+                })
+
+            },
+            getGastosDeptoActual: async (id, setData) => {
+                const { apiURL, currentEdificioID } = getStore();
+
+                const resp = await fetch(`${apiURL}/gastoscomunes/depto/${currentEdificioID}/${id}`)
+                const data = await resp.json()
+                const { msg } = data;
+                setData(data)
+
+            },
 
         }
+
 
     }
 };

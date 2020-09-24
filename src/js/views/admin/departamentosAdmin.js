@@ -31,6 +31,9 @@ const DepartamentosAdmin = () => {
         actions.getEdificioCompleto()
         actions.getDepartamentos()
         actions.getDptosUsuarios()
+        actions.getBodegasDelEdificio()
+        actions.getEstacionamientosDelEdificio()
+        
     },[])
     return (
         <SidebarPage>
@@ -47,7 +50,7 @@ const DepartamentosAdmin = () => {
                         <Link to="/admin/inicializacion-dptos" className="btn btn-warning">Modelo de Departamentos</Link>
                     </div>
                     <div className="col-md-2 m-1">
-                        <Link to="/admin/inicializacion-pisos" className="btn btn-warning">Estructura del Edificio</Link>
+                        <Link to="/admin/inicializacion-pisos" className="btn btn-warning">Editar/Creacion Departamentos</Link>
                     </div>
                 </div>
             </div>
@@ -122,8 +125,8 @@ const DepartamentosAdmin = () => {
                                         <div className="card-body text-info">
                                             <p className="card-text">Residente: {dpto.residente.name}</p>
                                             <p className="card-text">Contacto: {dpto.residente.email}</p>
-                                            <p className="card-text">Bodega: {dpto.bodega}</p>
-                                            <p className="card-text">Estacionamiento: {dpto.estacionamiento}</p>
+                                            <p className="card-text">N° Bodega: {dpto.bodega_id}</p>
+                                            <p className="card-text">N° Estacionamiento: {dpto.estacionamiento_id}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -145,8 +148,8 @@ const DepartamentosAdmin = () => {
                                         <div className="card-body text-info">
                                             <p className="card-text">Residente: {dpto.residente.name}</p>
                                             <p className="card-text">Contacto {dpto.residente.email}</p>
-                                            <p className="card-text">Bodega: {dpto.bodega}</p>
-                                            <p className="card-text">Estacionamiento: {dpto.estacionamiento}</p>
+                                            <p className="card-text">N° Bodega: {dpto.bodega_id}</p>
+                                            <p className="card-text">N° Estacionamiento: {dpto.estacionamiento_id}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -166,8 +169,8 @@ const DepartamentosAdmin = () => {
                                 <div className="card-body text-info">
                                     <p className="card-text">Residente: {departamentoNumero.residente.name}</p>
                                     <p className="card-text">Contacto: {departamentoNumero.residente.email}</p>
-                                    <p className="card-text">Bodega: {departamentoNumero.bodega}</p>
-                                    <p className="card-text">Estacionamiento: {departamentoNumero.estacionamiento}</p>
+                                    <p className="card-text">N° Bodega: {departamentoNumero.bodega_id}</p>
+                                    <p className="card-text">N° Estacionamiento: {departamentoNumero.estacionamiento_id}</p>
                                 </div>
                             </div>
                         </div>

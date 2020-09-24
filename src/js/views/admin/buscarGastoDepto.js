@@ -4,7 +4,7 @@ import ModalComprobante from '../../components/modalComprobante';
 import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
-const GastosAdmin = () => {
+const GastosDeptoActual = () => {
     const { store } = useContext(Context)
     const [show, setShow] = useState(false)
     const [comprobanteName, setComprobanteName] = useState("")
@@ -89,4 +89,4 @@ const GastosAdmin = () => {
     )
 };
 
-export default GastosAdmin;
+export default GastosDeptoActual;

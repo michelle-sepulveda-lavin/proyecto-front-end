@@ -12,13 +12,15 @@ const InicializacionPisos = () => {
     const contadorPisos = () => {
         store.departamentoUsuarios.map((dpto) => {
             if (pisos.length > 0) {
-                if (!pisos.includes(dpto.piso)) {
-                    setPisos([...pisos, pisos.push(dpto.piso)])
+                if (pisos.includes(parseInt(dpto.piso)) == false) {
+                    setPisos([...pisos, pisos.push(parseInt(dpto.piso))])
+                    
                 }
             } else {
-                setPisos([pisos.push(dpto.piso)])
+                setPisos([pisos.push(parseInt(dpto.piso))])
             }
         })
+        console.log(pisos)
     }
 
     const handleChange = (e) => {
@@ -38,12 +40,17 @@ const InicializacionPisos = () => {
         actions.getDepartamentos()
         actions.getDptosUsuarios()
         actions.getUsuariosDelEdificio()
-        actions.usuariosSinAsignar()
-
+        actions.usuariosNoAsignados()
+        actions.getBodegasDelEdificio()
+        actions.getEstacionamientosDelEdificio()
+        
     }, []);
     return (
         <>
-            <div className="container">
+           {
+               !!store.departamentos && 
+               <>
+                 <div className="container">
                 <div className="row">
                     <div className="col-md-6 m-auto">
                         <h1>Inicializacion de los Piso</h1>
@@ -55,8 +62,8 @@ const InicializacionPisos = () => {
                         <p>Departamentos totales {!!store.edificioCompleto && store.edificioCompleto.numero_departamentos}</p>
                     </div>
                     <div className="col-md-6 border">
-                        <p>Pisos por completar {!!store.edificioCompleto && store.edificioCompleto.numero_pisos}</p>
-                        <p>Departamentos por asignar {!!store.edificioCompleto && store.edificioCompleto.numero_departamentos}</p>
+                        <p>Pisos inicializados: {pisos.length > 0 ? pisos.length : <button className="btn btn-outline-info" onClick={contadorPisos}>Ver</button>}</p>
+                        <p>Departamentos Creados: {!!store.contadorUsuarios && (store.contadorUsuarios )}</p>
                     </div>
                 </div>
             </div>
@@ -85,9 +92,9 @@ const InicializacionPisos = () => {
                             <tr>
                                 <th scope="col">N° Departamento</th>
                                 <th scope="col">Residente</th>
-                                <th scope="col">Bodega</th>
-                                <th scope="col">Estacionamiento</th>
-                                <th scope="col">Piso</th>
+                                <th scope="col">N° Bodega</th>
+                                <th scope="col">N° Estacionamiento</th>
+                                <th scope="col">N° Piso</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Edificio</th>
                                 <th scope="col">Modelo</th>
@@ -102,14 +109,14 @@ const InicializacionPisos = () => {
                                 <td>
 
                                     {
-                                        store.finalUserBuilding.length > 0 ?
+                                        !!store.usuariosEdificioNoAsignados ?
                                             <>
                                                 <label className="sr-only" htmlFor="residente">Residente</label>
-                                                <select defaultValue={'null'} className="form-control form-control-sm" name="residente" onClick={e => handleChange(e)}>
+                                                <select defaultValue={'null'} className="form-control form-control-sm" name="residente" onChange={e => handleChange(e)}>
                                                     <option value="null" disabled>Seleccionar</option>
                                                     {
-                                                        !!store.usuariosEdificio &&
-                                                        store.usuariosEdificio.map((user, index) => {
+                                                        !!store.usuariosEdificioNoAsignados &&
+                                                        store.usuariosEdificioNoAsignados.map((user, index) => {
                                                             return (
                                                                 user.rol.name === "usuario" &&
                                                                 <option value={user.id} key={index}>{user.username}</option>
@@ -126,19 +133,11 @@ const InicializacionPisos = () => {
                                     }
 
                                 </td>
-                                <td><label className="sr-only" htmlFor="bodega">Bodega</label>
-                                    <select defaultValue={'default'} className="form-control form-control-sm" name="bodega" onChange={e => handleChange(e)}>
-                                        <option value="default" disabled>Seleccionar</option>
-                                        <option value="si">Si</option>
-                                        <option value="no">No</option>
-                                    </select>
+                                <td><label className="sr-only" htmlFor="bodega_id">Bodega</label>
+                                    <input type="number" className="form-control mb-2 mr-sm-2" name="bodega_id" onChange={e => handleChange(e)} />
                                 </td>
-                                <td><label className="sr-only" htmlFor="estacionamiento">Estacionamiento</label>
-                                    <select defaultValue={'default'} className="form-control form-control-sm" name="estacionamiento" onChange={e => handleChange(e)}>
-                                        <option value="default" disabled>Seleccionar</option>
-                                        <option value="si">Si</option>
-                                        <option value="no">No</option>
-                                    </select>
+                                <td><label className="sr-only" htmlFor="estacionamiento_id">Estacionamiento</label>
+                                    <input type="number" className="form-control mb-2 mr-sm-2" name="estacionamiento_id" onChange={e => handleChange(e)} />
                                 </td>
                                 <td><label className="sr-only" htmlFor="piso">Piso</label>
                                     <input type="text" className="form-control mb-2 mr-sm-2" name="piso" onChange={e => handleChange(e)} /></td>
@@ -173,7 +172,7 @@ const InicializacionPisos = () => {
                 <div className="row">
                     <div className="col">
                         <div className="btn-group">
-                            <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={contadorPisos}>
+                            <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=>contadorPisos()}>
                                 Piso
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -210,8 +209,8 @@ const InicializacionPisos = () => {
                                     <th scope="col">#</th>
                                     <th scope="col">N° Departamento</th>
                                     <th scope="col">Residente</th>
-                                    <th scope="col">Bodega</th>
-                                    <th scope="col">Estacionamiento</th>
+                                    <th scope="col">N° Bodega</th>
+                                    <th scope="col">N° Estacionamiento</th>
                                     <th scope="col">Piso</th>
                                     <th scope="col">Estado</th>
                                     <th scope="col">Edificio</th>
@@ -229,8 +228,8 @@ const InicializacionPisos = () => {
                                                     <th scope="row">{index + 1}</th>
                                                     <td>{dpto.numero_departamento}</td>
                                                     <td className="text-center">{dpto.residente.name}</td>
-                                                    <td>{dpto.bodega}</td>
-                                                    <td>{dpto.estacionamiento}</td>
+                                                    <td>{dpto.bodega_id}</td>
+                                                    <td>{dpto.estacionamiento_id}</td>
                                                     <td>{dpto.piso}</td>
                                                     <td>{dpto.estado}</td>
                                                     <td>{dpto.edificio.name}</td>
@@ -257,8 +256,8 @@ const InicializacionPisos = () => {
                                                     <th scope="row">{index + 1}</th>
                                                     <td>{dpto.numero_departamento}</td>
                                                     <td className="text-center">{dpto.residente.name}</td>
-                                                    <td>{dpto.bodega}</td>
-                                                    <td>{dpto.estacionamiento}</td>
+                                                    <td>{dpto.bodega_id}</td>
+                                                    <td>{dpto.estacionamiento_id}</td>
                                                     <td>{dpto.piso}</td>
                                                     <td>{dpto.estado}</td>
                                                     <td>{dpto.edificio.name}</td>
@@ -284,6 +283,8 @@ const InicializacionPisos = () => {
                     </div>
                 </div>
             </div>
+               </>
+           }
             <div className="row my-5">
                 <div className="col-md-3 m-auto">
                     <Link to="/admin/departamentos" style={{ textDecoration: 'none' }}>

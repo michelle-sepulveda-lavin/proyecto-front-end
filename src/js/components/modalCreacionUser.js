@@ -30,7 +30,7 @@ const ModalCreacionUser = props => {
                             <form onSubmit={e => {
                                 actions.crearUsuario(e)
                                 limpiarFormulario(e)
-                                actions.levantaBanderaUsuarios()
+                                /* actions.levantaBanderaUsuarios() */
                             }}>
                                 <div className="form-group">
                                     <label htmlFor="username">Nombre Usuario</label>
