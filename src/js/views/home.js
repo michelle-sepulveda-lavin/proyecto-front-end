@@ -22,7 +22,6 @@ const Home = () => {
                     </div>
                     <div>
                         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-<<<<<<< HEAD
 
                             <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
 
@@ -30,81 +29,80 @@ const Home = () => {
                                     <Link to="./login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
                                 </li>
                                 <li className="d-block mt-2 mt-md-0">
-=======
 
-                            <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
-                                <li className="d-block mr-2">
->>>>>>> 792ffd2cd629c6e2a3db8bd5dd76f8c79bfc4e17
-                                    <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
+                                    <ul className="navbar-nav mr-0 mt-2 mt-lg-0 text-center text-md-left float-right">
+                                        <li className="d-block mr-2">
+                                            <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
 
-                                </li>
-                                {
-                                    !!store.currentRol ?
-                                        <>
-                                            <li className="d-block">
-                                                <Link to="/dashboard" className=" btn btn-success mr-1" role="button">Dashboard</Link>
-                                            </li>
-                                            <li className="d-block" >
-                                                <Link to="/" className=" btn btn-secondary mr-1" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-2"></i>Cerrar sesion</Link>
-                                            </li>
-                                        </>
-                                        :
-                                        <li className="d-block">
-                                            <Link to="/login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
                                         </li>
-                                }
+                                        {
+                                            !!store.currentRol ?
+                                                <>
+                                                    <li className="d-block">
+                                                        <Link to="/dashboard" className=" btn btn-success mr-1" role="button">Dashboard</Link>
+                                                    </li>
+                                                    <li className="d-block" >
+                                                        <Link to="/" className=" btn btn-secondary mr-1" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-2"></i>Cerrar sesion</Link>
+                                                    </li>
+                                                </>
+                                                :
+                                                <li className="d-block">
+                                                    <Link to="/login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
+                                                </li>
+                                        }
+                                    </ul>
+                                </li>
                             </ul>
-
                         </div>
                     </div>
-                </div>
-            </nav>
-            {/* navbar end */}
-            <div className="container">
-                {/* first card */}
-                <div className="card mb-3 mt-5">
-                    <div className="row no-gutters">
-                        <div className="col-md-6">
-                            <img src="https://picsum.photos/600/400?random=1" className="card-img" alt="..." />
                         </div>
-                        <div className="col-md-6">
-                            <div className="card-body text-center">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident beatae error a iste eius dolorum quam itaque sapiente placeat qui explicabo vitae, officia totam eligendi cupiditate. Maiores corporis tenetur ipsam?</p>
-                                <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident beatae error a iste eius dolorum quam itaque sapiente placeat qui explicabo vitae, officia totam eligendi cupiditate. Maiores corporis tenetur ipsam?</p>
+            </nav>
+                    {/* navbar end */}
+                    <div className="container">
+                        {/* first card */}
+                        <div className="card mb-3 mt-5">
+                            <div className="row no-gutters">
+                                <div className="col-md-6">
+                                    <img src="https://picsum.photos/600/400?random=1" className="card-img" alt="..." />
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="card-body text-center">
+                                        <h5 className="card-title">Card title</h5>
+                                        <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident beatae error a iste eius dolorum quam itaque sapiente placeat qui explicabo vitae, officia totam eligendi cupiditate. Maiores corporis tenetur ipsam?</p>
+                                        <p className="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident beatae error a iste eius dolorum quam itaque sapiente placeat qui explicabo vitae, officia totam eligendi cupiditate. Maiores corporis tenetur ipsam?</p>
 
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                {/* first card end */}
+                        {/* first card end */}
 
-                {/* second card */}
-                <div className="card-deck mt-5">
-                    <div className="card">
-                        <img src="https://picsum.photos/600/400?random=2" className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        {/* second card */}
+                        <div className="card-deck mt-5">
+                            <div className="card">
+                                <img src="https://picsum.photos/600/400?random=2" className="card-img-top" alt="..." />
+                                <div className="card-body">
+                                    <h5 className="card-title">Card title</h5>
+                                    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                            </div>
+                            <div className="card">
+                                <img src="https://picsum.photos/600/400?random=3" className="card-img-top" alt="..." />
+                                <div className="card-body">
+                                    <h5 className="card-title">Card title</h5>
+                                    <p className="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                                </div>
+                            </div>
+                            <div className="card">
+                                <img src="https://picsum.photos/600/400?random=4" className="card-img-top" alt="..." />
+                                <div className="card-body">
+                                    <h5 className="card-title">Card title</h5>
+                                    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                                </div>
+                            </div>
                         </div>
+                        {/* second card end */}
                     </div>
-                    <div className="card">
-                        <img src="https://picsum.photos/600/400?random=3" className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <img src="https://picsum.photos/600/400?random=4" className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                        </div>
-                    </div>
-                </div>
-                {/* second card end */}
-            </div>
         </>
     )
 };

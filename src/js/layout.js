@@ -5,10 +5,7 @@ import Home from './views/home'
 import Login from './views/login';
 import Planes from './views/planes';
 import Footer from './components/footer';
-<<<<<<< HEAD
 
-=======
->>>>>>> 792ffd2cd629c6e2a3db8bd5dd76f8c79bfc4e17
 import ListadoEdificioAdm from './views/superAdmin/listadoEdificioAdm'
 import ModifyPlans from './views/superAdmin/planes-SA';
 import CrearEdificios from './views/superAdmin/crearEdificios';
@@ -25,16 +22,14 @@ import PaqueteriaConserje from './views/conserjes/paqueteriaConserje';
 import GastosConserje from './views/conserjes/gastosConserje';
 import GastosUser from './views/user/gastosUser';
 import RecuperacionContraseña from './views/recuperacionContraseña';
-<<<<<<< HEAD
 import BoletinAdm from './views/boletinAdm';
-=======
 import Usuarios from './views/superAdmin/usuarios';
 import DetalleEdificio from './views/superAdmin/detalleEdificio';
 import Contratos from './views/superAdmin/contratos';
 import Contactados from './views/superAdmin/contactados';
 import ModalCrearConserje from './components/modalCrearConserje';
 
->>>>>>> 792ffd2cd629c6e2a3db8bd5dd76f8c79bfc4e17
+
 
 
 const Layout = () => {
@@ -42,13 +37,11 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
-<<<<<<< HEAD
+                    
                     <Route exact path='/BoletinAdm' component={BoletinAdm} />
-=======
                     <Route exact path='/crearconserje' component={ModalCrearConserje} />
                     <Route exact path='/contratos' component={Contratos} />
                     <Route exact path='/allusuarios' component={Usuarios} />
->>>>>>> 792ffd2cd629c6e2a3db8bd5dd76f8c79bfc4e17
                     <Route exact path='/usuario/gastos-comunes' component={GastosUser} />
                     <Route exact path='/conserje/gastos-comunes' component={GastosConserje} />
                     <Route exact path='/conserje/paqueteria' component={PaqueteriaConserje} />
@@ -63,13 +56,8 @@ const Layout = () => {
                     <Route exact path='/listado-edificios' component={ListadoEdificioAdm} />
                     <Route exact path='/listado-edificios/:id' component={DetalleEdificio} />
                     <Route exact path='/dashboard' component={Dashboard} />
-<<<<<<< HEAD
 
-                    <Route exact path='/recuperacion-password' component={RecuperacionContraseña} />
-
-=======
                     <Route exact path='/recuperacion-password/:token' component={RecuperacionContraseña} />
->>>>>>> 792ffd2cd629c6e2a3db8bd5dd76f8c79bfc4e17
                     <Route exact path='/crearedificio' component={CrearEdificios} />
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/' component={Home} />

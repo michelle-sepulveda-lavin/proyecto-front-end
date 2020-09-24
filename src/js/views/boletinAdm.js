@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import '../../css/boletines.css'
+import React, { useState, useEffect } from 'react';
 import BoletinTable from '../components/BoletinTable';
 import { v4 as uuidv4 } from 'uuid';
 import AddBoletin from '../components/AddBoletin';
@@ -7,6 +6,8 @@ import EditBoletin from '../components/EditBoletin';
 
 
 const BoletinAdm = () => {
+
+
 
     const boletinData = [
         { id: uuidv4(), asunto: 'Corte de energia 1', body: 'lorem1' },
@@ -25,7 +26,7 @@ const BoletinAdm = () => {
     }
 
     const deleteboletin = (id) => {
-        console.log(id)
+        // console.log(id)
 
         setBoletin(boletin.filter(add_boletin => add_boletin.id !== id))
 
@@ -34,7 +35,7 @@ const BoletinAdm = () => {
     const [editing, setEditing] = useState(false)
 
     const [currentBoletin, setCurrentBoletin] = useState({
-        id: null, name: '', username: ''
+        id: null, asunto: '', body: ''
     });
 
     const editRow = (edit_boletin) => {
@@ -53,7 +54,7 @@ const BoletinAdm = () => {
         <>
             <div className="container">
                 
-                <div className="flex-row">
+                <div className="flex-row prueba">
                     <div className="flex-large">
 
                         {
@@ -67,7 +68,7 @@ const BoletinAdm = () => {
                                 </div>
                             ) : (
                                     <div>
-                                        <h2>Agregar Boletin</h2>
+                                        <br/>
                                         <AddBoletin addboletin={addboletin} />
                                     </div>
                                 )
