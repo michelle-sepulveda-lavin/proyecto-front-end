@@ -7,17 +7,21 @@ const BoletinTable = (props) => {
     const url = 'http://localhost:5000'
 
     useEffect(() => {
-        
-        const fetchData = async () => {
-            await fetch(`${url}/boletin`)
-            .then(response => response.json())
-            .then(json => setData(json))
-            .catch(error => console.log(error))
-        }
-        
         fetchData()
     }, [])
     
+    const fetchData = async () => {
+        const response =  await fetch(`${url}/boletin`)
+        const data = await response.json()
+        if (data.msg){
+            alert(data.msg)
+        }
+        else {
+            setData(data)
+        }
+        
+    }
+
 
     return (
         <>
@@ -31,11 +35,11 @@ const BoletinTable = (props) => {
                 </thead>
                 <tbody>
                     {
-                        props.boletin.length > 0 ?
-                            props.boletin.map((boletin, index) => (
-                                <tr key={boletin.id}>
-                                    <td>{boletin.asunto}</td>
-                                    <td>{boletin.body}</td>
+                        data.length > 0 ?
+                            data.map((data, index) => (
+                                <tr key={data.id}>
+                                    <td>{data.asunto}</td>
+                                    <td>{data.body}</td>
                                     <td>
                                         {/* <button className="button muted-button"
                                         onClick={
