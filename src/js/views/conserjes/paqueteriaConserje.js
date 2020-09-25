@@ -32,7 +32,9 @@ const PaqueteriaConserje = () => {
 
                 <div className="row ">
                     <div className="col mt-5">
-                        <table className="table table-hover table-responsive-md">
+                        {
+                            store.paqueteriaEdificio.length > 0?
+                            <table className="table table-hover table-responsive-md">
                             <thead className="bg-dark text-white">
                                 <tr>
                                     <th scope="col">#</th>
@@ -63,6 +65,10 @@ const PaqueteriaConserje = () => {
                                 }
                             </tbody>
                         </table>
+                        :
+                        <h5 className="text-center">No ha paquetes por entregar</h5>
+                    
+                        }
                     </div>
                 </div>
             </div>

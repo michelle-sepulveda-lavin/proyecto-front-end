@@ -51,12 +51,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             contadorUsuarios: null,
             bodegasEdificio: null,
             estacionamientoEdificios: null,
-            paqueteriaEdificio: null,
+            paqueteriaEdificio: [],
             gastosComunes: [],
             crearGastoComun: { error: null },
             montosTotalesMes: [],
             gastosComunesMesActual: [],
             errorLogin: null,
+            errorPaqueteria: null,
             gastosMes: [],
             gastosDepto: [],
             departamentoActualUsuario: []
@@ -1096,74 +1097,91 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(data)
                     actions.getGastosMonthYear(month, year)
                 }
-
                 catch (error) {
                     console.log(error)
                 }
+
             },
-        },
-        getDepartamentoActualUsuario: async (id) => {
-            const { departamentoActualUsuario } = getStore()
-
-            const response = await fetch(`http://127.0.0.1:5000/departamentoUsuario/${id}`);
-            const data = await response.json()
-            if (response.ok) {
+            getPaqueteria: async () => {
+                const { apiURL, currentEdificioID } = getStore();
                 setStore({
-                    departamentoActualUsuario: data
+                    errorPaqueteria: null
                 })
-            }
-        },
-        handlePaqueteria: async (e, numeroDpto) => {
-            e.preventDefault();
-            const { apiURL, currentEdificioID } = getStore();
-            const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(numeroDpto)
-            });
-            const data = await resp.json();
-            if (resp.ok) {
-                alert(data.msg)
-                getActions().getPaqueteria()
-            } else {
-                alert(data.msg)
-            }
+                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
+                const data = await resp.json();
+                if (resp.ok) {
+                    setStore({
+                        paqueteriaEdificio: data
+                    })
+                } else {
+                    setStore({
+                        errorPaqueteria: data.msg
+                    })
 
-        },
-        getPaqueteria: async () => {
-            const { apiURL, currentEdificioID } = getStore();
-            const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
-            const data = await resp.json();
-            if (resp.ok) {
-                setStore({
-                    paqueteriaEdificio: data
-                })
-            } else {
-                alert(data.msg)
-            }
-        },
-        estadoPaquete: async (index) => {
-            const { apiURL, paqueteriaEdificio } = getStore();
-            const modificado = paqueteriaEdificio[index].id
-            const resp = await fetch(`${apiURL}/paqueteria/${modificado}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ estado: true })
-            });
-            const data = await resp.json()
-            if (resp.ok) {
-                alert(data.msg)
-                getActions().getPaqueteria()
-            } else {
-                alert(data.msg)
+                }
+            },
+            getDepartamentoActualUsuario: async (id) => {
+                const { departamentoActualUsuario } = getStore()
+
+                const response = await fetch(`http://127.0.0.1:5000/departamentoUsuario/${id}`);
+                const data = await response.json()
+                if (response.ok) {
+                    setStore({
+                        departamentoActualUsuario: data
+                    })
+                }
+            },
+            handlePaqueteria: async (e, numeroDpto) => {
+                e.preventDefault();
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(numeroDpto)
+                });
+                const data = await resp.json();
+                if (resp.ok) {
+                    alert(data.msg)
+                    getActions().getPaqueteria()
+                } else {
+                    alert(data.msg)
+                }
+
+            },
+            getPaqueteria: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
+                const data = await resp.json();
+                if (resp.ok) {
+                    setStore({
+                        paqueteriaEdificio: data
+                    })
+                } else {
+                    alert(data.msg)
+                }
+            },
+            estadoPaquete: async (index) => {
+                const { apiURL, paqueteriaEdificio } = getStore();
+                const modificado = paqueteriaEdificio[index].id
+                const resp = await fetch(`${apiURL}/paqueteria/${modificado}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ estado: true })
+                });
+                const data = await resp.json()
+                if (resp.ok) {
+                    alert(data.msg)
+                    getActions().getPaqueteria()
+                } else {
+                    alert(data.msg)
+                }
             }
         }
     }
+    };
 
-};
-
-export default getState;
+    export default getState;
