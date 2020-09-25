@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Pagination from '../../components/pagination';
 import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
@@ -12,8 +13,16 @@ const GastosDeptoActual = () => {
     const handleInput = (e) => {
         setDeptoSeleccionado(e.target.value)
     }
-
     const [gastosMes, setGastosMes] = useState([]);
+
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [perPage, setPerPage] = useState(10)
+    const indexOfLastPost = currentPage * perPage;
+    const indexOfFirstPost = indexOfLastPost - perPage;
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+    const currentPosts = store.gastosDepto.slice(indexOfFirstPost, indexOfLastPost)
+
     return (
         <SidebarPage>
             <h1 className="mt-4">Gastos comunes por departamento</h1>
@@ -28,7 +37,7 @@ const GastosDeptoActual = () => {
                         <div>
                             <button className="btn btn-success" onClick={() => {
                                 if (deptoSeleccionado !== "") {
-                                    actions.getGastosDeptoActual(deptoSeleccionado, setGastosMes)
+                                    actions.getGastosDeptoActual(deptoSeleccionado)
                                 }
                             }}>Buscar</button>
                         </div>
@@ -39,19 +48,10 @@ const GastosDeptoActual = () => {
                     <div>
                         <div className="row mx-auto mt-4">
                             <div className="col-12 col-md-10 mx-auto overflow-auto pb-4">
-                                {gastosMes.length > 0 &&
+                                {store.gastosDepto.length > 0 &&
                                     <>
-                                        <div className="d-flex justify-content-center mb-4">
-                                            <span className="boton-hover btn border-info  mr-2 rounded-pill border shadow-sm" onClick={() => {
-                                                setEstadoPago("pagado")
-                                            }}>Pagados</span>
-                                            <span className="btn boton-hover border-info  rounded-pill border shadow-sm mr-2" onClick={() => {
-                                                setEstadoPago("noPagado")
-                                            }}>No pagados</span>
-                                            <span className="btn boton-hover border  rounded border shadow-sm" onClick={() => {
-                                                setEstadoPago("todos")
-                                            }}>Todos</span>
-                                        </div>
+
+
 
                                         < table className="table text-center overflow-auto mx-auto ">
                                             <thead className="thead-dark text-center mx-auto">
@@ -59,35 +59,41 @@ const GastosDeptoActual = () => {
                                                     <th scope="col">Depto</th>
                                                     <th scope="col">Monto</th>
                                                     <th scope="col">Estado</th>
-                                                    <th scope="col">Promedio por Depto</th>
+                                                    <th scope="col">Mes de gasto común</th>
+                                                    <th scope="col">Año</th>
 
                                                     <th scope="col">Comprobante</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {gastosMes.length > 0 && gastosMes.map((gasto, index) => {
+                                                {store.gastosDepto.length > 0 && currentPosts.map((gasto, index) => {
 
-                                                    if (gasto.estado === estadoPago || estadoPago === "todos") {
-                                                        return (
 
-                                                            <tr key={index}>
-                                                                <th scope="row">{gasto.departamento.numero_depto}</th>
-                                                                <td>{gasto.monto}</td>
-                                                                <td>{gasto.estado === "noPagado" ? estados[0] : gasto.estado === "moroso" ? estados[1] : gasto.estado === "revision" ? estados[2] : gasto.estado === "pagado" ? estados[3] : ""}</td>
-                                                                <td>{meses[gasto.month]}</td>
+                                                    return (
 
-                                                                <td>
+                                                        <tr key={index} className={gasto.estado === "noPagado" ? "bg-warning" : ""}>
+                                                            <th scope="row">{gasto.departamento.numero_depto}</th>
+                                                            <td>{new Intl.NumberFormat('en-US',
+                                                                { style: 'currency', currency: 'CLP' }
+                                                            ).format(gasto.monto)} </td>
+                                                            <td>{gasto.estado === "noPagado" ? estados[0] : gasto.estado === "moroso" ? estados[1] : gasto.estado === "revision" ? estados[2] : gasto.estado === "pagado" ? estados[3] : ""}</td>
 
-                                                                    <span className="btn btn-success"
-                                                                    >Pagado</span></td>
-                                                            </tr>
-                                                        )
-                                                    }
+                                                            <td>{meses[gasto.month]}</td>
+                                                            <td>{gasto.year}</td>
+
+                                                            <td>
+
+                                                                <span className="btn btn-success"
+                                                                >Pagado</span></td>
+                                                        </tr>
+                                                    )
+
                                                 })
                                                 }
                                             </tbody>
                                         </table>
+                                        <Pagination postsPerPage={perPage} totalPosts={store.gastosDepto.length} paginate={paginate} />
                                     </>
                                 }
                                 {store.montosTotalesMes.length === 0 &&
