@@ -45,12 +45,18 @@ const getState = ({ getStore, getActions, setStore }) => {
             conserjes: [],
             finalUserBuilding: [],
             departamentoModificar: null,
+            bodegaM2: 10,
+            estacionamientoM2: 15,
             usuariosEdificioNoAsignados: null,
             contadorUsuarios: null,
             bodegasEdificio: null,
             estacionamientoEdificios: null,
-            errorLogin: null,
-            paqueteriaEdificio: null
+            paqueteriaEdificio: null,
+            gastosComunes: [],
+            crearGastoComun: { error: null },
+            montosTotalesMes: [],
+            gastosComunesMesActual: [],
+            errorLogin: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -541,7 +547,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 const data = await resp.json();
                 const { msg } = data;
-
+                console.log(data)
                 if (msg !== undefined) {
                     if (msg == "departamento de usuario creado exitosamente") {
                         setStore({
@@ -749,7 +755,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 try {
                     const response = await fetch('http://127.0.0.1:5000/roles');
                     const data = await response.json()
-                    console.log(data)
                     setStore({
                         roles: data
                     })
@@ -766,7 +771,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (id !== null && id !== undefined) {
                         const response = await fetch(`${apiURL}/conserjes/edificio/${id}`);
                         const data = await response.json()
-                        console.log(data)
                         if (response.ok) {
                             setStore({
                                 conserjes: data
@@ -814,6 +818,67 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({
                     departamentoModificar: numero
                 })
+            },
+            getTotalM2: (modelos) => {
+                const { departamentos, edificioCompleto, bodegasEdificio, estacionamientoEdificios } = getStore()
+                const totalModelos = []
+                const totalBodega = edificioCompleto.total_bodegas * bodegasEdificio.total_superficie;
+                const totalEstacionamiento = edificioCompleto.total_estacionamientos * estacionamientoEdificios.total_superficie;
+
+                if (departamentos.length > 0) {
+                    modelos.map((modelo) => {
+                        totalModelos.push(modelo.cantidad_total * modelo.total)
+                    })
+                    const totalEdificio = totalModelos.reduce((a, b) => a + b) + totalBodega + totalEstacionamiento;
+                    return totalEdificio
+                } else {
+                    return null
+                }
+
+            },
+            calculoPorcentajeGastoComunDepto: (depto, montoGastos, depaID, comprobante, history) => {
+                const { getTotalM2, postGastosComunes } = getActions()
+                const { departamentos, bodegasEdificio, estacionamientoEdificios, gastosComunes, currentEdificio, currentDate } = getStore()
+                const totalM2edificio = getTotalM2(departamentos)
+
+                const mes = currentDate.getMonth()
+                const year = currentDate.getFullYear()
+
+                const formData = new FormData();
+                formData.append("month", mes)
+                formData.append("year", year)
+                formData.append("edificio_id", currentEdificio)
+                formData.append("montoTotal", montoGastos)
+                formData.append("departamento_id", depaID)
+                formData.append("comprobante", comprobante.comprobante)
+
+
+                let tamañoDepto = departamentos.filter(depart => depart.id === depto.modelo.id)[0].total
+                if (depto.bodega_id !== null && depto.estacionamiento_id !== null) {
+                    tamañoDepto += (bodegasEdificio.total_superficie + estacionamientoEdificios.total_superficie)
+                }
+                else if (depto.estacionamiento_id !== null && depto.bodega_id === null) {
+                    tamañoDepto += estacionamientoEdificios.total_superficie
+                } else if (depto.estacionamiento_id === null && depto.bodega_id !== null) {
+                    tamañoDepto += bodegasEdificio.total_superficie
+                }
+                if (!!totalM2edificio) {
+                    const porcentaje = (tamañoDepto / totalM2edificio) * 100
+                    const montoGastoComun = (parseFloat(montoGastos) * porcentaje)
+                    formData.append("monto", montoGastoComun)
+                    gastosComunes.push(montoGastoComun)
+                    postGastosComunes(formData, history)
+                    return montoGastoComun
+                }
+                return ("problema con FETCH")
+
+            },
+            calculoGastoPromedio: (monto) => {
+                const { edificioCompleto } = getStore()
+
+                const promedio = monto / edificioCompleto.numero_departamentos
+
+                return promedio
             },
             usuariosNoAsignados: () => {
                 const { departamentoUsuarios, finalUserBuilding } = getStore();
@@ -905,6 +970,78 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                 }
             },
+            postGastosComunes: async (datos, history) => {
+                const { apiURL } = getStore();
+
+                const resp = await fetch(`${apiURL}/gastoscomunes`, {
+                    method: "POST",
+                    headers: {},
+                    body: datos
+                })
+
+                const data = await resp.json();
+
+                const { msg } = data;
+                if (!resp.ok) {
+                    setStore({
+                        crearGastoComun: { error: msg }
+                    })
+                } else {
+                    setStore({
+                        crearGastoComun: { error: msg }
+                    })
+                    setTimeout(() => {
+                        history.push("/admin/gastos-comunes")
+                    }, 2500);
+                }
+            },
+            getMontosTotales: async () => {
+                const { apiURL, currentEdificioID, montosTotalesMes } = getStore();
+                try {
+                    const resp = await fetch(`${apiURL}/montostotales/edificio/${currentEdificioID}`)
+                    const data = await resp.json()
+                    if (resp.ok) {
+                        setStore({
+                            montosTotalesMes: data
+                        })
+                    }
+                    const { msg } = data;
+                }
+                catch (error) {
+                    console.log(error)
+                }
+
+
+            },
+            getGastosMonthYear: async (month, year, setData) => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
+                const data = await resp.json()
+                const { msg } = data;
+                setData(data)
+            },
+            getGastosMesActual: async () => {
+                const { apiURL, currentEdificioID, currentDate, gastosComunesMesActual, montosTotalesMes } = getStore();
+
+                const month = currentDate.getMonth()
+                const year = currentDate.getFullYear()
+                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
+                const data = await resp.json()
+                const { msg } = data;
+                setStore({
+                    gastosComunesMesActual: data
+                })
+
+            },
+            getGastosDeptoActual: async (id, setData) => {
+                const { apiURL, currentEdificioID } = getStore();
+
+                const resp = await fetch(`${apiURL}/gastoscomunes/depto/${currentEdificioID}/${id}`)
+                const data = await resp.json()
+                const { msg } = data;
+                setData(data)
+
+            },
             deleteBodegaEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
                 const resp = await fetch(`${apiURL}/delete-bodega-edificio/${currentEdificioID}`, {
@@ -987,11 +1124,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     alert(data.msg)
                 }
             }
-
-
-
-
-
         }
 
 

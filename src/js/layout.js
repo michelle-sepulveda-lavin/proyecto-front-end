@@ -5,7 +5,6 @@ import Home from './views/home'
 import Login from './views/login';
 import Planes from './views/planes';
 import Footer from './components/footer';
-
 import ListadoEdificioAdm from './views/superAdmin/listadoEdificioAdm'
 import ModifyPlans from './views/superAdmin/planes-SA';
 import CrearEdificios from './views/superAdmin/crearEdificios';
@@ -30,6 +29,9 @@ import Contactados from './views/superAdmin/contactados';
 import ModalCrearConserje from './components/modalCrearConserje';
 import InicializacionDptos from './views/admin/inicializacionDptos';
 import InicializacionPisos from './views/admin/inicializacionPisos';
+import SubirGastos from './components/subirGastos';
+import GastosDepartamentos from './views/admin/gastosDepartamentos';
+import GastosDeptoActual from './views/admin/buscarGastoDepto';
 
 
 
@@ -38,9 +40,12 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/admin/gastos-depto-actual' component={GastosDeptoActual} />
+                    <Route exact path='/admin/gastos-departamentos' component={GastosDepartamentos} />
+                    <Route exact path='/admin/subir-gastos' component={SubirGastos} />
                     <Route exact path='/admin/inicializacion-pisos' component={InicializacionPisos} />
                     <Route exact path='/admin/inicializacion-dptos' component={InicializacionDptos} />
-                    <Route exact path='/BoletinAdm' component={BoletinAdm} />
+                    <Route exact path='/boletinAdm' component={BoletinAdm} />
                     <Route exact path='/contratos' component={Contratos} />
                     <Route exact path='/allusuarios' component={Usuarios} />
                     <Route exact path='/usuario/gastos-comunes' component={GastosUser} />
