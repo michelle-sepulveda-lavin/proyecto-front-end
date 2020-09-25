@@ -51,6 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             contadorUsuarios: null,
             bodegasEdificio: null,
             estacionamientoEdificios: null,
+            paqueteriaEdificio: null,
             gastosComunes: [],
             crearGastoComun: { error: null },
             montosTotalesMes: [],
@@ -1112,9 +1113,57 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
             }
         },
+        handlePaqueteria: async (e, numeroDpto) => {
+            e.preventDefault();
+            const { apiURL, currentEdificioID } = getStore();
+            const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(numeroDpto)
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+                alert(data.msg)
+                getActions().getPaqueteria()
+            } else {
+                alert(data.msg)
+            }
 
-
+        },
+        getPaqueteria: async () => {
+            const { apiURL, currentEdificioID } = getStore();
+            const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
+            const data = await resp.json();
+            if (resp.ok) {
+                setStore({
+                    paqueteriaEdificio: data
+                })
+            } else {
+                alert(data.msg)
+            }
+        },
+        estadoPaquete: async (index) => {
+            const { apiURL, paqueteriaEdificio } = getStore();
+            const modificado = paqueteriaEdificio[index].id
+            const resp = await fetch(`${apiURL}/paqueteria/${modificado}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ estado: true })
+            });
+            const data = await resp.json()
+            if (resp.ok) {
+                alert(data.msg)
+                getActions().getPaqueteria()
+            } else {
+                alert(data.msg)
+            }
+        }
     }
+
 };
 
 export default getState;

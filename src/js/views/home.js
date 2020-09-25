@@ -27,7 +27,21 @@ const Home = () => {
                                     <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
 
                                 </li>
-
+                                {
+                                    !!store.currentRol ?
+                                        <>
+                                            <li className="d-block">
+                                                <Link to="/dashboard" className=" btn btn-success mr-1" role="button">Dashboard</Link>
+                                            </li>
+                                            <li className="d-block" >
+                                                <Link to="/" className=" btn btn-secondary mr-1" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-2"></i>Cerrar sesion</Link>
+                                            </li>
+                                        </>
+                                        :
+                                        <li className="d-block">
+                                            <Link to="/login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
+                                        </li>
+                                }
 
 
                             </ul>
