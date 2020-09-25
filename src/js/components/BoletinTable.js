@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 const BoletinTable = (props) => {
     // console.log(props.boletin)
@@ -28,7 +28,7 @@ const BoletinTable = (props) => {
             <table className="table table-hover">
                 <thead>
                     <tr>
-                        <th>Asunto</th>
+                        <th onClick={() => console.log(data)}>Asunto</th>
                         <th>Body</th>
                         <th>Actions</th>
                     </tr>
@@ -50,8 +50,8 @@ const BoletinTable = (props) => {
                                         onClick={() => {props.deleteboletin(boletin.id)}}
                                         >Delete</button> */}
                                         <div className="custom-control custom-switch">
-                                            <input type="checkbox" className="custom-control-input" id={"customSwitch"+index} />
-                                            <label className="custom-control-label" htmlFor={"customSwitch"+index}>Activo</label>
+                                            <input type="checkbox" className="custom-control-input" id={"customSwitch" + index} />
+                                            <label className="custom-control-label" htmlFor={"customSwitch" + index}>Activo</label>
                                         </div>
                                     </td>
                                 </tr>

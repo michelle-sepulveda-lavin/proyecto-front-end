@@ -29,7 +29,13 @@ const injectContext = PassedComponent => {
 			state.actions.sesionIniciada()
 			state.actions.getCurrentEdificio()
 			state.actions.getConserjes()
-
+			state.actions.getEdificioCompleto()
+			state.actions.getDptosUsuarios()
+			state.actions.getBodegasDelEdificio()
+			state.actions.getEstacionamientosDelEdificio()
+			state.actions.getDepartamentos()
+			state.actions.getMontosTotales()
+			state.actions.getGastosMesActual()
 		}, []);
 
 		useEffect(() => {

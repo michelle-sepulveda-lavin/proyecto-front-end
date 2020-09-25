@@ -130,8 +130,11 @@ body {
 }
 .bg-gradient-primary {
   background-color: #011638;
-  background-image: linear-gradient(180deg, #011638 10%, #000 100%);
+  background-image: linear-gradient(180deg, #011638 10%, rgb(0, 0, 0) 100%);
   background-size: cover;
+}
+.bg-gradient-secondary {
+  background-color: #011638;
 }
 .accordion {
   overflow-anchor: none;
@@ -339,7 +342,19 @@ li {
 .prueba {
   background: #f9fbff;
 }
-
+.modal-lg {
+  min-height: 70vh;
+}
+.boton-hover {
+  background: #fff;
+}
+.boton-hover:hover {
+  background: #69c8f0;
+  transition: 0.2s;
+}
+.min-height-50 {
+  min-height: 50vh;
+}
 .dashboard-blue {
   background-color: #121975;
   background-image: linear-gradient(160deg, #0312e4 10%, #010031 100%);
