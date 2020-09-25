@@ -51,12 +51,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             contadorUsuarios: null,
             bodegasEdificio: null,
             estacionamientoEdificios: null,
-            paqueteriaEdificio: null,
+            paqueteriaEdificio: [],
             gastosComunes: [],
             crearGastoComun: { error: null },
             montosTotalesMes: [],
             gastosComunesMesActual: [],
-            errorLogin: null
+            errorLogin: null,
+            errorPaqueteria: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -1096,6 +1097,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getPaqueteria: async () =>{
                 const { apiURL, currentEdificioID } = getStore();
+                setStore({
+                    errorPaqueteria: null
+                })
                 const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
                 const data = await resp.json();
                 if(resp.ok){
@@ -1103,7 +1107,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         paqueteriaEdificio: data
                     })
                 }else{
-                    alert(data.msg)
+                    setStore({
+                        errorPaqueteria: data.msg
+                    })
                 }
             },
             estadoPaquete:async (index) =>{
