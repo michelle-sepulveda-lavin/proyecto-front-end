@@ -4,7 +4,14 @@ import SidebarPage from '../../components/SidebarPage';
 const GastosUser = () => {
     return (
         <SidebarPage>
-            <h1>Gastos Comunes Usuario</h1>
+            <h1 className="mt-4">Gastos Comunes Usuario</h1>
+            <div className="container">
+
+
+
+
+
+            </div>
         </SidebarPage>
     )
 };

@@ -57,7 +57,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             montosTotalesMes: [],
             gastosComunesMesActual: [],
             errorLogin: null,
-            errorPaqueteria: null
+            errorPaqueteria: null,
+            gastosMes: [],
+            gastosDepto: [],
+            departamentoActualUsuario: []
         },
         actions: {
             handleChangeLogin: e => {
@@ -230,7 +233,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { getContratos } = getActions()
                 const response = await fetch('http://127.0.0.1:5000/crearedificio');
                 const data = await response.json()
-                if (!data.msg) {
+                if (response.ok) {
                     setStore({
                         ...store,
                         edificios: data
@@ -864,7 +867,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     tamañoDepto += bodegasEdificio.total_superficie
                 }
                 if (!!totalM2edificio) {
-                    const porcentaje = (tamañoDepto / totalM2edificio) * 100
+                    const porcentaje = (tamañoDepto / totalM2edificio)
                     const montoGastoComun = (parseFloat(montoGastos) * porcentaje)
                     formData.append("monto", montoGastoComun)
                     gastosComunes.push(montoGastoComun)
@@ -1014,12 +1017,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
             },
-            getGastosMonthYear: async (month, year, setData) => {
-                const { apiURL, currentEdificioID } = getStore();
+            getGastosMonthYear: async (month, year) => {
+                const { apiURL, currentEdificioID, gastosMes } = getStore();
                 const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
                 const data = await resp.json()
                 const { msg } = data;
-                setData(data)
+                setStore({
+                    gastosMes: data
+                })
+
             },
             getGastosMesActual: async () => {
                 const { apiURL, currentEdificioID, currentDate, gastosComunesMesActual, montosTotalesMes } = getStore();
@@ -1034,13 +1040,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
 
             },
-            getGastosDeptoActual: async (id, setData) => {
-                const { apiURL, currentEdificioID } = getStore();
+            getGastosDeptoActual: async (id) => {
+                const { apiURL, currentEdificioID, gastosDepto } = getStore();
 
                 const resp = await fetch(`${apiURL}/gastoscomunes/depto/${currentEdificioID}/${id}`)
                 const data = await resp.json()
                 const { msg } = data;
-                setData(data)
+                setStore({
+                    gastosDepto: data
+                })
 
             },
             deleteBodegaEdificio: async () => {
@@ -1076,6 +1084,53 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 
             },
+            cambiarEstadoGastoComun: async (depto, month, year, estado) => {
+                const { apiURL, currentEdificio } = getStore()
+                const actions = getActions()
+                try {
+                    const response = await fetch(`${apiURL}/gastoscomunes/depto/${currentEdificio}/${depto}/${month}/${year}`, {
+                        method: "PATCH",
+                        body: JSON.stringify({ estado: estado }),
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' }
+                    })
+                    const data = await response.json()
+                    console.log(data)
+                    actions.getGastosMonthYear(month, year)
+                }
+                catch (error) {
+                    console.log(error)
+                }
+
+            },
+            getPaqueteria: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                setStore({
+                    errorPaqueteria: null
+                })
+                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
+                const data = await resp.json();
+                if (resp.ok) {
+                    setStore({
+                        paqueteriaEdificio: data
+                    })
+                } else {
+                    setStore({
+                        errorPaqueteria: data.msg
+                    })
+
+                }
+            },
+            getDepartamentoActualUsuario: async (id) => {
+                const { departamentoActualUsuario } = getStore()
+
+                const response = await fetch(`http://127.0.0.1:5000/departamentoUsuario/${id}`);
+                const data = await response.json()
+                if (response.ok) {
+                    setStore({
+                        departamentoActualUsuario: data
+                    })
+                }
+            },
             handlePaqueteria: async (e, numeroDpto) => {
                 e.preventDefault();
                 const { apiURL, currentEdificioID } = getStore();
@@ -1095,24 +1150,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 
             },
-            getPaqueteria: async () =>{
+            getPaqueteria: async () => {
                 const { apiURL, currentEdificioID } = getStore();
-                setStore({
-                    errorPaqueteria: null
-                })
                 const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
                 const data = await resp.json();
-                if(resp.ok){
+                if (resp.ok) {
                     setStore({
                         paqueteriaEdificio: data
                     })
-                }else{
-                    setStore({
-                        errorPaqueteria: data.msg
-                    })
+                } else {
+                    alert(data.msg)
                 }
             },
-            estadoPaquete:async (index) =>{
+            estadoPaquete: async (index) => {
                 const { apiURL, paqueteriaEdificio } = getStore();
                 const modificado = paqueteriaEdificio[index].id
                 const resp = await fetch(`${apiURL}/paqueteria/${modificado}`, {
@@ -1120,7 +1170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({estado: true})
+                    body: JSON.stringify({ estado: true })
                 });
                 const data = await resp.json()
                 if (resp.ok) {
@@ -1132,8 +1182,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
         }
 
+    };
 
-    }
-};
-
-export default getState;
+    export default getState;
