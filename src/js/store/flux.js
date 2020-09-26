@@ -60,7 +60,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             errorPaqueteria: null,
             gastosMes: [],
             gastosDepto: [],
-            departamentoActualUsuario: []
+            departamentoActualUsuario: [],
+            currentUserId: null,
+            paqueteriaUsuario: null,
+            currentUserDptoNumero: null,
+            flagCreacionEdificio: false,
+            errorCreacionDpto: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -95,7 +100,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                         currentUser: data,
                         errorLogin: null,
                         currentRol: data.user.rol.name,
-                        currentEdificio: data.user.edificio
+                        currentEdificio: data.user.edificio,
+                        currentUserId: data.user.id
                     })
                     localStorage.setItem('currentUser', JSON.stringify(data));
                     history.push("/dashboard")
@@ -121,11 +127,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { msg } = data;
                 if (resp.ok) {
                     alert(data.msg)
+                    setStore({
+                        errorCreacionDpto: null,
+                        flagCreacionEdificio: false
+                    })
 
                 }
                 else if (msg !== undefined) {
                     setStore({
-                        error: msg
+                        errorCreacionDpto: msg
                     })
                 }
             },
@@ -203,7 +213,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const user = JSON.parse(localStorage.getItem("currentUser"));
                     setStore({
                         ...store,
-                        currentRol: user.user.rol.name
+                        currentRol: user.user.rol.name,
+                        currentUserId: user.user.id
                     })
                 }
             },
@@ -557,9 +568,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         alert(msg)
                         getActions().getDptosUsuarios()
                     } else {
-                        setStore({
-                            error: msg
-                        })
+                        alert(msg)
                     }
                 }
             },
@@ -1117,15 +1126,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 }
             },
-            getDepartamentoActualUsuario: async (id) => {
-                const { departamentoActualUsuario } = getStore()
-
-                const response = await fetch(`http://127.0.0.1:5000/departamentoUsuario/${id}`);
+            getDepartamentoActualInfo: async () => {
+                const { currentUserId, apiURL } = getStore()
+                const response = await fetch(`${apiURL}/infoDepartamentoUsuario/${currentUserId}`);
                 const data = await response.json()
                 if (response.ok) {
                     setStore({
-                        departamentoActualUsuario: data
+                        departamentoActualUsuario: data,
+                        currentUserDptoNumero: data.id
                     })
+                    getActions().getPaqueteriaUsuario()
+                } else {
+                    alert(data.msg)
                 }
             },
             handlePaqueteria: async (e, numeroDpto) => {
@@ -1164,9 +1176,34 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } else {
                     alert(data.msg)
                 }
+            },
+            getcurrentID: () => {
+                if (!!localStorage.getItem("currentUser")) {
+                    const user = localStorage.getItem("currentUser")
+                    setStore({
+                        currentUserId: user.user.id
+                    })
+
+                }
+            },
+            getPaqueteriaUsuario: async() =>{
+                const {currentUserDptoNumero, apiURL} = getStore();
+                const resp = await fetch(`${apiURL}/paqueteriaUsuario/${currentUserDptoNumero}`)
+                const data = await resp.json()
+                if(!data.msg){
+                    setStore({
+                        paqueteriaUsuario: data
+                    })
+                }
+
+            },
+            flagCrearEdificio: (estado) =>{
+                setStore({
+                    flagCreacionEdificio: estado
+                })
             }
         }
     }
-    };
+};
 
-    export default getState;
+export default getState;

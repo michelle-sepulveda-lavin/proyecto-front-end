@@ -11,16 +11,22 @@ const ListadoUsuarios = () => {
             <div className="row my-5">
                 <div className="col">
                     <form onSubmit={e => actions.getUsuarios(e)} >
-                        <div className="form-group text-center">
-                            <label htmlFor="rol_id m-2">Filtro busqueda</label>
-                            <select defaultValue={'default'} name="rol_id" className="form-control m-auto col-md-6 " onChange={e => actions.handleChangeLogin(e)}>
-                                <option value="default" disabled>Seleccionar</option>
-                                <option value="superAdministrador">Super Administradores</option>
-                                <option value="administrador">Administradores</option>
-                                <option value="conserje">Conserje</option>
-                                <option value="usuario">Usuarios</option>
-                            </select>
-                            <button className="btn btn-success m-2">Mostrar</button>
+                        <div className="form-row text-center border">
+                            <div className="col-md-2">
+                                <label htmlFor="rol_id text-center">Filtro busqueda</label>
+                            </div>
+                            <div className="col-md-4 border">
+                                <select defaultValue={''} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
+                                    <option value="" >Todos</option>
+                                    <option value="superAdministrador">Super Administradores</option>
+                                    <option value="administrador">Administradores</option>
+                                    <option value="conserje">Conserje</option>
+                                    <option value="usuario">Usuarios</option>
+                                </select>
+                            </div>
+                            <div className="col-md-6 border">
+                                <button className="btn btn-success">Mostrar</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -52,11 +58,11 @@ const ListadoUsuarios = () => {
                                             <td>{usuario.rol.name}</td>
                                             <td>{usuario.edificio}</td>
                                             <td>
-                                                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalEditUser" 
-                                                onClick={()=>{
-                                                    actions.guardarIndex(i)
-                                                    actions.resetMsg()
-                                                }}>
+                                                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalEditUser"
+                                                    onClick={() => {
+                                                        actions.guardarIndex(i)
+                                                        actions.resetMsg()
+                                                    }}>
                                                     <i className="fas fa-pencil-alt cursor-pointer"></i>
                                                 </button>
                                                 <ModalEditUser />

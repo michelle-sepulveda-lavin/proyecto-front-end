@@ -197,7 +197,7 @@ const InicializacionPisos = () => {
                                                     <input type="text" className="form-control mb-2 mr-sm-2" name="piso" onChange={e => handleChange(e)} /></td>
                                                 <td><label className="sr-only" htmlFor="estado">Estado</label>
                                                     <select defaultValue={'default'} className="form-control form-control-sm" name="estado" onChange={e => handleChange(e)}>
-                                                        <option value="default" disabled>Seleccionar</option>
+                                                        <option value="default" disabled></option>
                                                         <option value="habitado">Habitado</option>
                                                         <option value="deshabitado">Deshabitado</option>
                                                     </select>
@@ -206,7 +206,7 @@ const InicializacionPisos = () => {
                                                     <input type="text" className="form-control mb-2 mr-sm-2" name="edificio_id" readOnly value={!!store.edificioCompleto && store.edificioCompleto.nombre_edificio} onChange={e => handleChange(e)} /></td>
                                                 <td><label className="sr-only" htmlFor="modelo_id">Modelo</label>
                                                     <select defaultValue={'default'} className="form-control form-control-sm" name="modelo_id" onChange={e => handleChange(e)}>
-                                                        <option value="default" disabled>Seleccionar</option>
+                                                        <option value="default" disabled></option>
                                                         {
                                                             !!store.departamentos && store.departamentos.map((dpto, index) => {
                                                                 return (
