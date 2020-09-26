@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from '../../components/pagination';
+import PagoGastos from '../../components/pagoGasto';
+import PagoUsuario from '../../components/pagoUsuario';
 import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
@@ -14,14 +16,22 @@ const GastosDeptoActual = () => {
         setDeptoSeleccionado(e.target.value)
     }
     const [gastosMes, setGastosMes] = useState([]);
-
+    const [show, setShow] = useState(false)
+    const [dataPago, setDataPago] = useState({
+        idDepto: null,
+        month: null,
+        year: null,
+        pago: null
+    })
+    const [showPago, setShowPago] = useState(false)
+    const [comprobantePago, setComprobantePago] = useState(null)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const indexOfLastPost = currentPage * perPage;
     const indexOfFirstPost = indexOfLastPost - perPage;
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
-    const currentPosts = store.gastosDepto.slice(indexOfFirstPost, indexOfLastPost)
+    const currentPosts = gastosMes.length > 0 && gastosMes.slice(indexOfFirstPost, indexOfLastPost)
 
     return (
         <SidebarPage>
@@ -37,7 +47,7 @@ const GastosDeptoActual = () => {
                         <div>
                             <button className="btn btn-success" onClick={() => {
                                 if (deptoSeleccionado !== "") {
-                                    actions.getGastosDeptoActual(deptoSeleccionado)
+                                    actions.getGastosDeptoActual(deptoSeleccionado, setGastosMes)
                                 }
                             }}>Buscar</button>
                         </div>
@@ -62,12 +72,12 @@ const GastosDeptoActual = () => {
                                                     <th scope="col">Mes de gasto común</th>
                                                     <th scope="col">Año</th>
 
-                                                    <th scope="col">Comprobante</th>
+                                                    <th scope="col"></th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {store.gastosDepto.length > 0 && currentPosts.map((gasto, index) => {
+                                                {gastosMes.length > 0 && currentPosts.map((gasto, index) => {
 
 
                                                     return (
@@ -82,10 +92,39 @@ const GastosDeptoActual = () => {
                                                             <td>{meses[gasto.month]}</td>
                                                             <td>{gasto.year}</td>
 
-                                                            <td>
+                                                            <td> {
+                                                                gasto.estado === "pagado" ?
 
-                                                                <span className="btn btn-success"
-                                                                >Pagado</span></td>
+                                                                    <span className="btn btn-success px-4"
+                                                                        onClick={() => {
+                                                                            setShowPago(true)
+                                                                            setComprobantePago(gasto.pago)
+                                                                        }
+                                                                        }>Comprobante</span>
+                                                                    :
+                                                                    gasto.estado === "revision" ?
+                                                                        <span className="btn btn-warning px-5"
+                                                                            onClick={() => {
+
+                                                                                setShow(true)
+                                                                                setDataPago({
+                                                                                    idDepto: gasto.departamento.departamento_id,
+                                                                                    month: gasto.month,
+                                                                                    year: gasto.year,
+                                                                                    pago: gasto.pago
+                                                                                })
+
+                                                                            }}>Validar</span>
+                                                                        :
+                                                                        gasto.estado === "noPagado" ?
+                                                                            <span className="btn btn-info"
+                                                                                onClick={() => {
+                                                                                    console.log("EN PROGRESO")
+                                                                                }}>Enviar notificación</span>
+                                                                            :
+                                                                            ""
+                                                            }
+                                                            </td>
                                                         </tr>
                                                     )
 
@@ -93,10 +132,10 @@ const GastosDeptoActual = () => {
                                                 }
                                             </tbody>
                                         </table>
-                                        <Pagination postsPerPage={perPage} totalPosts={store.gastosDepto.length} paginate={paginate} />
+                                        <Pagination postsPerPage={perPage} totalPosts={gastosMes.length} paginate={paginate} />
                                     </>
                                 }
-                                {store.montosTotalesMes.length === 0 &&
+                                {gastosMes === 0 &&
 
                                     <h4>No hay montos ingresados en este edificio</h4>
 
@@ -127,7 +166,10 @@ const GastosDeptoActual = () => {
                     </span>
                 </Link>
             </div>
-        </SidebarPage>
+            <PagoUsuario pago={comprobantePago} show={showPago} setShow={setShowPago}></PagoUsuario>
+
+            <PagoGastos show={show} setShow={setShow} datos={dataPago} deptoSeleccionado={deptoSeleccionado}></PagoGastos>
+        </SidebarPage >
     )
 };
 

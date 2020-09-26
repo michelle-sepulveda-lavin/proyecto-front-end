@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -6,6 +6,14 @@ import { Context } from "../store/appContext";
 const ModalPromedio = props => {
     const { actions, store } = useContext(Context)
     const history = useHistory()
+    useEffect(() => {
+        actions.getDptosUsuarios()
+        actions.getBodegasDelEdificio()
+        actions.getEstacionamientosDelEdificio()
+        actions.getDepartamentos()
+        actions.getDptosUsuarios()
+        actions.getEdificioCompleto()
+    }, [])
     return (
         <div className="modal" tabIndex="-1" role="dialog" style={{ display: props.showModal ? "inline-block" : "none" }}>
             <div className="modal-dialog modal-dialog-centered" role="document">

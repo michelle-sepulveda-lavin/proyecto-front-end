@@ -1,16 +1,10 @@
-import React from 'react';
-import { useForm } from 'react-hook-form'
+import React, { useContext, useState } from 'react';
+import { Context } from '../store/appContext';
 
 const AddBoletin = (props) => {
+    
+    const { store, actions } = useContext(Context);
 
-    const { register, errors, handleSubmit } = useForm();
-
-    const onSubmit = (data, e) => {
-        console.log(data)
-
-        props.addboletin(data)
-        e.target.reset();
-    }
 
 
     return (
@@ -35,73 +29,29 @@ const AddBoletin = (props) => {
                         </div>
                         <div className="modal-body">
 
-                            <form onSubmit={(e) => { handleSubmit(e) }}>
+                            <form onSubmit={(e) => { actions.handleSubmitBoletin(e) }}>
                                 <div className="form-group">
                                     <label htmlFor="recipient-name" className="col-form-label">Asunto:</label>
-                                    <input type="text" className="form-control" id="recipient-name" name="asunto" ref={
-                                        register({
-                                            required: {
-                                                value: true,
-                                                message: 'Campo Requerido'
-                                            }
-                                        })
-                                    } />
+                                    <input type="text" className="form-control" id="recipient-name" name="asunto_boletin" onChange={(e) => actions.captureData(e)} value={store.asunto_boletin}/>
                                 </div>
-                                <div>
-                                    {errors?.asunto?.message}
-                                </div>
+                               
                                 <div className="form-group">
                                     <label htmlFor="message-text" className="col-form-label">Message:</label>
-                                    <textarea className="form-control" id="message-text" name="body" ref={
-                                        register({
-                                            required: {
-                                                value: true,
-                                                message: 'Campo Requerido'
-                                            }
-                                        })
-                                    } ></textarea>
+                                    <textarea className="form-control" id="message-text" name="body_boletin" onChange={(e) => actions.captureData(e)}value={store.body_boletin}></textarea>
 
-                                    <div>
-                                        {errors?.body?.message}
-                                    </div>
+                                    
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button className="btn btn-primary">Guardar</button>
                                 </div>
                             </form>
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" className="btn btn-primary">Guardar</button>
 
-                        </div>
                     </div>
                 </div>
             </div>
-            {/* <form onSubmit={handleSubmit(onSubmit)}>
-                <label>Asunto</label>
-                <input type="text" name="asunto" ref={
-                    register({
-                        required: {
-                            value: true,
-                            message: 'Campo Requerido'
-                        }
-                    })
-                } />
-                <div>
-                    {errors?.asunto?.message}
-                </div>
-                <label>Body</label>
-                <input type="text" name="body" ref={
-                    register({
-                        required: {
-                            value: true,
-                            message: 'Campo Requerido'
-                        }
-                    })
-                } />
-                <div>
-                    {errors?.body?.message}
-                </div>
-                <button>Agregar nuevo Boletin</button>
-            </form> */}
+
 
         </>
     )

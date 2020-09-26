@@ -3,12 +3,14 @@ import { Context } from '../store/appContext';
 
 const DashboardUser = (props) => {
     const { store, actions } = useContext(Context);
-    
+
 
     useEffect(() => {
         actions.getDepartamentoActualInfo()
         actions.getPaqueteriaUsuario()
+        actions.getDepartamentoActualUsuario()
     }, [])
+
     return (
         <div className="container-fluid">
             <div className="row justify-content-center ">
@@ -21,7 +23,7 @@ const DashboardUser = (props) => {
                     <div className="row m-2">
                         <div className="col-lg-4">
                             <span className="ml-md-1 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-green">
-                                <p className="pt-3">{!!store.paqueteriaUsuario? store.paqueteriaUsuario.length : "0"}</p>
+                                <p className="pt-3">{!!store.paqueteriaUsuario ? store.paqueteriaUsuario.length : "0"}</p>
                             </span>
                         </div>
                         <div className="col col-lg-4 text-center text-dark pt-3">

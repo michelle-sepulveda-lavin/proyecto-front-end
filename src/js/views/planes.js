@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Context } from '../store/appContext';
 
 
 const Planes = () => {
-
+    const { actions } = useContext(Context)
     const getData = async () => {
         const response = await fetch('http://127.0.0.1:5000/api/planes');
         const data = await response.json()
@@ -13,6 +14,7 @@ const Planes = () => {
     }
     useEffect(() => {
         getData()
+        actions.getPlanes()
     }, []);
 
     const sendContact = async (contact) => {
@@ -62,7 +64,7 @@ const Planes = () => {
     return (
         <>
 
-            <img src="https://richardgarcia.net/wp-content/uploads/2019/02/zOOM-LOGOS-PNG.png" alt="logo" className="logo" />
+            <img src="../edificos-felices-logo.png" alt="logo" className="logo logo-planes ml-3 mt-2" />
 
             <h1 className="text-center planes-titulo">NUESTROS PLANES</h1>
 
@@ -75,16 +77,16 @@ const Planes = () => {
 
                         return (
                             <div key={index} className="col-9 col-md-5 mb-5 plan">
-                                <div className="card h-md-100 shadow  border-0">
+                                <div className="card rounded border h-md-100 shadow  border-0">
 
                                     <div className="card-body p-0">
-                                        <div className="plan-header d-flex justify-content-center align-items-center">
+                                        <div className="plan-header planes text-light d-flex justify-content-center align-items-center">
                                             <div className="text-center">
-                                                <h3 className="card-title m-0">{plans.name}</h3>
-                                                <span className="plan-price">{plans.price}</span> <span className="tipo-moneda">/ UF</span>
+                                                <h3 className="card-title m-0 ">{plans.name}</h3>
+                                                <span className="plan-price text-light">{plans.price}</span> <span className="tipo-moneda">/ UF</span>
                                                 <h5 className="mb-3"> Pagado {plans.frecuencia}</h5>
                                                 {planes.indexOf(plans) === planes.length - 1 &&
-                                                    <span className="boton-preferido p-3 shadow" data-toggle="modal" data-target="#modal-suscripcion" onClick={() => {
+                                                    <span className="boton-preferido p-3 shadow text-body" data-toggle="modal" data-target="#modal-suscripcion" onClick={() => {
                                                         setNewContact({ ...newContact, plan: plans.name });
                                                     }}>¡LO QUIERO!</span>
                                                 }

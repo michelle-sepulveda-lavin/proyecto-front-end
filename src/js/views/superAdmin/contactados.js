@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
@@ -39,6 +39,10 @@ const Contactados = () => {
 
     })
 
+    useEffect(() => {
+        actions.getContactData()
+
+    }, [])
     return (
         <SidebarPage>
 

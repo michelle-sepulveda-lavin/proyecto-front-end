@@ -32,6 +32,8 @@ const ModifyPlans = () => {
 
     useEffect(() => {
         getData()
+        actions.getPlanes()
+
     }, []);
 
     const [showModal, setShowModal] = useState(false);

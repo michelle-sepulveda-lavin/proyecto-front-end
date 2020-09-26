@@ -3,14 +3,13 @@ import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
 
 
-const ModalComprobante = props => {
-    const { store } = useContext(Context)
+const PagoUsuario = props => {
+    const { store, actions } = useContext(Context)
 
     return (
 
         <div className="modal modal-dialog-scrollable overflowy-auto" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none" }}>
             <div className="modal-dialog modal-dialog-centered" role="document">
-
                 <div className="modal-content bg-modal modal-lg2">
                     <div>
                         <button type="button" class="close float-right mr-4" onClick={() => props.setShow(false)}>
@@ -18,22 +17,12 @@ const ModalComprobante = props => {
                         </button>
                     </div>
                     <div className="modal-body">
-                        {store.montosTotalesMes.length > 0 &&
-                            < iframe src={`${store.apiURL}/comprobantes/${props.comprobante}`} width="100%" height="auto" className="modal-lg"> </iframe>}
+                        {!!props.pago &&
+                            < iframe src={`${store.apiURL}/pagosgastos/${props.pago}`} width="100%" height="auto" className="modal-lg"> </iframe>}
+                        {!props.pago &&
+                            <h3 className="text-center mt-5 pt-5">No existe registro de este comprobante</h3>
+                        }
                     </div>
-                    <div className="modal-footer">
-                        <button
-                            type="button"
-                            className="btn btn-secondary"
-                            onClick={() => {
-                                props.setShow(false)
-                            }}
-                        >
-                            Atrás
-						</button>
-
-                    </div>
-
 
                 </div>
             </div>
@@ -41,6 +30,6 @@ const ModalComprobante = props => {
     )
 };
 
-export default ModalComprobante;
+export default PagoUsuario;
 
 
