@@ -60,7 +60,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             errorPaqueteria: null,
             gastosMes: [],
             gastosDepto: [],
-            departamentoActualUsuario: []
+            departamentoActualUsuario: [],
+            asunto_boletin: '',
+            body_boletin: '',
+            all_boletin: [],
         },
         actions: {
             handleChangeLogin: e => {
@@ -81,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
 
                 const data = await resp.json();
-
+                console.log(data)
                 const { msg } = data;
 
                 if (msg !== undefined) {
@@ -1179,7 +1182,60 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } else {
                     alert(data.msg)
                 }
+            },
+            handleSubmitBoletin: async (e) => {
+                e.preventDefault();
+                const store = getStore();
+                const { asunto_boletin, body_boletin, apiURL } = getStore();
+                const resp = await fetch(`${apiURL}/boletin`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        asunto: asunto_boletin,
+                        body: body_boletin,
+                        edificio_id: store.currentEdificioID
+                    })
+                });
+
+                const data = await resp.json();
+                console.log(data)
+                const { msg } = data;
+
+                if (msg !== undefined) {
+                    setStore({
+                        errorBoletin: msg
+                    })
+                } else {
+                    setStore({
+                        asunto_boletin: '',
+                        body_boletin: '',
+                        edificio_id: null,
+                        error: null
+                    })
+                    getActions().getBoletines();
+
+                }
+
+                // e.target.reset()
+            },
+            captureData: (e) => {
+                setStore({
+                    [e.target.name]: e.target.value
+                })
+            },
+            getBoletines: async () => {
+                const { apiURL } = getStore();
+                const response =  await fetch(`${apiURL}/boletin`)
+                const data = await response.json()
+                if (data.msg){
+                    alert(data.msg)
+                }
+                else {
+                    setStore({all_boletin: data})
+                }
+                
             }
+
         }
     }
     };

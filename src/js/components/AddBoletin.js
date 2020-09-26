@@ -1,25 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Context } from '../store/appContext';
 
 const AddBoletin = (props) => {
     
-    const [data, setData] = useState([])
+    const { store, actions } = useContext(Context);
 
-    // const onSubmit = (data, e) => {
-    //     console.log(data)
 
-    //     props.addboletin(data)
-    //     e.target.reset();
-    // }
-
-    const handleSubmit = (() => {
-
-    })
-
-    
-    const capturedata = (e) => {
-        
-        e.target.reset()
-    }
 
     return (
         <>
@@ -43,15 +29,15 @@ const AddBoletin = (props) => {
                         </div>
                         <div className="modal-body">
 
-                            <form onSubmit={(e) => { handleSubmit(e) }}>
+                            <form onSubmit={(e) => { actions.handleSubmitBoletin(e) }}>
                                 <div className="form-group">
                                     <label htmlFor="recipient-name" className="col-form-label">Asunto:</label>
-                                    <input type="text" className="form-control" id="recipient-name" name="asunto" onChange={(e) => capturedata()} />
+                                    <input type="text" className="form-control" id="recipient-name" name="asunto_boletin" onChange={(e) => actions.captureData(e)} value={store.asunto_boletin}/>
                                 </div>
                                
                                 <div className="form-group">
                                     <label htmlFor="message-text" className="col-form-label">Message:</label>
-                                    <textarea className="form-control" id="message-text" name="body" ></textarea>
+                                    <textarea className="form-control" id="message-text" name="body_boletin" onChange={(e) => actions.captureData(e)}value={store.body_boletin}></textarea>
 
                                     
                                 </div>

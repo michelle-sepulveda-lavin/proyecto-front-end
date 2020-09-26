@@ -36,6 +36,7 @@ const injectContext = PassedComponent => {
 			state.actions.getDepartamentos()
 			state.actions.getMontosTotales()
 			state.actions.getGastosMesActual()
+			state.actions.getBoletines()
 		}, []);
 
 		useEffect(() => {

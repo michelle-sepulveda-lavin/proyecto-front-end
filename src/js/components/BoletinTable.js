@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Context } from '../store/appContext';
 
 const BoletinTable = (props) => {
     // console.log(props.boletin)
 
-    const [data, setData] = useState([])
-    const url = 'http://localhost:5000'
+    const { store, actions } = useContext(Context);
 
-    useEffect(() => {
-        fetchData()
-    }, [])
-    
-    const fetchData = async () => {
-        const response =  await fetch(`${url}/boletin`)
-        const data = await response.json()
-        if (data.msg){
-            alert(data.msg)
-        }
-        else {
-            setData(data)
-        }
-        
-    }
+    // useEffect(() => {
+    //     getBoletines()
+    // }, [])
+
+
 
 
     return (
@@ -28,27 +18,19 @@ const BoletinTable = (props) => {
             <table className="table table-hover">
                 <thead>
                     <tr>
-                        <th onClick={() => console.log(data)}>Asunto</th>
+                        <th onClick={() => console.log(actions)}>Asunto</th>
                         <th>Body</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        data.length > 0 ?
-                            data.map((data, index) => (
-                                <tr key={data.id}>
-                                    <td>{data.asunto}</td>
-                                    <td>{data.body}</td>
+                        store.all_boletin.length > 0 ?
+                            store.all_boletin.map((edificio, index) => (
+                                <tr key={edificio.edificio_id}>
+                                    <td>{edificio.asunto}</td>
+                                    <td>{edificio.body}</td>
                                     <td>
-                                        {/* <button className="button muted-button"
-                                        onClick={
-                                            () => {props.editRow(boletin)}
-                                        }
-                                        >Edit</button>
-                                        <button className="button muted-button"
-                                        onClick={() => {props.deleteboletin(boletin.id)}}
-                                        >Delete</button> */}
                                         <div className="custom-control custom-switch">
                                             <input type="checkbox" className="custom-control-input" id={"customSwitch" + index} />
                                             <label className="custom-control-label" htmlFor={"customSwitch" + index}>Activo</label>
@@ -58,9 +40,9 @@ const BoletinTable = (props) => {
                             ))
                             :
                             (
-                                <tr>
-                                    <td colSpan={3}>No hay boletines</td>
-                                </tr>
+                                <div className="d-flex align-items-center">
+                                    <strong>Loading...</strong>
+                                </div>
                             )
                     }
 
