@@ -71,7 +71,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     [e.target.name]: e.target.value
                 })
             },
-            loginAction: async (e) => {
+            loginAction: async (e, history) => {
                 e.preventDefault();
                 const { username, password, apiURL } = getStore();
                 const resp = await fetch(`${apiURL}/login`, {
@@ -96,15 +96,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                         username: '',
                         password: '',
                         currentUser: data,
-                        error: null
+                        errorLogin: null,
+                        currentRol: data.user.rol.name,
+                        currentEdificio: data.user.edificio
                     })
                     localStorage.setItem('currentUser', JSON.stringify(data));
-                    /* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
-                    const user = JSON.parse(localStorage.getItem("currentUser"));
-                    setStore({
-                        currentRol: user.user.rol.name,
-                        currentEdificio: user.user.edificio
-                    })
+                    history.push("/dashboard")
                 }
             },
             crearEdificio: async (e, aux) => {
@@ -1152,18 +1149,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     alert(data.msg)
                 }
 
-            },
-            getPaqueteria: async () => {
-                const { apiURL, currentEdificioID } = getStore();
-                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
-                const data = await resp.json();
-                if (resp.ok) {
-                    setStore({
-                        paqueteriaEdificio: data
-                    })
-                } else {
-                    alert(data.msg)
-                }
             },
             estadoPaquete: async (index) => {
                 const { apiURL, paqueteriaEdificio } = getStore();

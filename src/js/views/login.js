@@ -35,7 +35,7 @@ const Login = props => {
             </div>
             <div className="container mt-5">
                 <form className="text-center col-md-6 m-auto" onSubmit={(e) => {
-                    actions.loginAction(e)
+                    actions.loginAction(e, history)
 
                 }}>
 
