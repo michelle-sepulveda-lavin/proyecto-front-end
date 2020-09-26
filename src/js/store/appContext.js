@@ -26,6 +26,17 @@ const injectContext = PassedComponent => {
 			state.actions.getCurrentDate()
 			state.actions.sesionIniciada()
 			state.actions.getEdificioCompleto()
+<<<<<<< HEAD
+=======
+			state.actions.getDptosUsuarios()
+			state.actions.getBodegasDelEdificio()
+			state.actions.getEstacionamientosDelEdificio()
+			state.actions.getDepartamentos()
+			state.actions.getMontosTotales()
+			state.actions.getGastosMesActual()
+			state.actions.getBoletines()
+		}, []);
+>>>>>>> f9653b1128836faa3a94dc72b3b98411bb9edbb4
 
 		}, []);
 

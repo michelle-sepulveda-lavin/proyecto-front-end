@@ -51,19 +51,23 @@ const getState = ({ getStore, getActions, setStore }) => {
             contadorUsuarios: null,
             bodegasEdificio: null,
             estacionamientoEdificios: null,
-            paqueteriaEdificio: null,
+            paqueteriaEdificio: [],
             gastosComunes: [],
             crearGastoComun: { error: null },
             montosTotalesMes: [],
             gastosComunesMesActual: [],
             errorLogin: null,
+            errorPaqueteria: null,
             gastosMes: [],
             gastosMesPaginados: [],
             gastosDepto: [],
             departamentoActualUsuario: null,
             g_idDepartamentoActual: null,
             gastosDeptoUsuario: null,
-            gastosActual: null
+            gastosActual: null,
+            asunto_boletin: '',
+            body_boletin: '',
+            all_boletin: [],
         },
         actions: {
             handleChangeLogin: e => {
@@ -76,11 +80,25 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { username, password, apiURL } = getStore();
                 const resp = await fetch(`${apiURL}/login`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: username, password: password }) });
                 const data = await resp.json();
+                console.log(data)
                 const { msg } = data;
-                if (msg !== undefined) { setStore({ errorLogin: msg }) }
-                else {
-                    setStore({ username: '', password: '', currentUser: data, errorLogin: null, currentRol: data.user.rol.name, currentEdificio: data.user.edificio, currentUserId: data.user.id })
-                    localStorage.setItem('currentUser', JSON.stringify(data)); history.push("/dashboard")
+
+                if (msg !== undefined) {
+                    setStore({
+                        errorLogin: msg
+                    })
+                } else {
+                    setStore({
+                        username: '',
+                        password: '',
+                        currentUser: data,
+                        errorLogin: null,
+                        currentRol: data.user.rol.name,
+                        currentEdificio: data.user.edificio,
+                        currentUserId: data.user.id
+                    })
+                    localStorage.setItem('currentUser', JSON.stringify(data));
+                    history.push("/dashboard")
                 }
             },
             crearEdificio: async (e, aux) => {
@@ -1085,7 +1103,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(data)
                     actions.getGastosMonthYear(month, year)
                 }
-
                 catch (error) {
                     console.log(error)
                 }
@@ -1125,7 +1142,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error)
                 }
             },
+            getPaqueteria: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                setStore({
+                    errorPaqueteria: null
+                })
+                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
+                const data = await resp.json();
+                if (resp.ok) {
+                    setStore({
+                        paqueteriaEdificio: data
+                    })
+                } else {
+                    setStore({
+                        errorPaqueteria: data.msg
+                    })
 
+                }
+            },
             handlePaqueteria: async (e, numeroDpto) => {
                 e.preventDefault();
                 const { apiURL, currentEdificioID } = getStore();
@@ -1144,18 +1178,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     alert(data.msg)
                 }
 
-            },
-            getPaqueteria: async () => {
-                const { apiURL, currentEdificioID } = getStore();
-                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
-                const data = await resp.json();
-                if (resp.ok) {
-                    setStore({
-                        paqueteriaEdificio: data
-                    })
-                } else {
-                    alert(data.msg)
-                }
             },
             estadoPaquete: async (index) => {
                 const { apiURL, paqueteriaEdificio } = getStore();
@@ -1196,7 +1218,60 @@ const getState = ({ getStore, getActions, setStore }) => {
                 catch (error) {
                     console.log(error)
                 }
+            },
+            handleSubmitBoletin: async (e) => {
+                e.preventDefault();
+                const store = getStore();
+                const { asunto_boletin, body_boletin, apiURL } = getStore();
+                const resp = await fetch(`${apiURL}/boletin`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        asunto: asunto_boletin,
+                        body: body_boletin,
+                        edificio_id: store.currentEdificioID
+                    })
+                });
+
+                const data = await resp.json();
+                console.log(data)
+                const { msg } = data;
+
+                if (msg !== undefined) {
+                    setStore({
+                        errorBoletin: msg
+                    })
+                } else {
+                    setStore({
+                        asunto_boletin: '',
+                        body_boletin: '',
+                        edificio_id: null,
+                        error: null
+                    })
+                    getActions().getBoletines();
+
+                }
+
+                // e.target.reset()
+            },
+            captureData: (e) => {
+                setStore({
+                    [e.target.name]: e.target.value
+                })
+            },
+            getBoletines: async () => {
+                const { apiURL } = getStore();
+                const response = await fetch(`${apiURL}/boletin`)
+                const data = await response.json()
+                if (data.msg) {
+                    alert(data.msg)
+                }
+                else {
+                    setStore({ all_boletin: data })
+                }
+
             }
+
         }
 
     };

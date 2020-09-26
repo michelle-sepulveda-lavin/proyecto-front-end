@@ -20,10 +20,10 @@ const Login = props => {
                     <div className="col-12">
                         <h1 className="d-flex justify-content-center">Iniciar Sesion</h1>
                         {
-                            store.error !== null && (
+                            !!store.errorLogin && (
                                 <div className="alert alert-warning alert-dismissible fade show" role="alert">
                                     <strong>Error</strong>{" "}
-                                    {store.error}
+                                    {store.errorLogin}
                                     <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
