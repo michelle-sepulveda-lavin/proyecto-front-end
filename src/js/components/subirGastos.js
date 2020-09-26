@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SidebarPage from '../components/SidebarPage';
 import { Context } from '../store/appContext';
 import ModalPromedio from './modalPromedio';
 
 const SubirGastos = () => {
     const { store, actions } = useContext(Context)
-    /* const mesActual = store.currentDate.toLocaleString('default', { month: 'long' }); */
+    const mesActual = !!store.currentDate && store.currentDate.toLocaleString('default', { month: 'long' })
     const [monto, setMonto] = useState("")
     const [showModal, setshowModal] = useState(false)
     const [promedioMonto, setPromedioMonto] = useState("")
@@ -19,6 +19,17 @@ const SubirGastos = () => {
             [e.target.id]: file
         })
     }
+    useEffect(() => {
+        actions.getDptosUsuarios()
+        actions.getBodegasDelEdificio()
+        actions.getEstacionamientosDelEdificio()
+        actions.getDepartamentos()
+        actions.getCurrentDate()
+        actions.getEdificioCompleto()
+        actions.getDptosUsuarios()
+        actions.getEdificioCompleto()
+
+    }, [])
     return (
         <SidebarPage>
             <div className="container mt-3">
@@ -27,7 +38,7 @@ const SubirGastos = () => {
 
                 <h1>Subir Gastos</h1>
 
-                <h3>Mes: {/* {mesActual.charAt(0).toUpperCase() + mesActual.slice(1)} */}</h3>
+                <h3>Mes: {!!store.currentDate && mesActual.charAt(0).toUpperCase() + mesActual.slice(1)}</h3>
 
                 {/* !!store.departamentoUsuarios && !!store.edificioCompleto && store.departamentoUsuarios.length === store.edificioCompleto.numero_departamentos */} {store.departamentoUsuarios &&
 

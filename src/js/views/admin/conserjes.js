@@ -5,9 +5,6 @@ import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
 const Conserjes = () => {
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
     const [show, setShow] = useState(false)
     const { store, actions } = useContext(Context)
     const [borrar, setBorrar] = useState(false)
@@ -65,6 +62,12 @@ const Conserjes = () => {
     }
     const [filtroTurno, setFiltroTurno] = useState("Todos")
     const [filtroEstado, setFiltroEstado] = useState("Todos")
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        actions.getConserjes(store.currentEdificio)
+    }, [])
+
     return (
         <SidebarPage>
             <h1 className="mt-4">Conserjes</h1>

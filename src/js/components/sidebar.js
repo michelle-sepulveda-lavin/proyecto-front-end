@@ -10,9 +10,9 @@ const Sidebar = (props) => {
 
             <ul className="text-center navbar-nav sidebar bg-gradient-primary">
                 <li className="mb-4">
-                    <div className=".sidebar-brand d-flex align-items-center justify-content-center">
+                    <div className="d-flex align-items-center justify-content-center">
                         <div className="sidebar-brand-icon">
-                            <img alt="logo" className="img-fluid pt-3" src="https://richardgarcia.net/wp-content/uploads/2019/02/zOOM-LOGOS-PNG.png" />
+                            <img alt="logo" className="img-fluid pt-3" src="../edificos-felices-logo.png" />
                         </div>
                     </div>
                 </li>

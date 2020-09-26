@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ModalComprobante from '../../components/modalComprobante';
 import Pagination from '../../components/pagination';
@@ -6,7 +6,7 @@ import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
 const GastosAdmin = () => {
-    const { store } = useContext(Context)
+    const { store, actions } = useContext(Context)
     const [show, setShow] = useState(false)
     const [comprobanteName, setComprobanteName] = useState("")
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -17,6 +17,14 @@ const GastosAdmin = () => {
     const indexOfFirstPost = indexOfLastPost - perPage;
     const currentPosts = store.montosTotalesMes.slice(indexOfFirstPost, indexOfLastPost)
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+
+    useEffect(() => {
+        actions.getEdificioCompleto()
+        actions.getMontosTotales()
+        actions.getEstacionamientosDelEdificio()
+
+    }, [])
     return (
         <SidebarPage>
             <h1 className="mt-4">Gastos Comunes</h1>
@@ -62,7 +70,7 @@ const GastosAdmin = () => {
                                                         <td>{
                                                             new Intl.NumberFormat('en-US',
                                                                 { style: 'currency', currency: 'CLP' }
-                                                            ).format(monto.monto / store.edificioCompleto.numero_departamentos)
+                                                            ).format(monto.monto / parseFloat(!!store.edificioCompleto && store.edificioCompleto.numero_departamentos))
                                                         }</td>
 
                                                         <td>

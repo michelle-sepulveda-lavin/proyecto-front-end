@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
@@ -6,6 +6,10 @@ import { Context } from '../store/appContext';
 const DashboardAdmin = (props) => {
     const { store, actions } = useContext(Context)
     const monto = 1000000
+    useEffect(() => {
+        actions.getConserjes(store.currentEdificio)
+        actions.getGastosMesActual()
+    }, [])
 
     return (
         <div className="container-fluid">

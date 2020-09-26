@@ -6,26 +6,20 @@ import { Context } from '../store/appContext';
 const DashboardSuperAdmin = () => {
     const [avatar, setAvatar] = useState(null)
     const { store, actions } = useContext(Context)
-    const getAvatar = async (avatar) => {
-        try {
-            const resp = await fetch(`http://127.0.0.1:5000/avatares/${avatar}`)
-            const data = await resp.json()
 
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
-    const getConserje = async (id) => {
-        const resp = await fetch(`http://127.0.0.1:5000/conserjes/${id}`)
+    const getConserje = async () => {
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const userID = user.user.edificio
+        const resp = await fetch(`http://127.0.0.1:5000/conserjes/${userID}`)
         const data = await resp.json()
         setAvatar(data)
     }
 
 
     useEffect(() => {
-        getAvatar("Screenshot.png")
-        getConserje(1)
+        getConserje()
+        actions.getPlanes()
+
     }, [])
 
     const planesMensuales = []

@@ -58,8 +58,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             gastosComunesMesActual: [],
             errorLogin: null,
             gastosMes: [],
+            gastosMesPaginados: [],
             gastosDepto: [],
-            departamentoActualUsuario: []
+            departamentoActualUsuario: null,
+            g_idDepartamentoActual: null,
+            gastosDeptoUsuario: null,
+            gastosActual: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -67,40 +71,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                     [e.target.name]: e.target.value
                 })
             },
-            loginAction: async (e) => {
+            loginAction: async (e, history) => {
                 e.preventDefault();
                 const { username, password, apiURL } = getStore();
-                const resp = await fetch(`${apiURL}/login`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    })
-                });
-
+                const resp = await fetch(`${apiURL}/login`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: username, password: password }) });
                 const data = await resp.json();
-
                 const { msg } = data;
-
-                if (msg !== undefined) {
-                    setStore({
-                        errorLogin: msg
-                    })
-                } else {
-                    setStore({
-                        username: '',
-                        password: '',
-                        currentUser: data,
-                        error: null
-                    })
-                    localStorage.setItem('currentUser', JSON.stringify(data));
-                    /* sessionStorage.setItem('currentUser', JSON.stringify(data)); */
-                    const user = JSON.parse(localStorage.getItem("currentUser"));
-                    setStore({
-                        currentRol: user.user.rol.name,
-                        currentEdificio: user.user.edificio
-                    })
+                if (msg !== undefined) { setStore({ errorLogin: msg }) }
+                else {
+                    setStore({ username: '', password: '', currentUser: data, errorLogin: null, currentRol: data.user.rol.name, currentEdificio: data.user.edificio, currentUserId: data.user.id })
+                    localStorage.setItem('currentUser', JSON.stringify(data)); history.push("/dashboard")
                 }
             },
             crearEdificio: async (e, aux) => {
@@ -541,7 +521,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             postDptoUsuario: async (e, info) => {
                 e.preventDefault()
                 const { apiURL, currentEdificioID } = getStore();
-                const resp = await fetch(`${apiURL}/departamentoUsuarioEdificio/${currentEdificioID}`, {
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
+                const resp = await fetch(`${apiURL}/departamentoUsuarioEdificio/${edificioID}`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
@@ -1000,8 +982,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getMontosTotales: async () => {
                 const { apiURL, currentEdificioID, montosTotalesMes } = getStore();
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
                 try {
-                    const resp = await fetch(`${apiURL}/montostotales/edificio/${currentEdificioID}`)
+                    const resp = await fetch(`${apiURL}/montostotales/edificio/${edificioID}`)
                     const data = await resp.json()
                     if (resp.ok) {
                         setStore({
@@ -1016,22 +1000,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
             },
-            getGastosMonthYear: async (month, year) => {
+            getGastosMonthYear: async (month, year, setData) => {
                 const { apiURL, currentEdificioID, gastosMes } = getStore();
                 const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
                 const data = await resp.json()
                 const { msg } = data;
                 setStore({
-                    gastosMes: data
+                    gastosMes: data,
                 })
-
+                setData(data)
             },
             getGastosMesActual: async () => {
                 const { apiURL, currentEdificioID, currentDate, gastosComunesMesActual, montosTotalesMes } = getStore();
-
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
                 const month = currentDate.getMonth()
                 const year = currentDate.getFullYear()
-                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
+                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${edificioID}/${month}/${year}`)
                 const data = await resp.json()
                 const { msg } = data;
                 setStore({
@@ -1039,15 +1024,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
 
             },
-            getGastosDeptoActual: async (id) => {
+            getGastosDeptoActual: async (id, setData) => {
                 const { apiURL, currentEdificioID, gastosDepto } = getStore();
-
-                const resp = await fetch(`${apiURL}/gastoscomunes/depto/${currentEdificioID}/${id}`)
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
+                const resp = await fetch(`${apiURL}/gastoscomunes/depto/${edificioID}/${id}`)
                 const data = await resp.json()
                 const { msg } = data;
                 setStore({
                     gastosDepto: data
                 })
+                setData(data)
 
             },
             deleteBodegaEdificio: async () => {
@@ -1086,11 +1073,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             cambiarEstadoGastoComun: async (depto, month, year, estado) => {
                 const { apiURL, currentEdificio } = getStore()
                 const actions = getActions()
+                const formData = new FormData()
+                formData.append("estado", estado)
                 try {
                     const response = await fetch(`${apiURL}/gastoscomunes/depto/${currentEdificio}/${depto}/${month}/${year}`, {
                         method: "PATCH",
-                        body: JSON.stringify({ estado: estado }),
-                        headers: { 'Content-type': 'application/json; charset=UTF-8' }
+                        body: formData,
+                        headers: {}
                     })
                     const data = await response.json()
                     console.log(data)
@@ -1101,69 +1090,115 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error)
                 }
             },
-        },
-        getDepartamentoActualUsuario: async (id) => {
-            const { departamentoActualUsuario } = getStore()
+            getDepartamentoActualUsuario: async () => {
+                const { apiURL } = getStore()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const userID = user.user.id
+                const edificioID = user.user.edificio
+                try {
+                    const response = await fetch(`${apiURL}/infoDepartamentoUsuario/${userID}`);
+                    const data = await response.json()
+                    if (response.ok) {
+                        setStore({
+                            departamentoActualUsuario: data,
+                            g_idDepartamentoActual: data.numero_departamento
+                        })
+                        localStorage.setItem("departamento", JSON.stringify(data.numero_departamento))
 
-            const response = await fetch(`http://127.0.0.1:5000/departamentoUsuario/${id}`);
-            const data = await response.json()
-            if (response.ok) {
-                setStore({
-                    departamentoActualUsuario: data
-                })
-            }
-        },
-        handlePaqueteria: async (e, numeroDpto) => {
-            e.preventDefault();
-            const { apiURL, currentEdificioID } = getStore();
-            const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(numeroDpto)
-            });
-            const data = await resp.json();
-            if (resp.ok) {
-                alert(data.msg)
-                getActions().getPaqueteria()
-            } else {
-                alert(data.msg)
-            }
+                        /*                         const resp = await fetch(`${apiURL}/gastoscomunes/depto/${edificioID}/${data.numero_departamento}`)
+                                                const data2 = await resp.json()
+                                                setStore({ gastosDeptoUsuario: data2 })
+                                                console.log(data2)
+                                                setStore({
+                                                    gastosActual: data2.filter((meses) => {
+                                                        const q = new Date()
+                                                        const mes = q.getMonth();
+                                                        const year = q.getFullYear();
+                                                        return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
+                                                    })
+                                                }) */
 
-        },
-        getPaqueteria: async () => {
-            const { apiURL, currentEdificioID } = getStore();
-            const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
-            const data = await resp.json();
-            if (resp.ok) {
-                setStore({
-                    paqueteriaEdificio: data
-                })
-            } else {
-                alert(data.msg)
-            }
-        },
-        estadoPaquete: async (index) => {
-            const { apiURL, paqueteriaEdificio } = getStore();
-            const modificado = paqueteriaEdificio[index].id
-            const resp = await fetch(`${apiURL}/paqueteria/${modificado}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ estado: true })
-            });
-            const data = await resp.json()
-            if (resp.ok) {
-                alert(data.msg)
-                getActions().getPaqueteria()
-            } else {
-                alert(data.msg)
+                    }
+                    else { alert(data.msg) }
+                }
+                catch (error) {
+                    console.log(error)
+                }
+            },
+
+            handlePaqueteria: async (e, numeroDpto) => {
+                e.preventDefault();
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(numeroDpto)
+                });
+                const data = await resp.json();
+                if (resp.ok) {
+                    alert(data.msg)
+                    getActions().getPaqueteria()
+                } else {
+                    alert(data.msg)
+                }
+
+            },
+            getPaqueteria: async () => {
+                const { apiURL, currentEdificioID } = getStore();
+                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
+                const data = await resp.json();
+                if (resp.ok) {
+                    setStore({
+                        paqueteriaEdificio: data
+                    })
+                } else {
+                    alert(data.msg)
+                }
+            },
+            estadoPaquete: async (index) => {
+                const { apiURL, paqueteriaEdificio } = getStore();
+                const modificado = paqueteriaEdificio[index].id
+                const resp = await fetch(`${apiURL}/paqueteria/${modificado}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ estado: true })
+                });
+                const data = await resp.json()
+                if (resp.ok) {
+                    alert(data.msg)
+                    getActions().getPaqueteria()
+                } else {
+                    alert(data.msg)
+                }
+            },
+            enviarComprobantePago: async (depto, month, year, aux) => {
+                const { apiURL } = getStore()
+                const actions = getActions()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const userID = user.user.edificio
+                const formData = new FormData;
+                formData.append("pago", aux)
+                formData.append("estado", "revision")
+                try {
+                    const response = await fetch(`${apiURL}/gastoscomunes/depto/${userID}/${depto}/${month}/${year}`, {
+                        method: "PATCH",
+                        body: formData,
+                        headers: {}
+                    })
+                    const data = await response.json()
+                    console.log(data)
+                }
+
+                catch (error) {
+                    console.log(error)
+                }
             }
         }
-    }
 
+    };
 };
-
 export default getState;

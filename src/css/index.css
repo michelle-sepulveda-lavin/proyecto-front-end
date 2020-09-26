@@ -97,6 +97,7 @@ body {
 }
 
 .footer {
+  font-size: 0.85em;
   position: relative;
   right: 0;
   bottom: 0;
@@ -117,7 +118,7 @@ body {
 }
 .sidebar {
   min-height: 100vh;
-  width: 9em;
+  width: 11em;
   color: #eeeeee;
   font-size: 90%;
 }
@@ -343,7 +344,8 @@ li {
   background: #f9fbff;
 }
 .modal-lg {
-  min-height: 70vh;
+  min-height: 60vh;
+  min-width: 50vh;
 }
 .boton-hover {
   background: #fff;
@@ -358,5 +360,29 @@ li {
 .dashboard-blue {
   background-color: #121975;
   background-image: linear-gradient(160deg, #0312e4 10%, #010031 100%);
+  background-size: cover;
+}
+.modal-lg2 {
+  min-height: 60vh;
+  min-width: 55vw;
+}
+.bg-modal {
+  background: #eceef1;
+}
+.logo-footer {
+  width: 6.5em;
+  height: auto;
+}
+.logo-home {
+  width: 4.5em;
+  height: auto;
+}
+.logo-planes {
+  width: 6.3em;
+}
+.planes {
+  background: #021e4b;
+  background-color: #011638;
+  background-image: linear-gradient(155deg, #001c49 10%, rgb(9, 9, 17) 110%);
   background-size: cover;
 }
