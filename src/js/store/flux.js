@@ -266,6 +266,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             handleClose: (history) => {
                 localStorage.removeItem("currentUser")
+                localStorage.removeItem("departamento")
                 setStore({
                     username: "",
                     password: '',
@@ -1026,7 +1027,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
             },
-            getGastosMonthYear: async (month, year, setData) => {
+            getGastosMonthYear: async (month, year) => {
                 const { apiURL, currentEdificioID, gastosMes } = getStore();
                 const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
                 const data = await resp.json()
@@ -1034,7 +1035,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({
                     gastosMes: data,
                 })
-                setData(data)
             },
             getGastosMesActual: async () => {
                 const { apiURL, currentEdificioID, currentDate, gastosComunesMesActual, montosTotalesMes } = getStore();

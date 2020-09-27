@@ -7,7 +7,11 @@ import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
 const GastosDepartamentos = () => {
+
     const { store, actions } = useContext(Context)
+
+
+
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     const estados = ["No Pagado", "Moroso", "Por Revisar", "Pagado"];
     const [gastoSeleccionado, setGastoSeleccionado] = useState("");
@@ -35,13 +39,31 @@ const GastosDepartamentos = () => {
         pago: null
     })
     const [data, setData] = useState([])
-    const currentPosts = data.length > 0 && data.slice(indexOfFirstPost, indexOfLastPost)
-
+    const currentPosts = data.length > 0 ? data.slice(indexOfFirstPost, indexOfLastPost) : []
 
     useEffect(() => {
         actions.getMontosTotales()
-
+        actions.getEdificioCompleto()
+        actions.getEstacionamientosDelEdificio()
     }, []);
+
+    useEffect(() => {
+        let _isMounted = true
+
+        const getGastosMonthYear = async (month, year) => {
+            const resp = await fetch(`${store.apiURL}/gastoscomunes/edificio/${store.currentEdificioID}/${month}/${year}`)
+            const data = await resp.json()
+            const { msg } = data;
+            if (_isMounted) {
+                setData(data)
+            }
+        }
+
+        getGastosMonthYear(gastoSeleccionado.month, gastoSeleccionado.year)
+        actions.getGastosMonthYear(gastoSeleccionado.month, gastoSeleccionado.year)
+        return () => _isMounted = false
+    }, [gastoSeleccionado]);
+
 
     const [showPago, setShowPago] = useState(false)
     const [comprobantePago, setComprobantePago] = useState(null)
@@ -54,7 +76,12 @@ const GastosDepartamentos = () => {
                         <div className="d-flex align-items-center mr-3">
                             <p className="m-0">Busca por fecha: </p>
                         </div>
-                        <select className=" form-control mr-3" defaultValue={'default'} id="turno" onChange={handleInputGastos}>
+                        <select className=" form-control mr-3" defaultValue={'default'} id="turno" onChange={(e) => {
+                            handleInputGastos(e)
+                            setEstadoPago("todos")
+                            setCurrentPage(1)
+
+                        }}>
                             <option>Seleccionar</option>
                             {store.montosTotalesMes.length > 0 ?
                                 store.montosTotalesMes.map((monto) => {
@@ -66,13 +93,7 @@ const GastosDepartamentos = () => {
 
                         </select>
                         <div>
-                            <button className="btn btn-success" onClick={() => {
-                                if (gastoSeleccionado !== "") {
-                                    actions.getGastosMonthYear(gastoSeleccionado.month, gastoSeleccionado.year, setData)
-                                    setEstadoPago("todos")
-                                    setCurrentPage(1)
-                                }
-                            }}>Buscar</button>
+
                         </div>
                     </div>
                 </div>
@@ -111,7 +132,7 @@ const GastosDepartamentos = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {data.length > 0 && currentPosts.map((gasto, index) => {
+                                                {currentPosts.map((gasto, index) => {
 
                                                     if (gasto.estado === estadoPago || estadoPago === "todos") {
                                                         return (
@@ -199,7 +220,7 @@ const GastosDepartamentos = () => {
                                             </tbody>
 
                                         </table>
-                                        <Pagination postsPerPage={perPage} totalPosts={store.gastosMes.length} paginate={paginate} />
+                                        <Pagination postsPerPage={perPage} totalPosts={data.length} paginate={paginate} />
                                     </>
                                 }
                                 {store.montosTotalesMes.length === 0 &&

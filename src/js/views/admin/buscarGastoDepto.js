@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from '../../components/pagination';
 import PagoGastos from '../../components/pagoGasto';
@@ -15,6 +15,12 @@ const GastosDeptoActual = () => {
     const handleInput = (e) => {
         setDeptoSeleccionado(e.target.value)
     }
+    useEffect(() => {
+        actions.getEdificioCompleto()
+        actions.getMontosTotales()
+        actions.getEstacionamientosDelEdificio()
+
+    }, [])
     const [gastosMes, setGastosMes] = useState([]);
     const [show, setShow] = useState(false)
     const [dataPago, setDataPago] = useState({
@@ -31,7 +37,7 @@ const GastosDeptoActual = () => {
     const indexOfLastPost = currentPage * perPage;
     const indexOfFirstPost = indexOfLastPost - perPage;
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
-    const currentPosts = gastosMes.length > 0 && gastosMes.slice(indexOfFirstPost, indexOfLastPost)
+    const currentPosts = gastosMes.length > 0 ? gastosMes.slice(indexOfFirstPost, indexOfLastPost) : []
 
     return (
         <SidebarPage>
@@ -77,7 +83,7 @@ const GastosDeptoActual = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {gastosMes.length > 0 && currentPosts.map((gasto, index) => {
+                                                {currentPosts.map((gasto, index) => {
 
 
                                                     return (
