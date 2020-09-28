@@ -32,6 +32,7 @@ import InicializacionPisos from './views/admin/inicializacionPisos';
 import SubirGastos from './components/subirGastos';
 import GastosDepartamentos from './views/admin/gastosDepartamentos';
 import GastosDeptoActual from './views/admin/buscarGastoDepto';
+import HistorialBoletin from './views/admin/historialBoletin';
 
 
 
@@ -40,6 +41,7 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/admin/historial-boletines' component={HistorialBoletin} />
                     <Route exact path='/admin/gastos-depto-actual' component={GastosDeptoActual} />
                     <Route exact path='/admin/gastos-departamentos' component={GastosDepartamentos} />
                     <Route exact path='/admin/subir-gastos' component={SubirGastos} />

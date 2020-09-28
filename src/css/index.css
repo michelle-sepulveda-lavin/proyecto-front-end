@@ -118,7 +118,7 @@ body {
 }
 .sidebar {
   min-height: 100vh;
-  width: 11em;
+  width: 10em;
   color: #eeeeee;
   font-size: 90%;
 }
@@ -245,7 +245,7 @@ li {
   background: #ffffff;
 }
 .btn-dashboard {
-  background: #011638;
+  background: #3faaf2;
 }
 .dashboard-text {
   color: #5a5c69;
@@ -341,7 +341,7 @@ li {
   font-size: 1.1rem;
 }
 .prueba {
-  background: #f9fbff;
+  background: #3db5d00e;
 }
 .modal-lg {
   min-height: 60vh;
@@ -368,7 +368,7 @@ li {
   background-size: cover;
 }
 
-.login-background{
+.login-background {
   background-color: #3941b4a4;
   background-image: linear-gradient(60deg, #1821a5 10%, #3f3ddf 60%);
 }
@@ -395,4 +395,39 @@ li {
   background-color: #011638;
   background-image: linear-gradient(155deg, #001c49 10%, rgb(9, 9, 17) 110%);
   background-size: cover;
+}
+.bg-db-1 {
+  background: #48a7e4;
+}
+.bg-db-2 {
+  background: #3abeb8;
+}
+.bg-db-3 {
+  background: #ececec;
+}
+
+.btn-db-1 {
+  background: #288ed1;
+  width: 5em;
+  height: 5em;
+  border-radius: 90%;
+  color: #ebecf1;
+}
+.btn-db-2 {
+  background: #2a978b;
+  width: 5em;
+  height: 5em;
+  border-radius: 90%;
+  color: #ebecf1;
+}
+.btn-db-3 {
+  background: #c7c7c7;
+  width: 5em;
+  height: 5em;
+  border-radius: 90%;
+}
+.btn-db-1 p,
+.btn-db-2 p,
+.btn-db-3 p {
+  font-size: 3rem;
 }

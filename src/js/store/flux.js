@@ -45,8 +45,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             conserjes: [],
             finalUserBuilding: [],
             departamentoModificar: null,
-            bodegaM2: 10,
-            estacionamientoM2: 15,
             usuariosEdificioNoAsignados: null,
             contadorUsuarios: null,
             bodegasEdificio: null,
@@ -698,7 +696,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             crearConserje: async (e, aux) => {
                 const actions = getActions()
                 const store = getStore()
-                const { crearConserje, currentEdificio, roles, apiURL } = getStore()
+                const { crearConserje, roles, apiURL } = getStore()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
                 e.preventDefault()
                 const conserjeIndex = roles.length > 0 && (roles.map((rol) => rol.rol).indexOf('conserje'));
 
@@ -717,7 +717,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 formData.append("username", aux.username);
 
-                formData.append("edificios_id", currentEdificio)
+                formData.append("edificios_id", edificioID)
                 formData.append("rol_id", roles[conserjeIndex].id)
                 formData.append("nombre", aux.nombre);
                 formData.append("telefono", aux.telefono);
@@ -744,7 +744,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             crearConserje: { ...crearConserje, error: msg }
                         })
                     }
-                    actions.getConserjes(store.currentEdificio)
+                    actions.getConserjes(edificioID)
 
                 }
                 catch (error) {
@@ -795,8 +795,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             cambiarEstadoConserje: async (id, estado) => {
-                const { apiURL, currentEdificio } = getStore()
+                const { apiURL } = getStore()
                 const actions = getActions()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
                 try {
                     const response = await fetch(`${apiURL}/conserjes/estado-conserje/${id}`, {
                         method: "PATCH",
@@ -805,7 +807,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                     const data = await response.json()
                     console.log(data)
-                    actions.getConserjes(currentEdificio)
+                    actions.getConserjes(edificioID)
                 }
 
                 catch (error) {
@@ -850,16 +852,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             calculoPorcentajeGastoComunDepto: (depto, montoGastos, depaID, comprobante, history) => {
                 const { getTotalM2, postGastosComunes } = getActions()
-                const { departamentos, bodegasEdificio, estacionamientoEdificios, gastosComunes, currentEdificio, currentDate } = getStore()
+                const { departamentos, bodegasEdificio, estacionamientoEdificios, gastosComunes, currentDate } = getStore()
                 const totalM2edificio = getTotalM2(departamentos)
-
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
                 const mes = currentDate.getMonth()
                 const year = currentDate.getFullYear()
 
                 const formData = new FormData();
                 formData.append("month", mes)
                 formData.append("year", year)
-                formData.append("edificio_id", currentEdificio)
+                formData.append("edificio_id", edificioID)
                 formData.append("montoTotal", montoGastos)
                 formData.append("departamento_id", depaID)
                 formData.append("comprobante", comprobante.comprobante)
@@ -1008,7 +1011,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             getMontosTotales: async () => {
-                const { apiURL, currentEdificioID, montosTotalesMes } = getStore();
+                const { apiURL } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
                 const edificioID = user.user.edificio
                 try {
@@ -1027,14 +1030,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
             },
-            getGastosMonthYear: async (month, year) => {
-                const { apiURL, currentEdificioID, gastosMes } = getStore();
-                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
-                const data = await resp.json()
-                const { msg } = data;
-                setStore({
-                    gastosMes: data,
-                })
+            getGastosMonthYear: async (month, year, setData) => {
+                const { apiURL } = getStore();
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
+                try {
+                    const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${edificioID}/${month}/${year}`)
+                    const data = await resp.json()
+                    const { msg } = data;
+                    setStore({
+                        gastosMes: data,
+                    })
+                    console.log(data)
+                    console.log("prueba")
+
+                    setData(data)
+
+                    return data
+                }
+                catch (error) {
+                    console.log(error)
+                }
             },
             getGastosMesActual: async () => {
                 const { apiURL, currentEdificioID, currentDate, gastosComunesMesActual, montosTotalesMes } = getStore();
@@ -1051,7 +1067,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             },
             getGastosDeptoActual: async (id, setData) => {
-                const { apiURL, currentEdificioID, gastosDepto } = getStore();
+                const { apiURL, gastosDepto } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
                 const edificioID = user.user.edificio
                 const resp = await fetch(`${apiURL}/gastoscomunes/depto/${edificioID}/${id}`)
@@ -1096,20 +1112,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 
             },
-            cambiarEstadoGastoComun: async (depto, month, year, estado) => {
-                const { apiURL, currentEdificio } = getStore()
+            cambiarEstadoGastoComun: async (depto, month, year, estado, setData) => {
+                const { apiURL } = getStore()
                 const actions = getActions()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
                 const formData = new FormData()
                 formData.append("estado", estado)
                 try {
-                    const response = await fetch(`${apiURL}/gastoscomunes/depto/${currentEdificio}/${depto}/${month}/${year}`, {
+                    const response = await fetch(`${apiURL}/gastoscomunes/depto/${edificioID}/${depto}/${month}/${year}`, {
                         method: "PATCH",
                         body: formData,
                         headers: {}
                     })
                     const data = await response.json()
                     console.log(data)
-                    actions.getGastosMonthYear(month, year)
+                    actions.getGastosMonthYear(month, year, setData)
                 }
                 catch (error) {
                     console.log(error)
@@ -1316,7 +1334,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                 else {
                     setStore({ all_boletin: data })
                 }
+            },
+            cambiarEstadoBoletin: async (id, estado) => {
+                const { apiURL } = getStore()
+                const actions = getActions()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio
+                try {
+                    const response = await fetch(`${apiURL}/boletin/${edificioID}/${id}`, {
+                        method: "PATCH",
+                        body: JSON.stringify({ estado: estado }),
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' }
+                    })
+                    const data = await response.json()
+                    console.log(data)
+                    actions.getBoletines(edificioID)
+                }
 
+                catch (error) {
+                    console.log(error)
+                }
             }
 
         }

@@ -15,12 +15,7 @@ const GastosDeptoActual = () => {
     const handleInput = (e) => {
         setDeptoSeleccionado(e.target.value)
     }
-    useEffect(() => {
-        actions.getEdificioCompleto()
-        actions.getMontosTotales()
-        actions.getEstacionamientosDelEdificio()
 
-    }, [])
     const [gastosMes, setGastosMes] = useState([]);
     const [show, setShow] = useState(false)
     const [dataPago, setDataPago] = useState({
@@ -37,7 +32,7 @@ const GastosDeptoActual = () => {
     const indexOfLastPost = currentPage * perPage;
     const indexOfFirstPost = indexOfLastPost - perPage;
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
-    const currentPosts = gastosMes.length > 0 ? gastosMes.slice(indexOfFirstPost, indexOfLastPost) : []
+    const currentPosts = gastosMes.length > 0 && gastosMes.slice(indexOfFirstPost, indexOfLastPost)
 
     return (
         <SidebarPage>
@@ -64,7 +59,7 @@ const GastosDeptoActual = () => {
                     <div>
                         <div className="row mx-auto mt-4">
                             <div className="col-12 col-md-10 mx-auto overflow-auto pb-4">
-                                {store.gastosDepto.length > 0 &&
+                                {gastosMes.length > 0 &&
                                     <>
 
 
@@ -83,58 +78,59 @@ const GastosDeptoActual = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {currentPosts.map((gasto, index) => {
+                                                {gastosMes.length > 0 &&
+                                                    currentPosts.map((gasto, index) => {
 
 
-                                                    return (
+                                                        return (
 
-                                                        <tr key={index} className={gasto.estado === "noPagado" ? "bg-warning" : ""}>
-                                                            <th scope="row">{gasto.departamento.numero_depto}</th>
-                                                            <td>{new Intl.NumberFormat('en-US',
-                                                                { style: 'currency', currency: 'CLP' }
-                                                            ).format(gasto.monto)} </td>
-                                                            <td>{gasto.estado === "noPagado" ? estados[0] : gasto.estado === "moroso" ? estados[1] : gasto.estado === "revision" ? estados[2] : gasto.estado === "pagado" ? estados[3] : ""}</td>
+                                                            <tr key={index} className={gasto.estado === "noPagado" ? "bg-warning" : ""}>
+                                                                <th scope="row">{gasto.departamento.numero_depto}</th>
+                                                                <td>{new Intl.NumberFormat('en-US',
+                                                                    { style: 'currency', currency: 'CLP' }
+                                                                ).format(gasto.monto)} </td>
+                                                                <td>{gasto.estado === "noPagado" ? estados[0] : gasto.estado === "moroso" ? estados[1] : gasto.estado === "revision" ? estados[2] : gasto.estado === "pagado" ? estados[3] : ""}</td>
 
-                                                            <td>{meses[gasto.month]}</td>
-                                                            <td>{gasto.year}</td>
+                                                                <td>{meses[gasto.month]}</td>
+                                                                <td>{gasto.year}</td>
 
-                                                            <td> {
-                                                                gasto.estado === "pagado" ?
+                                                                <td> {
+                                                                    gasto.estado === "pagado" ?
 
-                                                                    <span className="btn btn-success px-4"
-                                                                        onClick={() => {
-                                                                            setShowPago(true)
-                                                                            setComprobantePago(gasto.pago)
-                                                                        }
-                                                                        }>Comprobante</span>
-                                                                    :
-                                                                    gasto.estado === "revision" ?
-                                                                        <span className="btn btn-warning px-5"
+                                                                        <span className="btn btn-success px-4"
                                                                             onClick={() => {
-
-                                                                                setShow(true)
-                                                                                setDataPago({
-                                                                                    idDepto: gasto.departamento.departamento_id,
-                                                                                    month: gasto.month,
-                                                                                    year: gasto.year,
-                                                                                    pago: gasto.pago
-                                                                                })
-
-                                                                            }}>Validar</span>
+                                                                                setShowPago(true)
+                                                                                setComprobantePago(gasto.pago)
+                                                                            }
+                                                                            }>Comprobante</span>
                                                                         :
-                                                                        gasto.estado === "noPagado" ?
-                                                                            <span className="btn btn-info"
+                                                                        gasto.estado === "revision" ?
+                                                                            <span className="btn btn-warning px-5"
                                                                                 onClick={() => {
-                                                                                    console.log("EN PROGRESO")
-                                                                                }}>Enviar notificación</span>
-                                                                            :
-                                                                            ""
-                                                            }
-                                                            </td>
-                                                        </tr>
-                                                    )
 
-                                                })
+                                                                                    setShow(true)
+                                                                                    setDataPago({
+                                                                                        idDepto: gasto.departamento.departamento_id,
+                                                                                        month: gasto.month,
+                                                                                        year: gasto.year,
+                                                                                        pago: gasto.pago
+                                                                                    })
+
+                                                                                }}>Validar</span>
+                                                                            :
+                                                                            gasto.estado === "noPagado" ?
+                                                                                <span className="btn btn-info"
+                                                                                    onClick={() => {
+                                                                                        console.log("EN PROGRESO")
+                                                                                    }}>Enviar notificación</span>
+                                                                                :
+                                                                                ""
+                                                                }
+                                                                </td>
+                                                            </tr>
+                                                        )
+
+                                                    })
                                                 }
                                             </tbody>
                                         </table>

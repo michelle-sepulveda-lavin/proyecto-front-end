@@ -1,15 +1,22 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../store/appContext';
 
-const BoletinTable = (props) => {
+const BoletinInactivoTable = (props) => {
 
     const { store, actions } = useContext(Context);
 
     useEffect(() => {
-        actions.getBoletines()
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const edificioID = user.user.edificio
+        actions.getBoletines(edificioID)
     }, [])
 
-
+    const filtroBoletin = () => {
+        const inactivo = store.all_boletin.filter((boletin) => {
+            return boletin.estado === false
+        })
+        return inactivo
+    }
 
 
     return (
@@ -27,15 +34,23 @@ const BoletinTable = (props) => {
                     <tbody className="overflow-auto">
                         {
                             store.all_boletin.length > 0 ?
-                                store.all_boletin.map((edificio, index) => (
+                                filtroBoletin().map((edificio, index) => (
                                     <tr key={edificio.edificio_id} >
                                         <th scope="row">{edificio.id}</th>
                                         <td className="text-center">{edificio.asunto}</td>
                                         <td className="text-break w-50"><p>{edificio.body}</p></td>
                                         <td>
                                             <div className="custom-control custom-switch">
-                                                <input type="checkbox" className="custom-control-input" id={"customSwitch" + index} />
-                                                <label className="custom-control-label" htmlFor={"customSwitch" + index}>Activo</label>
+                                                <input type="checkbox" className="custom-control-input" id={"customSwitch" + index} defaultChecked={edificio.estado === true ? "checked" : ""} />
+                                                <label className="custom-control-label" htmlFor={"customSwitch" + index} onClick={(e) => {
+                                                    let estado = "";
+                                                    if (edificio.estado === false) {
+                                                        estado = true
+                                                    } else {
+                                                        estado = false
+                                                    }
+                                                    actions.cambiarEstadoBoletin(edificio.id, estado)
+                                                }}>{edificio.estado === true ? "Activo" : "Inactivo"}</label>
                                             </div>
                                         </td>
                                     </tr>
@@ -55,4 +70,4 @@ const BoletinTable = (props) => {
     )
 };
 
-export default BoletinTable;
+export default BoletinInactivoTable;
