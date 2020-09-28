@@ -1085,7 +1085,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     gastosDepto: data
                 })
                 setData(data)
-
+                return data
             },
             deleteBodegaEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
@@ -1120,7 +1120,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 
             },
-            cambiarEstadoGastoComun: async (depto, month, year, estado, setData) => {
+            cambiarEstadoGastoComun: async (depto, month, year, estado, setData, setData2) => {
                 const { apiURL } = getStore()
                 const actions = getActions()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
@@ -1136,6 +1136,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json()
                     console.log(data)
                     actions.getGastosMonthYear(month, year, setData)
+                    actions.getGastosMonthYear(month, year, setData2)
                 }
                 catch (error) {
                     console.log(error)
@@ -1274,7 +1275,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore()
                 const actions = getActions()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const userID = user.user.edificio
+                const userID = user.user.edificio.id
                 const formData = new FormData;
                 formData.append("pago", aux)
                 formData.append("estado", "revision")
