@@ -8,13 +8,13 @@ const DashboardAdmin = (props) => {
 
     const filtradoHabitado = () => {
         const habitados = store.departamentoUsuarios.filter((dpto) => {
-            return dpto.estado == "habitado"
+            return dpto.estado === "habitado"
         })
         return habitados
     }
     const filtradoDeshabitado = () => {
         const deshabitados = store.departamentoUsuarios.filter((dpto) => {
-            return dpto.estado == "deshabitado"
+            return dpto.estado === "deshabitado"
         })
         return deshabitados
     }
@@ -108,8 +108,8 @@ const DashboardAdmin = (props) => {
                                     if (conserje.estado === true) {
                                         return (
 
-                                            <div class="card mb-2 mb-md-4 p-2 prueba shadow-sm ">
-                                                <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
+                                            <div key={index} className="card mb-2 mb-md-4 p-2 prueba shadow-sm ">
+                                                <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
                                                     <div className="w-75 d-flex align-items-center" >
 
                                                         <div className="d-flex align-items-center  flex-column">  <img src="../user.png" className="img-fluid w-40" />

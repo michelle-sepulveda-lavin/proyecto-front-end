@@ -1274,7 +1274,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore()
                 const actions = getActions()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const userID = user.user.edificio
+                const userID = user.user.edificio.id
                 const formData = new FormData;
                 formData.append("pago", aux)
                 formData.append("estado", "revision")

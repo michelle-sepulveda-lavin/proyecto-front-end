@@ -38,10 +38,11 @@ const GastosDepartamentos = () => {
     const currentPosts = data.length > 0 && data.slice(indexOfFirstPost, indexOfLastPost)
 
     const [data2, setData2] = useState([])
+
     useEffect(() => {
         actions.getMontosTotales()
 
-    }, []);
+    },[]);
 
     const [showPago, setShowPago] = useState(false)
     const [comprobantePago, setComprobantePago] = useState(null)
@@ -106,7 +107,7 @@ const GastosDepartamentos = () => {
                                     setEstadoPago("todos")
                                     setCurrentPage(1)
                                     actions.getGastosMonthYear(gastoSeleccionado.month, gastoSeleccionado.year, setData).then(response => { setData2(response) })
-                                    console.log("prueba")
+                                    /* console.log("prueba") */
                                 }
                             }}>Buscar</button>
                         </div>
