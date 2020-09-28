@@ -27,7 +27,7 @@ const DashboardAdmin = (props) => {
         const year = q.getFullYear();
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const userID = JSON.parse(localStorage.getItem("departamento"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         const resp = await fetch(`${store.apiURL}/gastoscomunes/edificio/${edificioID}/${mes}/${year}`)
         const data = await resp.json()
         setGastosDepto(data)
@@ -37,7 +37,7 @@ const DashboardAdmin = (props) => {
     useEffect(() => {
         actions.getConserjes(store.currentEdificio.id)
         const user = JSON.parse(localStorage.getItem("currentUser"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         actions.getConserjes(edificioID)
         actions.getGastosMesActual()
         actions.getEdificioCompleto()

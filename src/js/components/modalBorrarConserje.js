@@ -6,7 +6,7 @@ const BorrarConserje = props => {
     const { actions, store } = useContext(Context)
     const deleteConserje = async () => {
         const user = JSON.parse(localStorage.getItem("currentUser"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         const response = await fetch(`${store.apiURL}/conserjes/${props.id}`, {
             method: "DELETE",
             headers: {
