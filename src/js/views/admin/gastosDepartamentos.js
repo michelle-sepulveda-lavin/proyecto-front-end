@@ -176,10 +176,7 @@ const GastosDepartamentos = () => {
                                                                     { style: 'currency', currency: 'CLP' }
                                                                 ).format(gasto.monto)}</td>
                                                             <td>{gasto.estado === "noPagado" ? estados[0] : gasto.estado === "moroso" ? estados[1] : gasto.estado === "revision" ? estados[2] : gasto.estado === "pagado" ? estados[3] : ""}</td>
-                                                            <td>{estadoPago === "revision" && <span className="btn btn-warning"
-                                                                onClick={() => {
-                                                                    actions.cambiarEstadoGastoComun(gasto.departamento.departamento_id, gasto.month, gasto.year, "pagado", setData)
-                                                                }}>Cambiar Estado</span>} </td>
+                                                            <td> </td>
 
 
                                                             {estadoPago === "todos" ?
@@ -288,7 +285,7 @@ const GastosDepartamentos = () => {
             </div>
             <PagoUsuario pago={comprobantePago} show={showPago} setShow={setShowPago}></PagoUsuario>
 
-            <PagoGastos show={show} setShow={setShow} datos={dataPago} setData={setData}></PagoGastos>
+            <PagoGastos show={show} setShow={setShow} datos={dataPago} setData={setData} setData2={setData2} mes={gastoSeleccionado}></PagoGastos>
         </SidebarPage >
     )
 };
