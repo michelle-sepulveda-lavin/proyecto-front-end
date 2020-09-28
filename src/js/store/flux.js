@@ -391,7 +391,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                     getActions().getUsuariosDelEdificio()
                     getActions().getUsuarios(e)
-                   
+
                 }
             },
             cerrarModal: () => {
@@ -555,9 +555,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             postDptoUsuario: async (e, info) => {
                 e.preventDefault()
-                const { apiURL, currentEdificioID } = getStore();
+                const { apiURL } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 const resp = await fetch(`${apiURL}/departamentoUsuarioEdificio/${edificioID}`, {
                     method: 'POST',
                     headers: {
@@ -706,7 +706,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore()
                 const { crearConserje, roles, apiURL } = getStore()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 e.preventDefault()
                 const conserjeIndex = roles.length > 0 && (roles.map((rol) => rol.rol).indexOf('conserje'));
 
@@ -806,7 +806,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore()
                 const actions = getActions()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 try {
                     const response = await fetch(`${apiURL}/conserjes/estado-conserje/${id}`, {
                         method: "PATCH",
@@ -1041,7 +1041,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             getGastosMonthYear: async (month, year, setData) => {
                 const { apiURL } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 try {
                     const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${edificioID}/${month}/${year}`)
                     const data = await resp.json()
@@ -1077,7 +1077,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             getGastosDeptoActual: async (id, setData) => {
                 const { apiURL, gastosDepto } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 const resp = await fetch(`${apiURL}/gastoscomunes/depto/${edificioID}/${id}`)
                 const data = await resp.json()
                 const { msg } = data;
@@ -1124,7 +1124,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore()
                 const actions = getActions()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 const formData = new FormData()
                 formData.append("estado", estado)
                 try {
@@ -1145,7 +1145,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
                 const userID = user.user.id
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 try {
                     const response = await fetch(`${apiURL}/infoDepartamentoUsuario/${userID}`);
                     const data = await response.json()
@@ -1347,7 +1347,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore()
                 const actions = getActions()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 try {
                     const response = await fetch(`${apiURL}/boletin/${edificioID}/${id}`, {
                         method: "PATCH",
@@ -1362,12 +1362,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error)
                 }
             },
-            activarModalEdit: () =>{
+            activarModalEdit: () => {
                 setStore({
                     flagModalEditUser: true
                 })
             },
-            cerrarModalEdit: () =>{
+            cerrarModalEdit: () => {
                 setStore({
                     flagModalEditUser: false
                 })

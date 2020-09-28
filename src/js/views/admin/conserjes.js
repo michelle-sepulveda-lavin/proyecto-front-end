@@ -33,7 +33,7 @@ const Conserjes = () => {
     const changeConserje = async (id, conserje) => {
         const formData1 = new FormData()
         const user = JSON.parse(localStorage.getItem("currentUser"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         if (conserje.nombre !== undefined && conserje.nombre !== "") {
             formData1.append("nombre", conserje.nombre)
         }
@@ -69,7 +69,7 @@ const Conserjes = () => {
 
         window.scrollTo(0, 0)
         const user = JSON.parse(localStorage.getItem("currentUser"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         actions.getConserjes(edificioID)
     }, [])
 

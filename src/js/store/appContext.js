@@ -20,15 +20,12 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			/* const user = JSON.parse(localStorage.getItem("currentUser"))
-			const edificioID = user.user.edificio */
 			state.actions.getRoles()
 			state.actions.getCurrentRol();
 			state.actions.getEdificiosData()
 			state.actions.getCurrentDate()
 			state.actions.sesionIniciada()
 			state.actions.getEdificioCompleto()
-			/* state.actions.getBoletines(edificioID) */
 		}, []);
 
 		useEffect(() => {

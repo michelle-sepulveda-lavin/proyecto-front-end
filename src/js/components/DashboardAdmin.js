@@ -27,7 +27,7 @@ const DashboardAdmin = (props) => {
         const year = q.getFullYear();
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const userID = JSON.parse(localStorage.getItem("departamento"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         const resp = await fetch(`${store.apiURL}/gastoscomunes/edificio/${edificioID}/${mes}/${year}`)
         const data = await resp.json()
         setGastosDepto(data)
@@ -37,7 +37,7 @@ const DashboardAdmin = (props) => {
     useEffect(() => {
         actions.getConserjes(store.currentEdificio.id)
         const user = JSON.parse(localStorage.getItem("currentUser"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         actions.getConserjes(edificioID)
         actions.getGastosMesActual()
         actions.getEdificioCompleto()
@@ -78,7 +78,7 @@ const DashboardAdmin = (props) => {
                             filtroBoletin().map((boletin, index) => {
 
 
-                                return <li key={index} className="h-100 pt-0 pl-4 pr-4 col mb-3 text-dark ">  <div className="bg-db-3 row py-2"><div className="col-12 col-md-3 d-flex align-items-center"><img className="img-fluid  d-inline" src="../email.png" /></div> <h4 className="p-3 col-md-9 col-12 d-inline rounded-lg" >{boletin.asunto}</h4> </div> </li>
+                                return <li key={index} className="h-100 pt-0 pl-4 pr-4 col mb-3 text-dark ">  <div className="bg-db-3 row py-2"><div className="col-10 col-md-3 d-flex align-items-center"><img className="img-fluid  d-inline" src="../email.png" /></div> <h4 className="p-3 col-md-9 col-12 d-inline rounded-lg" >{boletin.asunto}</h4> </div> </li>
 
 
                             })
@@ -186,6 +186,9 @@ const DashboardAdmin = (props) => {
                                         </div>
 
                                     </div>
+                                    <div className="d-flex justify-content-end">
+                                        <Link to={"/admin/departamentos"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -220,6 +223,9 @@ const DashboardAdmin = (props) => {
                                             </div>
                                         </div>
 
+                                    </div>
+                                    <div className="d-flex justify-content-end">
+                                        <Link to={"/admin/gastos-comunes"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
                                     </div>
                                 </div>
                             </div>

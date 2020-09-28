@@ -34,7 +34,7 @@ const GastosUser = () => {
     const getGastosDeptoActual = async () => {
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const userID = JSON.parse(localStorage.getItem("departamento"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         const resp = await fetch(`${store.apiURL}/gastoscomunes/depto/${edificioID}/${userID}`)
         const data = await resp.json()
         setGastosDepto(data)

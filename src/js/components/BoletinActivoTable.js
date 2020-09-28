@@ -7,7 +7,7 @@ const BoletinActivoTable = (props) => {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("currentUser"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         actions.getBoletines(edificioID)
     }, [])
 
