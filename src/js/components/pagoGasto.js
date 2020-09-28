@@ -26,9 +26,9 @@ const PagoGastos = props => {
                                 <button
                                     className="btn btn-danger mr-2"
                                     onClick={() => {
-                                        actions.cambiarEstadoGastoComun(props.datos.idDepto, props.datos.month, props.datos.year, "noPagado")
+                                        actions.cambiarEstadoGastoComun(props.datos.idDepto, props.datos.month, props.datos.year, "noPagado", props.setData)
                                         props.setShow(false)
-                                        actions.getGastosDeptoActual(props.deptoSeleccionado)
+                                        actions.getGastosDeptoActual(props.deptoSeleccionado, props.setData)
                                     }}
                                 >
                                     Rechazar
@@ -38,9 +38,9 @@ const PagoGastos = props => {
                                 <button
                                     className="btn btn-success"
                                     onClick={() => {
-                                        actions.cambiarEstadoGastoComun(props.datos.idDepto, props.datos.month, props.datos.year, "pagado")
+                                        actions.cambiarEstadoGastoComun(props.datos.idDepto, props.datos.month, props.datos.year, "pagado", props.setData)
                                         props.setShow(false)
-                                        actions.getGastosDeptoActual(props.deptoSeleccionado)
+                                        actions.getGastosDeptoActual(props.deptoSeleccionado, props.setData)
                                     }}
                                 >
                                     Aprobar Pago

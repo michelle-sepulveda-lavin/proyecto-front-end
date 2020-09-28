@@ -32,6 +32,8 @@ const Conserjes = () => {
     }
     const changeConserje = async (id, conserje) => {
         const formData1 = new FormData()
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const edificioID = user.user.edificio
         if (conserje.nombre !== undefined && conserje.nombre !== "") {
             formData1.append("nombre", conserje.nombre)
         }
@@ -52,7 +54,7 @@ const Conserjes = () => {
             })
             const data = await response.json()
             console.log(data)
-            actions.getConserjes(store.currentEdificio.id)
+            actions.getConserjes(edificioID)
 
         }
 
@@ -64,8 +66,11 @@ const Conserjes = () => {
     const [filtroEstado, setFiltroEstado] = useState("Todos")
 
     useEffect(() => {
+
         window.scrollTo(0, 0)
-        actions.getConserjes(store.currentEdificio)
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const edificioID = user.user.edificio
+        actions.getConserjes(edificioID)
     }, [])
 
     return (

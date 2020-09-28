@@ -13,6 +13,8 @@ const GastosUser = () => {
 
     }, [])
 
+    const deptoID = !!store.departamentoActualUsuario && store.departamentoActualUsuario.id
+
     const ref = useRef(null)
 
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -102,7 +104,7 @@ const GastosUser = () => {
                                             <div className="d-flex justify-content-center">
                                                 <button className="btn btn-success mt-4" onClick={() => {
                                                     if (comprobantePago !== "") {
-                                                        actions.enviarComprobantePago(1, gastoActual[0].month, gastoActual[0].year, comprobantePago)
+                                                        actions.enviarComprobantePago(deptoID, gastoActual[0].month, gastoActual[0].year, comprobantePago)
                                                         getGastosDeptoActual()
                                                         setTimeout(() => {
                                                             ref.current.value = ""
@@ -164,11 +166,13 @@ const GastosUser = () => {
 
 
                                                     <td>
+                                                        {(monto.estado === "pagado" || monto.estado === "revision") &&
+                                                            <span className="btn btn-success" onClick={() => {
+                                                                setShow(true)
+                                                                setPago(monto.pago)
+                                                            }}>Comprobante</span>}
 
-                                                        <span className="btn btn-success" onClick={() => {
-                                                            setShow(true)
-                                                            setPago(monto.pago)
-                                                        }}>Comprobante</span></td>
+                                                    </td>
                                                 </tr>
                                             )
                                         })

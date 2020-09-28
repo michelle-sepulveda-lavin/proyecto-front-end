@@ -19,6 +19,8 @@ const DashboardSuperAdmin = () => {
     useEffect(() => {
         getConserje()
         actions.getPlanes()
+        actions.getEdificiosData()
+        actions.getEdificioCompleto()
 
     }, [])
 

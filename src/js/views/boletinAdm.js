@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import BoletinTable from '../components/BoletinTable';
+import BoletinActivoTable from '../components/BoletinActivoTable';
 import { v4 as uuidv4 } from 'uuid';
 import AddBoletin from '../components/AddBoletin';
 import EditBoletin from '../components/EditBoletin';
@@ -68,7 +68,7 @@ const BoletinAdm = () => {
                                 </div>
                             ) : (
                                     <div>
-                                        <br/>
+                                        <br />
                                         <AddBoletin addboletin={addboletin} />
                                     </div>
                                 )
@@ -76,8 +76,8 @@ const BoletinAdm = () => {
 
                     </div>
                     <div className="flex-large">
-                        <h2>Boletines</h2>
-                        <BoletinTable
+                        <h2>Boletines activos</h2>
+                        <BoletinActivoTable
                             boletin={boletin}
                             deleteboletin={deleteboletin}
 
