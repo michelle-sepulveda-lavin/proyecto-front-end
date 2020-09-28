@@ -73,6 +73,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             asunto_boletin: '',
             body_boletin: '',
             all_boletin: [],
+            todosUsuariosBaseDato: null,
+            errorCreacionUser: null,
+            flagModalEditUser: null,
         },
         actions: {
             handleChangeLogin: e => {
@@ -85,7 +88,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { username, password, apiURL } = getStore();
                 const resp = await fetch(`${apiURL}/login`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: username, password: password }) });
                 const data = await resp.json();
-                console.log(data)
                 const { msg } = data;
 
                 if (msg !== undefined) {
@@ -112,7 +114,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const dataEdificio = Object.entries(aux);
                 const formData = new FormData();
                 dataEdificio.map((dato) => {
-                    formData.append(dato[0], dato[1])
+                    return formData.append(dato[0], dato[1])
 
                 })
                 formData.append("archivoCSV", archivoCSV)
@@ -221,7 +223,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore();
                 if (localStorage.getItem("currentUser")) {
                     const user = JSON.parse(localStorage.getItem("currentUser"));
-                    const idEdificio = user.user.edificio
+                    const idEdificio = user.user.edificio.id
                     setStore({
                         currentEdificioID: idEdificio
                     })
@@ -376,7 +378,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const data = await resp.json();
                 if (data.msg) {
                     setStore({
-                        error: data.msg
+                        errorCreacionUser: data.msg
                     })
                 } else {
                     alert("usuario creado")
@@ -385,9 +387,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                         username: "",
                         password: "",
                         email: "",
-                        rol_id: ""
+                        rol_id: "",
+                        errorCreacionUser: null
                     });
                     getActions().getUsuariosDelEdificio()
+                    getActions().getUsuarios(e)
+                   
                 }
             },
             cerrarModal: () => {
@@ -419,7 +424,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     email: allUsuarios[i].email
                 })
             },
-            postUsuarios: async (e, i) => {
+            postUsuarios: async (e) => {
                 e.preventDefault()
                 const { email, edificio_id, apiURL } = getStore();
                 const resp = await fetch(`${apiURL}/register`, {
@@ -442,7 +447,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                             email: "",
                             edificio_id: "",
                             username: "",
-                            edificio_id: ""
+                            edificio_id: "",
+                            error: null,
+                            flagModalEditUser: false,
+
                         })
                         getActions().getUsuarios(e)
 
@@ -1027,8 +1035,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             },
             getGastosMonthYear: async (month, year, setData) => {
-                const { apiURL, currentEdificioID, gastosMes } = getStore();
-                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
+                const { apiURL, currentEdificio, gastosMes } = getStore();
+                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificio.id}/${month}/${year}`)
                 const data = await resp.json()
                 const { msg } = data;
                 setStore({
@@ -1039,7 +1047,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             getGastosMesActual: async () => {
                 const { apiURL, currentEdificioID, currentDate, gastosComunesMesActual, montosTotalesMes } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 const month = currentDate.getMonth()
                 const year = currentDate.getFullYear()
                 const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${edificioID}/${month}/${year}`)
@@ -1317,7 +1325,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({ all_boletin: data })
                 }
 
-            }
+            },
+            activarModalEdit: () =>{
+                setStore({
+                    flagModalEditUser: true
+                })
+            },
+            cerrarModalEdit: () =>{
+                setStore({
+                    flagModalEditUser: false
+                })
+            },
 
         }
     }

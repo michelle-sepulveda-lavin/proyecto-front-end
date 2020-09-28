@@ -12,7 +12,7 @@ const PagoGastos = props => {
             <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content bg-modal modal-lg2">
                     <div>
-                        <button type="button" class="close float-right mr-4" onClick={() => props.setShow(false)}>
+                        <button type="button" className="close float-right mr-4" onClick={() => props.setShow(false)}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>

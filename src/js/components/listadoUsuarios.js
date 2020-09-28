@@ -1,21 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
 import ModalEditUser from './modalEditUser';
 
 const ListadoUsuarios = () => {
     const { actions, store } = useContext(Context);
 
-
     return (
         <>
             <div className="row my-5">
                 <div className="col">
                     <form onSubmit={e => actions.getUsuarios(e)} >
-                        <div className="form-row text-center border">
+                        <div className="form-row text-center ">
                             <div className="col-md-2">
                                 <label htmlFor="rol_id text-center">Filtro busqueda</label>
                             </div>
-                            <div className="col-md-4 border">
+                            <div className="col-md-4 ">
                                 <select defaultValue={''} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
                                     <option value="" >Todos</option>
                                     <option value="superAdministrador">Super Administradores</option>
@@ -24,7 +23,7 @@ const ListadoUsuarios = () => {
                                     <option value="usuario">Usuarios</option>
                                 </select>
                             </div>
-                            <div className="col-md-6 border">
+                            <div className="col-md-6 ">
                                 <button className="btn btn-success">Mostrar</button>
                             </div>
                         </div>
@@ -56,12 +55,13 @@ const ListadoUsuarios = () => {
                                             <td>{usuario.username}</td>
                                             <td>{usuario.email}</td>
                                             <td>{usuario.rol.name}</td>
-                                            <td>{usuario.edificio}</td>
+                                            <td>{!!usuario.edificio? usuario.edificio.name : usuario.edificio.id}</td>
                                             <td>
                                                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalEditUser"
                                                     onClick={() => {
                                                         actions.guardarIndex(i)
                                                         actions.resetMsg()
+                                                        actions.activarModalEdit()
                                                     }}>
                                                     <i className="fas fa-pencil-alt cursor-pointer"></i>
                                                 </button>

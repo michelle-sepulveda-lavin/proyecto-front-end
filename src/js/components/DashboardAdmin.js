@@ -7,7 +7,7 @@ const DashboardAdmin = (props) => {
     const { store, actions } = useContext(Context)
     const monto = 1000000
     useEffect(() => {
-        actions.getConserjes(store.currentEdificio)
+        actions.getConserjes(store.currentEdificio.id)
         actions.getGastosMesActual()
     }, [])
 
@@ -21,7 +21,7 @@ const DashboardAdmin = (props) => {
                         <h3 onClick={() => {
 
                             store.departamentoUsuarios.map((depa) => {
-                                actions.calculoPorcentajeGastoComunDepto(depa, monto)
+                                return actions.calculoPorcentajeGastoComunDepto(depa, monto)
                             })
                         }}>Conserjes Activos</h3>
 
@@ -36,7 +36,7 @@ const DashboardAdmin = (props) => {
                                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
                                             <div className="w-75 d-flex align-items-center" >
 
-                                                <div className="d-flex align-items-center  flex-column">  <img src="../user.png" className="img-fluid w-40" />
+                                                <div className="d-flex align-items-center  flex-column">  <img src="../user.png" alt="foto_conserje" className="img-fluid w-40" />
                                                     <div className="text-center">
                                                         <h3>{conserje.nombre}</h3>
                                                     </div>

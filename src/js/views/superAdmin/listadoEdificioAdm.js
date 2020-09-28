@@ -30,19 +30,19 @@ const ListadoEdificioAdm = () => {
                                         if (index < 10) {
 
                                             return (
-                                                <>
-                                                    <tr key={index}>
-                                                        <th scope="row">{edificio.id}</th>
-                                                        <td>{edificio.nombre_edificio}</td>
-                                                        <td>{edificio.direccion}</td>
-                                                        <td>{edificio.correo}</td>
-                                                        <td>{edificio.telefono}</td>
-                                                        <td>{edificio.termino_contrato}</td>
-                                                        <td>
-                                                            <Link to={`/listado-edificios/${edificio.id}`}>
-                                                                <span className="btn btn-warning" >Detalle</span> </Link> </td>
-                                                    </tr>
-                                                </>)
+
+                                                <tr key={index}>
+                                                    <th scope="row">{edificio.id}</th>
+                                                    <td>{edificio.nombre_edificio}</td>
+                                                    <td>{edificio.direccion}</td>
+                                                    <td>{edificio.correo}</td>
+                                                    <td>{edificio.telefono}</td>
+                                                    <td>{edificio.termino_contrato}</td>
+                                                    <td>
+                                                        <Link to={`/listado-edificios/${edificio.id}`}>
+                                                            <span className="btn btn-warning" >Detalle</span> </Link> </td>
+                                                </tr>
+                                            )
                                         }
                                     })}
                                 </tbody>

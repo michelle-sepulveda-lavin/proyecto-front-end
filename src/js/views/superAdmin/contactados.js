@@ -94,8 +94,8 @@ const Contactados = () => {
                                 {
                                     !includes.includes(false) &&
 
-                                    <p className="">No hay mensajes archivados
-                                        </p>
+                                    <th className="">No hay mensajes archivados
+                                        </th>
 
 
                                 }
