@@ -27,7 +27,7 @@ const DashboardUser = (props) => {
                             </span>
                         </div>
                         <div className="col col-lg-4 text-center text-dark pt-3">
-                            <h4 >Paquetes sin entregar</h4>
+                            <h4 >En conserjería</h4>
                         </div>
                     </div>
                 </div>

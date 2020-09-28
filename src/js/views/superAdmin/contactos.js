@@ -33,8 +33,8 @@ const Contactos = () => {
 
                 <div className="row">
                     <div className="col-12 col-md-8 mx-auto">
-                        <table class="table  border">
-                            <thead class="thead-dark text-center">
+                        <table className="table  border">
+                            <thead className="thead-dark text-center">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre</th>

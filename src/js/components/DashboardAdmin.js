@@ -35,6 +35,7 @@ const DashboardAdmin = (props) => {
     }
 
     useEffect(() => {
+        actions.getConserjes(store.currentEdificio.id)
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const edificioID = user.user.edificio
         actions.getConserjes(edificioID)

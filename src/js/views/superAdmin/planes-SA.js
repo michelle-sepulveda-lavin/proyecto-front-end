@@ -53,10 +53,10 @@ const ModifyPlans = () => {
     const [createPlan, setCreatePlan] = useState(false)
 
     const [newPlan, setNewPlan] = useState({
-        name: null,
-        price: null,
+        name: "",
+        price: "",
         body: [],
-        frecuencia: null
+        frecuencia: ""
     })
 
     const deleteItem = (index) => {

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import ModalPassword from '../components/modalPassword';
 import { Context } from '../store/appContext';
-import Background from '../../img/free-wallpaper-37.jpg'
+import Background from '../../img/FAVPNG_building-poster-banner-wallpaper_VQmBR0TP.png'
 
 const Login = props => {
     const { store, actions } = useContext(Context);
@@ -10,7 +10,7 @@ const Login = props => {
 
     const sectionStyle = {
         width: "100%",
-        height: "80%",
+        height: "100%",
         backgroundImage: `url(${Background})`
     }
 
@@ -43,8 +43,8 @@ const Login = props => {
                         <form className="" onSubmit={(e) => { actions.loginAction(e, history) }}>
                             <label htmlFor="usuario" className="sr-only">Usuario</label>
                             <div className="input-group mt-5" style={{ width: "60%", margin: "auto" }}>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text dashboard-blue text-white"><i className="fas fa-user"></i></div>
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text login-background text-white"><i className="fas fa-user"></i></div>
                                 </div>
                                 <input
                                     name="username"
@@ -58,8 +58,8 @@ const Login = props => {
 
                             <label htmlFor="password" className="sr-only">Contraseña</label>
                             <div className="input-group mt-5" style={{ width: "60%", margin: "auto" }}>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text dashboard-blue text-white"><i className="fas fa-key"></i></div>
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text login-background text-white"><i className="fas fa-key"></i></div>
                                 </div>
                                 <input
                                     name="password"
@@ -88,7 +88,7 @@ const Login = props => {
                                 />
                                 <label className="form-check-label" htmlFor="recordarPassword">Recordar Usuario</label>
                             </div>
-                            <button className="btn dashboard-blue text-white mb-5">Iniciar sesion</button>
+                            <button className="btn login-background text-white mb-5">Iniciar sesion</button>
                         </form>
                     </div>
                 </div>

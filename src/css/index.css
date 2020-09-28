@@ -362,10 +362,8 @@ li {
   background-image: linear-gradient(160deg, #0312e4 10%, #010031 100%);
   background-size: cover;
 }
-.login-blue {
-  background-color: #192192;
-  background-image: linear-gradient(60deg, #1821a5 10%, #0a0964 100%);
-  background-size: cover;
+.login-celeste {
+  color: #3eace9;
 }
 
 .login-background {
