@@ -863,7 +863,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { departamentos, bodegasEdificio, estacionamientoEdificios, gastosComunes, currentDate } = getStore()
                 const totalM2edificio = getTotalM2(departamentos)
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 const mes = currentDate.getMonth()
                 const year = currentDate.getFullYear()
 
@@ -1021,7 +1021,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             getMontosTotales: async () => {
                 const { apiURL } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 try {
                     const resp = await fetch(`${apiURL}/montostotales/edificio/${edificioID}`)
                     const data = await resp.json()
