@@ -32,7 +32,7 @@ const ModifyPlans = () => {
 
     useEffect(() => {
         getData()
-        actions.getPlanes()
+        /* actions.getPlanes() */
 
     }, []);
 

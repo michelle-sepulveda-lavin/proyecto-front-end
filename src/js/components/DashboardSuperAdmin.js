@@ -6,18 +6,18 @@ import { Context } from '../store/appContext';
 const DashboardSuperAdmin = () => {
     const { store, actions } = useContext(Context)
 
-    const getConserje = async () => {
-        const user = JSON.parse(localStorage.getItem("currentUser"))
-        const userID = user.user.edificio.id
-        const resp = await fetch(`http://127.0.0.1:5000/conserjes/${userID}`)
+    const getUno =async () =>{
+        const resp = await fetch(`${store.apiURL}/register`)
         const data = await resp.json()
-
     }
+
 
     useEffect(() => {
         actions.getPlanes()
         actions.getEdificiosData()
-        getConserje()
+        actions.getContactData()
+        getUno()
+        
     }, [])
 
 
