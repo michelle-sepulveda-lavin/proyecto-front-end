@@ -20,26 +20,12 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			state.actions.getRoles()
 			state.actions.getCurrentRol();
-			state.actions.getEdificiosData()
 			state.actions.getCurrentDate()
 			state.actions.sesionIniciada()
-			state.actions.getEdificioCompleto()
-			state.actions.getDptosUsuarios()
-			state.actions.getBodegasDelEdificio()
-			state.actions.getEstacionamientosDelEdificio()
-			state.actions.getDepartamentos()
-			// state.actions.getMontosTotales()
-			// state.actions.getGastosMesActual()
-			state.actions.getBoletines()
-
+	
 		}, []);
 
-		useEffect(() => {
-			state.actions.getCurrentEdificio()
-
-		}, [state.store.currentRol])
 
 		return (
 			<Context.Provider value={state}>

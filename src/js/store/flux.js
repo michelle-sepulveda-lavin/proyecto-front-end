@@ -23,11 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             flagRecordar: false,
             contactos: [],
             currentDate: null,
-            contratos: {
-                vigentes: [],
-                porVencer: [],
-                vencidos: []
-            },
+            contratos: [],
             flagModal: false,
             allUsuarios: [],
             archivoCSV: null,
@@ -45,8 +41,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             conserjes: [],
             finalUserBuilding: [],
             departamentoModificar: null,
-            bodegaM2: 10,
-            estacionamientoM2: 15,
             usuariosEdificioNoAsignados: null,
             contadorUsuarios: null,
             bodegasEdificio: null,
@@ -73,6 +67,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             asunto_boletin: '',
             body_boletin: '',
             all_boletin: [],
+            todosUsuariosBaseDato: null,
+            errorCreacionUser: null,
+            flagModalEditUser: null,
+            flagModalAddUser: null,
+            administradorEdificio: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -85,7 +84,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { username, password, apiURL } = getStore();
                 const resp = await fetch(`${apiURL}/login`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: username, password: password }) });
                 const data = await resp.json();
-                console.log(data)
                 const { msg } = data;
 
                 if (msg !== undefined) {
@@ -112,7 +110,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const dataEdificio = Object.entries(aux);
                 const formData = new FormData();
                 dataEdificio.map((dato) => {
-                    formData.append(dato[0], dato[1])
+                    return formData.append(dato[0], dato[1])
 
                 })
                 formData.append("archivoCSV", archivoCSV)
@@ -174,7 +172,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         body: JSON.stringify({ "password": passwordConfirmacion })
                     });
                     const data = await resp.json();
-                    history.push("/login")
+                    if (data.msg === "contraseña cambiada exitosamente") {
+                        history.push("/login")
+                    }
                 }
 
             },
@@ -221,31 +221,31 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore();
                 if (localStorage.getItem("currentUser")) {
                     const user = JSON.parse(localStorage.getItem("currentUser"));
-                    const idEdificio = user.user.edificio
+                    const idEdificio = user.user.edificio.id
                     setStore({
                         currentEdificioID: idEdificio
                     })
-                    const response = await fetch(`${apiURL}/crearedificio/${idEdificio}`);
-                    const data = await response.json()
-                    if (!data.msg) {
-                        setStore({
-                            edificioCompleto: data
-                        })
+                    if (idEdificio) {
+                        const response = await fetch(`${apiURL}/crearedificio/${idEdificio}`);
+                        const data = await response.json()
+                        if (!data.msg) {
+                            setStore({
+                                edificioCompleto: data
+                            })
+
+                        }
 
                     }
                 }
             },
             getEdificiosData: async () => {
                 const store = getStore()
-                const { getContratos } = getActions()
                 const response = await fetch('http://127.0.0.1:5000/crearedificio');
                 const data = await response.json()
                 if (response.ok) {
                     setStore({
-                        ...store,
                         edificios: data
                     })
-                    getContratos()
                 }
             },
             getContactData: async () => {
@@ -266,6 +266,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             handleClose: (history) => {
                 localStorage.removeItem("currentUser")
+                localStorage.removeItem("departamento")
                 setStore({
                     username: "",
                     password: '',
@@ -314,7 +315,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 history.push("/")
             },
             getCurrentDate: () => {
-                const { currentDate } = getStore();
                 var q = new Date();
                 var m = q.getMonth();
                 var d = q.getDate();
@@ -324,25 +324,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     currentDate: date
                 })
             },
-            getContratos: () => {
-                const { edificios, currentDate, contratos } = getStore();
-                edificios.length > 0 &&
-                    edificios.map((edificio) => {
-                        const fechaContrato = new Date(edificio.termino_contrato)
-                        const mesContrato = fechaContrato.getMonth()
-                        const mesActual = currentDate.getMonth();
-                        const proximoVencer = (mesContrato - mesActual) <= 1 ? true : false;
 
-                        if (currentDate > fechaContrato) {
-                            contratos.vencidos.push(edificio)
-                        } else if (currentDate < fechaContrato && proximoVencer) {
-                            contratos.porVencer.push(edificio)
-                        } else {
-                            contratos.vigentes.push(edificio)
-                        }
-                    })
-
-            },
             sesionIniciada: () => {
                 if (localStorage.getItem("currentUser") !== null) {
                     const usuario = JSON.parse(localStorage.getItem("currentUser"))
@@ -376,7 +358,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const data = await resp.json();
                 if (data.msg) {
                     setStore({
-                        error: data.msg
+                        errorCreacionUser: data.msg
                     })
                 } else {
                     alert("usuario creado")
@@ -385,9 +367,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                         username: "",
                         password: "",
                         email: "",
-                        rol_id: ""
+                        rol_id: "",
+                        errorCreacionUser: null
                     });
                     getActions().getUsuariosDelEdificio()
+                    getActions().getUsuarios(e)
+
                 }
             },
             cerrarModal: () => {
@@ -419,7 +404,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     email: allUsuarios[i].email
                 })
             },
-            postUsuarios: async (e, i) => {
+            postUsuarios: async (e) => {
                 e.preventDefault()
                 const { email, edificio_id, apiURL } = getStore();
                 const resp = await fetch(`${apiURL}/register`, {
@@ -442,7 +427,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                             email: "",
                             edificio_id: "",
                             username: "",
-                            edificio_id: ""
+                            error: null,
+                            flagModalEditUser: false,
+
                         })
                         getActions().getUsuarios(e)
 
@@ -484,13 +471,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
             },
             getPlanes: async () => {
-                const { planes } = getStore()
-                const response = await fetch('http://127.0.0.1:5000/api/planes');
-                const data = await response.json()
-                if (!data.msg) {
-                    setStore({
-                        planes: data
-                    })
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/api/planes');
+                    const data = await response.json()
+
+                    if (!data.msg) {
+                        setStore({
+                            planes: data
+                        })
+                    }
+                }
+                catch(error){
+                    console.log(error)
                 }
             },
             handleDepartamentos: async (e, modelInfo) => {
@@ -504,12 +496,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                     body: JSON.stringify(modelInfo)
                 });
                 const data = await resp.json();
-                const { msg } = data
 
                 if (!resp.ok) {
                     alert(resp.ok)
-                } else {
-                    alert("ok")
+                } else if (data.msg === "departamento creado exitosamente") {
+                    alert(data.msg)
                     getActions().getDepartamentos()
                 }
             },
@@ -518,7 +509,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const response = await fetch(`${apiURL}/info-departamento/${currentEdificioID}`)
                 const data = await response.json()
                 const { msg } = data
-                if (msg == undefined) {
+                if (msg === undefined) {
                     setStore({
                         departamentos: data
                     })
@@ -542,15 +533,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 if (!resp.ok) {
                     alert(resp.ok)
                 } else {
-                    alert("ok")
+                    alert(data.msg)
                     getActions().getDepartamentos()
                 }
             },
             postDptoUsuario: async (e, info) => {
                 e.preventDefault()
-                const { apiURL, currentEdificioID } = getStore();
+                const { apiURL } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 const resp = await fetch(`${apiURL}/departamentoUsuarioEdificio/${edificioID}`, {
                     method: 'POST',
                     headers: {
@@ -562,7 +553,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { msg } = data;
                 console.log(data)
                 if (msg !== undefined) {
-                    if (msg == "departamento de usuario creado exitosamente") {
+                    if (msg === "departamento de usuario creado exitosamente") {
                         setStore({
                             success: msg
                         })
@@ -618,7 +609,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
                 if (piso !== "todos") {
                     const auxiliar = departamentoUsuarios.filter((dpto, index) => {
-                        return (dpto.piso == piso)
+                        return (dpto.piso === piso)
                     })
                     setStore({
                         departamentosPorPiso: auxiliar
@@ -653,7 +644,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
                 if (estado !== "todos") {
                     const auxiliar = departamentoUsuarios.filter((dpto) => {
-                        return (dpto.estado == estado)
+                        return (dpto.estado === estado)
                     })
                     setStore({
                         departamentoEstado: auxiliar
@@ -684,20 +675,33 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
                 const data = await resp.json()
                 if (data.msg !== undefined) {
-                    alert(data.msg)
                     if (data.msg === "Departamento actualizado exitosamente") {
                         setStore({
-                            success: "Departamento actualizado exitosamente"
+                            error: null
                         })
-
+                        getActions().getUsuariosDelEdificio()
+                        getActions().getUsuarios(e)
+                        getActions().getEdificioCompleto()
+                        getActions().getDepartamentos()
+                        getActions().getDptosUsuarios()
+                        getActions().getUsuariosDelEdificio()
+                        getActions().usuariosNoAsignados()
+                        getActions().getBodegasDelEdificio()
+                        getActions().getEstacionamientosDelEdificio()
+                        getActions().cerrarModalAddUsert()
+                    } else {
+                        setStore({
+                            error: data.msg
+                        })
                     }
                 }
 
             },
             crearConserje: async (e, aux) => {
                 const actions = getActions()
-                const store = getStore()
-                const { crearConserje, currentEdificio, roles, apiURL } = getStore()
+                const { crearConserje, roles } = getStore()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
                 e.preventDefault()
                 const conserjeIndex = roles.length > 0 && (roles.map((rol) => rol.rol).indexOf('conserje'));
 
@@ -716,7 +720,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 formData.append("username", aux.username);
 
-                formData.append("edificios_id", currentEdificio)
+                formData.append("edificios_id", edificioID)
                 formData.append("rol_id", roles[conserjeIndex].id)
                 formData.append("nombre", aux.nombre);
                 formData.append("telefono", aux.telefono);
@@ -730,7 +734,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         body: formData
                     });
                     const data = await resp.json();
-                    console.log(data)
                     const { msg } = data;
                     if (resp.ok) {
                         alert(data.msg)
@@ -743,7 +746,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             crearConserje: { ...crearConserje, error: msg }
                         })
                     }
-                    actions.getConserjes(store.currentEdificio)
+                    actions.getConserjes(edificioID)
 
                 }
                 catch (error) {
@@ -752,7 +755,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 console.log(aux.email)
             },
             getCurrentEdificio: () => {
-                const { currentEdificio } = getStore();
                 if (localStorage.getItem("currentUser")) {
                     const user = JSON.parse(localStorage.getItem("currentUser"));
                     setStore({
@@ -761,8 +763,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             getRoles: async () => {
-                const { roles } = getStore()
-
                 try {
                     const response = await fetch('http://127.0.0.1:5000/roles');
                     const data = await response.json()
@@ -777,7 +777,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             },
             getConserjes: async (id) => {
-                const { conserjes, apiURL } = getStore()
+                const { apiURL } = getStore()
                 try {
                     if (id !== null && id !== undefined) {
                         const response = await fetch(`${apiURL}/conserjes/edificio/${id}`);
@@ -794,8 +794,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             cambiarEstadoConserje: async (id, estado) => {
-                const { apiURL, currentEdificio } = getStore()
+                const { apiURL } = getStore()
                 const actions = getActions()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
                 try {
                     const response = await fetch(`${apiURL}/conserjes/estado-conserje/${id}`, {
                         method: "PATCH",
@@ -803,8 +805,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: { 'Content-type': 'application/json; charset=UTF-8' }
                     })
                     const data = await response.json()
-                    console.log(data)
-                    actions.getConserjes(currentEdificio)
+                    actions.getConserjes(edificioID)
                 }
 
                 catch (error) {
@@ -849,16 +850,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             calculoPorcentajeGastoComunDepto: (depto, montoGastos, depaID, comprobante, history) => {
                 const { getTotalM2, postGastosComunes } = getActions()
-                const { departamentos, bodegasEdificio, estacionamientoEdificios, gastosComunes, currentEdificio, currentDate } = getStore()
+                const { departamentos, bodegasEdificio, estacionamientoEdificios, gastosComunes, currentDate } = getStore()
                 const totalM2edificio = getTotalM2(departamentos)
-
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
                 const mes = currentDate.getMonth()
                 const year = currentDate.getFullYear()
 
                 const formData = new FormData();
                 formData.append("month", mes)
                 formData.append("year", year)
-                formData.append("edificio_id", currentEdificio)
+                formData.append("edificio_id", edificioID)
                 formData.append("montoTotal", montoGastos)
                 formData.append("departamento_id", depaID)
                 formData.append("comprobante", comprobante.comprobante)
@@ -1007,9 +1009,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             getMontosTotales: async () => {
-                const { apiURL, currentEdificioID, montosTotalesMes } = getStore();
+                const { apiURL } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 try {
                     const resp = await fetch(`${apiURL}/montostotales/edificio/${edificioID}`)
                     const data = await resp.json()
@@ -1018,7 +1020,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                             montosTotalesMes: data
                         })
                     }
-                    const { msg } = data;
                 }
                 catch (error) {
                     console.log(error)
@@ -1027,41 +1028,48 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             },
             getGastosMonthYear: async (month, year, setData) => {
-                const { apiURL, currentEdificioID, gastosMes } = getStore();
-                const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${currentEdificioID}/${month}/${year}`)
-                const data = await resp.json()
-                const { msg } = data;
-                setStore({
-                    gastosMes: data,
-                })
-                setData(data)
+                const { apiURL } = getStore();
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                try {
+                    const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${edificioID}/${month}/${year}`)
+                    const data = await resp.json()
+                    setStore({
+                        gastosMes: data,
+                    })
+
+                    setData(data)
+
+                    return data
+                }
+                catch (error) {
+                    console.log(error)
+                }
             },
             getGastosMesActual: async () => {
-                const { apiURL, currentEdificioID, currentDate, gastosComunesMesActual, montosTotalesMes } = getStore();
+                const { apiURL, currentDate } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 const month = currentDate.getMonth()
                 const year = currentDate.getFullYear()
                 const resp = await fetch(`${apiURL}/gastoscomunes/edificio/${edificioID}/${month}/${year}`)
                 const data = await resp.json()
-                const { msg } = data;
                 setStore({
                     gastosComunesMesActual: data
                 })
 
             },
             getGastosDeptoActual: async (id, setData) => {
-                const { apiURL, currentEdificioID, gastosDepto } = getStore();
+                const { apiURL } = getStore();
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const edificioID = user.user.edificio
+                const edificioID = user.user.edificio.id
                 const resp = await fetch(`${apiURL}/gastoscomunes/depto/${edificioID}/${id}`)
                 const data = await resp.json()
-                const { msg } = data;
                 setStore({
                     gastosDepto: data
                 })
                 setData(data)
-
+                return data
             },
             deleteBodegaEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
@@ -1096,20 +1104,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 
             },
-            cambiarEstadoGastoComun: async (depto, month, year, estado) => {
-                const { apiURL, currentEdificio } = getStore()
+            cambiarEstadoGastoComun: async (depto, month, year, estado, setData, setData2) => {
+                const { apiURL } = getStore()
                 const actions = getActions()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
                 const formData = new FormData()
                 formData.append("estado", estado)
                 try {
-                    const response = await fetch(`${apiURL}/gastoscomunes/depto/${currentEdificio}/${depto}/${month}/${year}`, {
+                    const response = await fetch(`${apiURL}/gastoscomunes/depto/${edificioID}/${depto}/${month}/${year}`, {
                         method: "PATCH",
                         body: formData,
                         headers: {}
                     })
                     const data = await response.json()
-                    console.log(data)
-                    actions.getGastosMonthYear(month, year)
+                    actions.getGastosMonthYear(month, year, setData)
+                    actions.getGastosMonthYear(month, year, setData2)
                 }
                 catch (error) {
                     console.log(error)
@@ -1119,7 +1129,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
                 const userID = user.user.id
-                const edificioID = user.user.edificio
+                /* const edificioID = user.user.edificio.id */
                 try {
                     const response = await fetch(`${apiURL}/infoDepartamentoUsuario/${userID}`);
                     const data = await response.json()
@@ -1246,10 +1256,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             enviarComprobantePago: async (depto, month, year, aux) => {
                 const { apiURL } = getStore()
-                const actions = getActions()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
-                const userID = user.user.edificio
-                const formData = new FormData;
+                const userID = user.user.edificio.id
+                const formData = new FormData();
                 formData.append("pago", aux)
                 formData.append("estado", "revision")
                 try {
@@ -1259,7 +1268,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: {}
                     })
                     const data = await response.json()
-                    console.log(data)
                 }
 
                 catch (error) {
@@ -1281,7 +1289,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
 
                 const data = await resp.json();
-                console.log(data)
                 const { msg } = data;
 
                 if (msg !== undefined) {
@@ -1316,9 +1323,73 @@ const getState = ({ getStore, getActions, setStore }) => {
                 else {
                     setStore({ all_boletin: data })
                 }
+            },
+            cambiarEstadoBoletin: async (id, estado) => {
+                const { apiURL } = getStore()
+                const actions = getActions()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                try {
+                    const response = await fetch(`${apiURL}/boletin/${edificioID}/${id}`, {
+                        method: "PATCH",
+                        body: JSON.stringify({ estado: estado }),
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' }
+                    })
+                    const data = await response.json()
+                    console.log(data)
+                    actions.getBoletines(edificioID)
+                }
+                catch (error) {
+                    console.log(error)
+                }
+            },
+            activarModalEdit: () => {
+                setStore({
+                    flagModalEditUser: true
+                })
+            },
+            cerrarModalEdit: () => {
+                setStore({
+                    flagModalEditUser: false
+                })
+            },
+            activarModalAddUser: () => {
+                setStore({
+                    flagModalAddUser: true
+                })
+            },
+            cerrarModalAddUsert: () => {
+                setStore({
+                    flagModalAddUser: false
+                })
+            },
+            getAdministradorEdificio: async(id) =>{
+                const {apiURL} = getStore()
+                const resp = await fetch(`${apiURL}/admnistradorEdificio/${id}`)
+                const data = await resp.json()
+                if(!data.msg){
+                    setStore({
+                        administradorEdificio: data
+                    })
+                }
+            },
 
+            correoGastos: async (id, monto) => {
+                const { apiURL } = getStore();
+                if (!!id) {
+                    const resp = await fetch(`${apiURL}/correo-gastos/${id}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ "monto": monto })
+                    });
+                    const data = await resp.json();
+                    alert(data.msg)
+                } else {
+                    alert("Este departamento no tiene una cuenta asociada")
+                }
             }
-
         }
     }
 };

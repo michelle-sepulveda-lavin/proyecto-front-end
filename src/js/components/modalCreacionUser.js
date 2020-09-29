@@ -22,9 +22,9 @@ const ModalCreacionUser = props => {
                         </div>
                         <div className="modal-body">
                             {
-                                !!store.error &&
+                                !!store.errorCreacionUser &&
                                 <div className="alert alert-danger" role="alert">
-                                    {store.error}
+                                    {store.errorCreacionUser}
                                 </div>
                             }
                             <form onSubmit={e => {
@@ -34,15 +34,15 @@ const ModalCreacionUser = props => {
                             }}>
                                 <div className="form-group">
                                     <label htmlFor="username">Nombre Usuario</label>
-                                    <input type="text" className="form-control" name="username" onChange={e => { actions.handleChangeLogin(e) }} />
+                                    <input type="text" className="form-control" value={store.username} name="username" onChange={e => { actions.handleChangeLogin(e) }} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email</label>
-                                    <input type="email" className="form-control" name="email" onChange={e => actions.handleChangeLogin(e)} />
+                                    <input type="email" className="form-control" value={store.email} name="email" onChange={e => actions.handleChangeLogin(e)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
-                                    <input type="password" className="form-control" name="password" onChange={e => actions.handleChangeLogin(e)} />
+                                    <input type="password" className="form-control" value={store.password} name="password" onChange={e => actions.handleChangeLogin(e)} />
                                 </div>
                                 <div className="form-group">
                                     {
@@ -59,10 +59,14 @@ const ModalCreacionUser = props => {
                                                 <label htmlFor="rol_id">Rol</label>
                                                 <select defaultValue={'default'} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
                                                     <option value="default" disabled>Seleccionar</option>
-                                                    <option value="superAdministrador">Super Administrador</option>
-                                                    <option value="administrador" >Administrador</option>
-                                                    <option value="conserje">Conserje</option>
-                                                    <option value="usuario">Usuario</option>
+                                                    {
+                                                        !!store.roles &&
+                                                        store.roles.map((rol, index)=>{
+                                                            return(
+                                                                <option key={index} value={rol.id}>{rol.rol}</option>
+                                                            )
+                                                        })
+                                                    }
                                                 </select>
                                             </>
                                     }
@@ -81,8 +85,21 @@ const ModalCreacionUser = props => {
                                             </>
                                             :
                                             <>
-                                                <label htmlFor="edificio_id">Edificio id</label>
-                                                <input type="number" className="form-control" name="edificio_id" onChange={e => actions.handleChangeLogin(e)} />
+                                                <label htmlFor="edificio_id">Edificio</label>
+                                                <select defaultValue={'default'} name="edificio_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
+                                                    <option value="default" disabled>Seleccionar</option>
+                                                    <option value="default">Ninguno</option>
+                                                    {
+                                                        !!store.edificios &&
+                                                        store.edificios.map((edificio, index)=>{
+                                                            return(
+                                                                <option key={index} value={edificio.id}>{edificio.nombre_edificio}</option>
+                                                            )
+                                                        })
+                                                    }
+
+
+                                                </select>
                                             </>
                                     }
                                 </div>

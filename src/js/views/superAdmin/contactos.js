@@ -32,9 +32,9 @@ const Contactos = () => {
             <div className="container-fluid">
 
                 <div className="row">
-                    <div className="col-12 col-md-8 mx-auto">
-                        <table class="table  border">
-                            <thead class="thead-dark text-center">
+                    <div className="col-12 col-md-8 mx-auto overflow-auto ">
+                        <table className="table  border">
+                            <thead className="thead-dark text-center">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre</th>
@@ -49,9 +49,8 @@ const Contactos = () => {
                                     if (index < 10 && contacto.state === true) {
 
                                         return (
-                                            <>
-                                                <tr>
-                                                    <th key={index} scope="row">{contacto.id}</th>
+                                                <tr key={index}>
+                                                    <th scope="row">{contacto.id}</th>
                                                     <td>{contacto.name}</td>
                                                     <td>{contacto.email}</td>
                                                     <td>{contacto.plan}</td>
@@ -61,7 +60,7 @@ const Contactos = () => {
                                                             contactado(contacto.email)
                                                         }}>Contactado</span></td>
                                                 </tr>
-                                            </>)
+                                        )
                                     }
                                 })}
                             </tbody>

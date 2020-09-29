@@ -11,7 +11,9 @@ const GastosUser = () => {
         actions.getCurrentDate()
         getGastosDeptoActual()
 
-    }, [])
+    },[])
+
+    const deptoID = !!store.departamentoActualUsuario && store.departamentoActualUsuario.id
 
     const ref = useRef(null)
 
@@ -32,7 +34,7 @@ const GastosUser = () => {
     const getGastosDeptoActual = async () => {
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const userID = JSON.parse(localStorage.getItem("departamento"))
-        const edificioID = user.user.edificio
+        const edificioID = user.user.edificio.id
         const resp = await fetch(`${store.apiURL}/gastoscomunes/depto/${edificioID}/${userID}`)
         const data = await resp.json()
         setGastosDepto(data)
@@ -102,7 +104,7 @@ const GastosUser = () => {
                                             <div className="d-flex justify-content-center">
                                                 <button className="btn btn-success mt-4" onClick={() => {
                                                     if (comprobantePago !== "") {
-                                                        actions.enviarComprobantePago(1, gastoActual[0].month, gastoActual[0].year, comprobantePago)
+                                                        actions.enviarComprobantePago(deptoID, gastoActual[0].month, gastoActual[0].year, comprobantePago)
                                                         getGastosDeptoActual()
                                                         setTimeout(() => {
                                                             ref.current.value = ""
@@ -164,11 +166,13 @@ const GastosUser = () => {
 
 
                                                     <td>
+                                                        {(monto.estado === "pagado" || monto.estado === "revision") &&
+                                                            <span className="btn btn-success" onClick={() => {
+                                                                setShow(true)
+                                                                setPago(monto.pago)
+                                                            }}>Comprobante</span>}
 
-                                                        <span className="btn btn-success" onClick={() => {
-                                                            setShow(true)
-                                                            setPago(monto.pago)
-                                                        }}>Comprobante</span></td>
+                                                    </td>
                                                 </tr>
                                             )
                                         })

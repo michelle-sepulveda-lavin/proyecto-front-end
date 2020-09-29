@@ -64,10 +64,13 @@ const GastosConserje = () => {
                                     <>
 
                                         <div>
+                                            {noPagados.length > 0 ?
+                                                <div class="alert alert-danger text-center" role="alert">
+                                                    <h3> Gastos comunes por pagar:  {noPagados.length}</h3>
+                                                </div> : <div class="alert alert-success" role="alert">
+                                                    <h3> No debe gastos comunes</h3>
+                                                </div>}
 
-                                            <div className="d-flex justify-content-center mb-3">
-                                                <h3> Gastos comunes por pagar: {noPagados.length > 0 ? " " + noPagados.length : 0} </h3>
-                                            </div>
                                         </div>
 
                                         < table className="table text-center overflow-auto mx-auto ">

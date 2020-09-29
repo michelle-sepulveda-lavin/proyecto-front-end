@@ -173,7 +173,7 @@ const InicializacionPisos = () => {
 
                                                             <>
                                                                 <label className="sr-only" htmlFor="bodega_id">Bodega</label>
-                                                                <input type="number" className="form-control mb-2 mr-sm-2" name="bodega_id" onChange={e => handleChange(e)} />
+                                                                <input type="number" className="form-control mb-2 mr-sm-2" name="bodega_id" defaultValue="0" onChange={e => handleChange(e)} />
                                                             </>
                                                     }
                                                 </td>
@@ -188,7 +188,7 @@ const InicializacionPisos = () => {
                                                             :
                                                             <>
                                                                 <label className="sr-only" htmlFor="estacionamiento_id">Estacionamiento</label>
-                                                                <input type="number" className="form-control mb-2 mr-sm-2" name="estacionamiento_id" onChange={e => handleChange(e)} />
+                                                                <input type="number" className="form-control mb-2 mr-sm-2" name="estacionamiento_id" defaultValue="0" onChange={e => handleChange(e)} />
                                                             </>
 
                                                     }
@@ -324,7 +324,15 @@ const InicializacionPisos = () => {
                                                                 }}></i>
                                                             </td>
                                                             <td>
-                                                                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addUser" onClick={() => actions.dptoModificar(dpto.id)}>
+                                                                <button 
+                                                                    type="button" 
+                                                                    className="btn btn-primary" 
+                                                                    data-toggle="modal" 
+                                                                    data-target="#addUser" 
+                                                                    onClick={() => {
+                                                                        actions.dptoModificar(dpto.id)
+                                                                        actions.activarModalAddUser()
+                                                                        }}>
                                                                     <i className="fas fa-pencil-alt cursor-pointer"></i>
                                                                 </button>
                                                                 <ModalAddUser />

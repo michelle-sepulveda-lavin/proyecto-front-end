@@ -12,7 +12,7 @@ const PagoGastos = props => {
             <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content bg-modal modal-lg2">
                     <div>
-                        <button type="button" class="close float-right mr-4" onClick={() => props.setShow(false)}>
+                        <button type="button" className="close float-right mr-4" onClick={() => props.setShow(false)}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -26,9 +26,11 @@ const PagoGastos = props => {
                                 <button
                                     className="btn btn-danger mr-2"
                                     onClick={() => {
-                                        actions.cambiarEstadoGastoComun(props.datos.idDepto, props.datos.month, props.datos.year, "noPagado")
+                                        actions.cambiarEstadoGastoComun(props.datos.idDepto, props.datos.month, props.datos.year, "noPagado", props.setData, props.setData2)
+
                                         props.setShow(false)
-                                        actions.getGastosDeptoActual(props.deptoSeleccionado)
+                                        actions.getGastosDeptoActual(props.deptoSeleccionado, props.setData)
+                                        actions.getGastosDeptoActual(props.deptoSeleccionado, props.setData).then(response => { props.setData2(response) })
                                     }}
                                 >
                                     Rechazar
@@ -38,9 +40,9 @@ const PagoGastos = props => {
                                 <button
                                     className="btn btn-success"
                                     onClick={() => {
-                                        actions.cambiarEstadoGastoComun(props.datos.idDepto, props.datos.month, props.datos.year, "pagado")
+                                        actions.cambiarEstadoGastoComun(props.datos.idDepto, props.datos.month, props.datos.year, "pagado", props.setData, props.setData2)
                                         props.setShow(false)
-                                        actions.getGastosDeptoActual(props.deptoSeleccionado)
+                                        actions.getGastosDeptoActual(props.deptoSeleccionado, props.setData)
                                     }}
                                 >
                                     Aprobar Pago

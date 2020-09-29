@@ -11,7 +11,7 @@ const Conserjes = () => {
     const [idBorrar, setIdBorrar] = useState("")
     const [idToModify, setIdToModify] = useState("");
     const [modify, setModify] = useState(false);
-    const [estadoConserje, setEstadoConserje] = useState(null)
+    /* const [estadoConserje, setEstadoConserje] = useState(null) */
     const handleChangeFiltro = (e) => {
         setFiltroTurno(e.target.value)
     }
@@ -32,6 +32,8 @@ const Conserjes = () => {
     }
     const changeConserje = async (id, conserje) => {
         const formData1 = new FormData()
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const edificioID = user.user.edificio.id
         if (conserje.nombre !== undefined && conserje.nombre !== "") {
             formData1.append("nombre", conserje.nombre)
         }
@@ -52,7 +54,7 @@ const Conserjes = () => {
             })
             const data = await response.json()
             console.log(data)
-            actions.getConserjes(store.currentEdificio)
+            actions.getConserjes(edificioID)
 
         }
 
@@ -64,8 +66,11 @@ const Conserjes = () => {
     const [filtroEstado, setFiltroEstado] = useState("Todos")
 
     useEffect(() => {
+
         window.scrollTo(0, 0)
-        actions.getConserjes(store.currentEdificio)
+        const user = JSON.parse(localStorage.getItem("currentUser"))
+        const edificioID = user.user.edificio.id
+        actions.getConserjes(edificioID)
     }, [])
 
     return (
@@ -110,7 +115,7 @@ const Conserjes = () => {
 
 
                                                 <div className="text-right icons-conserje">
-                                                    <i class="far fa-edit text-right pr-2 pt-1" onClick={() => {
+                                                    <i className="far fa-edit text-right pr-2 pt-1" onClick={() => {
                                                         setIdToModify(conserje.id)
                                                         if (!modify) {
                                                             setModify(true)
@@ -143,11 +148,11 @@ const Conserjes = () => {
                                                             (<input className="d-inline" defaultValue={conserje.nombre} name="nombre" onChange={handleInputConserje} />) :
                                                             conserje.nombre}</strong></h5>
                                                     <ul className="pl-0 mb-0 border-top border-info pt-3">
-                                                        <li> <i class="fas fa-phone mr-1 mb-2"> </i> <strong>Teléfono: </strong>
+                                                        <li> <i className="fas fa-phone mr-1 mb-2"> </i> <strong>Teléfono: </strong>
                                                             {modify && idToModify === conserje.id ?
                                                                 (<input className="d-inline" defaultValue={conserje.telefono} name="telefono" onChange={handleInputConserje} />) :
                                                                 (conserje.telefono)}</li>
-                                                        <li><i class="far fa-clock mr-2 mb-2"></i><strong>Turno:</strong>  {modify && idToModify === conserje.id ?
+                                                        <li><i className="far fa-clock mr-2 mb-2"></i><strong>Turno:</strong>  {modify && idToModify === conserje.id ?
                                                             (<select className="d-inline" defaultValue={conserjeModificado.turno} name="turno" onChange={handleInputConserje}>
                                                                 <option value="default" disabled>Seleccionar</option>
                                                                 <option value="Mañana">Mañana</option>
@@ -157,10 +162,10 @@ const Conserjes = () => {
                                                             </select>) : conserje.turno} </li>
 
 
-                                                        <li><i class="far fa-user mr-2"></i><strong>Usuario: </strong>  {conserje.usuario.username}</li>
-                                                        <li> <span class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input" id={"customSwitch" + index} defaultChecked={checked} />
-                                                            <label class="custom-control-label" for={"customSwitch" + index} onClick={() => {
+                                                        <li><i className="far fa-user mr-2"></i><strong>Usuario: </strong>  {conserje.usuario.username}</li>
+                                                        <li> <span className="custom-control custom-switch">
+                                                            <input type="checkbox" className="custom-control-input" id={"customSwitch" + index} defaultChecked={checked} />
+                                                            <label className="custom-control-label" htmlFor={"customSwitch" + index} onClick={() => {
 
                                                                 if (conserje.estado === false) {
                                                                     estado_conserje = true

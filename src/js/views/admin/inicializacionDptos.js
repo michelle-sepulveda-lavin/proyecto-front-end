@@ -155,24 +155,29 @@ const InicializacionDptos = () => {
                     </div>
                 </div>
                 <div className="row pt-3">
-                    <form
-                        onSubmit={(e) => {
-                            actions.handleBodegas(e, modelInfo)
-                            limpiarFormulario(e)
-                            limpiarState()
-                        }} >
-                        <div className="col">
-                            <div className="form-group">
-                                <label htmlFor="total_superficie">Superficie total</label>
-                                <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
-                            </div>
-                        </div>
-                        <div className="col-md-2">
-                            <div className="form-group my-auto">
-                                <button type="submit" className="btn btn-primary">Añadir</button>
-                            </div>
-                        </div>
-                    </form>
+                    {
+                        !!store.bodegasEdificio ?
+                            <p></p>
+                            :
+                            <form
+                                onSubmit={(e) => {
+                                    actions.handleBodegas(e, modelInfo)
+                                    limpiarFormulario(e)
+                                    limpiarState()
+                                }} >
+                                <div className="col">
+                                    <div className="form-group">
+                                        <label htmlFor="total_superficie">Superficie total</label>
+                                        <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="form-group my-auto">
+                                        <button type="submit" className="btn btn-primary">Añadir</button>
+                                    </div>
+                                </div>
+                            </form>
+                    }
                 </div>
                 <div className="row mt-5">
                     <div className="col">
@@ -206,24 +211,29 @@ const InicializacionDptos = () => {
                     </div>
                 </div>
                 <div className="row pt-3">
-                    <form
-                        onSubmit={(e) => {
-                            actions.handleEstacionamiento(e, modelInfo)
-                            limpiarFormulario(e)
-                            limpiarState()
-                        }} >
-                        <div className="col">
-                            <div className="form-group">
-                                <label htmlFor="total_superficie">Superficie total</label>
-                                <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
-                            </div>
-                        </div>
-                        <div className="col-md-2 my-auto">
-                            <div className="form-group my-auto">
-                                <button type="submit" className="btn btn-primary">Añadir</button>
-                            </div>
-                        </div>
-                    </form>
+                    {
+                        !!store.estacionamientoEdificios ?
+                            <p></p>
+                            :
+                            <form
+                                onSubmit={(e) => {
+                                    actions.handleEstacionamiento(e, modelInfo)
+                                    limpiarFormulario(e)
+                                    limpiarState()
+                                }} >
+                                <div className="col">
+                                    <div className="form-group">
+                                        <label htmlFor="total_superficie">Superficie total</label>
+                                        <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                                    </div>
+                                </div>
+                                <div className="col-md-2 my-auto">
+                                    <div className="form-group my-auto">
+                                        <button type="submit" className="btn btn-primary">Añadir</button>
+                                    </div>
+                                </div>
+                            </form>
+                    }
                 </div>
                 <div className="row mt-5">
                     <div className="col-12">

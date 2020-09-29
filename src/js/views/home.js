@@ -59,7 +59,7 @@ const Home = () => {
             {/* <nav className="navbar navbar-color navbar-light navbar-expand-lg navbar-light bg-light">
 
                 <div className="d-md-flex justify-content-between w-100 text-center">
-                    <Link className="navbar-brand ml-2 float-left" to={"./"}><img src="../edificos-felices-logo.png" className="logo-home"></img></Link>
+                    <Link className="navbar-brand ml-2 float-left" to={"./"}><img src="../edificos-felices-logo.png" className="logo-home" alt=""></img></Link>
 
                     <span className="titulo-navbar align-self-center font-weight-bold ">Edificios Felices</span>
                     <div className="d-inline float-right">
