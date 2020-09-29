@@ -5,7 +5,9 @@ import { Context } from '../../store/appContext';
 
 const ListadoEdificioAdm = () => {
     const { store, actions } = useContext(Context)
-    useEffect(() => { actions.getEdificiosData() }, [])
+    useEffect(() => {
+        actions.getEdificiosData()
+    }, [])
     return (
         <>
             <SidebarPage>

@@ -27,12 +27,10 @@ const ModifyPlans = () => {
         const data = await response.json()
         console.log(data)
         getData()
-        actions.getPlanes()
     }
 
     useEffect(() => {
         getData()
-        /* actions.getPlanes() */
 
     }, []);
 

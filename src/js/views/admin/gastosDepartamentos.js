@@ -42,7 +42,7 @@ const GastosDepartamentos = () => {
     useEffect(() => {
         actions.getMontosTotales()
 
-    },[]);
+    }, []);
 
     const [showPago, setShowPago] = useState(false)
     const [comprobantePago, setComprobantePago] = useState(null)
@@ -153,7 +153,7 @@ const GastosDepartamentos = () => {
                                         </div>
 
                                         < table className="table text-center table-hover table-bordered border overflow-auto mx-auto ">
-                                            <thead className="thead-dark text-center mx-auto">
+                                            <thead className="btn-oscuro text-center mx-auto">
                                                 <tr className="mx-auto">
                                                     <th scope="col">Depto</th>
                                                     <th scope="col">Monto</th>

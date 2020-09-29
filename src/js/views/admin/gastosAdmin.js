@@ -34,8 +34,8 @@ const GastosAdmin = () => {
                 <div className="container mt-4 ">
                     {store.montosTotalesMes.length > 0 &&
                         <div className="d-flex justify-content-center">
-                            <Link to="/admin/gastos-departamentos"> <button className="btn btn-success mr-3">Buscar  gastos por mes</button> </Link>
-                            <Link to="/admin/gastos-depto-actual"> <button className="btn btn-success">Buscar gastos por departamento</button> </Link>
+                            <Link to="/admin/gastos-departamentos"> <button className="btn btn-verde text-white mr-3">Buscar  gastos por mes</button> </Link>
+                            <Link to="/admin/gastos-depto-actual"> <button className="btn btn-verde text-white">Buscar gastos por departamento</button> </Link>
                         </div>
                     }
 
@@ -44,7 +44,7 @@ const GastosAdmin = () => {
                             {store.montosTotalesMes.length > 0 &&
                                 <>
                                     < table className="table text-center table-hover table-bordered border overflow-auto mx-auto ">
-                                        <thead className="thead-dark text-center mx-auto">
+                                        <thead className="btn-oscuro text-white text-center mx-auto">
                                             <tr className="mx-auto">
                                                 <th scope="col">Año</th>
                                                 <th scope="col">Mes</th>
@@ -75,7 +75,7 @@ const GastosAdmin = () => {
 
                                                         <td>
 
-                                                            <span className="btn btn-warning" onClick
+                                                            <span className="btn btn-azul" onClick
                                                                 ={() => {
                                                                     setShow(true)
                                                                     setComprobanteName(monto.comprobante)
@@ -97,7 +97,7 @@ const GastosAdmin = () => {
                             }
 
 
-                            <Link to="/admin/subir-gastos"> <button className="btn btn-success">Subir Gastos del Mes</button> </Link>
+                            <Link to="/admin/subir-gastos"> <button className="btn btn-verde">Subir Gastos del Mes</button> </Link>
                         </div>
 
 
