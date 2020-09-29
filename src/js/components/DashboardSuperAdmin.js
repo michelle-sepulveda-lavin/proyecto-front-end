@@ -4,27 +4,19 @@ import { Context } from '../store/appContext';
 
 
 const DashboardSuperAdmin = () => {
-<<<<<<< HEAD
-=======
     const { store, actions } = useContext(Context)
 
-    const getUno =async () =>{
+    const getUno = async () => {
         const resp = await fetch(`${store.apiURL}/register`)
         const data = await resp.json()
     }
->>>>>>> c0b1380c11a6901f0bc48415f2acaf78dfbefb90
-
-    const { store, actions } = useContext(Context)
 
     useEffect(() => {
         actions.getPlanes()
         actions.getEdificiosData()
         actions.getContactData()
-<<<<<<< HEAD
-=======
         getUno()
-        
->>>>>>> c0b1380c11a6901f0bc48415f2acaf78dfbefb90
+
     }, [])
 
 
