@@ -20,8 +20,14 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
+<<<<<<< HEAD
 /* 			state.actions.getRoles()
  */			state.actions.getCurrentRol();
+=======
+			/* state.actions.getRoles() */
+			state.actions.getCurrentRol();
+			state.actions.getEdificiosData()
+>>>>>>> c0b1380c11a6901f0bc48415f2acaf78dfbefb90
 			state.actions.getCurrentDate()
 			state.actions.sesionIniciada()
 		}, []);

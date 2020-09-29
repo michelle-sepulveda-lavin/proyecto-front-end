@@ -29,7 +29,7 @@ const ModalCreacionUser = props => {
                             }
                             <form onSubmit={e => {
                                 actions.crearUsuario(e)
-                                /* limpiarFormulario(e) */
+                                limpiarFormulario(e)
                                 /* actions.levantaBanderaUsuarios() */
                             }}>
                                 <div className="form-group">
@@ -57,12 +57,16 @@ const ModalCreacionUser = props => {
                                             :
                                             <>
                                                 <label htmlFor="rol_id">Rol</label>
-                                                <select value={'default'} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
+                                                <select defaultValue={'default'} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
                                                     <option value="default" disabled>Seleccionar</option>
-                                                    <option value="superAdministrador">Super Administrador</option>
-                                                    <option value="administrador" >Administrador</option>
-                                                    <option value="conserje">Conserje</option>
-                                                    <option value="usuario">Usuario</option>
+                                                    {
+                                                        !!store.roles &&
+                                                        store.roles.map((rol, index)=>{
+                                                            return(
+                                                                <option key={index} value={rol.id}>{rol.rol}</option>
+                                                            )
+                                                        })
+                                                    }
                                                 </select>
                                             </>
                                     }
@@ -84,6 +88,7 @@ const ModalCreacionUser = props => {
                                                 <label htmlFor="edificio_id">Edificio</label>
                                                 <select defaultValue={'default'} name="edificio_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
                                                     <option value="default" disabled>Seleccionar</option>
+                                                    <option value="default">Ninguno</option>
                                                     {
                                                         !!store.edificios &&
                                                         store.edificios.map((edificio, index)=>{

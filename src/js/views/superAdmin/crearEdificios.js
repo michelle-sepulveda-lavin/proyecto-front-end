@@ -102,7 +102,7 @@ const CrearEdificios = () => {
                                         <input type="date" className="form-control" name="termino_contrato" onChange={e => { handleChange(e) }} />
                                     </div>
                                     <div className="col-md-2">
-                                        <label htmlFor="plan_id">Plan Id</label>
+                                        <label htmlFor="plan_id">Plan </label>
                                         <select defaultValue={'default'} className="form-control form-control-sm" name="plan_id" onChange={e => handleChange(e)}>
                                             <option value="default" disabled>Seleccione</option>
                                             {

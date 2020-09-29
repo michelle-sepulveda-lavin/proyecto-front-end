@@ -5,7 +5,7 @@ import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
 const DetalleEdificio = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const { id } = useParams()
 
     const getEdificio = async (id) => {
@@ -27,6 +27,8 @@ const DetalleEdificio = () => {
 
     useEffect(() => {
         getEdificio(id)
+        actions.getPlanes()
+        actions.getAdministradorEdificio(id)
 
     }, [])
 
@@ -50,7 +52,7 @@ const DetalleEdificio = () => {
                         <div className="card h-100 shadow-sm">
 
                             <div className="card-body text-center row ">
-                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i class="fas fa-phone edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i className="fas fa-phone edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Teléfono</h5>
@@ -64,7 +66,7 @@ const DetalleEdificio = () => {
                         <div className="card h-100 shadow-sm">
 
                             <div className="card-body text-center row">
-                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i class="fas fa-route edificio-color-4 "></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i className="fas fa-route edificio-color-4 "></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Dirección</h5>
@@ -80,7 +82,7 @@ const DetalleEdificio = () => {
                         <div className="card h-100 shadow-sm">
 
                             <div className="card-body text-center row">
-                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i class="fas fa-file-signature edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i className="fas fa-file-signature edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Inicio Contrato</h5>
@@ -94,7 +96,7 @@ const DetalleEdificio = () => {
                         <div className="card  h-100 shadow-sm">
 
                             <div className="card-body text-center row">
-                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i class="fas fa-file-contract edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i className="fas fa-file-contract edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Fin Contrato</h5>
@@ -111,7 +113,7 @@ const DetalleEdificio = () => {
 
                             <div className="card-body text-center row">
 
-                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i class="fas fa-house-user edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i className="fas fa-house-user edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Departamentos</h5>
@@ -126,7 +128,7 @@ const DetalleEdificio = () => {
 
                             <div className="card-body text-center row">
 
-                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i class="fas fa-warehouse edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i className="fas fa-warehouse edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Bodegas</h5>
@@ -141,7 +143,7 @@ const DetalleEdificio = () => {
 
                             <div className="card-body text-center row">
 
-                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i class="fas fa-car-side edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i className="fas fa-car-side edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Estacionamientos</h5>
@@ -156,7 +158,7 @@ const DetalleEdificio = () => {
 
                             <div className="card-body text-center row">
 
-                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i class="fas fa-building edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-center"><i className="fas fa-building edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Pisos</h5>
@@ -173,11 +175,11 @@ const DetalleEdificio = () => {
                         <div className="card h-100 shadow-sm">
 
                             <div className="card-body text-center row ">
-                                <div className="col-lg-3 d-flex align-items-center justify-content-start"><i class="fas fa-user-tie edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-start"><i className="fas fa-user-tie edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Administrador</h5>
-                                        <p className="card-text">{edificio && modify === false && edificio.nombre_administrador ? edificio.nombre_administrador : edificio && modify === true && edificio.nombre_administrador ? (
+                                        <p className="card-text">{edificio && modify === false && store.administradorEdificio ? store.administradorEdificio.username : edificio && modify === true && store.administradorEdificio.username ? (
                                             <input className="mt-2" name="nombre_administrador" value={edificioModificado.nombre_administrador}
                                                 onChange={handleInput}
                                             ></input>
@@ -191,7 +193,7 @@ const DetalleEdificio = () => {
                         <div className="card h-100 shadow-sm">
 
                             <div className="card-body text-center row">
-                                <div className="col-lg-3 d-flex align-items-center justify-content-start"><i class="far fa-envelope edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-start"><i className="far fa-envelope edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Correo</h5>
@@ -209,36 +211,20 @@ const DetalleEdificio = () => {
                         <div className="card h-100 shadow-sm">
 
                             <div className="card-body text-center row">
-                                <div className="col-lg-3 d-flex align-items-center justify-content-start"><i class="fas fa-money-check-alt edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-start"><i className="fas fa-money-check-alt edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Plan Seleccionado</h5>
-                                        <p className="card-text">{edificio && modify === false ? (edificio.plan_id === 1 ? "Plan Mensual" : edificio.plan_id === 2 ? "Plan Anual" : "") : edificio && modify === true ? (
-                                            <select class="form-control form-control-sm mt-2" onChange={(e) => {
-                                                let value = e.target.value
-                                                if (value === "Plan Mensual") {
-                                                    setEdificio((prevstate) => {
-                                                        return { ...prevstate, plan_id: 1 }
-                                                    })
-                                                } else if (value === "Plan Anual") {
-                                                    setEdificio((prevstate) => {
-                                                        return { ...prevstate, plan_id: 2 }
-                                                    })
-                                                } else {
+                                        <p className="card-text">{edificio && modify === false ? edificio.plan_name : edificio && modify === true ? (
+                                            <select className="form-control form-control-sm mt-2" name="plan_id" onChange={handleInput}> {
+                                                !!store.planes &&
+                                                store.planes.map((plan, index) => {
+                                                    return (
+                                                        <option key={index} value={plan.id}>{plan.name}</option>
+                                                    )
+                                                })
 
-                                                    setEdificioModificado((prevstate) => {
-                                                        return { ...prevstate, plan_id: (edificioModificado.plan_id === 1 ? "Plan Mensual" : edificioModificado.plan_id === 2 ? "Plan Anual" : "") }
-                                                    })
-                                                }
-                                            }}> {
-
-                                                    edificio.plan_id === 1 ?
-                                                        <><option>Plan Mensual</option>
-                                                            <option>Plan Anual</option> </> : edificio.plan_id === 2 ? <><option>Plan Mensual</option>
-                                                                <option>Plan Anual</option> </> : ""
-
-                                                }
-
+                                            }
                                             </select>
                                         ) : ""}</p>
                                     </div>
@@ -250,7 +236,7 @@ const DetalleEdificio = () => {
                         <div className="card h-100 shadow-sm">
 
                             <div className="card-body text-center row">
-                                <div className="col-lg-3 d-flex align-items-center justify-content-start"><i class="fas fa-money-bill-alt edificio-color-4"></i></div>
+                                <div className="col-lg-3 d-flex align-items-center justify-content-start"><i className="fas fa-money-bill-alt edificio-color-4"></i></div>
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Vencimiento De Gastos Comunes</h5>
@@ -275,7 +261,7 @@ const DetalleEdificio = () => {
 
                     <span className={"btn btn-danger px-2 " + (modify === true ? " d-none" : "")} onClick={() => {
                         setShowModal(true)
-                    }}> Eliminar Edificio <i class="far fa-trash-alt"></i></span>
+                    }}> Eliminar Edificio <i className="far fa-trash-alt"></i></span>
 
 
                     <div className={"btn btn-success ml-1" + (modify === true ? " d-none" : "")} onClick={() => {
@@ -289,7 +275,7 @@ const DetalleEdificio = () => {
                         setModify(false)
                         setEdificioModificado(edificio)
                     }}>
-                        Cancelar   <i class="fas fa-times"></i></div>
+                        Cancelar   <i className="fas fa-times"></i></div>
 
 
                     <div className="d-flex justify-content-center">
@@ -299,7 +285,7 @@ const DetalleEdificio = () => {
                             setModify(false)
 
                         }}>
-                            Guardar Cambios   <i class="fas fa-check"></i></div>
+                            Guardar Cambios   <i className="fas fa-check"></i></div>
                     </div>
 
 

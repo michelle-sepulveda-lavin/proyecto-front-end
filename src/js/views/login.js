@@ -15,13 +15,13 @@ const Login = props => {
     }
 
     useEffect(() => {
-        if (store.currentUser !== null) history.push("/dashboard");
+/*         if (store.currentUser !== null) history.push("/dashboard"); */
         actions.mostrarUsuario()
 
     }, [store.currentUser]);
 
     return (
-        <div className="container-fluid login-background pt-4" style={sectionStyle}>
+        <div className="container-fluid bg-white pt-4" style={sectionStyle}>
             <div className="container my-5 pb-5">
                 <div className="card col-md-6 m-auto px-0" style={{ backgroundColor: "rgba(255,255,255,0.7)", borderRadius: "30px" }}>
                     <div className="card-header login-background text-white text-center" style={{ borderTopLeftRadius: "30px", borderTopRightRadius: "30px" }}>
