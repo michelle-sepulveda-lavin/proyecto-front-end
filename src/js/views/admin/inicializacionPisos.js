@@ -114,7 +114,7 @@ const InicializacionPisos = () => {
                                     limpiarFormulario(e)
                                     limpiarState()
                                 }}>
-                                    <table className="table table-bordered table-responsive-md">
+                                    <table className="table table-bordered text-center table-responsive-md">
                                         <thead className="thead-dark">
                                             <tr>
                                                 <th scope="col">N° Departamento</th>
@@ -259,7 +259,7 @@ const InicializacionPisos = () => {
                         </div>
                         <div className="row">
                             <div className="col">
-                                <table className="table table-bordered table-responsive-md">
+                                <table className="table table-hover text-center table-bordered border">
                                     <thead className="thead-dark">
                                         <tr>
                                             <th scope="col">#</th>

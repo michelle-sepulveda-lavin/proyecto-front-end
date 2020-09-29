@@ -56,7 +56,7 @@ const Contactados = () => {
 
                 <div className="row">
                     <div className="col-12 col-md-7 mx-auto">
-                        <table className="table  border">
+                        <table className="table table-hover table-bordered border">
                             {includes.includes(false) &&
                                 <thead className="thead-dark text-center w-100">
                                     <tr>

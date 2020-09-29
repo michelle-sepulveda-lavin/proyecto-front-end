@@ -10,7 +10,7 @@ const DepartamentosAdmin = () => {
     const [departamentoNumero, setdepartamentoNumero] = useState()
 
     const contadorPisos = () => {
-        const auxiliar = store.departamentoUsuarios.map((dpto)=>{
+        const auxiliar = store.departamentoUsuarios.map((dpto) => {
             return dpto.piso
         })
         const aux2 = [...new Set(auxiliar)]
@@ -30,16 +30,24 @@ const DepartamentosAdmin = () => {
         actions.getDptosUsuarios()
         actions.getBodegasDelEdificio()
         actions.getEstacionamientosDelEdificio()
-        
-    },[])
+
+    }, [])
     return (
         <SidebarPage>
             <div className="container">
                 <div className="row">
                     <div className="col-md-6 m-auto">
                         <h1>Departamentos</h1>
-                        <h4 className="text-center mt-3">Edificio: {!!store.edificioCompleto ? store.edificioCompleto.nombre_edificio : "cargando"}</h4>
-                        <h6 className="text-center mt-3">Direccion: {!!store.edificioCompleto ? store.edificioCompleto.direccion : "cargando"}</h6>
+                    </div>
+                </div>
+            </div>
+            <div className="container bg-white border">
+                <div className="row">
+                    <div className="col-md-12">
+                        <h4 className="text-center mt-3">{!!store.edificioCompleto ? store.edificioCompleto.nombre_edificio : "cargando"}</h4>
+                    </div>
+                    <div className="col-md-12">
+                        <h6 className="text-center mt-3">{!!store.edificioCompleto ? store.edificioCompleto.direccion : "cargando"}</h6>
                     </div>
                 </div>
                 <div className="row mt-5 d-flex justify-content-center">
@@ -69,7 +77,7 @@ const DepartamentosAdmin = () => {
                                 </a>
                                 {
                                     !!pisos &&
-                                    pisos.sort(function(a, b){return a - b}).map((piso, index) => {
+                                    pisos.sort(function (a, b) { return a - b }).map((piso, index) => {
                                         return (
                                             <a className="dropdown-item" key={index} onClick={() => actions.filtradoPiso(piso)}>
                                                 {piso}

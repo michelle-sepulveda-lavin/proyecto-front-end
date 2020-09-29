@@ -138,7 +138,7 @@ const GastosUser = () => {
                         <h3 className="text-center mb-3" onClick={() => console.log(currentPosts)}>Historial</h3>
                         {!!gastosDepto && gastosDepto.length > 0 &&
                             <>
-                                < table className="table text-center overflow-auto mx-auto ">
+                                < table className="table text-center table-hover table-bordered border overflow-auto mx-auto ">
                                     <thead className="thead-dark text-center mx-auto">
                                         <tr className="mx-auto">
                                             <th scope="col">Año</th>
