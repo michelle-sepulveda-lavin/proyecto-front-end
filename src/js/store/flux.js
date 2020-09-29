@@ -23,11 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             flagRecordar: false,
             contactos: [],
             currentDate: null,
-            contratos: {
-                vigentes: [],
-                porVencer: [],
-                vencidos: []
-            },
+            contratos: [],
             flagModal: false,
             allUsuarios: [],
             archivoCSV: null,
@@ -237,7 +233,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getEdificiosData: async () => {
                 const store = getStore()
-                const { getContratos } = getActions()
                 const response = await fetch('http://127.0.0.1:5000/crearedificio');
                 const data = await response.json()
                 if (response.ok) {
@@ -245,7 +240,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         ...store,
                         edificios: data
                     })
-                    getContratos()
                 }
             },
             getContactData: async () => {
@@ -325,25 +319,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     currentDate: date
                 })
             },
-            getContratos: () => {
-                const { edificios, currentDate, contratos } = getStore();
-                edificios.length > 0 &&
-                    edificios.map((edificio) => {
-                        const fechaContrato = new Date(edificio.termino_contrato)
-                        const mesContrato = fechaContrato.getMonth()
-                        const mesActual = currentDate.getMonth();
-                        const proximoVencer = (mesContrato - mesActual) <= 1 ? true : false;
 
-                        if (currentDate > fechaContrato) {
-                            contratos.vencidos.push(edificio)
-                        } else if (currentDate < fechaContrato && proximoVencer) {
-                            contratos.porVencer.push(edificio)
-                        } else {
-                            contratos.vigentes.push(edificio)
-                        }
-                    })
-
-            },
             sesionIniciada: () => {
                 if (localStorage.getItem("currentUser") !== null) {
                     const usuario = JSON.parse(localStorage.getItem("currentUser"))
@@ -739,7 +715,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         body: formData
                     });
                     const data = await resp.json();
-                    console.log(data)
                     const { msg } = data;
                     if (resp.ok) {
                         alert(data.msg)
@@ -814,7 +789,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: { 'Content-type': 'application/json; charset=UTF-8' }
                     })
                     const data = await response.json()
-                    console.log(data)
                     actions.getConserjes(edificioID)
                 }
 
@@ -1049,8 +1023,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         gastosMes: data,
                     })
-                    console.log(data)
-                    console.log("prueba")
 
                     setData(data)
 
@@ -1134,7 +1106,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: {}
                     })
                     const data = await response.json()
-                    console.log(data)
                     actions.getGastosMonthYear(month, year, setData)
                     actions.getGastosMonthYear(month, year, setData2)
                 }
@@ -1286,7 +1257,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: {}
                     })
                     const data = await response.json()
-                    console.log(data)
                 }
 
                 catch (error) {
@@ -1308,7 +1278,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
 
                 const data = await resp.json();
-                console.log(data)
                 const { msg } = data;
 
                 if (msg !== undefined) {
@@ -1373,7 +1342,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                     flagModalEditUser: false
                 })
             },
-
+            correoGastos: async (id, monto) => {
+                const { apiURL } = getStore();
+                if (!!id) {
+                    const resp = await fetch(`${apiURL}/correo-gastos/${id}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ "monto": monto })
+                    });
+                    const data = await resp.json();
+                    alert(data.msg)
+                } else {
+                    alert("Este departamento no tiene una cuenta asociada")
+                }
+            }
         }
     }
 };

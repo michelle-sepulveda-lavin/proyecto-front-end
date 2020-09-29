@@ -9,7 +9,7 @@ const DashboardSuperAdmin = () => {
 
     const getConserje = async () => {
         const user = JSON.parse(localStorage.getItem("currentUser"))
-        const userID = user.user.edificio
+        const userID = user.user.edificio.id
         const resp = await fetch(`http://127.0.0.1:5000/conserjes/${userID}`)
         const data = await resp.json()
         setAvatar(data)
@@ -20,16 +20,39 @@ const DashboardSuperAdmin = () => {
         getConserje()
         actions.getPlanes()
         actions.getEdificiosData()
-        actions.getEdificioCompleto()
-
     }, [])
 
-    const planesMensuales = []
-    const planesAnuales = []
 
-    const [lastContacts, setLastContacts] = useState([])
+    const filtradoPorVencer = () => {
 
-    const nuevaFecha = store.edificios.length > 0 && new Date(store.edificios[0].termino_contrato)
+        const porVencer = store.edificios.filter((contrato) => {
+            const fechaContrato = new Date(contrato.termino_contrato)
+            const mesContrato = fechaContrato.getMonth()
+            const mesActual = store.currentDate.getMonth();
+            const proximoVencer = (mesContrato - mesActual) <= 1 ? true : false;
+            return (store.currentDate < fechaContrato && proximoVencer)
+        })
+        return porVencer
+    }
+    const filtradoVencido = () => {
+
+        const vencido = store.edificios.filter((contrato) => {
+            const fechaContrato = new Date(contrato.termino_contrato)
+            return (fechaContrato < store.currentDate)
+        })
+        return vencido
+    }
+    const filtradoVigente = () => {
+
+        const vigente = store.edificios.filter((contrato) => {
+            const fechaContrato = new Date(contrato.termino_contrato)
+            const mesContrato = fechaContrato.getMonth()
+            const mesActual = store.currentDate.getMonth();
+            const proximoVencer = (mesContrato - mesActual) <= 1 ? true : false;
+            return (fechaContrato > store.currentDate && (proximoVencer === false))
+        })
+        return vigente
+    }
 
 
     return (<>
@@ -102,12 +125,12 @@ const DashboardSuperAdmin = () => {
                 <div className="card-body">
                     <h2 className="card-title text-center">Contratos</h2>
                     <ul className="p-0 mt-5 justify-content-center row">
-                        <li className="d-flex mb-3 text-dark align-items-center justify-content-center row col-md-4"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-yellow"><p className="pt-3">{store.contratos.porVencer.length}</p></span></div> </div> <div className="col col-lg-6 text-center"><h4 >Próximos a Vencer</h4> </div></li>
+                        <li className="d-flex mb-3 text-dark align-items-center justify-content-center row col-md-4"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-yellow"><p className="pt-3">{filtradoPorVencer().length}</p></span></div> </div> <div className="col col-lg-6 text-center"><h4 >Próximos a Vencer</h4> </div></li>
 
-                        <li className="d-flex mb-3 col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-red"><p className="pt-3">{store.contratos.vencidos.length}</p></span> </div></div> <div className="col col-lg-6 text-center text-dark"><h4 >Vencidos</h4> </div></li>
+                        <li className="d-flex mb-3 col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-red"><p className="pt-3">{filtradoVencido().length}</p></span> </div></div> <div className="col col-lg-6 text-center text-dark"><h4 >Vencidos</h4> </div></li>
 
 
-                        <li className="d-flex col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-green"><p className="pt-3">{store.contratos.vigentes.length}</p></span> </div></div> <div className="col col-lg-6 text-center"><h4 className="text-dark">Vigentes</h4> </div></li>
+                        <li className="d-flex col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-green"><p className="pt-3">{filtradoVigente().length}</p></span> </div></div> <div className="col col-lg-6 text-center"><h4 className="text-dark">Vigentes</h4> </div></li>
 
                     </ul>
                     <div className="d-flex justify-content-center">

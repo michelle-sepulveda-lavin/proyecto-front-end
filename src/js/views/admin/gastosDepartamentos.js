@@ -206,7 +206,7 @@ const GastosDepartamentos = () => {
                                                                         gasto.estado === "noPagado" ?
                                                                             <td> <span className="btn btn-info"
                                                                                 onClick={() => {
-                                                                                    console.log("EN PROGRESO")
+                                                                                    actions.correoGastos(gasto.departamento.residente, gasto.monto)
                                                                                 }}>Enviar notificación</span> </td>
                                                                             :
                                                                             "")
@@ -225,7 +225,7 @@ const GastosDepartamentos = () => {
                                                                     estadoPago === "noPagado" ?
                                                                         <td> <span className="btn btn-info"
                                                                             onClick={() => {
-                                                                                console.log("EN PROGRESO")
+                                                                                actions.correoGastos(gasto.departamento.residente, gasto.monto)
                                                                             }}>Enviar notificación</span>  </td>
                                                                         :
                                                                         estadoPago === "revision" ?

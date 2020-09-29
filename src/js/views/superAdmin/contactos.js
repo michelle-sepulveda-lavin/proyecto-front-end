@@ -32,7 +32,7 @@ const Contactos = () => {
             <div className="container-fluid">
 
                 <div className="row">
-                    <div className="col-12 col-md-8 mx-auto">
+                    <div className="col-12 col-md-8 mx-auto overflow-auto ">
                         <table className="table  border">
                             <thead className="thead-dark text-center">
                                 <tr>

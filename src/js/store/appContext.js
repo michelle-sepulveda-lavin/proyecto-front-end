@@ -25,13 +25,8 @@ const injectContext = PassedComponent => {
 			state.actions.getEdificiosData()
 			state.actions.getCurrentDate()
 			state.actions.sesionIniciada()
-			state.actions.getEdificioCompleto()
 		}, []);
 
-		useEffect(() => {
-			state.actions.getCurrentEdificio()
-
-		}, [state.store.currentRol])
 
 		return (
 			<Context.Provider value={state}>
