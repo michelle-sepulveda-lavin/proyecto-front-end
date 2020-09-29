@@ -452,12 +452,13 @@ li {
 .carousel-caption {
   line-height: inherit;
 }
+.min-h-20 {
+  min-height: 20vh;
+}
+
 .carousel p {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
-}
-.min-h-20 {
-  min-height: 20vh;
 }

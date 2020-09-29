@@ -14,7 +14,6 @@ const Planes = () => {
     }
     useEffect(() => {
         getData()
-        actions.getPlanes()
     }, []);
 
     const sendContact = async (contact) => {

@@ -89,7 +89,7 @@ const DashboardUser = (props) => {
                                                     />
                                                     <Carousel.Caption className="text-body">
                                                         <h3 className=" mb-md-4 ">{boletin.asunto}</h3>
-                                                        <p className="d-md-block d-none text-justify pr-3 overflow-auto">{boletin.body}</p>
+                                                        <p className="d-md-flex d-none text-justify pr-3 overflow-auto">{boletin.body}</p>
                                                     </Carousel.Caption>
                                                 </Carousel.Item>
 
