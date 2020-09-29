@@ -11,8 +11,8 @@ const ListadoEdificioAdm = () => {
                 <h1 className="py-3 pl-3">Listado de edificios</h1>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-12 col-md-9 mx-auto">
-                            <table className="table table-responsive-lg  border">
+                        <div className="col-12 col-md-9 mx-auto overflow-auto ">
+                            <table className="table  border">
                                 <thead className="thead-dark text-center">
                                     <tr>
                                         <th scope="col">ID</th>

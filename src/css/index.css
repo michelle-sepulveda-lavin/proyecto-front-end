@@ -358,8 +358,8 @@ li {
   min-height: 50vh;
 }
 .dashboard-blue {
-  background-color: #121975;
-  background-image: linear-gradient(160deg, #0312e4 10%, #010031 100%);
+  background-color: #010549;
+  background-image: linear-gradient(160deg, #01218a 10%, #010031 100%);
   background-size: cover;
 }
 .login-celeste {
@@ -403,7 +403,9 @@ li {
 .bg-db-3 {
   background: #ececec;
 }
-
+.bg-db-4 {
+  background: #3db5d0;
+}
 .btn-db-1 {
   background: #288ed1;
   width: 5em;
@@ -426,6 +428,36 @@ li {
 }
 .btn-db-1 p,
 .btn-db-2 p,
-.btn-db-3 p {
+.btn-db-3 p,
+.btn-db-4 p {
   font-size: 3rem;
+}
+.btn-db-4 {
+  background: #3192a8;
+  width: 5em;
+  height: 5em;
+  border-radius: 90%;
+  color: #ebecf1;
+}
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+.font-bigger {
+  font-size: 1.3em;
+}
+.carousel-caption {
+  line-height: inherit;
+}
+.carousel p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+.min-h-20 {
+  min-height: 20vh;
 }
