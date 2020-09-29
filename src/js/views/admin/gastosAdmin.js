@@ -43,7 +43,7 @@ const GastosAdmin = () => {
                         <div className="col-12 col-md-9 mx-auto overflow-auto pb-4">
                             {store.montosTotalesMes.length > 0 &&
                                 <>
-                                    < table className="table text-center overflow-auto mx-auto ">
+                                    < table className="table text-center table-hover table-bordered border overflow-auto mx-auto ">
                                         <thead className="btn-oscuro text-white text-center mx-auto">
                                             <tr className="mx-auto">
                                                 <th scope="col">Año</th>

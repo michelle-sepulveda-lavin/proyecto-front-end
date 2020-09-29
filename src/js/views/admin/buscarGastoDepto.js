@@ -64,7 +64,7 @@ const GastosDeptoActual = () => {
 
 
 
-                                        < table className="table text-center overflow-auto mx-auto ">
+                                        < table className="table text-center table-bordered border overflow-auto mx-auto ">
                                             <thead className="thead-dark text-center mx-auto">
                                                 <tr className="mx-auto">
                                                     <th scope="col">Depto</th>

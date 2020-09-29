@@ -107,7 +107,7 @@ const InicializacionDptos = () => {
                 }
                 <div className="row mt-5">
                     <div className="col-12">
-                        <table className="table table-bordered table-responsive-md">
+                        <table className="table table-hover text-center table-bordered border">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -148,40 +148,72 @@ const InicializacionDptos = () => {
 
             <div className="container mt-5 border">
                 <div className="row">
-                    <div className="col">
-                        <h5>
+                    <div className="col-md-6">
+                        <h5 className="text-center">
                             Bodegas
+                        </h5>
+                    </div>
+                    <div className="col-md-6">
+                        <h5 className="text-center">
+                            Estacionamientos
                         </h5>
                     </div>
                 </div>
                 <div className="row pt-3">
-                    {
-                        !!store.bodegasEdificio ?
-                            <p></p>
-                            :
-                            <form
-                                onSubmit={(e) => {
-                                    actions.handleBodegas(e, modelInfo)
-                                    limpiarFormulario(e)
-                                    limpiarState()
-                                }} >
-                                <div className="col">
-                                    <div className="form-group">
-                                        <label htmlFor="total_superficie">Superficie total</label>
-                                        <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                    <div className="col-md-6">
+                        {
+                            !!store.bodegasEdificio ?
+                                <p></p>
+                                :
+                                <form
+                                    onSubmit={(e) => {
+                                        actions.handleBodegas(e, modelInfo)
+                                        limpiarFormulario(e)
+                                        limpiarState()
+                                    }} >
+                                    <div className="col">
+                                        <div className="form-group">
+                                            <label htmlFor="total_superficie">Superficie total</label>
+                                            <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-md-2">
-                                    <div className="form-group my-auto">
-                                        <button type="submit" className="btn btn-primary">Añadir</button>
+                                    <div className="col-md-2">
+                                        <div className="form-group my-auto">
+                                            <button type="submit" className="btn btn-primary">Añadir</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                    }
+                                </form>
+                        }
+                    </div>
+                    <div className="col-md-6">
+                        {
+                            !!store.estacionamientoEdificios ?
+                                <p></p>
+                                :
+                                <form
+                                    onSubmit={(e) => {
+                                        actions.handleEstacionamiento(e, modelInfo)
+                                        limpiarFormulario(e)
+                                        limpiarState()
+                                    }} >
+                                    <div className="col">
+                                        <div className="form-group">
+                                            <label htmlFor="total_superficie">Superficie total</label>
+                                            <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-2 my-auto">
+                                        <div className="form-group my-auto">
+                                            <button type="submit" className="btn btn-primary">Añadir</button>
+                                        </div>
+                                    </div>
+                                </form>
+                        }
+                    </div>
                 </div>
                 <div className="row mt-5">
-                    <div className="col">
-                        <table className="table table-bordered">
+                    <div className="col-md-6">
+                        <table className="table table-hover text-center table-bordered border">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">Superficie total</th>
@@ -200,44 +232,8 @@ const InicializacionDptos = () => {
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-            <div className="container border mt-5">
-                <div className="row">
-                    <div className="col">
-                        <h5>
-                            Estacionamientos
-                        </h5>
-                    </div>
-                </div>
-                <div className="row pt-3">
-                    {
-                        !!store.estacionamientoEdificios ?
-                            <p></p>
-                            :
-                            <form
-                                onSubmit={(e) => {
-                                    actions.handleEstacionamiento(e, modelInfo)
-                                    limpiarFormulario(e)
-                                    limpiarState()
-                                }} >
-                                <div className="col">
-                                    <div className="form-group">
-                                        <label htmlFor="total_superficie">Superficie total</label>
-                                        <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
-                                    </div>
-                                </div>
-                                <div className="col-md-2 my-auto">
-                                    <div className="form-group my-auto">
-                                        <button type="submit" className="btn btn-primary">Añadir</button>
-                                    </div>
-                                </div>
-                            </form>
-                    }
-                </div>
-                <div className="row mt-5">
-                    <div className="col-12">
-                        <table className="table table-bordered">
+                    <div className="col-md-6">
+                        <table className="table table-hover text-center table-bordered border">
                             <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">Superficie total</th>
@@ -258,7 +254,6 @@ const InicializacionDptos = () => {
                     </div>
                 </div>
             </div>
-
 
             <div className="row my-5">
                 <div className="col-md-3 m-auto">

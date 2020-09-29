@@ -34,7 +34,7 @@ const PaqueteriaConserje = () => {
                     <div className="col mt-5">
                         {
                             store.paqueteriaEdificio.length > 0?
-                            <table className="table table-hover table-responsive-md">
+                            <table className="table table-hover table-bordered border text-center table-responsive-md">
                             <thead className="bg-dark text-white">
                                 <tr>
                                     <th scope="col">#</th>

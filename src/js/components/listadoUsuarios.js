@@ -33,7 +33,7 @@ const ListadoUsuarios = () => {
 
             <div className="row mt-5">
                 <div className="col">
-                    <table className="table table-bordered table-responsive-md">
+                    <table className="table table-hover text-center table-bordered border">
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">N°</th>
@@ -57,7 +57,7 @@ const ListadoUsuarios = () => {
                                             <td>{usuario.rol.name}</td>
                                             <td>{!!usuario.edificio? usuario.edificio.name : usuario.edificio.id}</td>
                                             <td>
-                                                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalEditUser"
+                                                <button type="button" className="btn " data-toggle="modal" data-target="#modalEditUser"
                                                     onClick={() => {
                                                         actions.guardarIndex(i)
                                                         actions.resetMsg()

@@ -15,7 +15,7 @@ const ListadoEdificioAdm = () => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 col-md-9 mx-auto overflow-auto ">
-                            <table className="table  border">
+                            <table className="table table-hover table-bordered border">
                                 <thead className="thead-dark text-center">
                                     <tr>
                                         <th scope="col">ID</th>

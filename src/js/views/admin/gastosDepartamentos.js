@@ -152,7 +152,7 @@ const GastosDepartamentos = () => {
                                             }}>Todos</span>
                                         </div>
 
-                                        < table className="table text-center overflow-auto mx-auto ">
+                                        < table className="table text-center table-hover table-bordered border overflow-auto mx-auto ">
                                             <thead className="btn-oscuro text-center mx-auto">
                                                 <tr className="mx-auto">
                                                     <th scope="col">Depto</th>
