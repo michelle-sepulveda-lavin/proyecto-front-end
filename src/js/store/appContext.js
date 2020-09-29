@@ -30,8 +30,8 @@ const injectContext = PassedComponent => {
 			state.actions.getBodegasDelEdificio()
 			state.actions.getEstacionamientosDelEdificio()
 			state.actions.getDepartamentos()
-			state.actions.getMontosTotales()
-			state.actions.getGastosMesActual()
+			// state.actions.getMontosTotales()
+			// state.actions.getGastosMesActual()
 			state.actions.getBoletines()
 
 		}, []);

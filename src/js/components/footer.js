@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
     return (
         <>
-            <div className="footer text-light">
+            <div className="footer text-light mt-5">
                 <div className="d-flex justify-content-between">
                     <div className="p-0 ml-2">
                         <div >Contacto: <br />
