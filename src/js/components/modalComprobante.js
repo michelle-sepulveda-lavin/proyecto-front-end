@@ -18,8 +18,10 @@ const ModalComprobante = props => {
                         </button>
                     </div>
                     <div className="modal-body">
-                        {store.montosTotalesMes.length > 0 &&
-                            < iframe src={`${store.apiURL}/comprobantes/${props.comprobante}`} width="100%" height="auto" className="modal-lg"> </iframe>}
+                        {
+                            store.montosTotalesMes.length > 0 && props.comprobante !== "" &&
+                            < iframe src={`${store.apiURL}/comprobantes/${props.comprobante}`} width="100%" height="auto" className="modal-lg"> </iframe>
+                        }
                     </div>
                     <div className="modal-footer">
                         <button

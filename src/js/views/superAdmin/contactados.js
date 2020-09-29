@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
@@ -16,7 +17,7 @@ const Contactados = () => {
         console.log(data)
         actions.getContactData()
     }
-    const noContactado = async (email) => {
+/*     const noContactado = async (email) => {
         const response = await fetch(`http://127.0.0.1:5000/api/info-contacto/${email}`, {
             method: "PATCH",
             body: JSON.stringify({
@@ -29,7 +30,7 @@ const Contactados = () => {
         const data = await response.json()
         console.log(data)
         actions.getContactData()
-    }
+    } */
     const includes = store.contactos.map((contacto) => {
         if (Object.values(contacto).includes(false)) {
             return false
@@ -42,7 +43,7 @@ const Contactados = () => {
     useEffect(() => {
         actions.getContactData()
 
-    }, [])
+    },[])
     return (
         <SidebarPage>
 
@@ -55,9 +56,9 @@ const Contactados = () => {
 
                 <div className="row">
                     <div className="col-12 col-md-7 mx-auto">
-                        <table class="table  border">
+                        <table className="table  border">
                             {includes.includes(false) &&
-                                <thead class="thead-dark text-center w-100">
+                                <thead className="thead-dark text-center w-100">
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Nombre</th>
@@ -77,7 +78,7 @@ const Contactados = () => {
 
                                         return (
 
-                                            <tr>
+                                            <tr key={index}>
                                                 <th scope="row">{contacto.id}</th>
                                                 <td>{contacto.name}</td>
                                                 <td>{contacto.email}</td>
@@ -94,8 +95,9 @@ const Contactados = () => {
                                 {
                                     !includes.includes(false) &&
 
-                                    <th className="">No hay mensajes archivados
-                                        </th>
+                                    <tr>
+                                        <th>No hay mensajes archivados</th>
+                                    </tr>
 
 
                                 }
@@ -106,9 +108,11 @@ const Contactados = () => {
                             <div className="d-flex justify-content-center">
                                 <span className="btn btn-danger px-5" onClick={() => {
                                     store.contactos.map((contacto) => {
-                                        if (contacto.state === false) {
+                                        /* if (contacto.state === false) {
                                             deleteContact(contacto.email)
-                                        }
+                                        } */
+                                        contacto.state === false &&
+                                        deleteContact(contacto.email)
                                     })
                                 }}>Borrar Todos</span>
                             </div>
@@ -117,6 +121,17 @@ const Contactados = () => {
 
                 </div>
 
+            </div>
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="m-auto pb-5">
+                        <Link to="/contactos" style={{ textDecoration: 'none' }}>
+                            <span className="boton-a-inicio shadow bg-white">
+                                <i className="fas fa-arrow-circle-left bg-white"></i> Atras
+                            </span>
+                        </Link>
+                    </div>
+                </div>
             </div>
 
         </SidebarPage>

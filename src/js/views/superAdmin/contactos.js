@@ -49,9 +49,8 @@ const Contactos = () => {
                                     if (index < 10 && contacto.state === true) {
 
                                         return (
-                                            <>
-                                                <tr>
-                                                    <th key={index} scope="row">{contacto.id}</th>
+                                                <tr key={index}>
+                                                    <th scope="row">{contacto.id}</th>
                                                     <td>{contacto.name}</td>
                                                     <td>{contacto.email}</td>
                                                     <td>{contacto.plan}</td>
@@ -61,7 +60,7 @@ const Contactos = () => {
                                                             contactado(contacto.email)
                                                         }}>Contactado</span></td>
                                                 </tr>
-                                            </>)
+                                        )
                                     }
                                 })}
                             </tbody>

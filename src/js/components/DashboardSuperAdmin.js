@@ -4,33 +4,21 @@ import { Context } from '../store/appContext';
 
 
 const DashboardSuperAdmin = () => {
-    const [avatar, setAvatar] = useState(null)
     const { store, actions } = useContext(Context)
-
-    const getConserje = async () => {
-        const user = JSON.parse(localStorage.getItem("currentUser"))
-        const userID = user.user.edificio
-        const resp = await fetch(`http://127.0.0.1:5000/conserjes/${userID}`)
+    const getUno=async()=>{
+        const resp = await fetch(`${store.apiURL}/register/usuario`)
         const data = await resp.json()
-        setAvatar(data)
+
     }
 
-
     useEffect(() => {
-        getConserje()
         actions.getPlanes()
         actions.getEdificiosData()
         actions.getEdificioCompleto()
-
-    }, [])
-
-    const planesMensuales = []
-    const planesAnuales = []
-
-    const [lastContacts, setLastContacts] = useState([])
-
-    const nuevaFecha = store.edificios.length > 0 && new Date(store.edificios[0].termino_contrato)
-
+        actions.getContactData()
+        getUno()
+    
+    },[])
 
     return (<>
 
@@ -42,8 +30,7 @@ const DashboardSuperAdmin = () => {
                         <div className="card-body">
                             <h2 className="card-title text-center " >Edificios</h2>
                             <h5 className="mt-3">Edificios administrados</h5>
-                            <div className="dashboard-num my-5 shadow-sm dashboard-prime-color" onClick={() => console.log(avatar)
-                            }><p>{store.edificios.length}</p></div>
+                            <div className="dashboard-num my-5 shadow-sm dashboard-prime-color"><p>{store.edificios.length}</p></div>
                             <h5>Últimos agregados</h5>
                             <ul className="p-0">
                                 {store.edificios.length > 0 && store.edificios.slice(0).reverse().map((edificio, index) => {

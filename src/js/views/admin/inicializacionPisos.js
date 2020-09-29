@@ -324,7 +324,15 @@ const InicializacionPisos = () => {
                                                                 }}></i>
                                                             </td>
                                                             <td>
-                                                                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addUser" onClick={() => actions.dptoModificar(dpto.id)}>
+                                                                <button 
+                                                                    type="button" 
+                                                                    className="btn btn-primary" 
+                                                                    data-toggle="modal" 
+                                                                    data-target="#addUser" 
+                                                                    onClick={() => {
+                                                                        actions.dptoModificar(dpto.id)
+                                                                        actions.activarModalAddUser()
+                                                                        }}>
                                                                     <i className="fas fa-pencil-alt cursor-pointer"></i>
                                                                 </button>
                                                                 <ModalAddUser />
