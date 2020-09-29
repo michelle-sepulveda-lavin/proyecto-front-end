@@ -20,10 +20,10 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-/* 			state.actions.getRoles()
- */			state.actions.getCurrentRol();
+			state.actions.getCurrentRol();
 			state.actions.getCurrentDate()
 			state.actions.sesionIniciada()
+
 		}, []);
 
 

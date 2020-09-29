@@ -130,8 +130,8 @@ body {
   font-size: 2em;
 }
 .bg-gradient-primary {
-  background-color: #011638;
-  background-image: linear-gradient(180deg, #011638 10%, rgb(0, 0, 0) 100%);
+  background-color: #163547;
+  background-image: linear-gradient(180deg, #122b3a 10%, rgb(0, 0, 0) 100%);
   background-size: cover;
 }
 .bg-gradient-secondary {
@@ -394,6 +394,41 @@ li {
   background-image: linear-gradient(155deg, #001c49 10%, rgb(9, 9, 17) 110%);
   background-size: cover;
 }
+
+/* Home */
+header.masthead {
+  padding-top: 10.5rem;
+  padding-bottom: 22.5rem;
+  text-align: center;
+  color: black;
+  background-image: url("/img/free-wallpaper-37.jpg");
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;
+}
+/* Home end */
+.page-section {
+  padding: 6rem 0;
+}
+/* Services */
+.page-section h2.section-heading {
+  font-size: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.page-section h3.section-subheading {
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  font-family: "Droid Serif", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  margin-bottom: 4rem;
+}
+/* Services end */
+
 .bg-db-1 {
   background: #48a7e4;
 }
@@ -461,4 +496,24 @@ li {
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
+}
+.btn-verde {
+  background: #40dbba;
+  color: #fff;
+}
+.btn-amarillo {
+  background: #fdeb47;
+  color: #000;
+}
+.btn-azul {
+  background: #3db5d0;
+  color: #fff;
+}
+.btn-oscuro {
+  background: #163547;
+  color: #fff;
+}
+
+tr:hover {
+  background: #4cb1ec21;
 }
