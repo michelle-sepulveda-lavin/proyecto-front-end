@@ -11,7 +11,7 @@ const Conserjes = () => {
     const [idBorrar, setIdBorrar] = useState("")
     const [idToModify, setIdToModify] = useState("");
     const [modify, setModify] = useState(false);
-    const [estadoConserje, setEstadoConserje] = useState(null)
+    /* const [estadoConserje, setEstadoConserje] = useState(null) */
     const handleChangeFiltro = (e) => {
         setFiltroTurno(e.target.value)
     }

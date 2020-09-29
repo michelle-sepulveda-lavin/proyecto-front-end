@@ -11,7 +11,7 @@ const GastosUser = () => {
         actions.getCurrentDate()
         getGastosDeptoActual()
 
-    }, [])
+    },[])
 
     const deptoID = !!store.departamentoActualUsuario && store.departamentoActualUsuario.id
 
