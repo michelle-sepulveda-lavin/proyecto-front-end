@@ -11,7 +11,7 @@ const GastosUser = () => {
         actions.getCurrentDate()
         getGastosDeptoActual()
 
-    },[])
+    }, [])
 
     const deptoID = !!store.departamentoActualUsuario && store.departamentoActualUsuario.id
 
@@ -72,15 +72,17 @@ const GastosUser = () => {
                     <div className="col-12 col-md-10 row">
 
                         <div className="col-12 col-md-7">
-                            <div class="card">
+                            <div class="card rounded">
                                 <div class="card-body">
                                     <h4 class="card-title text-center mb-3">Gastos comunes de {mesActual}</h4>
                                     <div className="row justify-content-center">
-                                        <div className="border col-md-5 mr-md-2 text-center">
-                                            <p>Edificio</p>
-                                            <p>{!!store.departamentoActualUsuario && store.departamentoActualUsuario.edificio.name}</p>
+                                        <div className="border font-bigger bg-db-2 col-md-5 mr-md-2 text-center d-flex align-items-center justify-content-center">
+                                            <div className="">
+                                                <p>Edificio:</p>
+                                                <p>{!!store.departamentoActualUsuario && store.departamentoActualUsuario.edificio.name}</p>
+                                            </div>
                                         </div>
-                                        <div className="border mt-2 text-center col-md-5 mt-md-0">
+                                        <div className="border mt-2 btn-verde font-bigger text-center col-md-5 mt-md-0">
                                             <p>Monto</p>
                                             {!!gastoActual && gastoActual.length > 0 ? (gastoActual[0].estado === "revision" ? <p className="">El pago está pendiente de revisión</p> : gastoActual[0].estado === "noPagado" ? <p> {gastoCLP(gastoActual[0].monto)}</p> : "") : <p>No hay gastos pendientes este mes</p>}
                                         </div>
@@ -90,7 +92,7 @@ const GastosUser = () => {
                         </div>
 
                         <div className="col-12 col-md-5">
-                            <div class="card pb-3">
+                            <div class="card pb-3 bg-db-3">
                                 <div class="card-body">
 
                                     {!!gastoActual && gastoActual.length > 0 ? gastoActual[0].estado === "revision" ? <h3 className="mt-3 text-center">El pago está pendiente de revisión</h3> : gastoActual[0].estado === "noPagado" ?
@@ -138,8 +140,8 @@ const GastosUser = () => {
                         <h3 className="text-center mb-3" onClick={() => console.log(currentPosts)}>Historial</h3>
                         {!!gastosDepto && gastosDepto.length > 0 &&
                             <>
-                                < table className="table text-center table-hover table-bordered border overflow-auto mx-auto ">
-                                    <thead className="thead-dark text-center mx-auto">
+                                < table className="table text-center  table-bordered border overflow-auto mx-auto ">
+                                    <thead className="btn-oscuro text-center mx-auto">
                                         <tr className="mx-auto">
                                             <th scope="col">Año</th>
                                             <th scope="col">Mes</th>
@@ -167,7 +169,7 @@ const GastosUser = () => {
 
                                                     <td>
                                                         {(monto.estado === "pagado" || monto.estado === "revision") &&
-                                                            <span className="btn btn-success" onClick={() => {
+                                                            <span className="btn btn-verde" onClick={() => {
                                                                 setShow(true)
                                                                 setPago(monto.pago)
                                                             }}>Comprobante</span>}

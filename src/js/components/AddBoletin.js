@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
 
 const AddBoletin = (props) => {
-    
+
     const { store, actions } = useContext(Context);
 
 
@@ -14,7 +14,7 @@ const AddBoletin = (props) => {
                 <div className="row">
                     <div className="col-sm-8"></div>
                     <div className="col-sm-4">
-                        <button type="button" className="btn btn-verde" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Crear Boletin</button>
+                        <button type="button" className="btn btn-azul" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Crear Boletin</button>
                     </div>
                 </div>
             </div>
@@ -32,14 +32,14 @@ const AddBoletin = (props) => {
                             <form onSubmit={(e) => { actions.handleSubmitBoletin(e) }}>
                                 <div className="form-group">
                                     <label htmlFor="recipient-name" className="col-form-label">Asunto:</label>
-                                    <input type="text" className="form-control" id="recipient-name" name="asunto_boletin" onChange={(e) => actions.captureData(e)} value={store.asunto_boletin}/>
+                                    <input type="text" className="form-control" id="recipient-name" name="asunto_boletin" onChange={(e) => actions.captureData(e)} value={store.asunto_boletin} />
                                 </div>
-                               
+
                                 <div className="form-group">
                                     <label htmlFor="message-text" className="col-form-label">Message:</label>
-                                    <textarea className="form-control" id="message-text" name="body_boletin" onChange={(e) => actions.captureData(e)}value={store.body_boletin}></textarea>
+                                    <textarea className="form-control" id="message-text" name="body_boletin" onChange={(e) => actions.captureData(e)} value={store.body_boletin}></textarea>
 
-                                    
+
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>

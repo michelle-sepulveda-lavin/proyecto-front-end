@@ -68,7 +68,7 @@ const ModalModifyPlan = (props) => {
                             <div className="form-group">
                                 <label htmlFor="nuevo_plan3" className="d-block mb-3">Características</label>
                                 <div className="d-flex">
-                                    <span className="btn btn-primary p-1 mr-3"
+                                    <span className="btn btn-azul p-1 mr-3"
                                         onClick={() => {
                                             if (inputCaracteristica.current.value !== "") {
                                                 props.planToModify.body.push(inputCaracteristica.current.value)
@@ -109,7 +109,7 @@ const ModalModifyPlan = (props) => {
 						</button>
                             <button
                                 type="button"
-                                className="btn btn-success"
+                                className="btn btn-verde"
                                 data-dismiss="modal"
                                 onClick={() => {
                                     const values = Object.values(props.planToModify)

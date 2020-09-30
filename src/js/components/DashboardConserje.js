@@ -92,12 +92,12 @@ const DashboardConserje = (props) => {
                                             return (
                                                 < Carousel.Item key={index} >
                                                     <img
-                                                        className="d-block w-100 rounded"
+                                                        className="d-block w-100 rounded min-h-20"
                                                         src={`../gris2.jpg`}
                                                         alt="slide"
                                                     />
                                                     <Carousel.Caption>
-                                                        <h4 className="mb-md-4 text-body">{boletin.asunto}</h4>
+                                                        <h5 className="mb-md-4 text-body">{boletin.asunto}</h5>
 
                                                     </Carousel.Caption>
                                                 </Carousel.Item>

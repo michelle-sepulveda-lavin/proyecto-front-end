@@ -62,7 +62,16 @@ const DashboardSuperAdmin = () => {
                         <div className="card-body">
                             <h2 className="card-title text-center " >Edificios</h2>
                             <h5 className="mt-3">Edificios administrados</h5>
-                            <div className="dashboard-num my-5 shadow-sm dashboard-prime-color"><p>{store.edificios.length}</p></div>
+                            <div className="row justify-content-center">
+                                <div className="card col-9 col-md-6 my-4 p-3 bg-db-1">
+                                    <h4 className="text-light text-center">Habitados</h4>
+                                    <div className="d-flex justify-content-center">
+                                        <span className="ml-md-1 big-font d-flex align-items-center justify-content-center p-5 btn-db-1 shadow-sm">
+                                            <p className="pt-3">{!!store.edificios.length && store.edificios.length}</p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                             <h5>Últimos agregados</h5>
                             <ul className="p-0">
                                 {store.edificios.length > 0 && store.edificios.slice(0).reverse().map((edificio, index) => {
@@ -100,16 +109,28 @@ const DashboardSuperAdmin = () => {
                             </div>
                             <div className="mt-5">
                                 <h3 className="text-center mb-5">Planes solicitados</h3>
-                                <div className="row text-center row-cols-md-2">
+
+
+
+                                <div className="row row-cols-1 row-cols-md-2 mb-4">
+
                                     {store.planes.map((plan, index) => {
                                         return (
-                                            <div key={index} className="col">
-                                                <h5 className="mb-3">{plan.name}</h5>
-                                                <div className="dashboard-num dashboard-prime-color my-3 shadow-sm"><p>{store.contactos.filter((contacto) => contacto.plan === plan.name).length}</p></div>
+
+                                            <div key={index} className="col h-100">
+                                                <div className={"card p-3 text-white" + (index % 2 === 0 ? " bg-db-4" : " bg-db-2")}>
+                                                    <h4 >{plan.name}</h4>
+                                                    <div className="d-flex justify-content-end">
+                                                        <span className={"ml-md-1 d-flex align-items-center justify-content-center btn-db-2 shadow-sm dashboard-green" + (index % 2 === 0 ? " btn-db-4" : " btn-db-2")}>
+                                                            <p className="pt-3">{store.contactos.filter((contacto) => contacto.plan === plan.name).length}</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
+
+
                                         )
                                     })}
-
                                 </div>
                             </div>
                         </div>
@@ -121,12 +142,18 @@ const DashboardSuperAdmin = () => {
                 <div className="card-body">
                     <h2 className="card-title text-center">Contratos</h2>
                     <ul className="p-0 mt-5 justify-content-center row">
-                        <li className="d-flex mb-3 text-dark align-items-center justify-content-center row col-md-4"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-yellow"><p className="pt-3">{filtradoPorVencer().length}</p></span></div> </div> <div className="col col-lg-6 text-center"><h4 >Próximos a Vencer</h4> </div></li>
+                        <li className="d-flex mb-3 text-dark align-items-center justify-content-center row col-md-4"> <div className="col col-lg-6 d-flex justify-content-center"><div> <div className={"card p-3 text-white bg-db-1"}>  <span className={"ml-md-1 d-flex align-items-center justify-content-center btn-db-1 shadow-sm"}>
+                            <p className="pt-3">{filtradoPorVencer().length}</p>
+                        </span></div></div> </div> <div className="col col-lg-6 text-center"><h4 >Próximos a Vencer</h4> </div></li>
 
-                        <li className="d-flex mb-3 col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-red"><p className="pt-3">{filtradoVencido().length}</p></span> </div></div> <div className="col col-lg-6 text-center text-dark"><h4 >Vencidos</h4> </div></li>
+                        <li className="d-flex mb-3 col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div className={"card p-3 text-white bg-db-4"}>  <span className={"ml-md-1 d-flex align-items-center justify-content-center btn-db-4 shadow-sm "}>
+                            <p className="pt-3">{filtradoVencido().length}</p>
+                        </span></div></div> <div className="col col-lg-6 text-center text-dark"><h4 >Vencidos</h4> </div></li>
 
 
-                        <li className="d-flex col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div><span className="ml-md-5 d-flex align-items-center justify-content-center dashboard-num-2 shadow-sm dashboard-green"><p className="pt-3">{filtradoVigente().length}</p></span> </div></div> <div className="col col-lg-6 text-center"><h4 className="text-dark">Vigentes</h4> </div></li>
+                        <li className="d-flex col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div className={"card p-3 text-white bg-db-2"}>  <span className={"ml-md-1 d-flex align-items-center justify-content-center btn-db-2 shadow-sm"}>
+                            <p className="pt-3">{filtradoVigente().length}</p>
+                        </span></div></div> <div className="col col-lg-6 text-center"><h4 className="text-dark">Vigentes</h4> </div></li>
 
                     </ul>
                     <div className="d-flex justify-content-center">

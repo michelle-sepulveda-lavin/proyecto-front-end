@@ -183,7 +183,7 @@ const GastosDepartamentos = () => {
 
                                                                 (gasto.estado === "pagado" ?
                                                                     <td>
-                                                                        <span className="btn btn-azul px-4"
+                                                                        <span className="btn btn-verde px-4"
                                                                             onClick={() => {
                                                                                 setShowPago(true)
                                                                                 setComprobantePago(gasto.pago)
@@ -191,7 +191,7 @@ const GastosDepartamentos = () => {
                                                                             }>Comprobante</span> </td>
                                                                     :
                                                                     gasto.estado === "revision" ?
-                                                                        <td> <span className="btn btn-warning"
+                                                                        <td> <span className="btn btn-amarillo"
                                                                             onClick={() => {
 
                                                                                 setShow(true)
@@ -205,7 +205,7 @@ const GastosDepartamentos = () => {
                                                                             }}>Validar</span> </td>
                                                                         :
                                                                         gasto.estado === "noPagado" ?
-                                                                            <td> <span className="btn btn-verde"
+                                                                            <td> <span className="btn btn-azul"
                                                                                 onClick={() => {
                                                                                     actions.correoGastos(gasto.departamento.residente, gasto.monto)
                                                                                 }}>Enviar notificación</span> </td>
@@ -216,7 +216,7 @@ const GastosDepartamentos = () => {
 
                                                                 (estadoPago === "pagado" ?
                                                                     <td>
-                                                                        <span className="btn btn-azul"
+                                                                        <span className="btn btn-verde"
                                                                             onClick={() => {
                                                                                 setComprobantePago(gasto.pago)
 
@@ -224,13 +224,13 @@ const GastosDepartamentos = () => {
                                                                             }}>Comprobante</span> </td>
                                                                     :
                                                                     estadoPago === "noPagado" ?
-                                                                        <td> <span className="btn btn-verde"
+                                                                        <td> <span className="btn btn-azul"
                                                                             onClick={() => {
                                                                                 actions.correoGastos(gasto.departamento.residente, gasto.monto)
                                                                             }}>Enviar notificación</span>  </td>
                                                                         :
                                                                         estadoPago === "revision" ?
-                                                                            <td> <span className="btn btn-warning"
+                                                                            <td> <span className="btn btn-amarillo"
                                                                                 onClick={() => {
                                                                                     setShow(true)
                                                                                     setDataPago({

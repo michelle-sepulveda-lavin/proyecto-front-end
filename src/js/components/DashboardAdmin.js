@@ -98,7 +98,7 @@ const DashboardAdmin = (props) => {
                         <div className="container card-body">
                             <div className="row mb-2">
                                 <div className="col-12 mb-4 mt-3 text-center text-md-left">
-                                    <h2>Conserjes Activos</h2>
+                                    <h2>Conserjes de Turno</h2>
                                 </div>
                             </div>
 
