@@ -12,32 +12,28 @@ const Home = () => {
             <nav className="navbar navbar-expand-lg navbar-dark fixed-top " id="mainNav">
 
                 <Link className="navbar-brand ml-2 float-left" to={"./"}><img src="../edificos-felices-logo.png" className="logo-home"></img></Link>
-                <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler navbar-toggler-right text-dark" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i className="fas fa-bars ml-1"></i>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav text-uppercase ml-auto">
-                        {/* <li className="nav-item"><a className="nav-link text-white" href="#services">Services</a></li>
-                        <li className="nav-item"><a className="nav-link text-white" href="#portfolio">Portfolio</a></li>
-                        <li className="nav-item"><a className="nav-link text-white" href="#about">About</a></li>
-                        <li className="nav-item"><a className="nav-link text-white" href="#team">Team</a></li>
-                        <li className="nav-item"><a className="nav-link text-white" href="#contact">Contact</a></li> */}
+                        
                         <Link className="btn btn-azul mr-3" to="./planes" role="button">Planes</Link>
 
                         {
                             !!store.currentRol ?
                                 <>
-                                    <li className="d-block">
+                                    
                                         <Link to="/dashboard" className=" btn btn-verde mr-3" role="button">Dashboard</Link>
-                                    </li>
-                                    <li className="d-block" >
-                                        <Link to="/" className=" btn btn-secondary mr-1" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-2"></i>Cerrar sesion</Link>
-                                    </li>
+                                    
+                                    
+                                        <Link to="/" className=" btn btn-secondary mr-3" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-3"></i>Cerrar sesion</Link>
+                                    
                                 </>
                                 :
                                 <li className="d-block">
-                                    <Link to="/login" className=" btn btn-verde mr-1" role="button">Iniciar sesión</Link>
+                                    <Link to="/login" className=" btn btn-verde mr-3" role="button">Iniciar sesión</Link>
                                 </li>
                         }
                     </ul>
