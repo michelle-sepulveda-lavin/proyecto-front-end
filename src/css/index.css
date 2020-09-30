@@ -529,9 +529,6 @@ tr:hover {
   padding-bottom: 15px;
 }
 
-.card-carousel .card {
-  border: 1.5px solid #288ed1;
-}
 .card-carousel li {
   margin: 0.5rem;
   width: 15em;
@@ -552,8 +549,18 @@ tr:hover {
 .conserjes-turno ::-webkit-scrollbar-thumb:hover {
   background: #144566;
 }
-tr:hover {
-  background: #4cb1ec21;
+.conserje-img {
+  width: 5em;
+  height: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+
+  margin-top: 0.5em;
+  background: rgb(245, 245, 245);
+  z-index: 2;
+  overflow: hidden;
 }
 
 .btn-social {
