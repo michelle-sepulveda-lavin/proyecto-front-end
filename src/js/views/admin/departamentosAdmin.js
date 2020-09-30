@@ -41,34 +41,36 @@ const DepartamentosAdmin = () => {
                     </div>
                 </div>
             </div>
-            <div className="container bg-white border">
-                <div className="row">
-                    <div className="col-md-12">
-                        <h4 className="text-center mt-3">{!!store.edificioCompleto ? store.edificioCompleto.nombre_edificio : "cargando"}</h4>
+            <div className="container d-flex justify-content-center mt-5">
+                <div className="row" style={{ width: "30vw" }}>
+                    <div className="col-md-6">
+                        <div className="row">
+                            <Link className="col" to="/admin/inicializacion-dptos" style={{ textDecoration: 'none' }} >
+                                <i className="fas fa-hammer fa-2x p-3 rounded-circle border btn-oscuro"></i>
+                                <span className="text-dark">Modelos</span>
+                            </Link>
+                        </div>
                     </div>
-                    <div className="col-md-12">
-                        <h6 className="text-center mt-3">{!!store.edificioCompleto ? store.edificioCompleto.direccion : "cargando"}</h6>
-                    </div>
-                </div>
-                <div className="row mt-5 d-flex justify-content-center">
-                    <div className="col-md-3 m-1">
-                        <Link to="/admin/inicializacion-dptos" className="btn btn-warning">Modelo de Departamentos</Link>
-                    </div>
-                    <div className="col-md-2 m-1">
-                        <Link to="/admin/inicializacion-pisos" className="btn btn-warning">Editar/Creacion Departamentos</Link>
+                    <div className="col-md-6">
+                        <div className="row">
+                            <Link className="col " to="/admin/inicializacion-pisos" style={{ textDecoration: 'none' }}>
+                                <i className="far fa-building fa-2x p-3 rounded-circle btn-oscuro"></i>
+                                <span className="text-dark">Editar/Crear</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="container mt-5 bg-white border p-3">
-                <div className="row">
+            <div className="container border bg-white mt-5 p-3" style={{ width: "50vw" }}>
+                {/* <div className="row">
                     <div className="col">
                         <h5>Filtros de Busqueda:</h5>
                     </div>
-                </div>
+                </div> */}
                 <div className="row">
-                    <div className="col-md-4">
-                        <div className="btn-group">
-                            <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={contadorPisos}>
+                    <div className="col m-1">
+                        <div className="btn-group btn-block">
+                            <button type="button" className="btn btn-verde dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={contadorPisos}>
                                 Piso
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -88,9 +90,9 @@ const DepartamentosAdmin = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4">
-                        <div className="btn-group">
-                            <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div className="col m-1">
+                        <div className="btn-group btn-block">
+                            <button type="button" className="btn btn-verde dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Estado
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -106,10 +108,16 @@ const DepartamentosAdmin = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4 d-flex">
-                        <label htmlFor="numero_departamento" className="sr-only">Numero Departamento</label>
-                        <input type="number" className="form-control" name="numero_departamento" onChange={e => setNumero(e.target.value)} />
-                        <button className="btn btn-info mx-2" onClick={e => buscaDpto(e)}>Buscar</button>
+                    <div className="col m-1">
+                        <div className="row">
+                            <div className="col-md-8">
+                                <label htmlFor="numero_departamento" className="sr-only">Numero Departamento</label>
+                                <input type="number" className="form-control" name="numero_departamento" onChange={e => setNumero(e.target.value)} />
+                            </div>
+                            <div className="col-md-4">
+                                <button className="btn btn-verde" onClick={e => buscaDpto(e)}><i className="fas fa-search"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,18 +128,19 @@ const DepartamentosAdmin = () => {
                         store.departamentosPorPiso.map((dpto, index) => {
                             return (
                                 <div className="col-md-4" key={index}>
-                                    <div className="card border-info mb-3" style={{ maxWidth: "18rem" }}>
+                                    <div className="card btn-oscuro mb-3" style={{ maxWidth: "18rem" }}>
                                         <div className="card-header d-flex justify-content-between">
-                                            <p>
+                                            <p  style={{fontSize: "2em"}}>
                                                 {dpto.numero_departamento}
                                             </p>
                                             <p className="card-text">{dpto.estado}</p>
                                         </div>
-                                        <div className="card-body text-info">
-                                            <p className="card-text">Residente: {dpto.residente.name}</p>
-                                            <p className="card-text">Contacto: {dpto.residente.email}</p>
-                                            <p className="card-text">N° Bodega: {dpto.bodega_id}</p>
-                                            <p className="card-text">N° Estacionamiento: {dpto.estacionamiento_id}</p>
+                                        <div className="card-body  bg-white text-dark">
+
+                                            <p className="card-text font-weight-bold">Residente: <span className="font-weight-normal text-capitalize">{dpto.residente.name}</span></p>
+                                            <p className="card-text font-weight-bold">Contacto: <span className="font-weight-normal">{dpto.residente.email}</span></p>
+                                            <p className="card-text font-weight-bold">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id? dpto.bodega_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id? dpto.estacionamiento_id : "No posee"}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -143,18 +152,18 @@ const DepartamentosAdmin = () => {
                         store.departamentoEstado.map((dpto, index) => {
                             return (
                                 <div className="col-md-4" key={index}>
-                                    <div className="card border-info mb-3" style={{ maxWidth: "18rem" }}>
+                                    <div className="card btn-oscuro mb-3" style={{ maxWidth: "18rem" }}>
                                         <div className="card-header d-flex justify-content-between">
-                                            <p>
+                                            <p  style={{fontSize: "2em"}}>
                                                 {dpto.numero_departamento}
                                             </p>
                                             <p className="card-text">{dpto.estado}</p>
                                         </div>
-                                        <div className="card-body text-info">
-                                            <p className="card-text">Residente: {dpto.residente.name}</p>
-                                            <p className="card-text">Contacto {dpto.residente.email}</p>
-                                            <p className="card-text">N° Bodega: {dpto.bodega_id}</p>
-                                            <p className="card-text">N° Estacionamiento: {dpto.estacionamiento_id}</p>
+                                        <div className="card-body bg-white text-dark">
+                                            <p className="card-text font-weight-bold">Residente: <span className="font-weight-normal text-capitalize">{dpto.residente.name}</span></p>
+                                            <p className="card-text font-weight-bold">Contacto: <span className="font-weight-normal">{dpto.residente.email}</span></p>
+                                            <p className="card-text font-weight-bold">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id? dpto.bodega_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id? dpto.estacionamiento_id : "No posee"}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -164,18 +173,18 @@ const DepartamentosAdmin = () => {
                     {
                         !!departamentoNumero &&
                         <div className="col-md-4">
-                            <div className="card border-info mb-3" style={{ maxWidth: "18rem" }}>
+                            <div className="card btn-oscuro mb-3" style={{ maxWidth: "18rem" }}>
                                 <div className="card-header d-flex justify-content-between">
-                                    <p>
+                                    <p style={{fontSize: "2em"}}>
                                         {departamentoNumero.numero_departamento}
                                     </p>
                                     <p className="card-text">{departamentoNumero.estado}</p>
                                 </div>
-                                <div className="card-body text-info">
-                                    <p className="card-text">Residente: {departamentoNumero.residente.name}</p>
-                                    <p className="card-text">Contacto: {departamentoNumero.residente.email}</p>
-                                    <p className="card-text">N° Bodega: {departamentoNumero.bodega_id}</p>
-                                    <p className="card-text">N° Estacionamiento: {departamentoNumero.estacionamiento_id}</p>
+                                <div className="card-body bg-white text-dark">
+                                    <p className="card-text font-weight-bold">Residente: <span className="font-weight-normal text-capitalize">{departamentoNumero.residente.name}</span></p>
+                                    <p className="card-text font-weight-bold">Contacto: <span className="font-weight-normal">{departamentoNumero.residente.email}</span></p>
+                                    <p className="card-text font-weight-bold">N° Bodega: <span className="font-weight-normal">{!!departamentoNumero.bodega_id? departamentoNumero.bodega_id : "No posee"}</span></p>
+                                    <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!departamentoNumero.estacionamiento_id? departamentoNumero.estacionamiento_id : "No posee"}</span></p>
                                 </div>
                             </div>
                         </div>
