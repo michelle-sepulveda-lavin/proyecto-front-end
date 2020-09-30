@@ -104,7 +104,7 @@ const ModalCreacionUser = props => {
                                     }
                                 </div>
                                 <div className="form-group d-flex justify-content-around">
-                                    <button className="btn btn-primary">Crear</button>
+                                    <button className="btn btn-azul">Crear</button>
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={actions.cerrarModal}>Cerrar</button>
                                 </div>
                             </form>

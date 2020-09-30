@@ -915,7 +915,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             handleBodegas: async (e, modelInfo) => {
                 e.preventDefault()
-                const { apiURL, edificioCompleto } = getStore();
+                const { apiURL, edificioCompleto, currentEdificioID } = getStore();
                 modelInfo.cantidad_total = edificioCompleto.total_bodegas
                 const resp = await fetch(`${apiURL}/add-bodega/${edificioCompleto.id}`, {
                     method: "POST",
@@ -927,15 +927,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const data = await resp.json();
                 const { msg } = data
 
-                if (!resp.ok) {
+                if (resp.ok) {
                     alert(msg)
+                    getActions().getBodegasDelEdificio(currentEdificioID)
+
                 } else {
-                    alert("ok")
+                    console.log(msg)
                 }
             },
             handleEstacionamiento: async (e, modelInfo) => {
                 e.preventDefault()
-                const { apiURL, edificioCompleto } = getStore();
+                const { apiURL, edificioCompleto, currentEdificioID } = getStore();
                 modelInfo.cantidad_total = edificioCompleto.total_estacionamientos
                 const resp = await fetch(`${apiURL}/add-estacionamiento/${edificioCompleto.id}`, {
                     method: "POST",
@@ -947,10 +949,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const data = await resp.json();
                 const { msg } = data
 
-                if (!resp.ok) {
+                if (resp.ok) {
                     alert(msg)
+                    getActions().getEstacionamientosDelEdificio(currentEdificioID)
                 } else {
-                    alert("ok")
+                    console.log(msg)
                 }
             },
             getBodegasDelEdificio: async () => {
@@ -1081,8 +1084,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 const data = await resp.json()
                 if (resp.ok) {
-                    getActions().getBodegasDelEdificio()
                     alert(data.msg)
+                    setStore({
+                        bodegasEdificio: null
+                    })
                 } else {
                     alert(data.msg)
                 }
@@ -1097,8 +1102,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
                 const data = await resp.json()
                 if (resp.ok) {
-                    getActions().getEstacionamientosDelEdificio()
                     alert(data.msg)
+                    setStore({
+                        estacionamientoEdificios: null
+                    })
                 } else {
                     alert(data.msg)
                 }

@@ -46,7 +46,7 @@ const DepartamentosAdmin = () => {
                     <div className="col-md-6">
                         <div className="row">
                             <Link className="col" to="/admin/inicializacion-dptos" style={{ textDecoration: 'none' }} >
-                                <i className="fas fa-hammer fa-2x p-3 rounded-circle border btn-oscuro"></i>
+                                <i className="fas fa-hammer fa-boxes fa-2x p-3 rounded-circle border btn-oscuro"></i>
                                 <span className="text-dark">Modelos</span>
                             </Link>
                         </div>
@@ -54,7 +54,7 @@ const DepartamentosAdmin = () => {
                     <div className="col-md-6">
                         <div className="row">
                             <Link className="col " to="/admin/inicializacion-pisos" style={{ textDecoration: 'none' }}>
-                                <i className="far fa-building fa-2x p-3 rounded-circle btn-oscuro"></i>
+                                <i className="far fa-building fa-boxes fa-2x p-3 rounded-circle btn-oscuro"></i>
                                 <span className="text-dark">Editar/Crear</span>
                             </Link>
                         </div>
@@ -70,7 +70,7 @@ const DepartamentosAdmin = () => {
                 <div className="row">
                     <div className="col m-1">
                         <div className="btn-group btn-block">
-                            <button type="button" className="btn btn-verde dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={contadorPisos}>
+                            <button type="button" className="btn btn-azul dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={contadorPisos}>
                                 Piso
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -92,7 +92,7 @@ const DepartamentosAdmin = () => {
                     </div>
                     <div className="col m-1">
                         <div className="btn-group btn-block">
-                            <button type="button" className="btn btn-verde dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" className="btn btn-azul dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Estado
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -115,7 +115,7 @@ const DepartamentosAdmin = () => {
                                 <input type="number" className="form-control" name="numero_departamento" onChange={e => setNumero(e.target.value)} />
                             </div>
                             <div className="col-md-4">
-                                <button className="btn btn-verde" onClick={e => buscaDpto(e)}><i className="fas fa-search"></i></button>
+                                <button className="btn btn-azul" onClick={e => buscaDpto(e)}><i className="fas fa-search"></i></button>
                             </div>
                         </div>
                     </div>
@@ -137,9 +137,9 @@ const DepartamentosAdmin = () => {
                                         </div>
                                         <div className="card-body  bg-white text-dark">
 
-                                            <p className="card-text font-weight-bold">Residente: <span className="font-weight-normal text-capitalize">{dpto.residente.name}</span></p>
-                                            <p className="card-text font-weight-bold">Contacto: <span className="font-weight-normal">{dpto.residente.email}</span></p>
-                                            <p className="card-text font-weight-bold">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id? dpto.bodega_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Residente: <span className="font-weight-normal text-capitalize">{dpto.residente.name}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{dpto.residente.email}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id? dpto.bodega_id : "No posee"}</span></p>
                                             <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id? dpto.estacionamiento_id : "No posee"}</span></p>
                                         </div>
                                     </div>
@@ -160,9 +160,9 @@ const DepartamentosAdmin = () => {
                                             <p className="card-text">{dpto.estado}</p>
                                         </div>
                                         <div className="card-body bg-white text-dark">
-                                            <p className="card-text font-weight-bold">Residente: <span className="font-weight-normal text-capitalize">{dpto.residente.name}</span></p>
-                                            <p className="card-text font-weight-bold">Contacto: <span className="font-weight-normal">{dpto.residente.email}</span></p>
-                                            <p className="card-text font-weight-bold">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id? dpto.bodega_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Residente: <span className="font-weight-normal text-capitalize">{dpto.residente.name}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{dpto.residente.email}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id? dpto.bodega_id : "No posee"}</span></p>
                                             <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id? dpto.estacionamiento_id : "No posee"}</span></p>
                                         </div>
                                     </div>
@@ -181,9 +181,9 @@ const DepartamentosAdmin = () => {
                                     <p className="card-text">{departamentoNumero.estado}</p>
                                 </div>
                                 <div className="card-body bg-white text-dark">
-                                    <p className="card-text font-weight-bold">Residente: <span className="font-weight-normal text-capitalize">{departamentoNumero.residente.name}</span></p>
-                                    <p className="card-text font-weight-bold">Contacto: <span className="font-weight-normal">{departamentoNumero.residente.email}</span></p>
-                                    <p className="card-text font-weight-bold">N° Bodega: <span className="font-weight-normal">{!!departamentoNumero.bodega_id? departamentoNumero.bodega_id : "No posee"}</span></p>
+                                    <p className="card-text font-weight-bold border-bottom">Residente: <span className="font-weight-normal text-capitalize">{departamentoNumero.residente.name}</span></p>
+                                    <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{departamentoNumero.residente.email}</span></p>
+                                    <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!departamentoNumero.bodega_id? departamentoNumero.bodega_id : "No posee"}</span></p>
                                     <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!departamentoNumero.estacionamiento_id? departamentoNumero.estacionamiento_id : "No posee"}</span></p>
                                 </div>
                             </div>
