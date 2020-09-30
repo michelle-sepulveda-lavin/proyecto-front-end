@@ -60,36 +60,43 @@ const DashboardUser = (props) => {
         return activos
     }
 
+    const [index, setIndex] = useState(0);
+
+    const handleSelect = (selectedIndex, e) => {
+        setIndex(selectedIndex);
+    };
+
     return (
         <div className="container-fluid">
             <h1 className="text-center mt-3 mb-5">Departamento {userID} </h1>
 
 
 
-            <div className="col mb-4">
-                <div className=" card shadow h-100 shadow-sm bg-dashboard border rounded">
+            <div className="row row-cols-1 row-cols-md-2 justify-content-center">
+                <div className="col mb-4">
+                    <div className=" card h-100 shadow-sm bg-dashboard border rounded">
 
 
 
-                    <div className="card-body">
-                        <div className="row mb-2">
-                            <div className="col-12 mb-4 text-center text-md-left">
-                                <h2>Boletines</h2>
-                            </div>
-                            <div className="d-flex justify-content-center">
+                        <div className="card-body">
+                            <div className="row mb-2">
+                                <div className="col-12 mb-4 text-center text-md-left">
+                                    <h2>Boletines</h2>
+                                </div>
+
                                 {filtroBoletin().length > 0 ?
-                                    <Carousel className="px-4">
+                                    <Carousel className="text-dark px-4">
                                         {filtroBoletin().map((boletin, index) => {
                                             return (
-                                                < Carousel.Item key={index}  >
+                                                < Carousel.Item key={index} >
                                                     <img
-                                                        className="d-block w-100 min-h-20 rounded"
-                                                        src={`../gris (1).jpg`}
+                                                        className="d-block w-100 rounded min-h-20"
+                                                        src={`../gris2.jpg`}
                                                         alt="slide"
                                                     />
-                                                    <Carousel.Caption className="text-body">
-                                                        <h3 className=" mb-md-4 ">{boletin.asunto}</h3>
-                                                        <p className="d-md-block d-none text-justify pr-3 overflow-auto">{boletin.body}</p>
+                                                    <Carousel.Caption>
+                                                        <h5 className="mb-md-4 text-body">{boletin.asunto}</h5>
+
                                                     </Carousel.Caption>
                                                 </Carousel.Item>
 
@@ -100,23 +107,70 @@ const DashboardUser = (props) => {
                                     <h3 className="text-center">No hay boletines en este momento</h3>
                                 }
 
+
+                            </div>
+
+                            <div className="d-flex justify-content-end mr-2">
+                                <Link to={"/conserje/boletines"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
                             </div>
                         </div>
 
-                        <div className="d-flex justify-content-end mr-2">
-                            <Link to={"/conserje/boletines"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
-                        </div>
                     </div>
-
                 </div>
-            </div>
+                <div className="col mb-4">
+                    <div className=" card h-100 shadow-sm bg-dashboard border rounded">
 
 
 
-            <div className="row row-cols-1 row-cols-md-2 justify-content-center">
+                        <div className="card-body conserjes-turno ">
+                            <div className="row mb-2">
+                                <div className="col-12 mb-3 text-center text-md-left">
+                                    <h2>Conserjes de Turno</h2>
+                                </div>
 
-                <div className="col ">
-                    <div className=" card h-100 shadow bg-dashboard border rounded">
+                                <ul className="list-group list-group-horizontal card-carousel text-center mx-5  p-2">
+                                    <li className="mr-3">
+                                        <div className="card text-body text-left ">
+
+                                            <ul className="pl-0 mb-0">
+                                                <li className="card-title"> <i class="fas fa-user-check"></i>  <strong>Nombre:</strong> crrrrrrrrrrronserje.nombre</li>
+                                                <li> <i className="fas fa-phone mr-1 mb-2"> </i> <strong>Teléfono: </strong>
+
+                                                                            conserje.rrrrrrrrrrrrrtelefono</li>
+                                                <li><i className="far fa-clock mr-2 mb-2"></i><strong>Turno:</strong>  conserje.turno </li>
+
+                                            </ul>
+                                        </div>
+
+                                    </li>
+                                    <li className="mr-3">
+                                        <div className="card text-body text-left ">
+
+                                            <ul className="pl-0 mb-0">
+                                                <li className="card-title"> <i class="fas fa-user-check"></i>  <strong>Nombre:</strong> crrrrrrrrrrronserje.nombre</li>
+                                                <li> <i className="fas fa-phone mr-1 mb-2"> </i> <strong>Teléfono: </strong>
+
+                                                                            conserje.rrrrrrrrrrrrrtelefono</li>
+                                                <li><i className="far fa-clock mr-2 mb-2"></i><strong>Turno:</strong>  conserje.turno </li>
+
+                                            </ul>
+                                        </div>
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                            <div className="d-flex justify-content-end mr-2">
+                                <Link to={"/conserje/boletines"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div className="col mb-4">
+                    <div className=" card h-100 shadow-sm  border rounded">
 
                         <div className="card-body">
                             <div className="row mb-2">
@@ -126,10 +180,10 @@ const DashboardUser = (props) => {
                             </div>
                             <div className="row row-cols-1 row-cols-md-2 mb-4  d-flex justify-content-center">
                                 <div className="col h-100 pt-md-3">
-                                    <div className="card shadow p-4 bg-db-1 ">
+                                    <div className="card shadow-sm p-4 bg-db-4 ">
 
                                         <div className="d-flex justify-content-center ">
-                                            <span className="ml-md-1 d-flex align-items-center justify-content-center btn-db-1 shadow-sm ">
+                                            <span className="ml-md-1 d-flex align-items-center justify-content-center btn-db-4 shadow-sm ">
                                                 <p className="pt-3">{!!store.paqueteriaUsuario ? store.paqueteriaUsuario.length : "0"}</p>
                                             </span>
                                         </div>
@@ -144,7 +198,7 @@ const DashboardUser = (props) => {
                     </div>
                 </div>
 
-                <div className="col ">
+                <div className="col mb-4">
                     <div className=" card h-100  mb-4 shadow bg-dashboard border rounded">
                         <div className="card-body">
                             <div className="row mb-2">
@@ -154,7 +208,7 @@ const DashboardUser = (props) => {
                             </div>
                             <div className="row mb-4 justify-content-center">
                                 <div className="col-11 col-md-8 h-100 ">
-                                    <div className="card shadow p-3 bg-db-4">
+                                    <div className="card shadow p-3 bg-db-2">
 
                                         <div className="font-bigger">
                                             <div>

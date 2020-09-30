@@ -264,7 +264,7 @@ const DetalleEdificio = () => {
                     }}> Eliminar Edificio <i className="far fa-trash-alt"></i></span>
 
 
-                    <div className={"btn btn-success ml-1" + (modify === true ? " d-none" : "")} onClick={() => {
+                    <div className={"btn btn-verde ml-1" + (modify === true ? " d-none" : "")} onClick={() => {
                         setModify(true)
                         setEdificioModificado(edificio)
                     }}>
@@ -279,7 +279,7 @@ const DetalleEdificio = () => {
 
 
                     <div className="d-flex justify-content-center">
-                        <div className={"btn btn-success ml-1" + (modify === false ? " d-none" : "")} onClick={() => {
+                        <div className={"btn btn-verde ml-1" + (modify === false ? " d-none" : "")} onClick={() => {
                             setEdificio(edificioModificado)
                             changeEdificio(edificioModificado, id)
                             setModify(false)
@@ -296,7 +296,7 @@ const DetalleEdificio = () => {
 
 
             </div>
-            <Link to="/listado-edificios" style={{ textDecoration: 'none' }} className="my-4"> <span className="boton-a-inicio shadow ml-3"> <i className="fas fa-arrow-circle-left"></i> Ir a edificios</span> </Link>
+            <Link to="/listado-edificios" style={{ textDecoration: 'none' }} className="my-4"> <span className="boton-a-inicio shadow-sm ml-3"> <i className="fas fa-arrow-circle-left"></i> Ir a edificios</span> </Link>
             <ModalDeleteEdificio show={showModal} id={id} close={() => { setShowModal(false) }} />
         </SidebarPage >
     )

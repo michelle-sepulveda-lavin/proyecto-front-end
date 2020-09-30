@@ -17,20 +17,20 @@ const Contactados = () => {
         console.log(data)
         actions.getContactData()
     }
-/*     const noContactado = async (email) => {
-        const response = await fetch(`http://127.0.0.1:5000/api/info-contacto/${email}`, {
-            method: "PATCH",
-            body: JSON.stringify({
-                state: true
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            },
-        })
-        const data = await response.json()
-        console.log(data)
-        actions.getContactData()
-    } */
+    /*     const noContactado = async (email) => {
+            const response = await fetch(`http://127.0.0.1:5000/api/info-contacto/${email}`, {
+                method: "PATCH",
+                body: JSON.stringify({
+                    state: true
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                },
+            })
+            const data = await response.json()
+            console.log(data)
+            actions.getContactData()
+        } */
     const includes = store.contactos.map((contacto) => {
         if (Object.values(contacto).includes(false)) {
             return false
@@ -43,7 +43,7 @@ const Contactados = () => {
     useEffect(() => {
         actions.getContactData()
 
-    },[])
+    }, [])
     return (
         <SidebarPage>
 
@@ -56,16 +56,16 @@ const Contactados = () => {
 
                 <div className="row">
                     <div className="col-12 col-md-7 mx-auto">
-                        <table className="table  border">
+                        <table className="table table-bordered border">
                             {includes.includes(false) &&
-                                <thead className="thead-dark text-center w-100">
+                                <thead className=" btn-oscuro text-center w-100">
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Correo</th>
                                         <th scope="col">Interés</th>
                                         <th scope="col">Teléfono</th>
-                                        <th scope="col">Estado</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
 
@@ -112,7 +112,7 @@ const Contactados = () => {
                                             deleteContact(contacto.email)
                                         } */
                                         contacto.state === false &&
-                                        deleteContact(contacto.email)
+                                            deleteContact(contacto.email)
                                     })
                                 }}>Borrar Todos</span>
                             </div>
@@ -124,10 +124,10 @@ const Contactados = () => {
             </div>
             <div className="container mt-5">
                 <div className="row">
-                    <div className="m-auto pb-5">
+                    <div className="ml-4 pb-5 d-flex justify-content-start">
                         <Link to="/contactos" style={{ textDecoration: 'none' }}>
-                            <span className="boton-a-inicio shadow bg-white">
-                                <i className="fas fa-arrow-circle-left bg-white"></i> Atras
+                            <span className="boton-a-inicio shadow-sm">
+                                <i className="fas fa-arrow-circle-left"></i> Atras
                             </span>
                         </Link>
                     </div>

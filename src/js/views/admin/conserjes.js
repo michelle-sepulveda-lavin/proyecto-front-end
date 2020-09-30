@@ -79,7 +79,7 @@ const Conserjes = () => {
             <div className="container">
                 <div className="d-flex justify-content-end" onClick={() => {
                     setShow(true)
-                }}><button className="btn btn-success">Crear Conserje</button>
+                }}><button className="btn btn-verde mr-md-5">Crear Conserje</button>
                 </div>
                 <div className="d-flex justify-content-center mt-3">
                     Filtrar por turno

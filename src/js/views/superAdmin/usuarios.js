@@ -7,8 +7,9 @@ import { Context } from '../../store/appContext';
 const Usuarios = () => {
     const { actions, store } = useContext(Context)
 
-    useEffect(()=>{
+    useEffect(() => {
         actions.getEdificiosData()
+        actions.getRoles()
     }, [])
 
     return (
@@ -21,7 +22,7 @@ const Usuarios = () => {
                 </div>
                 <div className="row">
                     <div className="col d-flex justify-content-center">
-                        <button type="button" className="btn btn-primary my-3" data-toggle="modal" data-target="#modalCreacionUser" onClick={actions.activarModal} >
+                        <button type="button" className="btn btn-azul text-white my-3" data-toggle="modal" data-target="#modalCreacionUser" onClick={actions.activarModal} >
                             Crear Usuario
                         </button>
                         <ModalCreacionUser />

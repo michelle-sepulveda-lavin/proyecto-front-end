@@ -42,7 +42,7 @@ const GastosDepartamentos = () => {
     useEffect(() => {
         actions.getMontosTotales()
 
-    },[]);
+    }, []);
 
     const [showPago, setShowPago] = useState(false)
     const [comprobantePago, setComprobantePago] = useState(null)
@@ -101,7 +101,7 @@ const GastosDepartamentos = () => {
 
                         </select>
                         <div>
-                            <button className="btn btn-success" onClick={() => {
+                            <button className="btn btn-verde" onClick={() => {
                                 if (gastoSeleccionado !== "") {
                                     actions.getGastosMonthYear(gastoSeleccionado.month, gastoSeleccionado.year, setData)
                                     setEstadoPago("todos")
@@ -152,8 +152,8 @@ const GastosDepartamentos = () => {
                                             }}>Todos</span>
                                         </div>
 
-                                        < table className="table text-center overflow-auto mx-auto ">
-                                            <thead className="thead-dark text-center mx-auto">
+                                        < table className="table text-center table-hover table-bordered border overflow-auto mx-auto ">
+                                            <thead className="btn-oscuro text-center mx-auto">
                                                 <tr className="mx-auto">
                                                     <th scope="col">Depto</th>
                                                     <th scope="col">Monto</th>
@@ -183,7 +183,7 @@ const GastosDepartamentos = () => {
 
                                                                 (gasto.estado === "pagado" ?
                                                                     <td>
-                                                                        <span className="btn btn-success px-4"
+                                                                        <span className="btn btn-verde px-4"
                                                                             onClick={() => {
                                                                                 setShowPago(true)
                                                                                 setComprobantePago(gasto.pago)
@@ -191,7 +191,7 @@ const GastosDepartamentos = () => {
                                                                             }>Comprobante</span> </td>
                                                                     :
                                                                     gasto.estado === "revision" ?
-                                                                        <td> <span className="btn btn-warning"
+                                                                        <td> <span className="btn btn-amarillo"
                                                                             onClick={() => {
 
                                                                                 setShow(true)
@@ -205,7 +205,7 @@ const GastosDepartamentos = () => {
                                                                             }}>Validar</span> </td>
                                                                         :
                                                                         gasto.estado === "noPagado" ?
-                                                                            <td> <span className="btn btn-info"
+                                                                            <td> <span className="btn btn-azul"
                                                                                 onClick={() => {
                                                                                     actions.correoGastos(gasto.departamento.residente, gasto.monto)
                                                                                 }}>Enviar notificación</span> </td>
@@ -216,7 +216,7 @@ const GastosDepartamentos = () => {
 
                                                                 (estadoPago === "pagado" ?
                                                                     <td>
-                                                                        <span className="btn btn-success"
+                                                                        <span className="btn btn-verde"
                                                                             onClick={() => {
                                                                                 setComprobantePago(gasto.pago)
 
@@ -224,13 +224,13 @@ const GastosDepartamentos = () => {
                                                                             }}>Comprobante</span> </td>
                                                                     :
                                                                     estadoPago === "noPagado" ?
-                                                                        <td> <span className="btn btn-info"
+                                                                        <td> <span className="btn btn-azul"
                                                                             onClick={() => {
                                                                                 actions.correoGastos(gasto.departamento.residente, gasto.monto)
                                                                             }}>Enviar notificación</span>  </td>
                                                                         :
                                                                         estadoPago === "revision" ?
-                                                                            <td> <span className="btn btn-warning"
+                                                                            <td> <span className="btn btn-amarillo"
                                                                                 onClick={() => {
                                                                                     setShow(true)
                                                                                     setDataPago({

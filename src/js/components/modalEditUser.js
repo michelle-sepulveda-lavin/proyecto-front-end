@@ -69,7 +69,7 @@ const ModalEditUser = props => {
                                             </select>
                                         </div>
                                         <div className="form-group d-flex justify-content-around">
-                                            <button className="btn btn-primary" >Editar</button>
+                                            <button className="btn btn-azul" >Editar</button>
                                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={actions.cerrarModalEdit}>Cerrar</button>
                                         </div>
                                     </form>

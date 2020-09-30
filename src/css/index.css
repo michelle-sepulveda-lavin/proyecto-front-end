@@ -47,13 +47,13 @@ body {
 }
 
 .boton-preferido:hover {
-  background: #000000;
+  background: #e0e0e0;
   transition: 0.25s;
   color: #ffffff;
 }
 
 .boton-no-preferido {
-  border: 1px solid #0087bd;
+  border: 1px solid #112735;
   border-radius: 30px;
   cursor: pointer;
   display: block;
@@ -62,8 +62,9 @@ body {
   text-align: center;
 }
 .boton-no-preferido:hover {
-  background: #0087bd;
+  background: #0b1b24;
   transition: 0.3s;
+  color: #fff;
 }
 
 .price-div {
@@ -71,25 +72,26 @@ body {
 }
 .planes-titulo {
   font-size: 2.6rem;
-  color: #0087bd;
+  color: #163547;
 }
 .boton-a-inicio {
   font-size: 1.4em;
 
   height: 2em;
-  border: 1px solid #002b3b;
+  border: 1.5px solid #163547;
   border-radius: 20px;
   padding: 10px;
   cursor: pointer;
   line-height: 0.5em;
   text-align: center;
-  color: #000;
+  color: #163547;
 }
 .boton-a-inicio:hover {
   transform: scale(1.05);
-  background: #69caf0;
+  background: #163547;
   transition: 0.2s;
   border: none;
+  color: #fff;
 }
 .modal li {
   list-style: none;
@@ -104,8 +106,8 @@ body {
   left: 0;
   padding: 0.1rem;
   width: 100%;
-  background-color: #011638;
-  background-image: linear-gradient(-90deg, #011638 10%, #000 100%);
+  background-color: #163547;
+  background-image: linear-gradient(-90deg, #163547 10%, #000 100%);
   background-size: cover;
 }
 
@@ -130,8 +132,8 @@ body {
   font-size: 2em;
 }
 .bg-gradient-primary {
-  background-color: #011638;
-  background-image: linear-gradient(180deg, #011638 10%, rgb(0, 0, 0) 100%);
+  background-color: #193b4e;
+  background-image: linear-gradient(180deg, #142e3f 10%, rgb(0, 0, 0) 100%);
   background-size: cover;
 }
 .bg-gradient-secondary {
@@ -251,11 +253,14 @@ li {
   color: #5a5c69;
 }
 .dashboard-subtitle {
-  color: #011638;
+  color: #142e3f;
 }
 #content-wrapper h1 {
-  color: #5a5c69;
+  color: #1e435c;
   text-align: center;
+}
+#content-wrapper h2 {
+  color: #142e3f;
 }
 .contenedor-edificio {
   width: 80%;
@@ -276,23 +281,9 @@ li {
 }
 
 .edificio-color-4 {
-  color: #022d72;
+  color: #1f4961;
 }
-.dashboard-green {
-  background-color: #02af10;
-  background-image: linear-gradient(160deg, #02ad10 10%, #012704 100%);
-  background-size: cover;
-}
-.dashboard-yellow {
-  background-color: #d4d100;
-  background-image: linear-gradient(160deg, #fffb00 10%, #8f7502 100%);
-  background-size: cover;
-}
-.dashboard-red {
-  background-color: #f10000;
-  background-image: linear-gradient(160deg, #e40303 10%, #310000 100%);
-  background-size: cover;
-}
+
 .avatar-img {
   width: 12em;
   height: 12em;
@@ -322,7 +313,7 @@ li {
 }
 
 .fondo-avatar {
-  background: #001e3b;
+  background: #1b4157;
   width: 100%;
   height: 10em;
   top: 0;
@@ -389,12 +380,10 @@ li {
   width: 6.3em;
 }
 .planes {
-  background: #021e4b;
-  background-color: #011638;
-  background-image: linear-gradient(155deg, #001c49 10%, rgb(9, 9, 17) 110%);
+  background: #163547;
+  background-image: linear-gradient(155deg, #163547 10%, #0b1b24 90%);
   background-size: cover;
 }
-
 
 /* Home */
 header.masthead {
@@ -423,16 +412,12 @@ header.masthead {
   font-size: 1rem;
   font-weight: 400;
   font-style: italic;
-  font-family: "Droid Serif", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Droid Serif", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   margin-bottom: 4rem;
 }
 /* Services end */
-
-
-
-
-
-
 
 .bg-db-1 {
   background: #48a7e4;
@@ -492,14 +477,83 @@ header.masthead {
 .carousel-caption {
   line-height: inherit;
 }
-.carousel p {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-}
 .min-h-20 {
-  min-height: 20vh;
+  min-height: 25vh;
+}
+
+.btn-verde {
+  background: #40dba7;
+  color: #fff;
+}
+.btn-amarillo {
+  background: #fcea50;
+  color: #000;
+}
+.btn-azul {
+  background: #3db5d0;
+  color: #fff;
+}
+.btn-oscuro {
+  background: #163547;
+  color: #fff;
+}
+
+tr:hover {
+  background: #59b5eb2a;
+}
+
+.fa-handshake,
+.fa-list-alt,
+.fa-boxes {
+  background: rgb(0, 238, 146);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 238, 146, 1) 0%,
+    rgba(0, 207, 189, 1) 50%,
+    rgba(0, 164, 246, 1) 94%
+  );
+}
+.circle {
+  border-radius: 80%;
+  width: 80%;
+  height: 100%;
+  margin-left: 15px;
+}
+.big-font p {
+  font-size: 3.7em;
+}
+
+.card-carousel {
+  overflow-x: auto;
+  overflow-y: auto;
+  padding-bottom: 15px;
+}
+
+.card-carousel .card {
+  border: 1.5px solid #288ed1;
+}
+.card-carousel li {
+  margin: 0.5rem;
+  width: 15em;
+}
+
+.conserjes-turno ::-webkit-scrollbar {
+  width: 7px;
+}
+
+.conserjes-turno ::-webkit-scrollbar-track {
+  background: #288ed1;
+}
+
+.conserjes-turno ::-webkit-scrollbar-thumb {
+  background: #1f6b9e;
+}
+
+.conserjes-turno ::-webkit-scrollbar-thumb:hover {
+  background: #144566;
+}
+tr:hover {
+  background: #4cb1ec21;
 }
 
 .btn-social {

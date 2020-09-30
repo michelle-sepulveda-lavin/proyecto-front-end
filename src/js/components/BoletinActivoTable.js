@@ -22,8 +22,8 @@ const BoletinActivoTable = (props) => {
     return (
         <>
             <div className="row container mt-4">
-                <table className="table table-hover col-10 mx-auto  overflow-auto ">
-                    <thead className="thead-dark text-center">
+                <table className="table table-hover table-bordered border col-10 mx-auto  overflow-auto ">
+                    <thead className="btn-oscuro text-center">
                         <tr>
                             <th>ID</th>
                             <th>Asunto</th>

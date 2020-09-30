@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Context } from '../../store/appContext';
 import ModalCreacionUser from '../../components/modalCreacionUser'
 import ModalAddUser from '../../components/modalAddUser';
+import SidebarPage from '../../components/SidebarPage';
 
 const InicializacionPisos = () => {
     const { store, actions } = useContext(Context);
@@ -62,24 +63,24 @@ const InicializacionPisos = () => {
 
     }, []);
     return (
-        <>
+        <SidebarPage>
             {
                 !!store.departamentos &&
                 <>
                     <div className="container">
-                        <div className="row">
-                            <div className="col-md-6 m-auto">
-                                <h1>Inicializacion de los Piso</h1>
+                        <div className="row text-center">
+                            <div className="col m-auto">
+                                <h1>Creacion/Edición Departamento</h1>
                             </div>
                         </div>
-                        <div className="row border">
-                            <div className="col-md-6 border">
-                                <p>Pisos totales {!!store.edificioCompleto && store.edificioCompleto.numero_pisos}</p>
-                                <p>Departamentos totales {!!store.edificioCompleto && store.edificioCompleto.numero_departamentos}</p>
-                                <p>Bodegas totales {!!store.edificioCompleto && store.edificioCompleto.total_bodegas}</p>
-                                <p>Estacionamiento totales {!!store.edificioCompleto && store.edificioCompleto.total_estacionamientos}</p>
+                        <div className="row mt-5 d-flex justify-content-center">
+                            <div className="col-md-4 border btn-azul">
+                                <p>Pisos totales: {!!store.edificioCompleto && store.edificioCompleto.numero_pisos}</p>
+                                <p>Departamentos totales: {!!store.edificioCompleto && store.edificioCompleto.numero_departamentos}</p>
+                                <p>Bodegas totales: {!!store.edificioCompleto && store.edificioCompleto.total_bodegas}</p>
+                                <p>Estacionamiento totales: {!!store.edificioCompleto && store.edificioCompleto.total_estacionamientos}</p>
                             </div>
-                            <div className="col-md-6 border">
+                            <div className="col-md-4 border btn-amarillo">
                                 <p>Pisos inicializados: {!!pisos && sumaUnidades()}</p>
                                 <p>Departamentos Creados: {!!store.contadorUsuarios && (store.contadorUsuarios)}</p>
                                 <p>Bodegas asignadas {!!store.departamentoUsuarios && sumaBodegas()}</p>
@@ -90,7 +91,7 @@ const InicializacionPisos = () => {
                     <div className="container my-5 d-flex justify-content-center">
                         <div className="row ">
                             <div className="col">
-                                <button type="button" className="btn btn-success" data-toggle="modal" data-target="#modalCreacionUser"
+                                <button type="button" className="btn btn-verde" data-toggle="modal" data-target="#modalCreacionUser"
                                     onClick={() => {
                                         actions.activarModal()
                                         actions.resetMsg()
@@ -114,8 +115,8 @@ const InicializacionPisos = () => {
                                     limpiarFormulario(e)
                                     limpiarState()
                                 }}>
-                                    <table className="table table-bordered table-responsive-md">
-                                        <thead className="thead-dark">
+                                    <table className="table table-bordered text-center table-responsive-md">
+                                        <thead className="btn-oscuro">
                                             <tr>
                                                 <th scope="col">N° Departamento</th>
                                                 <th scope="col">Residente</th>
@@ -216,7 +217,7 @@ const InicializacionPisos = () => {
                                                         }
                                                     </select>
                                                 </td>
-                                                <td><button className="btn btn-primary mb-2">Añadir</button></td>
+                                                <td><button className="btn btn-verde mb-2">Añadir</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -228,7 +229,7 @@ const InicializacionPisos = () => {
                         <div className="row">
                             <div className="col">
                                 <div className="btn-group">
-                                    <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={() => contadorPisos()}>
+                                    <button type="button" className="btn btn-verde dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={() => contadorPisos()}>
                                         Piso
                             </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -259,8 +260,8 @@ const InicializacionPisos = () => {
                         </div>
                         <div className="row">
                             <div className="col">
-                                <table className="table table-bordered table-responsive-md">
-                                    <thead className="thead-dark">
+                                <table className="table table-hover table-bordered border">
+                                    <thead className="btn-oscuro">
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">N° Departamento</th>
@@ -283,7 +284,7 @@ const InicializacionPisos = () => {
                                                         <tr key={index}>
                                                             <th scope="row">{index + 1}</th>
                                                             <td>{dpto.numero_departamento}</td>
-                                                            <td className="text-center">{dpto.residente.name}</td>
+                                                            <td>{dpto.residente.name}</td>
                                                             <td>{dpto.bodega_id}</td>
                                                             <td>{dpto.estacionamiento_id}</td>
                                                             <td>{dpto.piso}</td>
@@ -296,7 +297,7 @@ const InicializacionPisos = () => {
                                                                 }}></i>
                                                             </td>
                                                             <td>
-                                                                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addUser" onClick={() => actions.dptoModificar(dpto.id)}>
+                                                                <button type="button" className="btn" data-toggle="modal" data-target="#addUser" onClick={() => actions.dptoModificar(dpto.id)}>
                                                                     <i className="fas fa-pencil-alt cursor-pointer"></i>
                                                                 </button>
                                                                 <ModalAddUser />
@@ -311,7 +312,7 @@ const InicializacionPisos = () => {
                                                         <tr key={index}>
                                                             <th scope="row">{index + 1}</th>
                                                             <td>{dpto.numero_departamento}</td>
-                                                            <td className="text-center">{dpto.residente.name}</td>
+                                                            <td>{dpto.residente.name}</td>
                                                             <td>{dpto.bodega_id}</td>
                                                             <td>{dpto.estacionamiento_id}</td>
                                                             <td>{dpto.piso}</td>
@@ -326,7 +327,7 @@ const InicializacionPisos = () => {
                                                             <td>
                                                                 <button 
                                                                     type="button" 
-                                                                    className="btn btn-primary" 
+                                                                    className="btn" 
                                                                     data-toggle="modal" 
                                                                     data-target="#addUser" 
                                                                     onClick={() => {
@@ -358,7 +359,7 @@ const InicializacionPisos = () => {
                     </Link>
                 </div>
             </div>
-        </>
+        </SidebarPage>
     )
 };
 

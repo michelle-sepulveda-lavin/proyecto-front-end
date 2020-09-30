@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
 const InicializacionDptos = () => {
@@ -32,20 +33,20 @@ const InicializacionDptos = () => {
     }, [])
 
     return (
-        <>
+        <SidebarPage>
             <div className="container my-5">
-                <div className="row">
-                    <div className="col-md-6 m-auto">
-                        <h2>Formulario de Departamentos</h2>
+                <div className="row text-center">
+                    <div className="col">
+                        <h2>Modelos de departamentos</h2>
                     </div>
                 </div>
             </div>
             <div className="container border">
                 <div className="row">
-                    <div className="col-md-8">
-                        <h5>Modelo</h5>
+                    <div className="col-md-8 btn-verde text-center">
+                        <h4>Modelo</h4>
                     </div>
-                    <div className="col-md-4 bg-warning">
+                    <div className="col-md-4 btn-amarillo">
                         <span>
                             Total unidades:
                             </span>
@@ -68,38 +69,38 @@ const InicializacionDptos = () => {
                                 limpiarState()
                             }}>
                                 <div className="col-md-2">
-                                    <div className="form-group">
+                                    <div className="form-group text-center">
                                         <label htmlFor="modelo">Modelo</label>
                                         <input type="text" className="form-control" name="modelo" onChange={e => handleChange(e)} />
                                     </div>
                                 </div>
                                 <div className="col-md-2">
-                                    <div className="form-group">
+                                    <div className="form-group text-center">
                                         <label htmlFor="total">Superficie total</label>
                                         <input type="number" className="form-control" name="total" onChange={e => handleChange(e)} />
                                     </div>
                                 </div>
                                 <div className="col-md-2">
-                                    <div className="form-group">
+                                    <div className="form-group text-center">
                                         <label htmlFor="interior">Superficie interior</label>
                                         <input type="number" className="form-control" name="interior" onChange={e => handleChange(e)} />
                                     </div>
                                 </div>
                                 <div className="col-md-2">
-                                    <div className="form-group">
+                                    <div className="form-group text-center">
                                         <label htmlFor="terraza">Superficie terraza</label>
                                         <input type="number" className="form-control" name="terraza" onChange={e => handleChange(e)} />
                                     </div>
                                 </div>
                                 <div className="col-md-2">
-                                    <div className="form-group">
+                                    <div className="form-group text-center">
                                         <label htmlFor="cantidad_total">Total Unidades</label>
                                         <input type="number" className="form-control" name="cantidad_total" onChange={e => handleChange(e)} />
                                     </div>
                                 </div>
                                 <div className="col-md-2 my-auto">
-                                    <div className="form-group my-auto">
-                                        <button type="submit" className="btn btn-primary">Añadir</button>
+                                    <div className="form-group text-center my-auto">
+                                        <button type="submit" className="btn btn-verde">Añadir</button>
                                     </div>
                                 </div>
                             </form>
@@ -107,8 +108,8 @@ const InicializacionDptos = () => {
                 }
                 <div className="row mt-5">
                     <div className="col-12">
-                        <table className="table table-bordered table-responsive-md">
-                            <thead className="thead-dark">
+                        <table className="table table-hover text-center table-bordered border">
+                            <thead className="btn-oscuro">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Modelo</th>
@@ -148,41 +149,73 @@ const InicializacionDptos = () => {
 
             <div className="container mt-5 border">
                 <div className="row">
-                    <div className="col">
-                        <h5>
+                    <div className="col-md-6">
+                        <h4 className="text-center btn-verde">
                             Bodegas
-                        </h5>
+                        </h4>
+                    </div>
+                    <div className="col-md-6">
+                        <h4 className="text-center btn-verde">
+                            Estacionamientos
+                        </h4>
                     </div>
                 </div>
                 <div className="row pt-3">
-                    {
-                        !!store.bodegasEdificio ?
-                            <p></p>
-                            :
-                            <form
-                                onSubmit={(e) => {
-                                    actions.handleBodegas(e, modelInfo)
-                                    limpiarFormulario(e)
-                                    limpiarState()
-                                }} >
-                                <div className="col">
-                                    <div className="form-group">
-                                        <label htmlFor="total_superficie">Superficie total</label>
-                                        <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                    <div className="col-md-6">
+                        {
+                            !!store.bodegasEdificio ?
+                                <p></p>
+                                :
+                                <form
+                                    onSubmit={(e) => {
+                                        actions.handleBodegas(e, modelInfo)
+                                        limpiarFormulario(e)
+                                        limpiarState()
+                                    }} >
+                                    <div className="col">
+                                        <div className="form-group">
+                                            <label htmlFor="total_superficie">Superficie total</label>
+                                            <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-md-2">
-                                    <div className="form-group my-auto">
-                                        <button type="submit" className="btn btn-primary">Añadir</button>
+                                    <div className="col-md-2">
+                                        <div className="form-group my-auto">
+                                            <button type="submit" className="btn btn-verde">Añadir</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                    }
+                                </form>
+                        }
+                    </div>
+                    <div className="col-md-6">
+                        {
+                            !!store.estacionamientoEdificios ?
+                                <p></p>
+                                :
+                                <form
+                                    onSubmit={(e) => {
+                                        actions.handleEstacionamiento(e, modelInfo)
+                                        limpiarFormulario(e)
+                                        limpiarState()
+                                    }} >
+                                    <div className="col">
+                                        <div className="form-group">
+                                            <label htmlFor="total_superficie">Superficie total</label>
+                                            <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-2 my-auto">
+                                        <div className="form-group my-auto">
+                                            <button type="submit" className="btn btn-verde">Añadir</button>
+                                        </div>
+                                    </div>
+                                </form>
+                        }
+                    </div>
                 </div>
                 <div className="row mt-5">
-                    <div className="col">
-                        <table className="table table-bordered">
-                            <thead className="thead-dark">
+                    <div className="col-md-6">
+                        <table className="table table-hover text-center table-bordered border">
+                            <thead className="btn-oscuro">
                                 <tr>
                                     <th scope="col">Superficie total</th>
                                     <th scope="col">Borrar</th>
@@ -200,45 +233,9 @@ const InicializacionDptos = () => {
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-            <div className="container border mt-5">
-                <div className="row">
-                    <div className="col">
-                        <h5>
-                            Estacionamientos
-                        </h5>
-                    </div>
-                </div>
-                <div className="row pt-3">
-                    {
-                        !!store.estacionamientoEdificios ?
-                            <p></p>
-                            :
-                            <form
-                                onSubmit={(e) => {
-                                    actions.handleEstacionamiento(e, modelInfo)
-                                    limpiarFormulario(e)
-                                    limpiarState()
-                                }} >
-                                <div className="col">
-                                    <div className="form-group">
-                                        <label htmlFor="total_superficie">Superficie total</label>
-                                        <input type="number" className="form-control" name="total_superficie" onChange={e => handleChange(e)} />
-                                    </div>
-                                </div>
-                                <div className="col-md-2 my-auto">
-                                    <div className="form-group my-auto">
-                                        <button type="submit" className="btn btn-primary">Añadir</button>
-                                    </div>
-                                </div>
-                            </form>
-                    }
-                </div>
-                <div className="row mt-5">
-                    <div className="col-12">
-                        <table className="table table-bordered">
-                            <thead className="thead-dark">
+                    <div className="col-md-6">
+                        <table className="table table-hover text-center table-bordered border">
+                            <thead className="btn-oscuro">
                                 <tr>
                                     <th scope="col">Superficie total</th>
                                     <th scope="col">Borrar</th>
@@ -259,7 +256,6 @@ const InicializacionDptos = () => {
                 </div>
             </div>
 
-
             <div className="row my-5">
                 <div className="col-md-3 m-auto">
                     <Link to="/admin/departamentos" style={{ textDecoration: 'none' }}>
@@ -269,7 +265,7 @@ const InicializacionDptos = () => {
                     </Link>
                 </div>
             </div>
-        </>
+        </SidebarPage>
     )
 };
 

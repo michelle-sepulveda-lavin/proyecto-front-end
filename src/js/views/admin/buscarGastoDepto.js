@@ -46,7 +46,7 @@ const GastosDeptoActual = () => {
                         <input type="number" className=" form-control mr-3" defaultValue={'default'} id="turno" name="depto" onChange={handleInput}>
                         </input>
                         <div>
-                            <button className="btn btn-success" onClick={() => {
+                            <button className="btn btn-verde" onClick={() => {
                                 if (deptoSeleccionado !== "") {
                                     actions.getGastosDeptoActual(deptoSeleccionado, setGastosMes)
                                 }
@@ -64,8 +64,8 @@ const GastosDeptoActual = () => {
 
 
 
-                                        < table className="table text-center overflow-auto mx-auto ">
-                                            <thead className="thead-dark text-center mx-auto">
+                                        < table className="table text-center table-bordered border overflow-auto mx-auto ">
+                                            <thead className="btn-oscuro text-center mx-auto">
                                                 <tr className="mx-auto">
                                                     <th scope="col">Depto</th>
                                                     <th scope="col">Monto</th>
@@ -84,7 +84,7 @@ const GastosDeptoActual = () => {
 
                                                         return (
 
-                                                            <tr key={index} className={gasto.estado === "noPagado" ? "bg-warning" : ""}>
+                                                            <tr key={index} className={gasto.estado === "noPagado" ? "btn-amarillo" : ""}>
                                                                 <th scope="row">{gasto.departamento.numero_depto}</th>
                                                                 <td>{new Intl.NumberFormat('en-US',
                                                                     { style: 'currency', currency: 'CLP' }
@@ -97,7 +97,7 @@ const GastosDeptoActual = () => {
                                                                 <td> {
                                                                     gasto.estado === "pagado" ?
 
-                                                                        <span className="btn btn-success px-4"
+                                                                        <span className="btn btn-azul px-4"
                                                                             onClick={() => {
                                                                                 setShowPago(true)
                                                                                 setComprobantePago(gasto.pago)
@@ -119,7 +119,7 @@ const GastosDeptoActual = () => {
                                                                                 }}>Validar</span>
                                                                             :
                                                                             gasto.estado === "noPagado" ?
-                                                                                <span className="btn btn-info"
+                                                                                <span className="btn btn-verde"
                                                                                     onClick={() => {
                                                                                         console.log("EN PROGRESO")
                                                                                     }}>Enviar notificación</span>

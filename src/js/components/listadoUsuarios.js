@@ -24,7 +24,7 @@ const ListadoUsuarios = () => {
                                 </select>
                             </div>
                             <div className="col-md-6 ">
-                                <button className="btn btn-success">Mostrar</button>
+                                <button className="btn btn-verde">Mostrar</button>
                             </div>
                         </div>
                     </form>
@@ -32,9 +32,9 @@ const ListadoUsuarios = () => {
             </div>
 
             <div className="row mt-5">
-                <div className="col">
-                    <table className="table table-bordered table-responsive-md">
-                        <thead className="thead-dark">
+                <div className="col overflow-auto">
+                    <table className="table text-center table-bordered border">
+                        <thead className="btn-oscuro">
                             <tr>
                                 <th scope="col">N°</th>
                                 <th scope="col">Usuario</th>
@@ -55,9 +55,9 @@ const ListadoUsuarios = () => {
                                             <td>{usuario.username}</td>
                                             <td>{usuario.email}</td>
                                             <td>{usuario.rol.name}</td>
-                                            <td>{!!usuario.edificio? usuario.edificio.name : usuario.edificio.id}</td>
+                                            <td>{!!usuario.edificio ? usuario.edificio.name : usuario.edificio.id}</td>
                                             <td>
-                                                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalEditUser"
+                                                <button type="button" className="btn " data-toggle="modal" data-target="#modalEditUser"
                                                     onClick={() => {
                                                         actions.guardarIndex(i)
                                                         actions.resetMsg()

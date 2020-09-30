@@ -27,12 +27,10 @@ const ModifyPlans = () => {
         const data = await response.json()
         console.log(data)
         getData()
-        actions.getPlanes()
     }
 
     useEffect(() => {
         getData()
-        /* actions.getPlanes() */
 
     }, []);
 
@@ -88,7 +86,7 @@ const ModifyPlans = () => {
                     <div className="container-fluid my-5">
                         <div className="mx-auto text-center">
                             <h1 className="text-center planes-titulo mb-5">NUESTROS PLANES</h1>
-                            <button className="btn btn-warning mb-5" onClick={() => {
+                            <button className="btn btn-verde mb-5" onClick={() => {
                                 if (!createPlan) {
                                     setCreatePlan(true)
                                 } else {
@@ -136,8 +134,8 @@ const ModifyPlans = () => {
                                             <div className="card-body p-0">
                                                 <div className=" d-flex justify-content-center align-items-center">
                                                     <div className="text-center">
-                                                        <h3 className="card-title m-0">{plans.name}</h3>
-                                                        <span className="plan-price">{plans.price}</span> <span className="tipo-moneda">/ UF</span>
+                                                        <h3 className="card-title m-0 dashboard-subtitle">{plans.name}</h3>
+                                                        <span className="plan-price dashboard-subtitle dashboard-subtitle">{plans.price}</span> <span className="tipo-moneda dashboard-subtitle">/ UF</span>
                                                         <h5 className="mb-3"> Pagado {plans.frecuencia}</h5>
 
                                                     </div>
@@ -200,7 +198,7 @@ const ModifyPlans = () => {
                                             <div className="form-group">
                                                 <label htmlFor="nuevo_plan3" className="d-block mb-3">Características</label>
                                                 <div className="d-flex">
-                                                    <span className="btn btn-primary p-1 mr-3"
+                                                    <span className="btn btn-azul p-1 mr-3"
                                                         onClick={() => {
                                                             if (inputCaracteristica.current.value !== "") {
                                                                 newPlan.body.push(inputCaracteristica.current.value)
@@ -238,7 +236,7 @@ const ModifyPlans = () => {
 						                    </button>
                                             <button
                                                 type="button"
-                                                className="btn btn-success"
+                                                className="btn btn-verde"
                                                 data-dismiss="modal"
                                                 onClick={() => {
                                                     const values = Object.values(newPlan)

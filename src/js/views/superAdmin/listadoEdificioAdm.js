@@ -5,7 +5,9 @@ import { Context } from '../../store/appContext';
 
 const ListadoEdificioAdm = () => {
     const { store, actions } = useContext(Context)
-    useEffect(() => { actions.getEdificiosData() }, [])
+    useEffect(() => {
+        actions.getEdificiosData()
+    }, [])
     return (
         <>
             <SidebarPage>
@@ -13,8 +15,8 @@ const ListadoEdificioAdm = () => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 col-md-9 mx-auto overflow-auto ">
-                            <table className="table  border">
-                                <thead className="thead-dark text-center">
+                            <table className="table  table-bordered border">
+                                <thead className="btn-oscuro text-center">
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Nombre</th>
@@ -41,14 +43,14 @@ const ListadoEdificioAdm = () => {
                                                     <td>{edificio.termino_contrato}</td>
                                                     <td>
                                                         <Link to={`/listado-edificios/${edificio.id}`}>
-                                                            <span className="btn btn-warning" >Detalle</span> </Link> </td>
+                                                            <span className="btn btn-azul" >Detalle</span> </Link> </td>
                                                 </tr>
                                             )
                                         }
                                     })}
                                 </tbody>
                             </table>
-                            <Link to="./crearedificio"> <div className="btn btn-success mb-4"> Crear edificio nuevo</div> </Link>
+                            <Link to="./crearedificio"> <div className="btn btn-verde mb-4"> Crear edificio nuevo</div> </Link>
                         </div>
                     </div>
                 </div>
