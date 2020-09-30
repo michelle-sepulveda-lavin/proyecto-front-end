@@ -34,14 +34,14 @@ const Contactos = () => {
                 <div className="row">
                     <div className="col-12 col-md-8 mx-auto overflow-auto ">
                         <table className="table table-hover table-bordered border">
-                            <thead className="thead-dark text-center">
+                            <thead className="btn-oscuro text-center">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Correo</th>
                                     <th scope="col">Interés</th>
                                     <th scope="col">Teléfono</th>
-                                    <th scope="col">Estado</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,17 +49,17 @@ const Contactos = () => {
                                     if (index < 10 && contacto.state === true) {
 
                                         return (
-                                                <tr key={index}>
-                                                    <th scope="row">{contacto.id}</th>
-                                                    <td>{contacto.name}</td>
-                                                    <td>{contacto.email}</td>
-                                                    <td>{contacto.plan}</td>
-                                                    <td>{contacto.phone}</td>
-                                                    <td>
-                                                        <span className="btn btn-danger" onClick={() => {
-                                                            contactado(contacto.email)
-                                                        }}>Contactado</span></td>
-                                                </tr>
+                                            <tr key={index}>
+                                                <th scope="row">{contacto.id}</th>
+                                                <td>{contacto.name}</td>
+                                                <td>{contacto.email}</td>
+                                                <td>{contacto.plan}</td>
+                                                <td>{contacto.phone}</td>
+                                                <td>
+                                                    <span className="btn btn-azul" onClick={() => {
+                                                        contactado(contacto.email)
+                                                    }}>Contactado</span></td>
+                                            </tr>
                                         )
                                     }
                                 })}
@@ -70,7 +70,7 @@ const Contactos = () => {
 
                 </div>
                 <div className="d-flex justify-content-center">
-                    <Link to="/contactados"><span className="btn btn-success ">Contactos archivados</span> </Link>
+                    <Link to="/contactados"><span className="btn btn-verde ">Contactos archivados</span> </Link>
                 </div>
             </div>
 

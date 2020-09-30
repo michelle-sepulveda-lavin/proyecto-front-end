@@ -23,13 +23,13 @@ const Home = () => {
                         <li className="nav-item"><a className="nav-link text-white" href="#about">About</a></li>
                         <li className="nav-item"><a className="nav-link text-white" href="#team">Team</a></li>
                         <li className="nav-item"><a className="nav-link text-white" href="#contact">Contact</a></li> */}
-                        <Link className="btn btn-outline-dark" to="./planes" role="button">Planes</Link>
-                        
+                        <Link className="btn btn-azul mr-3" to="./planes" role="button">Planes</Link>
+
                         {
                             !!store.currentRol ?
                                 <>
                                     <li className="d-block">
-                                        <Link to="/dashboard" className=" btn btn-success mr-1" role="button">Dashboard</Link>
+                                        <Link to="/dashboard" className=" btn btn-verde mr-3" role="button">Dashboard</Link>
                                     </li>
                                     <li className="d-block" >
                                         <Link to="/" className=" btn btn-secondary mr-1" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-2"></i>Cerrar sesion</Link>
@@ -37,7 +37,7 @@ const Home = () => {
                                 </>
                                 :
                                 <li className="d-block">
-                                    <Link to="/login" className=" btn btn-outline-dark mr-1" role="button">Iniciar sesión</Link>
+                                    <Link to="/login" className=" btn btn-verde mr-1" role="button">Iniciar sesión</Link>
                                 </li>
                         }
                     </ul>
@@ -120,8 +120,8 @@ const Home = () => {
                     <div className="row text-center">
                         <div className="col-md-4">
                             <span className="fa-stack fa-4x">
-                                <i className="fas fa-circle fa-stack-2x text-success"></i>
-                                <i className="fas fa-handshake fa-stack-1x fa-inverse"></i>
+                                <i className="fas fa-circle rounded-circle fa-stack-2x text-gradient"></i>
+                                <i className="fas fa-handshake  circle fa-stack-1x fa-inverse"></i>
                             </span>
                             <h4 className="my-3">Gastos Comunes</h4>
                             <p className="text-muted">Registra los ingresos y egresos para calcular los gastos comunes de forma automática, subiendo incluso archivos de respaldo, con el plus de notificar mediante correo a usuarios cuando estén o no cancelados.</p>
@@ -129,15 +129,15 @@ const Home = () => {
                         <div className="col-md-4">
                             <span className="fa-stack fa-4x">
                                 <i className="fas fa-circle fa-stack-2x text-success"></i>
-                                <i className="far fa-list-alt fa-stack-1x fa-inverse"></i>
+                                <i className="far fa-list-alt  circle fa-stack-1x fa-inverse"></i>
                             </span>
                             <h4 className="my-3">Boletines</h4>
                             <p className="text-muted">La utilidad del boletín informativo radica en la difusión de información, noticias, actividades, eventos, sucesos o acontecimientos que tengan que ver con el edificio o condominio.</p>
                         </div>
                         <div className="col-md-4">
                             <span className="fa-stack fa-4x">
-                                <i className="fas fa-circle fa-stack-2x text-success"></i>
-                                <i className="fas fa-boxes fa-stack-1x fa-inverse"></i>
+                                <i className="fas fa-stack-2x "></i>
+                                <i className="fas fa-boxes circle fa-stack-1x fa-inverse"></i>
                             </span>
                             <h4 className="my-3">Paqueteria</h4>
                             <p className="text-muted">Logra una comunicación más fluida con los residentes al momento que llegue un producto y este sea entregado en conserjería, mediante notificaciones por plataforma.</p>

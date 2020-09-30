@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Popover from 'react-bootstrap/Popover'
+import Overlay from 'react-bootstrap/Overlay'
+import Button from 'react-bootstrap/Button'
 
 const CrearEdificios = () => {
     const { store, actions } = useContext(Context)
@@ -10,9 +14,19 @@ const CrearEdificios = () => {
         setState({ ...state, [e.target.name]: e.target.value })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         actions.getPlanes()
-    },[])
+    }, [])
+
+
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Title as="h3">En construcción</Popover.Title>
+            <Popover.Content>
+                ¡Esta función estará disponible dentro de poco tiempo!
+    </Popover.Content>
+        </Popover>
+    )
 
     return (
 
@@ -28,18 +42,23 @@ const CrearEdificios = () => {
                         <>
                             <div className="row mt-5" style={{ height: "100px" }}>
                                 <div className="col d-flex justify-content-center m-2">
-                                    <button className="btn btn-primary" style={{ width: "40vh" }} onClick={() => { actions.flagCrearEdificio(true) }}>
+                                    <button className="btn btn-azul" style={{ width: "40vh" }} onClick={() => { actions.flagCrearEdificio(true) }}>
                                         Formulario
                                     </button>
                                 </div>
                             </div>
+
                             <div className="row" style={{ height: "100px" }}>
                                 <div className="col d-flex justify-content-center m-2">
-                                    <button className="btn btn-secondary " style={{ width: "40vh" }} disabled>
-                                        Archivo CSV
-                                    </button>
+                                    <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+
+                                        <Button className="btn btn-secondary " style={{ width: "40vh" }}>
+                                            Archivo CSV
+                                        </Button>
+                                    </OverlayTrigger>
                                 </div>
                             </div>
+
                         </>
                         :
                         <>
@@ -116,19 +135,19 @@ const CrearEdificios = () => {
                                     </div>
                                     <div className="col-md-4">
                                         <label htmlFor="dia_vencimiento">Dia vencimiento gastos comunes</label>
-                                        <input type="number" className="form-control" name="dia_vencimiento" onChange={e => {handleChange(e)}} />
+                                        <input type="number" className="form-control" name="dia_vencimiento" onChange={e => { handleChange(e) }} />
                                     </div>
 
                                 </div>
                                 <div className="col d-flex justify-content-center my-5">
                                     <button className="btn btn-primary mx-1">Crear edificio</button>
-                                    <button className="btn btn-secondary" onClick={()=> actions.flagCrearEdificio(false) }>
+                                    <button className="btn btn-secondary" onClick={() => actions.flagCrearEdificio(false)}>
                                         Cancelar
                                     </button>
                                 </div>
                             </form>
                         </>
-                    }
+                }
             </div>
 
         </SidebarPage>

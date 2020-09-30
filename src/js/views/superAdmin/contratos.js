@@ -48,9 +48,9 @@ const Contratos = () => {
                 <div className="container-fluid mb-4">
                     <h3 className="text-center">Próximos a vencer</h3>
                     <div className="row">
-                        <div className="col-12 col-md-9 mx-auto">
-                            <table class="table table-responsive  border">
-                                <thead class="thead-dark text-center">
+                        <div className="col-12 col-md-9 mx-auto overflow-auto">
+                            <table class="table  border">
+                                <thead class="btn-oscuro text-center">
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Nombre</th>
@@ -77,7 +77,7 @@ const Contratos = () => {
                                                     <td>{edificio.termino_contrato}</td>
                                                     <td>
                                                         <Link to={`/listado-edificios/${edificio.id}`}>
-                                                            <span className="btn btn-warning" >Detalle</span> </Link> </td>
+                                                            <span className="btn btn-azul" >Detalle</span> </Link> </td>
                                                 </tr>
                                             </>)
 
@@ -89,9 +89,9 @@ const Contratos = () => {
 
                     <h3 className="text-center">Vencidos</h3>
                     <div className="row">
-                        <div className="col-12 col-md-9 mx-auto">
-                            <table class="table table-responsive  border">
-                                <thead class="thead-dark text-center">
+                        <div className="col-12 col-md-9 mx-auto overflow-auto">
+                            <table class="table border">
+                                <thead class="btn-oscuro text-center">
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Nombre</th>
@@ -118,7 +118,7 @@ const Contratos = () => {
                                                     <td>{edificio.termino_contrato}</td>
                                                     <td>
                                                         <Link to={`/listado-edificios/${edificio.id}`}>
-                                                            <span className="btn btn-warning" >Detalle</span> </Link> </td>
+                                                            <span className="btn btn-azul" >Detalle</span> </Link> </td>
                                                 </tr>
                                             </>)
 
@@ -130,9 +130,9 @@ const Contratos = () => {
 
                     <h3 className="text-center">Vigentes</h3>
                     <div className="row">
-                        <div className="col-12 col-md-9 mx-auto">
-                            <table class="table table-responsive  border">
-                                <thead class="thead-dark text-center">
+                        <div className="col-12 col-md-9 mx-auto overflow-auto">
+                            <table class="table border">
+                                <thead class="btn-oscuro text-center">
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Nombre</th>
@@ -159,7 +159,7 @@ const Contratos = () => {
                                                     <td>{edificio.termino_contrato}</td>
                                                     <td>
                                                         <Link to={`/listado-edificios/${edificio.id}`}>
-                                                            <span className="btn btn-warning" >Detalle</span> </Link> </td>
+                                                            <span className="btn btn-azul" >Detalle</span> </Link> </td>
                                                 </tr>
                                             </>)
 
@@ -169,7 +169,7 @@ const Contratos = () => {
                         </div>
                     </div>
                 </div>
-
+                <Link to="/dashboard" style={{ textDecoration: 'none' }} className="my-4"> <span className="boton-a-inicio shadow-sm ml-3"> <i className="fas fa-arrow-circle-left"></i> Ir a edificios</span> </Link>
 
             </SidebarPage>
 

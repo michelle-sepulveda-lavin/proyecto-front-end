@@ -85,7 +85,7 @@ const ModalCrearConserje = props => {
                                     <label htmlFor="contraseña">Contraseña</label>
                                     <input type="text" className="form-control" id="password" onChange={handleInputConserje} />
                                 </div>
-                                <button className="btn btn-success mb-3">Crear conserje</button>
+                                <button className="btn btn-verde mb-3">Crear conserje</button>
                             </form>
                         </div>
 

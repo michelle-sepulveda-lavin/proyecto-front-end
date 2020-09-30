@@ -23,7 +23,7 @@ const BoletinActivoTable = (props) => {
         <>
             <div className="row container mt-4">
                 <table className="table table-hover table-bordered border col-10 mx-auto  overflow-auto ">
-                    <thead className="thead-dark text-center">
+                    <thead className="btn-oscuro text-center">
                         <tr>
                             <th>ID</th>
                             <th>Asunto</th>

@@ -84,11 +84,7 @@ const Planes = () => {
                                                 <h3 className="card-title m-0 ">{plans.name}</h3>
                                                 <span className="plan-price text-light">{plans.price}</span> <span className="tipo-moneda">/ UF</span>
                                                 <h5 className="mb-3"> Pagado {plans.frecuencia}</h5>
-                                                {planes.indexOf(plans) === planes.length - 1 &&
-                                                    <span className="boton-preferido p-3 shadow text-body" data-toggle="modal" data-target="#modal-suscripcion" onClick={() => {
-                                                        setNewContact({ ...newContact, plan: plans.name });
-                                                    }}>¡LO QUIERO!</span>
-                                                }
+
                                             </div>
                                         </div>
 

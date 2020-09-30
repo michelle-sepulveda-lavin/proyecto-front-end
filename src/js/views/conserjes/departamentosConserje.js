@@ -48,7 +48,7 @@ const DepartamentosConserje = () => {
                     <div className="row">
                         <div className="col-md-4">
                             <div className="btn-group">
-                                <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={contadorPisos}>
+                                <button type="button" className="btn btn-azul dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={contadorPisos}>
                                     Piso
                             </button>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -70,7 +70,7 @@ const DepartamentosConserje = () => {
                         </div>
                         <div className="col-md-4">
                             <div className="btn-group">
-                                <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" className="btn btn-azul dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Estado
                             </button>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -89,7 +89,7 @@ const DepartamentosConserje = () => {
                         <div className="col-md-4 d-flex">
                             <label htmlFor="numero_departamento" className="sr-only">Numero Departamento</label>
                             <input type="number" className="form-control" name="numero_departamento" onChange={e => setNumero(e.target.value)} />
-                            <button className="btn btn-info mx-2" onClick={e => buscaDpto(e)}>Buscar</button>
+                            <button className="btn btn-azul mx-2" onClick={e => buscaDpto(e)}>Buscar</button>
                         </div>
                     </div>
                 </div>
