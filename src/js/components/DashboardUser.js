@@ -32,12 +32,15 @@ const DashboardUser = (props) => {
         const resp = await fetch(`${store.apiURL}/gastoscomunes/depto/${edificioID}/${userID}`)
         const data = await resp.json()
         console.log(data)
-        setGastoActual(data.filter((meses) => {
-            const q = new Date()
-            const mes = q.getMonth();
-            const year = q.getFullYear();
-            return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
-        }))
+        if (resp.ok) {
+            setGastoActual(data.filter((meses) => {
+                const q = new Date()
+                const mes = q.getMonth();
+                const year = q.getFullYear();
+                return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
+            }))
+        }
+
     }
 
     useEffect(() => {
@@ -111,7 +114,7 @@ const DashboardUser = (props) => {
                             </div>
 
                             <div className="d-flex justify-content-end mr-2">
-                                <Link to={"/conserje/boletines"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
+                                <Link to={"/boletines"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
                             </div>
                         </div>
 
@@ -162,9 +165,7 @@ const DashboardUser = (props) => {
 
                             </div>
 
-                            <div className="d-flex justify-content-end mr-2">
-                                <Link to={"/conserje/boletines"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
-                            </div>
+
                         </div>
 
                     </div>
@@ -199,7 +200,7 @@ const DashboardUser = (props) => {
                 </div>
 
                 <div className="col mb-4">
-                    <div className=" card h-100  mb-4 shadow bg-dashboard border rounded">
+                    <div className=" card h-100  mb-4 shadow-sm bg-dashboard border rounded">
                         <div className="card-body">
                             <div className="row mb-2">
                                 <div className="col-12 mb-4 text-center text-md-left">

@@ -24,7 +24,7 @@ const Login = props => {
         <div className="container-fluid bg-white pt-4" style={sectionStyle}>
             <div className="container my-5 pb-5">
                 <div className="card col-md-6 m-auto px-0" style={{ backgroundColor: "rgba(255,255,255,0.7)", borderRadius: "30px" }}>
-                    <div className="card-header login-background text-white text-center" style={{ borderTopLeftRadius: "30px", borderTopRightRadius: "30px" }}>
+                    <div className="card-header btn-verde text-white text-center" style={{ borderTopLeftRadius: "30px", borderTopRightRadius: "30px" }}>
                         <h1 style={{ fontFamily: 'fantasy' }}>
                             Bienvenido
                         </h1>
@@ -44,7 +44,7 @@ const Login = props => {
                             <label htmlFor="usuario" className="sr-only">Usuario</label>
                             <div className="input-group mt-5" style={{ width: "60%", margin: "auto" }}>
                                 <div className="input-group-prepend">
-                                    <div className="input-group-text login-background text-white"><i className="fas fa-user"></i></div>
+                                    <div className="input-group-text btn-azul text-white"><i className="fas fa-user"></i></div>
                                 </div>
                                 <input
                                     name="username"
@@ -59,7 +59,7 @@ const Login = props => {
                             <label htmlFor="password" className="sr-only">Contraseña</label>
                             <div className="input-group mt-5" style={{ width: "60%", margin: "auto" }}>
                                 <div className="input-group-prepend">
-                                    <div className="input-group-text login-background text-white"><i className="fas fa-key"></i></div>
+                                    <div className="input-group-text btn-azul text-white"><i className="fas fa-key"></i></div>
                                 </div>
                                 <input
                                     name="password"
@@ -88,7 +88,7 @@ const Login = props => {
                                 />
                                 <label className="form-check-label" htmlFor="recordarPassword">Recordar Usuario</label>
                             </div>
-                            <button className="btn login-background text-white mb-5">Iniciar sesion</button>
+                            <button className="btn btn-azul text-white mb-5">Iniciar sesion</button>
                         </form>
                     </div>
                 </div>

@@ -8,7 +8,7 @@ const SidebarConserje = () => {
                 <li> <i className="fas fa-home"></i> <p>Departamentos </p></li>
             </Link>
             < hr className="sidebar-divider"></hr>
-            <Link to={"/conserje/boletines"} style={{ textDecoration: 'none', color: "#eeeeee" }}>
+            <Link to={"/boletines"} style={{ textDecoration: 'none', color: "#eeeeee" }}>
                 <li> <i className="fas fa-bell"></i> <p>Boletines </p></li>
             </Link>
             < hr className="sidebar-divider"></hr>

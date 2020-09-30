@@ -18,8 +18,12 @@ const Home = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav text-uppercase ml-auto">
-                        
-                        <Link className="btn btn-azul mr-3" to="./planes" role="button">Planes</Link>
+                        {/* <li className="nav-item"><a className="nav-link text-white" href="#services">Services</a></li>
+                        <li className="nav-item"><a className="nav-link text-white" href="#portfolio">Portfolio</a></li>
+                        <li className="nav-item"><a className="nav-link text-white" href="#about">About</a></li>
+                        <li className="nav-item"><a className="nav-link text-white" href="#team">Team</a></li>
+                        <li className="nav-item"><a className="nav-link text-white" href="#contact">Contact</a></li> */}
+                        <Link className="btn btn-azul text-white mr-3" to="./planes" role="button">Planes</Link>
 
                         {
                             !!store.currentRol ?
@@ -32,9 +36,9 @@ const Home = () => {
                                     
                                 </>
                                 :
-                                <li className="d-block">
+                                
                                     <Link to="/login" className=" btn btn-verde mr-3" role="button">Iniciar sesión</Link>
-                                </li>
+                                
                         }
                     </ul>
                 </div>
@@ -102,12 +106,13 @@ const Home = () => {
                 <div className="container">
                     <h1 className="masthead-subheading">Mejora tu productividad</h1> <br />
                     <h5 className="masthead-heading text-uppercase">La mejor aplicación para la Administración de <br /> Edificios y Condominios</h5> <br />
-                    <a className="btn btn-outline-dark btn-xl text-uppercase" href="./planes">Revisa nuestros planes</a>
+                    <a className="btn btn-azul text-white btn-xl text-uppercase" href="./planes"> nuestros planes</a>
+                    <a className="btn bg-db-2 text-white ml-3 d-inline-block btn-xl text-uppercase" href="#services"> Nuestros Servicios</a>
                 </div>
             </header>
 
 
-            <section className="page-section" id="services">
+            <section className="page-section pt-5 mt-1" id="services">
                 <div className="container">
                     <div className="text-center">
                         <h2 className="section-heading text-uppercase">Servicios</h2>
