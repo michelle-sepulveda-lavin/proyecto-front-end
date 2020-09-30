@@ -37,7 +37,7 @@ const GastosUser = () => {
         const edificioID = user.user.edificio.id
         const resp = await fetch(`${store.apiURL}/gastoscomunes/depto/${edificioID}/${userID}`)
         const data = await resp.json()
-        if(resp.ok){
+        if (resp.ok) {
             setGastosDepto(data)
             console.log(data)
             setGastoActual(data.filter((meses) => {
@@ -46,8 +46,8 @@ const GastosUser = () => {
                 const year = q.getFullYear();
                 return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
             }))
-
         }
+
     }
     const [comprobantePago, setComprobantePago] = useState("")
 
@@ -79,15 +79,17 @@ const GastosUser = () => {
                                 <div class="card-body">
                                     <h4 class="card-title text-center mb-3">Gastos comunes de {mesActual}</h4>
                                     <div className="row justify-content-center">
-                                        <div className="border text-white font-bigger bg-db-2 col-md-5 mr-md-2 text-center d-flex align-items-center justify-content-center">
+                                        <div className=" text-white font-bigger bg-db-2 rounded-lg col-md-5 mr-md-2 text-center d-flex align-items-center justify-content-center">
                                             <div className="">
                                                 <p>Edificio:</p>
                                                 <p>{!!store.departamentoActualUsuario && store.departamentoActualUsuario.edificio.name}</p>
                                             </div>
                                         </div>
-                                        <div className="border mt-2 btn-verde font-bigger text-center col-md-5 mt-md-0">
-                                            <p>Monto</p>
-                                            {!!gastoActual && gastoActual.length > 0 ? (gastoActual[0].estado === "revision" ? <p className="">El pago está pendiente de revisión</p> : gastoActual[0].estado === "noPagado" ? <p> {gastoCLP(gastoActual[0].monto)}</p> : "") : <p>No hay gastos pendientes este mes</p>}
+                                        <div className="rounded-lg mt-2 btn-verde font-bigger text-center col-md-5 mt-md-0 d-flex justify-content-center align-items-center">
+                                            <div className="d-flex justify-content-center align-items-center flex-column">
+                                                <p className="mt-2">Monto</p>
+                                                {!!gastoActual && gastoActual.length > 0 ? (gastoActual[0].estado === "revision" ? <p className="">El pago está pendiente de revisión</p> : gastoActual[0].estado === "noPagado" ? <p> {gastoCLP(gastoActual[0].monto)}</p> : "") : <p>No hay gastos pendientes este mes</p>}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -30,8 +30,9 @@ const DashboardAdmin = (props) => {
         const edificioID = user.user.edificio.id
         const resp = await fetch(`${store.apiURL}/gastoscomunes/edificio/${edificioID}/${mes}/${year}`)
         const data = await resp.json()
+        if (resp.ok){
         setGastosDepto(data)
-
+        }
     }
 
     useEffect(() => {
@@ -54,17 +55,19 @@ const DashboardAdmin = (props) => {
     }
 
     const filtroNoPagado = () => {
+        if (gastosDepto !== ""){
         const noPagados = gastosDepto.filter((meses) => {
             return meses.estado === "noPagado"
         })
         return noPagados
-    }
+    }}
     const filtroRevision = () => {
+        if (gastosDepto !== ""){
         const revision = gastosDepto.filter((meses) => {
             return meses.estado === "revision"
         })
         return revision
-    }
+    }}
 
     return (
         <div className="container-fluid">

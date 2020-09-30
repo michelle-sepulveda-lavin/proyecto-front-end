@@ -64,8 +64,8 @@ const DashboardSuperAdmin = () => {
                             <h5 className="mt-3">Edificios administrados</h5>
                             <div className="row justify-content-center">
                                 <div className="card col-9 col-md-6 my-4 p-3 bg-db-1">
-                                    <h4 className="text-light text-center">Habitados</h4>
-                                    <div className="d-flex justify-content-center">
+
+                                    <div className="d-flex justify-content-center p-3">
                                         <span className="ml-md-1 big-font d-flex align-items-center justify-content-center p-5 btn-db-1 shadow-sm">
                                             <p className="pt-3">{!!store.edificios.length && store.edificios.length}</p>
                                         </span>

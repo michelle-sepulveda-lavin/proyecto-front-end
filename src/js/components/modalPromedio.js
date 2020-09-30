@@ -14,10 +14,15 @@ const ModalPromedio = props => {
         actions.getDptosUsuarios()
         actions.getEdificioCompleto()
     }, [])
+    const gastoCLP = (numero) => {
+        return new Intl.NumberFormat('en-US',
+            { style: 'currency', currency: 'CLP' }
+        ).format(numero)
+    }
     return (
         <div className="modal" tabIndex="-1" role="dialog" style={{ display: props.showModal ? "inline-block" : "none" }}>
             <div className="modal-dialog modal-dialog-centered" role="document">
-                <div className="modal-content bg-gradient-secondary text-light modal-lg">
+                <div className="modal-content btn-oscuro text-light modal-lg">
                     <div className="modal-header">
                         <h5 className="modal-title">¿Estás seguro?</h5>
 
@@ -47,8 +52,8 @@ const ModalPromedio = props => {
 
 
 
-                        <p className="border shadow p-2 bg-white text-body">Monto total ingresado: {props.monto}</p>
-                        <p className="border shadow p-2 bg-white text-body">Promedio por departamento: {props.promedioMonto}</p>
+                        <p className="border shadow p-2 bg-white text-body">Monto total ingresado: {gastoCLP(props.monto)}</p>
+                        <p className="border shadow p-2 bg-white text-body">Promedio por departamento: {gastoCLP(props.promedioMonto)}</p>
                         <p className="mt-4">Una vez ingresados los gastos comunes no podrán ser modificados</p>
                     </div>
                     <div className="modal-footer">
@@ -62,7 +67,7 @@ const ModalPromedio = props => {
 						</button>
                         <button
                             type="button"
-                            className="btn btn-success"
+                            className="btn btn-verde"
                             data-dismiss="modal"
                             onClick={() => {
                                 store.departamentoUsuarios.map((depa) => { actions.calculoPorcentajeGastoComunDepto(depa, props.monto, depa.id, props.comprobante, history) })
