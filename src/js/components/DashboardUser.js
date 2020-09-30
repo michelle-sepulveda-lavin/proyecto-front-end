@@ -44,12 +44,12 @@ const DashboardUser = (props) => {
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const edificioID = user.user.edificio.id
         actions.getEdificioCompleto()
-        actions.getDptosUsuarios()
         getGastosDeptoActual()
         actions.getBoletines(edificioID)
         actions.getDepartamentoActualInfo()
         actions.getPaqueteriaUsuario()
         actions.getDepartamentoActualUsuario()
+        actions.getConserjes(edificioID)
     }, [])
 
     const filtroBoletin = () => {
@@ -124,40 +124,40 @@ const DashboardUser = (props) => {
 
                         <div className="card-body conserjes-turno ">
                             <div className="row mb-2">
-                                <div className="col-12 mb-3 text-center text-md-left">
+                                <div className="col-12 mb-2 text-center text-md-left">
                                     <h2>Conserjes de Turno</h2>
                                 </div>
 
-                                <ul className="list-group list-group-horizontal card-carousel text-center mx-5  p-2">
-                                    <li className="mr-3">
-                                        <div className="card text-body text-left ">
+                                <ul className="list-group list-group-horizontal card-carousel text-center mx-md-5  p-2">
+                                    {store.conserjes.length > 0 &&
+                                        store.conserjes.map((conserje, index) => {
+                                            if (conserje.estado === true) {
+                                                return (
+                                                    <>
+                                                        <li className="">
+                                                            <div className="card shadow-sm text-body text-left row mr-2">
+                                                                <div className="col-12  d-flex justify-content-center">
+                                                                    <img class="conserje-img" src={"../user.png"}></img>
+                                                                </div>
+                                                                <div className="col-12 col-md-8 px-2">
+                                                                    <ul className="pl-0 mb-0">
+                                                                        <li className="card-title"> <i class="fas fa-user-check"></i>  <strong>Nombre:</strong> {conserje.nombre}</li>
+                                                                        <li> <i className="fas fa-phone mr-1 mb-2"> </i> <strong>Teléfono: </strong>
 
-                                            <ul className="pl-0 mb-0">
-                                                <li className="card-title"> <i class="fas fa-user-check"></i>  <strong>Nombre:</strong> crrrrrrrrrrronserje.nombre</li>
-                                                <li> <i className="fas fa-phone mr-1 mb-2"> </i> <strong>Teléfono: </strong>
+                                                                            {conserje.telefono}</li>
+                                                                        <li><i className="far fa-clock mr-2 mb-2"></i><strong>Turno:</strong>  {conserje.turno}</li>
 
-                                                                            conserje.rrrrrrrrrrrrrtelefono</li>
-                                                <li><i className="far fa-clock mr-2 mb-2"></i><strong>Turno:</strong>  conserje.turno </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
 
-                                            </ul>
-                                        </div>
+                                                        </li>
 
-                                    </li>
-                                    <li className="mr-3">
-                                        <div className="card text-body text-left ">
-
-                                            <ul className="pl-0 mb-0">
-                                                <li className="card-title"> <i class="fas fa-user-check"></i>  <strong>Nombre:</strong> crrrrrrrrrrronserje.nombre</li>
-                                                <li> <i className="fas fa-phone mr-1 mb-2"> </i> <strong>Teléfono: </strong>
-
-                                                                            conserje.rrrrrrrrrrrrrtelefono</li>
-                                                <li><i className="far fa-clock mr-2 mb-2"></i><strong>Turno:</strong>  conserje.turno </li>
-
-                                            </ul>
-                                        </div>
-
-                                    </li>
-
+                                                    </>
+                                                )
+                                            }
+                                        })
+                                    }
                                 </ul>
 
                             </div>
