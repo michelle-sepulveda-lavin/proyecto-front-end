@@ -140,7 +140,7 @@ const CrearEdificios = () => {
 
                                 </div>
                                 <div className="col d-flex justify-content-center my-5">
-                                    <button className="btn btn-primary mx-1">Crear edificio</button>
+                                    <button className="btn btn-azul mx-1">Crear edificio</button>
                                     <button className="btn btn-secondary" onClick={() => actions.flagCrearEdificio(false)}>
                                         Cancelar
                                     </button>
