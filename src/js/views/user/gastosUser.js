@@ -37,14 +37,17 @@ const GastosUser = () => {
         const edificioID = user.user.edificio.id
         const resp = await fetch(`${store.apiURL}/gastoscomunes/depto/${edificioID}/${userID}`)
         const data = await resp.json()
-        setGastosDepto(data)
-        console.log(data)
-        setGastoActual(data.filter((meses) => {
-            const q = new Date()
-            const mes = q.getMonth();
-            const year = q.getFullYear();
-            return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
-        }))
+        if(resp.ok){
+            setGastosDepto(data)
+            console.log(data)
+            setGastoActual(data.filter((meses) => {
+                const q = new Date()
+                const mes = q.getMonth();
+                const year = q.getFullYear();
+                return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
+            }))
+
+        }
     }
     const [comprobantePago, setComprobantePago] = useState("")
 
@@ -52,7 +55,7 @@ const GastosUser = () => {
     const [perPage, setPerPage] = useState(5)
     const indexOfLastPost = currentPage * perPage;
     const indexOfFirstPost = indexOfLastPost - perPage;
-    const currentPosts = !!gastosDepto && gastosDepto.slice(indexOfFirstPost, indexOfLastPost)
+    const currentPosts = gastosDepto.length > 0 && gastosDepto.slice(indexOfFirstPost, indexOfLastPost)
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     const handleAvatar = (e) => {

@@ -897,15 +897,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { departamentoUsuarios, finalUserBuilding } = getStore();
                 if (!!departamentoUsuarios) {
                     const aux = departamentoUsuarios.filter((dpto) => {
-                        return dpto.residente.id != null
+                        return dpto.residente != null
                     })
                     const aux2 = aux.map((dpto) => {
                         /* return {"id": dpto.residente.id, "name": dpto.residente.name, "email": dpto.residente.email} */
-                        return dpto.residente.name
+                        return dpto.residente
                     })
 
                     const aux3 = finalUserBuilding.filter((dpto) => {
-                        return !aux2.includes(dpto.username)
+                        return !aux2.includes(dpto.id)
                     })
                     setStore({
                         usuariosEdificioNoAsignados: aux3

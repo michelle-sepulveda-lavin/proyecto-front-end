@@ -21,6 +21,7 @@ const ListadoUsuarios = () => {
                                     <option value="administrador">Administradores</option>
                                     <option value="conserje">Conserje</option>
                                     <option value="usuario">Usuarios</option>
+                                    <option value="propietario">Propietario</option>
                                 </select>
                             </div>
                             <div className="col-md-6 ">

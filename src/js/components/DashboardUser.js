@@ -31,13 +31,16 @@ const DashboardUser = (props) => {
         const edificioID = user.user.edificio.id
         const resp = await fetch(`${store.apiURL}/gastoscomunes/depto/${edificioID}/${userID}`)
         const data = await resp.json()
-        console.log(data)
-        setGastoActual(data.filter((meses) => {
-            const q = new Date()
-            const mes = q.getMonth();
-            const year = q.getFullYear();
-            return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
-        }))
+        if(resp.ok){
+            console.log(data)
+            setGastoActual(data.filter((meses) => {
+                const q = new Date()
+                const mes = q.getMonth();
+                const year = q.getFullYear();
+                return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
+            }))
+
+        }
     }
 
     useEffect(() => {

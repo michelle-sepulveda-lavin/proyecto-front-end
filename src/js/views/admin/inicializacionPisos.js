@@ -51,6 +51,7 @@ const InicializacionPisos = () => {
         const aux2 = [...new Set(auxiliar)]
         return (aux2).length
     }
+    
 
     useEffect(() => {
         actions.getEdificioCompleto()
@@ -120,6 +121,7 @@ const InicializacionPisos = () => {
                                             <tr>
                                                 <th scope="col">N° Departamento</th>
                                                 <th scope="col">Residente</th>
+                                                <th scope="col">Propietario</th>
                                                 <th scope="col">N° Bodega</th>
                                                 <th scope="col">N° Estacionamiento</th>
                                                 <th scope="col">N° Piso</th>
@@ -156,6 +158,33 @@ const InicializacionPisos = () => {
                                                             :
                                                             <>
                                                                 <label className="sr-only" htmlFor="residente">Residente</label>
+                                                                <input type="text" className="form-control mb-2 mr-sm-2" name="residente" disabled />
+                                                            </>
+                                                    }
+
+                                                </td>
+                                                <td>
+
+                                                    {
+                                                        !!store.usuariosEdificio ?
+                                                            <>
+                                                                <label className="sr-only" htmlFor="propietario">Propietario</label>
+                                                                <select defaultValue={'null'} className="form-control form-control-sm" name="propietario" onChange={e => handleChange(e)}>
+                                                                    <option value="null" disabled>Seleccionar</option>
+                                                                    {
+                                                                        !!store.usuariosEdificio &&
+                                                                        store.usuariosEdificio.map((user, index) => {
+                                                                            return (
+                                                                                user.rol.name === "propietario" &&
+                                                                                <option value={user.id} key={index}>{user.username}</option>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </select>
+                                                            </>
+                                                            :
+                                                            <>
+                                                                <label className="sr-only" htmlFor="residente">Propietario</label>
                                                                 <input type="text" className="form-control mb-2 mr-sm-2" name="residente" disabled />
                                                             </>
                                                     }
@@ -238,7 +267,7 @@ const InicializacionPisos = () => {
                                 </a>
                                         {
                                             !!pisos &&
-                                            pisos.sort(function(a, b){return a - b}).map((piso, index) => {
+                                            pisos.sort(function (a, b) { return a - b }).map((piso, index) => {
                                                 return (
                                                     <a className="dropdown-item" key={index} onClick={() => actions.filtradoPiso(piso)}>
                                                         {piso}
@@ -266,6 +295,7 @@ const InicializacionPisos = () => {
                                             <th scope="col">#</th>
                                             <th scope="col">N° Departamento</th>
                                             <th scope="col">Residente</th>
+                                            <th scope="col">Propietario</th>
                                             <th scope="col">N° Bodega</th>
                                             <th scope="col">N° Estacionamiento</th>
                                             <th scope="col">Piso</th>
@@ -278,13 +308,22 @@ const InicializacionPisos = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            store.departamentosPorPiso.length > 0 ?
-                                                (store.departamentosPorPiso.sort(function(a, b){return a - b}).map((dpto, index) => {
+                                            store.departamentosPorPiso.length > 0 &&
+                                                (store.departamentosPorPiso.sort(function (a, b) { return a - b }).map((dpto, index) => {
+                                                    const residente = dpto.residente;
+                                                    const propietario = dpto.propietario;
+                                                    const usuarioName = (user) =>{ 
+                                                        return user.id == residente;
+                                                    }
+                                                    const propietarioName = (user) =>{ 
+                                                        return user.id == propietario;
+                                                    }
                                                     return (
                                                         <tr key={index}>
                                                             <th scope="row">{index + 1}</th>
                                                             <td>{dpto.numero_departamento}</td>
-                                                            <td>{dpto.residente.name}</td>
+                                                            <td>{!!residente && store.finalUserBuilding.find(usuarioName).username}</td>
+                                                            <td>{!!propietario && store.usuariosEdificio.find(propietarioName).username}</td>
                                                             <td>{dpto.bodega_id}</td>
                                                             <td>{dpto.estacionamiento_id}</td>
                                                             <td>{dpto.piso}</td>
@@ -306,13 +345,19 @@ const InicializacionPisos = () => {
                                                     )
                                                 })
                                                 )
-                                                :
+                                                /* :
                                                 (store.departamentoUsuarios.map((dpto, index) => {
+                                                    const residente = dpto.residente
+                                                    const usuarioName = (user) =>{ 
+                                                        return user.id == residente;
+                                                    }
+                                                    console.log(!!residente && store.finalUserBuilding.find(usuarioName).username)
                                                     return (
                                                         <tr key={index}>
                                                             <th scope="row">{index + 1}</th>
                                                             <td>{dpto.numero_departamento}</td>
-                                                            <td>{dpto.residente.name}</td>
+                                                            <td>{"j"}</td>
+                                                            <td>{"h"}</td>
                                                             <td>{dpto.bodega_id}</td>
                                                             <td>{dpto.estacionamiento_id}</td>
                                                             <td>{dpto.piso}</td>
@@ -325,15 +370,15 @@ const InicializacionPisos = () => {
                                                                 }}></i>
                                                             </td>
                                                             <td>
-                                                                <button 
-                                                                    type="button" 
-                                                                    className="btn" 
-                                                                    data-toggle="modal" 
-                                                                    data-target="#addUser" 
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn"
+                                                                    data-toggle="modal"
+                                                                    data-target="#addUser"
                                                                     onClick={() => {
                                                                         actions.dptoModificar(dpto.id)
                                                                         actions.activarModalAddUser()
-                                                                        }}>
+                                                                    }}>
                                                                     <i className="fas fa-pencil-alt cursor-pointer"></i>
                                                                 </button>
                                                                 <ModalAddUser />
@@ -341,7 +386,7 @@ const InicializacionPisos = () => {
                                                         </tr>
                                                     )
                                                 })
-                                                )
+                                                ) */
                                         }
                                     </tbody>
                                 </table>
