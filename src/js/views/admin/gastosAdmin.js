@@ -15,8 +15,9 @@ const GastosAdmin = () => {
 
     const indexOfLastPost = currentPage * perPage;
     const indexOfFirstPost = indexOfLastPost - perPage;
-    const currentPosts = store.montosTotalesMes.slice(indexOfFirstPost, indexOfLastPost)
+    const currentPosts = store.montosTotalesMes.length > 0 && store.montosTotalesMes.slice(indexOfFirstPost, indexOfLastPost)
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
+    
 
 
     useEffect(() => {
