@@ -17,7 +17,7 @@ const PagoUsuario = props => {
                         </button>
                     </div>
                     <div className="modal-body">
-                        {!!props.pago &&
+                        {!!props.pago && props.show &&
                             < iframe src={`${store.apiURL}/pagosgastos/${props.pago}`} width="100%" height="auto" className="modal-lg"> </iframe>}
                         {!props.pago &&
                             <h3 className="text-center mt-5 pt-5">No existe registro de este comprobante</h3>

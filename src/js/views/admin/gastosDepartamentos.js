@@ -121,21 +121,21 @@ const GastosDepartamentos = () => {
                                 {data2.length > 0 &&
                                     <>
                                         <div className="d-flex justify-content-center mb-4">
-                                            <span className="boton-hover btn border-info  mr-2 rounded-pill border shadow-sm" onClick={() => {
+                                            <span className="boton-hover btn border-verde  mr-2 rounded shadow-sm" onClick={() => {
                                                 setCurrentPage(1)
                                                 setEstadoPago("pagado")
 
                                                 filtradoEstado("pagado")
 
                                             }}>Pagados</span>
-                                            <span className="boton-hover btn border-info  mr-2 rounded-pill border shadow-sm" onClick={() => {
+                                            <span className="boton-hover btn border-warning  mr-2 rounded border shadow-sm" onClick={() => {
                                                 setCurrentPage(1)
                                                 setEstadoPago("revision")
 
                                                 filtradoEstado("revision")
 
                                             }}>Por Revisar</span>
-                                            <span className="btn boton-hover border-info  rounded-pill border shadow-sm mr-2" onClick={() => {
+                                            <span className="btn boton-hover border-info  rounded border shadow-sm mr-2" onClick={() => {
                                                 setCurrentPage(1)
                                                 setEstadoPago("noPagado")
 
@@ -143,7 +143,7 @@ const GastosDepartamentos = () => {
 
 
                                             }}>No pagados</span>
-                                            <span className="btn boton-hover border  rounded border shadow-sm" onClick={() => {
+                                            <span className="btn boton-hover border  rounded  shadow-sm" onClick={() => {
                                                 setCurrentPage(1)
                                                 setEstadoPago("todos")
 
@@ -152,13 +152,13 @@ const GastosDepartamentos = () => {
                                             }}>Todos</span>
                                         </div>
 
-                                        < table className="table text-center table-hover table-bordered border overflow-auto mx-auto ">
+                                        < table className="table text-center  table-bordered border overflow-auto mx-auto ">
                                             <thead className="btn-oscuro text-center mx-auto">
                                                 <tr className="mx-auto">
                                                     <th scope="col">Depto</th>
                                                     <th scope="col">Monto</th>
                                                     <th scope="col">Estado</th>
-                                                    <th scope="col">Promedio por Depto</th>
+
 
                                                     <th scope="col">{estadoPago === "pagado" ? "Comprobante" : estadoPago === "noPagado" ? "Cambiar Estado" : estadoPago === "revision" ? "Comprobante" : ""}</th>
 
@@ -176,7 +176,7 @@ const GastosDepartamentos = () => {
                                                                     { style: 'currency', currency: 'CLP' }
                                                                 ).format(gasto.monto)}</td>
                                                             <td>{gasto.estado === "noPagado" ? estados[0] : gasto.estado === "moroso" ? estados[1] : gasto.estado === "revision" ? estados[2] : gasto.estado === "pagado" ? estados[3] : ""}</td>
-                                                            <td> </td>
+
 
 
                                                             {estadoPago === "todos" ?

@@ -113,7 +113,7 @@ const DashboardConserje = (props) => {
                             </div>
 
                             <div className="d-flex justify-content-end mr-2">
-                                <Link to={"/conserje/boletines"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
+                                <Link to={"/boletines"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
                             </div>
                         </div>
 

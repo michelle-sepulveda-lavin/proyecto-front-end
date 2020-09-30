@@ -17,7 +17,7 @@ const PagoGastos = props => {
                         </button>
                     </div>
                     <div className="modal-body">
-                        {!!props.datos.pago &&
+                        {!!props.datos.pago && props.show &&
                             < iframe src={`${store.apiURL}/pagosgastos/${props.datos.pago}`} width="100%" height="auto" className="modal-lg"> </iframe>}
                     </div>
                     <div className="modal-footer d-flex justify-content-center">

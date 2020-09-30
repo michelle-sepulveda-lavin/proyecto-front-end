@@ -53,7 +53,7 @@ const Layout = () => {
                     <Route exact path='/usuario/gastos-comunes' component={GastosUser} />
                     <Route exact path='/conserje/gastos-comunes' component={GastosConserje} />
                     <Route exact path='/conserje/paqueteria' component={PaqueteriaConserje} />
-                    <Route exact path='/conserje/boletines' component={BoletinesConserje} />
+                    <Route exact path='/boletines' component={BoletinesConserje} />
                     <Route exact path='/conserje/departamentos' component={DepartamentosConserje} />
                     <Route exact path='/admin/gastos-comunes' component={GastosAdmin} />
                     <Route exact path='/admin/boletines' component={BoletinesAdmin} />
