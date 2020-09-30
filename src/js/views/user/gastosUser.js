@@ -69,14 +69,14 @@ const GastosUser = () => {
             <h1 className="mt-4">Gastos Comunes Usuario</h1>
             <div className="container">
                 <div className="row justify-content-center mt-4">
-                    <div className="col-12 col-md-10 row">
+                    <div className="col-12 col-md-10 row align-items-center">
 
                         <div className="col-12 col-md-7">
                             <div class="card rounded">
                                 <div class="card-body">
                                     <h4 class="card-title text-center mb-3">Gastos comunes de {mesActual}</h4>
                                     <div className="row justify-content-center">
-                                        <div className="border font-bigger bg-db-2 col-md-5 mr-md-2 text-center d-flex align-items-center justify-content-center">
+                                        <div className="border text-white font-bigger bg-db-2 col-md-5 mr-md-2 text-center d-flex align-items-center justify-content-center">
                                             <div className="">
                                                 <p>Edificio:</p>
                                                 <p>{!!store.departamentoActualUsuario && store.departamentoActualUsuario.edificio.name}</p>
