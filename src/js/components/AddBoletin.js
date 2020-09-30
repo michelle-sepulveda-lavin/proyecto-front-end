@@ -14,7 +14,7 @@ const AddBoletin = (props) => {
                 <div className="row">
                     <div className="col-sm-8"></div>
                     <div className="col-sm-4">
-                        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Crear Boletin</button>
+                        <button type="button" className="btn btn-verde" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Crear Boletin</button>
                     </div>
                 </div>
             </div>

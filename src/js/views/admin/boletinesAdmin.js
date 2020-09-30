@@ -20,7 +20,7 @@ const BoletinesAdmin = () => {
                 <BoletinAdm />
                 <div className="d-flex justify-content-center mb-4">
                     <div>
-                        <Link to="/admin/historial-boletines"> <button className="btn btn-secondary">Ver historial</button> </Link>
+                        <Link to="/admin/historial-boletines"> <button className="btn btn-azul">Ver historial</button> </Link>
                     </div>
                 </div>
             </SidebarPage>
