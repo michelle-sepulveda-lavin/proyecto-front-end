@@ -24,9 +24,9 @@ const DepartamentosAdmin = () => {
         setdepartamentoNumero(aux[0])
         actions.limpiarCamposFiltrado()
     }
-    
-    const guardarUsuario = () =>{
-        const resultado = !!departamentoNumero && store.finalUserBuilding.find( elem => elem.id == departamentoNumero.residente ); 
+
+    const guardarUsuario = () => {
+        const resultado = !!departamentoNumero && store.finalUserBuilding.find(elem => elem.id == departamentoNumero.residente);
         setUsuarioDptoNumero(resultado)
     }
 
@@ -125,7 +125,7 @@ const DepartamentosAdmin = () => {
                                 <button className="btn btn-azul" onClick={(e) => {
                                     buscaDpto(e)
                                     guardarUsuario()
-                                    }}><i className="fas fa-search"></i></button>
+                                }}><i className="fas fa-search"></i></button>
                             </div>
                         </div>
                     </div>
@@ -138,12 +138,12 @@ const DepartamentosAdmin = () => {
                         !!store.departamentosPorPiso &&
                         store.departamentosPorPiso.map((dpto, index) => {
                             const residente = !!dpto.residente && dpto.residente;
-                            const resultado = !!store.finalUserBuilding && store.finalUserBuilding.find( elem => elem.id == residente );
+                            const resultado = !!store.finalUserBuilding && store.finalUserBuilding.find(elem => elem.id == residente);
                             return (
                                 <div className="col-md-4" key={index}>
                                     <div className="card btn-oscuro mb-3" style={{ maxWidth: "18rem" }}>
                                         <div className="card-header d-flex justify-content-between">
-                                            <p  style={{fontSize: "2em"}}>
+                                            <p style={{ fontSize: "2em" }}>
                                                 {dpto.numero_departamento}
                                             </p>
                                             <p className="card-text">{dpto.estado}</p>
@@ -154,8 +154,8 @@ const DepartamentosAdmin = () => {
                                             <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{!!resultado && resultado.email}</span></p>
                                             <p className="card-text font-weight-bold border-bottom">Propietario: <span className="font-weight-normal">{}</span></p>
                                             <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{}</span></p>
-                                            <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id? dpto.bodega_id : "No posee"}</span></p>
-                                            <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id? dpto.estacionamiento_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id ? dpto.bodega_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id ? dpto.estacionamiento_id : "No posee"}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -166,12 +166,12 @@ const DepartamentosAdmin = () => {
                         !!store.departamentoEstado &&
                         store.departamentoEstado.map((dpto, index) => {
                             const residente = !!dpto.residente && dpto.residente;
-                            const resultado = !!store.finalUserBuilding && store.finalUserBuilding.find( elem => elem.id == residente );
+                            const resultado = !!store.finalUserBuilding && store.finalUserBuilding.find(elem => elem.id == residente);
                             return (
                                 <div className="col-md-4" key={index}>
                                     <div className="card btn-oscuro mb-3" style={{ maxWidth: "18rem" }}>
                                         <div className="card-header d-flex justify-content-between">
-                                            <p  style={{fontSize: "2em"}}>
+                                            <p style={{ fontSize: "2em" }}>
                                                 {dpto.numero_departamento}
                                             </p>
                                             <p className="card-text">{dpto.estado}</p>
@@ -181,8 +181,8 @@ const DepartamentosAdmin = () => {
                                             <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{!!resultado && resultado.email}</span></p>
                                             <p className="card-text font-weight-bold border-bottom">Propietario: <span className="font-weight-normal">{}</span></p>
                                             <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{}</span></p>
-                                            <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id? dpto.bodega_id : "No posee"}</span></p>
-                                            <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id? dpto.estacionamiento_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id ? dpto.bodega_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id ? dpto.estacionamiento_id : "No posee"}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -191,11 +191,11 @@ const DepartamentosAdmin = () => {
                     }
                     {
                         !!departamentoNumero &&
-                        
+
                         <div className="col-md-4">
                             <div className="card btn-oscuro mb-3" style={{ maxWidth: "18rem" }}>
                                 <div className="card-header d-flex justify-content-between">
-                                    <p style={{fontSize: "2em"}}>
+                                    <p style={{ fontSize: "2em" }}>
                                         {departamentoNumero.numero_departamento}
                                     </p>
                                     <p className="card-text">{departamentoNumero.estado}</p>
@@ -205,8 +205,8 @@ const DepartamentosAdmin = () => {
                                     <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{departamentoNumero.residente}</span></p>
                                     <p className="card-text font-weight-bold border-bottom">Propietario: <span className="font-weight-normal">{}</span></p>
                                     <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{}</span></p>
-                                    <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!departamentoNumero.bodega_id? departamentoNumero.bodega_id : "No posee"}</span></p>
-                                    <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!departamentoNumero.estacionamiento_id? departamentoNumero.estacionamiento_id : "No posee"}</span></p>
+                                    <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!departamentoNumero.bodega_id ? departamentoNumero.bodega_id : "No posee"}</span></p>
+                                    <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!departamentoNumero.estacionamiento_id ? departamentoNumero.estacionamiento_id : "No posee"}</span></p>
                                 </div>
                             </div>
                         </div>

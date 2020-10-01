@@ -28,10 +28,17 @@ const DashboardAdmin = (props) => {
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const userID = JSON.parse(localStorage.getItem("departamento"))
         const edificioID = user.user.edificio.id
-        const resp = await fetch(`${store.apiURL}/gastoscomunes/edificio/${edificioID}/${mes}/${year}`)
-        const data = await resp.json()
-        if (resp.ok){
-        setGastosDepto(data)
+
+        try {
+            const resp = await fetch(`${store.apiURL}/gastoscomunes/edificio/${edificioID}/${mes}/${year}`)
+            const data = await resp.json()
+            if (resp.ok) {
+                setGastosDepto(data)
+                console.log(data)
+            }
+        }
+        catch (error) {
+            console.log(error)
         }
     }
 
@@ -55,19 +62,21 @@ const DashboardAdmin = (props) => {
     }
 
     const filtroNoPagado = () => {
-        if (gastosDepto !== ""){
-        const noPagados = gastosDepto.filter((meses) => {
-            return meses.estado === "noPagado"
-        })
-        return noPagados
-    }}
+        if (gastosDepto !== "") {
+            const noPagados = gastosDepto.filter((meses) => {
+                return meses.estado === "noPagado"
+            })
+            return noPagados
+        }
+    }
     const filtroRevision = () => {
-        if (gastosDepto !== ""){
-        const revision = gastosDepto.filter((meses) => {
-            return meses.estado === "revision"
-        })
-        return revision
-    }}
+        if (gastosDepto !== "") {
+            const revision = gastosDepto.filter((meses) => {
+                return meses.estado === "revision"
+            })
+            return revision
+        }
+    }
 
     return (
         <div className="container-fluid">
@@ -80,7 +89,7 @@ const DashboardAdmin = (props) => {
                             filtroBoletin().map((boletin, index) => {
 
 
-                                return <li key={index} className="h-100 pt-0 pl-4 pr-4 col mb-3 text-dark ">  <div className="bg-db-3 row py-2"><div className="col-10 col-md-3 d-flex align-items-center"><img className="img-fluid  d-inline" src="../email.png" /></div> <h4 className="p-3 col-md-9 col-12 d-inline rounded-lg" >{boletin.asunto}</h4> </div> </li>
+                                return <li key={index} className="h-100 pt-0 pl-4 pr-4 col mb-3 text-dark ">  <div className="bg-db-3 row py-2"><div className="col-10 col-md-3 d-flex align-items-center justify-content-center"><img className="img-fluid w-75 d-inline" src="../email.png" /></div> <h4 className="p-3 col-md-9 col-12 d-inline rounded-lg" >{boletin.asunto}</h4> </div> </li>
 
 
                             })
