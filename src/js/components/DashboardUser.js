@@ -48,7 +48,7 @@ const DashboardUser = (props) => {
         const edificioID = user.user.edificio.id
         actions.getEdificioCompleto()
         getGastosDeptoActual()
-        actions.getBoletines(edificioID)
+        actions.getBoletines()
         actions.getDepartamentoActualInfo()
         actions.getPaqueteriaUsuario()
         actions.getDepartamentoActualUsuario()

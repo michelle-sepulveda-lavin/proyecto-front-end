@@ -44,7 +44,7 @@ const DashboardConserje = (props) => {
         actions.getDptosUsuarios()
         actions.getPaqueteria()
         getGastosDeptoActual()
-        actions.getBoletines(edificioID)
+        actions.getBoletines()
     }, [])
 
     const filtroBoletin = () => {
