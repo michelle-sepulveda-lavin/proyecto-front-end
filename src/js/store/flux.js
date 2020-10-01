@@ -71,7 +71,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             errorCreacionUser: null,
             flagModalEditUser: null,
             flagModalAddUser: null,
-            administradorEdificio: null
+            propietarioNoAsignado: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -310,7 +310,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     contadorUsuarios: null,
                     bodegasEdificio: null,
                     estacionamientoEdificios: null,
-                    errorLogin: null
+                    errorLogin: null,
+                    propietariosNoAsignados: null
                 })
                 history.push("/")
             },
@@ -579,6 +580,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         departamentoUsuarios: data,
                     })
                     getActions().usuariosNoAsignados()
+                    getActions().propietarioNoAsignado()
                     await setStore({
                         contadorUsuarios: getStore().departamentoUsuarios.length
                     })
@@ -635,6 +637,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         usuariosEdificio: data
                     })
                     getActions().usuariosparaAsignar()
+                    getActions().propietarioNoAsignado()
                 }
             },
             filtradoEstado: (estado) => {
@@ -688,6 +691,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         getActions().usuariosNoAsignados()
                         getActions().getBodegasDelEdificio()
                         getActions().getEstacionamientosDelEdificio()
+                        getActions().propietarioNoAsignado()
                         getActions().cerrarModalAddUsert()
                     } else {
                         setStore({
@@ -829,6 +833,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             dptoModificar: (numero) => {
                 setStore({
                     departamentoModificar: numero
+                    
                 })
             },
             getTotalM2: (modelos) => {
@@ -1396,7 +1401,30 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } else {
                     alert("Este departamento no tiene una cuenta asociada")
                 }
-            }
+            },
+
+            propietarioNoAsignado: () => {
+                const { departamentoUsuarios, usuariosEdificio } = getStore();
+                if (!!departamentoUsuarios) {
+                    const aux = departamentoUsuarios.filter((dpto) => {
+                        return dpto.propietario != null
+                    })
+                    const aux2 = aux.map((dpto) => {
+                        return dpto.propietario
+                    })
+                    const propietarios = usuariosEdificio.filter((user)=>{
+                        return user.rol.name === "propietario"
+                    })
+
+                    const aux3 = propietarios.filter((user) => {
+                        return !aux2.includes(user.id)
+                    })
+                    setStore({
+                        propietarioNoAsignado: aux3
+                    })
+
+                }
+            },
         }
     }
 };

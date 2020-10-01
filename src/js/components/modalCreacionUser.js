@@ -52,6 +52,7 @@ const ModalCreacionUser = props => {
                                                 <select defaultValue={'default'} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
                                                     <option value="default" disabled>Seleccionar</option>
                                                     <option value="usuario">Usuario</option>
+                                                    <option value="propietario">Propietario</option>
                                                 </select>
                                             </>
                                             :

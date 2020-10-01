@@ -166,14 +166,14 @@ const InicializacionPisos = () => {
                                                 <td>
 
                                                     {
-                                                        !!store.usuariosEdificio ?
+                                                        !!store.propietarioNoAsignado ?
                                                             <>
                                                                 <label className="sr-only" htmlFor="propietario">Propietario</label>
                                                                 <select defaultValue={'null'} className="form-control form-control-sm" name="propietario" onChange={e => handleChange(e)}>
                                                                     <option value="null" disabled>Seleccionar</option>
                                                                     {
-                                                                        !!store.usuariosEdificio &&
-                                                                        store.usuariosEdificio.map((user, index) => {
+                                                                        !!store.propietarioNoAsignado &&
+                                                                        store.propietarioNoAsignado.map((user, index) => {
                                                                             return (
                                                                                 user.rol.name === "propietario" &&
                                                                                 <option value={user.id} key={index}>{user.username}</option>
@@ -336,7 +336,10 @@ const InicializacionPisos = () => {
                                                                 }}></i>
                                                             </td>
                                                             <td>
-                                                                <button type="button" className="btn" data-toggle="modal" data-target="#addUser" onClick={() => actions.dptoModificar(dpto.id)}>
+                                                                <button type="button" className="btn" data-toggle="modal" data-target="#addUser" onClick={() => {
+                                                                    actions.dptoModificar(dpto.id)
+                                                                    actions.activarModalAddUser()
+                                                                    }}>
                                                                     <i className="fas fa-pencil-alt cursor-pointer"></i>
                                                                 </button>
                                                                 <ModalAddUser />

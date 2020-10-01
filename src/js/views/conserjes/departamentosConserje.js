@@ -8,6 +8,8 @@ const DepartamentosConserje = () => {
     const [departamentoNumero, setdepartamentoNumero] = useState()
     const [pisos, setPisos] = useState([]);
     const [numero, setNumero] = useState()
+    const [usuarioDptoNumero, setUsuarioDptoNumero] = useState()
+    const [propietarioDptoNumero, setpropietarioDptoNumero] = useState()
 
     const contadorPisos = () => {
         const auxiliar = store.departamentoUsuarios.map((dpto) => {
@@ -21,146 +23,167 @@ const DepartamentosConserje = () => {
             return dpto.numero_departamento === numero
         })
         setdepartamentoNumero(aux[0])
+        const resultado = !!store.finalUserBuilding && store.finalUserBuilding.find( elem => elem.id == aux[0].residente ); 
+        setUsuarioDptoNumero(resultado)
+        const resultado2 = !!store.usuariosEdificio && store.usuariosEdificio.find( elem => elem.id == aux[0].propietario ); 
+        setpropietarioDptoNumero(resultado2)
         actions.limpiarCamposFiltrado()
     }
 
     useEffect(() => {
         actions.getEdificioCompleto()
         actions.getDptosUsuarios()
+        actions.getUsuariosDelEdificio()
 
     }, [])
 
     return (
         <SidebarPage>
-            <div className="container">
+            <div className="container mt-4">
+                <h1>Departamentos</h1>
+            </div>
+            <div className="container border bg-white mt-5 p-3" style={{ width: "50vw" }}>
                 <div className="row">
-                    <div className="col mt-4">
-                        <h1>Departamentos</h1>
-                    </div>
-                </div>
-
-                <div className="container mt-4 bg-white border p-3">
-                    <div className="row">
-                        <div className="col">
-                            <h5>Filtros de Busqueda:</h5>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <div className="btn-group">
-                                <button type="button" className="btn btn-azul dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={contadorPisos}>
-                                    Piso
+                    <div className="col m-1">
+                        <div className="btn-group btn-block">
+                            <button type="button" className="btn btn-azul dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={contadorPisos}>
+                                Piso
                             </button>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a className="dropdown-item" onClick={() => actions.filtradoPiso("todos")}>
-                                        Todos
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a className="dropdown-item" onClick={() => actions.filtradoPiso("todos")}>
+                                    Todos
                                 </a>
-                                    {
-                                        !!pisos &&
-                                        pisos.sort(function (a, b) { return a - b }).map((piso, index) => {
-                                            return (
-                                                <a className="dropdown-item" key={index} onClick={() => actions.filtradoPiso(piso)}>
-                                                    {piso}
-                                                </a>
-                                            )
-                                        })
-                                    }
-                                </div>
+                                {
+                                    !!pisos &&
+                                    pisos.sort(function (a, b) { return a - b }).map((piso, index) => {
+                                        return (
+                                            <a className="dropdown-item" key={index} onClick={() => actions.filtradoPiso(piso)}>
+                                                {piso}
+                                            </a>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
-                        <div className="col-md-4">
-                            <div className="btn-group">
-                                <button type="button" className="btn btn-azul dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Estado
+                    </div>
+                    <div className="col m-1">
+                        <div className="btn-group btn-block">
+                            <button type="button" className="btn btn-azul dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Estado
                             </button>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a className="dropdown-item" onClick={() => actions.filtradoEstado("habitado")}>
-                                        Habitado
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a className="dropdown-item" onClick={() => actions.filtradoEstado("habitado")}>
+                                    Habitado
                                 </a>
-                                    <a className="dropdown-item" onClick={() => actions.filtradoEstado("deshabitado")}>
-                                        Deshabitado
+                                <a className="dropdown-item" onClick={() => actions.filtradoEstado("deshabitado")}>
+                                    Deshabitado
                                 </a>
-                                    <a className="dropdown-item" onClick={() => actions.filtradoEstado("todos")}>
-                                        Todos
+                                <a className="dropdown-item" onClick={() => actions.filtradoEstado("todos")}>
+                                    Todos
                                 </a>
-                                </div>
                             </div>
                         </div>
-                        <div className="col-md-4 d-flex">
-                            <label htmlFor="numero_departamento" className="sr-only">Numero Departamento</label>
-                            <input type="number" className="form-control" name="numero_departamento" onChange={e => setNumero(e.target.value)} />
-                            <button className="btn btn-azul mx-2" onClick={e => buscaDpto(e)}>Buscar</button>
-                        </div>
                     </div>
-                </div>
-                <div className="container mt-5">
-                    <div className="row">
-                        {
-                            !!store.departamentosPorPiso &&
-                            store.departamentosPorPiso.map((dpto, index) => {
-                                return (
-                                    <div className="col-md-4" key={index}>
-                                        <div className="card border-info mb-3" style={{ maxWidth: "18rem" }}>
-                                            <div className="card-header d-flex justify-content-between">
-                                                <p>
-                                                    {dpto.numero_departamento}
-                                                </p>
-                                                <p className="card-text">{dpto.estado}</p>
-                                            </div>
-                                            <div className="card-body text-info">
-                                                <p className="card-text">Residente: {dpto.residente.name}</p>
-                                                <p className="card-text">Contacto: {dpto.residente.email}</p>
-                                                <p className="card-text">N° Bodega: {dpto.bodega_id}</p>
-                                                <p className="card-text">N° Estacionamiento: {dpto.estacionamiento_id}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                        {
-                            !!store.departamentoEstado &&
-                            store.departamentoEstado.map((dpto, index) => {
-                                return (
-                                    <div className="col-md-4" key={index}>
-                                        <div className="card border-info mb-3" style={{ maxWidth: "18rem" }}>
-                                            <div className="card-header d-flex justify-content-between">
-                                                <p>
-                                                    {dpto.numero_departamento}
-                                                </p>
-                                                <p className="card-text">{dpto.estado}</p>
-                                            </div>
-                                            <div className="card-body text-info">
-                                                <p className="card-text">Residente: {dpto.residente.name}</p>
-                                                <p className="card-text">Contacto {dpto.residente.email}</p>
-                                                <p className="card-text">N° Bodega: {dpto.bodega_id}</p>
-                                                <p className="card-text">N° Estacionamiento: {dpto.estacionamiento_id}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                        {
-                            !!departamentoNumero &&
+                    <div className="col m-1">
+                        <div className="row">
+                            <div className="col-md-8">
+                                <label htmlFor="numero_departamento" className="sr-only">Numero Departamento</label>
+                                <input type="number" className="form-control" name="numero_departamento" onChange={e => setNumero(e.target.value)} />
+                            </div>
                             <div className="col-md-4">
-                                <div className="card border-info mb-3" style={{ maxWidth: "18rem" }}>
-                                    <div className="card-header d-flex justify-content-between">
-                                        <p>
-                                            {departamentoNumero.numero_departamento}
-                                        </p>
-                                        <p className="card-text">{departamentoNumero.estado}</p>
-                                    </div>
-                                    <div className="card-body text-info">
-                                        <p className="card-text">Residente: {departamentoNumero.residente.name}</p>
-                                        <p className="card-text">Contacto: {departamentoNumero.residente.email}</p>
-                                        <p className="card-text">N° Bodega: {departamentoNumero.bodega_id}</p>
-                                        <p className="card-text">N° Estacionamiento: {departamentoNumero.estacionamiento_id}</p>
+                                <button className="btn btn-azul" onClick={(e) => {
+                                    buscaDpto(e)
+                                    /* guardarUsuario() */
+                                }}><i className="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="container mt-5">
+                <div className="row">
+
+                    {
+                        !!store.departamentosPorPiso &&
+                        store.departamentosPorPiso.map((dpto, index) => {
+                            const residente = !!dpto.residente && dpto.residente;
+                            const propietario = !!dpto.propietario && dpto.propietario;
+                            const resultado = !!store.finalUserBuilding && store.finalUserBuilding.find(elem => elem.id == residente);
+                            const resultado2 = !!store.usuariosEdificio && store.usuariosEdificio.find(elem => elem.id == propietario);
+                            return (
+                                <div className="col-md-4" key={index}>
+                                    <div className="card btn-oscuro mb-3" style={{ maxWidth: "18rem" }}>
+                                        <div className="card-header d-flex justify-content-between">
+                                            <p style={{ fontSize: "2em" }}>
+                                                {dpto.numero_departamento}
+                                            </p>
+                                            <p className="card-text">{dpto.estado}</p>
+                                        </div>
+                                        <div className="card-body  bg-white text-dark">
+
+                                            <p className="card-text font-weight-bold border-bottom">Residente: <span className="font-weight-normal text-capitalize">{!!resultado && resultado.username}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{!!resultado && resultado.email}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Propietario: <span className="font-weight-normal">{!!resultado2 && resultado2.username}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{!!resultado2 && resultado2.email}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id ? dpto.bodega_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id ? dpto.estacionamiento_id : "No posee"}</span></p>
+                                        </div>
                                     </div>
                                 </div>
+                            )
+                        })
+                    }
+                    {
+                        !!store.departamentoEstado &&
+                        store.departamentoEstado.map((dpto, index) => {
+                            const residente = !!dpto.residente && dpto.residente;
+                            const propietario = !!dpto.propietario && dpto.propietario;
+                            const resultado = !!store.finalUserBuilding && store.finalUserBuilding.find(elem => elem.id == residente);
+                            const resultado2 = !!store.usuariosEdificio && store.usuariosEdificio.find(elem => elem.id == propietario);
+                            return (
+                                <div className="col-md-4" key={index}>
+                                    <div className="card btn-oscuro mb-3" style={{ maxWidth: "18rem" }}>
+                                        <div className="card-header d-flex justify-content-between">
+                                            <p style={{ fontSize: "2em" }}>
+                                                {dpto.numero_departamento}
+                                            </p>
+                                            <p className="card-text">{dpto.estado}</p>
+                                        </div>
+                                        <div className="card-body bg-white text-dark">
+                                            <p className="card-text font-weight-bold border-bottom">Residente: <span className="font-weight-normal text-capitalize">{!!resultado && resultado.username}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{!!resultado && resultado.email}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Propietario: <span className="font-weight-normal">{!!resultado2 && resultado2.username}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{!!resultado2 && resultado2.email}</span></p>
+                                            <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!dpto.bodega_id ? dpto.bodega_id : "No posee"}</span></p>
+                                            <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!dpto.estacionamiento_id ? dpto.estacionamiento_id : "No posee"}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    {
+                        !!departamentoNumero &&
+
+                        <div className="col-md-4">
+                            <div className="card btn-oscuro mb-3" style={{ maxWidth: "18rem" }}>
+                                <div className="card-header d-flex justify-content-between">
+                                    <p style={{ fontSize: "2em" }}>
+                                        {departamentoNumero.numero_departamento}
+                                    </p>
+                                    <p className="card-text">{departamentoNumero.estado}</p>
+                                </div>
+                                <div className="card-body bg-white text-dark">
+                                    <p className="card-text font-weight-bold border-bottom">Residente: <span className="font-weight-normal text-capitalize">{usuarioDptoNumero.username}</span></p>
+                                    <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{usuarioDptoNumero.email}</span></p>
+                                    <p className="card-text font-weight-bold border-bottom">Propietario: <span className="font-weight-normal">{propietarioDptoNumero.username}</span></p>
+                                    <p className="card-text font-weight-bold border-bottom">Contacto: <span className="font-weight-normal">{propietarioDptoNumero.email}</span></p>
+                                    <p className="card-text font-weight-bold border-bottom">N° Bodega: <span className="font-weight-normal">{!!departamentoNumero.bodega_id ? departamentoNumero.bodega_id : "No posee"}</span></p>
+                                    <p className="card-text font-weight-bold">N° Estacionamiento: <span className="font-weight-normal">{!!departamentoNumero.estacionamiento_id ? departamentoNumero.estacionamiento_id : "No posee"}</span></p>
+                                </div>
                             </div>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
             </div>
         </SidebarPage>

@@ -23,9 +23,11 @@ const Dashboard = (props) => {
                             <DashboardAdmin /> :
                             store.currentRol === "conserje" ?
                                 <DashboardConserje /> :
-                                store.currentRol === "usuario" ?
+                                store.currentRol === "propietario" ?
                                     <DashboardUser /> :
-                                    <h1>Debes iniciar sesión</h1>
+                                    store.currentRol === "usuario" ?
+                                        <DashboardUser /> :
+                                        <h1>Debes iniciar sesión</h1>
                     }
                 </div>
 
