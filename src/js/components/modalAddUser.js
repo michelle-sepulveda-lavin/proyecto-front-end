@@ -25,8 +25,23 @@ const ModalAddUser = (props) => {
                         <div className="modal-body">
                             <form onSubmit={(e) => actions.addResidente(e, info)}>
                                 <div className="form-group">
+                                    <label htmlFor="propietario">Propietario</label>
+                                    <select defaultValue={'default'} className="form-control" name="propietario" onClick={e => setInfo({ ...info, "propietario": e.target.value })}>
+                                        <option value="default" disabled>Seleccionar</option>
+                                        {
+                                            !!store.propietarioNoAsignado &&
+                                            store.propietarioNoAsignado.map((user, index) => {
+                                                return (
+                                                    <option value={user.id} key={index}>{user.username}</option>
+                                                )
+                                            })
+                                        }
+
+                                    </select>
+                                </div>
+                                <div className="form-group">
                                     <label htmlFor="residente">Residente</label>
-                                    <select defaultValue={'default'} className="form-control" name="residente" onClick={e => setInfo({...info,"residente": e.target.value })}>
+                                    <select defaultValue={'default'} className="form-control" name="residente" onClick={e => setInfo({ ...info, "residente": e.target.value })}>
                                         <option value="default" disabled>Seleccionar</option>
                                         <option value="default" >Sin usuario</option>
                                         {
@@ -42,7 +57,7 @@ const ModalAddUser = (props) => {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="estado">Estado</label>
-                                    <select defaultValue={'default'} className="form-control" name="estado" onClick={e => setInfo({...info, "estado": e.target.value })}>
+                                    <select defaultValue={'default'} className="form-control" name="estado" onClick={e => setInfo({ ...info, "estado": e.target.value })}>
                                         <option value="default" disabled>Seleccionar</option>
                                         <option value="habitado">Habitado</option>
                                         <option value="deshabitado">Deshabitado</option>
@@ -50,7 +65,7 @@ const ModalAddUser = (props) => {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={actions.cerrarModalAddUsert}>Cancelar</button>
-                                    <button className="btn btn-primary" >Añadir</button>
+                                    <button className="btn btn-verde" >Añadir</button>
                                 </div>
                             </form>
                         </div>

@@ -207,7 +207,7 @@ const GastosDepartamentos = () => {
                                                                         gasto.estado === "noPagado" ?
                                                                             <td> <span className="btn btn-azul"
                                                                                 onClick={() => {
-                                                                                    actions.correoGastos(gasto.departamento.residente, gasto.monto)
+                                                                                    actions.correoGastos(gasto.departamento.residente, gasto.monto, gasto.departamento.propietario)
                                                                                 }}>Enviar notificación</span> </td>
                                                                             :
                                                                             "")

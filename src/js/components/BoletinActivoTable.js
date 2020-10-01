@@ -21,36 +21,49 @@ const BoletinActivoTable = (props) => {
 
     return (
         <>
-            <div className="row container mt-4">
-                <table className="table  table-bordered border col-10 mx-auto  overflow-auto ">
+            <div className="row container mt-4 overflow-auto">
+                <table className="table table-bordered border col-10 mx-auto  overflow-auto ">
                     <thead className="btn-oscuro text-center">
                         <tr>
                             <th>ID</th>
                             <th>Asunto</th>
-                            <th>Body</th>
-                            <th>Actions</th>
+                            <th>Cuerpo</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody className="overflow-auto">
+                    <tbody className=" boletines">
                         {
                             store.all_boletin.length > 0 ?
                                 filtroBoletin().map((edificio, index) => (
                                     <tr key={edificio.edificio_id} >
                                         <th scope="row">{edificio.id}</th>
                                         <td className="text-center">{edificio.asunto}</td>
-                                        <td className="text-break w-50"><p>{edificio.body}</p></td>
-                                        <td>
-                                            <div className="custom-control custom-switch">
-                                                <input type="checkbox" className="custom-control-input" id={"customSwitch" + index} defaultChecked={edificio.estado === true ? "checked" : ""} />
-                                                <label className="custom-control-label" htmlFor={"customSwitch" + index} onClick={(e) => {
-                                                    let estado = "";
-                                                    if (edificio.estado === false) {
-                                                        estado = true
-                                                    } else {
-                                                        estado = false
+                                        <td className="text-break pt-0"><p>{edificio.body}</p></td>
+                                        <td className="">
+                                            <div className="mt-4 pb-0">
+                                                <div className="custom-control custom-switch mb-3 d-flex justify-content-center">
+                                                    <input type="checkbox" className="custom-control-input" id={"customSwitch" + index} defaultChecked={edificio.estado === true ? "checked" : ""} />
+                                                    <label className="custom-control-label" htmlFor={"customSwitch" + index} onClick={(e) => {
+                                                        let estado = "";
+                                                        if (edificio.estado === false) {
+                                                            estado = true
+                                                        } else {
+                                                            estado = false
+                                                        }
+                                                        actions.cambiarEstadoBoletin(edificio.id, estado)
+                                                    }}>{edificio.estado === true ? "Activo" : "Inactivo"}</label>
+                                                </div>
+                                                <div>
+                                                    <span className="btn btn-azul" onClick={() => {
+                                                        props.usuarios.map((usuario) => {
+                                                            if (!!usuario.email) {
+                                                                actions.correoBoletines(usuario.id, edificio.asunto, edificio.body, usuario.edificio.name)
+                                                            }
+                                                        })
+                                                        alert("Correo enviado")
                                                     }
-                                                    actions.cambiarEstadoBoletin(edificio.id, estado)
-                                                }}>{edificio.estado === true ? "Activo" : "Inactivo"}</label>
+                                                    }>Notificar por correo</span>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

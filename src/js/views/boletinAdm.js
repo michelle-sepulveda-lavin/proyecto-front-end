@@ -5,7 +5,7 @@ import AddBoletin from '../components/AddBoletin';
 import EditBoletin from '../components/EditBoletin';
 
 
-const BoletinAdm = () => {
+const BoletinAdm = (props) => {
 
 
 
@@ -79,9 +79,7 @@ const BoletinAdm = () => {
                         <h2>Boletines activos</h2>
                         <BoletinActivoTable
                             boletin={boletin}
-                            deleteboletin={deleteboletin}
-
-                            editRow={editRow} />
+                            usuarios={props.usuarios} />
                     </div>
                 </div>
             </div>

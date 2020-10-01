@@ -170,12 +170,12 @@ const DashboardUser = (props) => {
 
                     </div>
                 </div>
-                <div className="col mb-4">
+                <div className="col mb-2">
                     <div className=" card h-100 shadow-sm  border rounded">
 
                         <div className="card-body">
                             <div className="row mb-2">
-                                <div className="col-12 mb-4 text-center text-md-left">
+                                <div className="col-12  text-center text-md-left">
                                     <h2>Paquetes en conserjería</h2>
                                 </div>
                             </div>
@@ -199,21 +199,21 @@ const DashboardUser = (props) => {
                     </div>
                 </div>
 
-                <div className="col mb-4">
+                <div className="col mb-2">
                     <div className=" card h-100  mb-4 shadow-sm bg-dashboard border rounded">
                         <div className="card-body">
-                            <div className="row mb-2">
-                                <div className="col-12 mb-4 text-center text-md-left">
+                            <div className="row mb-3">
+                                <div className="col-12 mb-2 text-center text-md-left">
                                     <h2>Gastos Comunes del Mes</h2>
                                 </div>
                             </div>
                             <div className="row mb-4 justify-content-center">
                                 <div className="col-11 col-md-8 h-100 ">
-                                    <div className="card shadow p-3 bg-db-2">
+                                    <div className="card shadow-sm p-3 bg-db-2">
 
-                                        <div className="font-bigger">
+                                        <div className="font-bigger py-3">
                                             <div>
-                                                <p className="pt-3 text-light">{!!gastoActual && gastoActual.length > 0 ? (gastoActual[0].estado === "revision" ? <p className="">El pago está pendiente de revisión</p> : gastoActual[0].estado === "noPagado" ? <p> {gastoCLP(gastoActual[0].monto)}</p> : "") : "No hay gastos pendientes este mes"}</p>
+                                                <p className="pt-2 text-light text-center">{!!gastoActual && gastoActual.length > 0 ? (gastoActual[0].estado === "revision" ? <p className="">El pago está pendiente de revisión</p> : gastoActual[0].estado === "noPagado" ? <p> {gastoCLP(gastoActual[0].monto)}</p> : "") : "No hay gastos pendientes este mes"}</p>
 
                                             </div>
                                         </div>

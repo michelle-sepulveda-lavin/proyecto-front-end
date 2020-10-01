@@ -51,7 +51,7 @@ const InicializacionPisos = () => {
         const aux2 = [...new Set(auxiliar)]
         return (aux2).length
     }
-    
+
 
     useEffect(() => {
         actions.getEdificioCompleto()
@@ -116,7 +116,7 @@ const InicializacionPisos = () => {
                                     limpiarFormulario(e)
                                     limpiarState()
                                 }}>
-                                    <table className="table table-bordered text-center table-responsive-md">
+                                    <table className="table table-bordered text-center">
                                         <thead className="btn-oscuro">
                                             <tr>
                                                 <th scope="col">N° Departamento</th>
@@ -166,14 +166,14 @@ const InicializacionPisos = () => {
                                                 <td>
 
                                                     {
-                                                        !!store.usuariosEdificio ?
+                                                        !!store.propietarioNoAsignado ?
                                                             <>
                                                                 <label className="sr-only" htmlFor="propietario">Propietario</label>
                                                                 <select defaultValue={'null'} className="form-control form-control-sm" name="propietario" onChange={e => handleChange(e)}>
                                                                     <option value="null" disabled>Seleccionar</option>
                                                                     {
-                                                                        !!store.usuariosEdificio &&
-                                                                        store.usuariosEdificio.map((user, index) => {
+                                                                        !!store.propietarioNoAsignado &&
+                                                                        store.propietarioNoAsignado.map((user, index) => {
                                                                             return (
                                                                                 user.rol.name === "propietario" &&
                                                                                 <option value={user.id} key={index}>{user.username}</option>
@@ -288,8 +288,8 @@ const InicializacionPisos = () => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col">
-                                <table className="table table-hover table-bordered border">
+                            <div className="col overflow-auto">
+                                <table className="table table-bordered border">
                                     <thead className="btn-oscuro">
                                         <tr>
                                             <th scope="col">#</th>
@@ -309,84 +309,87 @@ const InicializacionPisos = () => {
                                     <tbody>
                                         {
                                             store.departamentosPorPiso.length > 0 &&
-                                                (store.departamentosPorPiso.sort(function (a, b) { return a - b }).map((dpto, index) => {
-                                                    const residente = dpto.residente;
-                                                    const propietario = dpto.propietario;
-                                                    const usuarioName = (user) =>{ 
-                                                        return user.id == residente;
-                                                    }
-                                                    const propietarioName = (user) =>{ 
-                                                        return user.id == propietario;
-                                                    }
-                                                    return (
-                                                        <tr key={index}>
-                                                            <th scope="row">{index + 1}</th>
-                                                            <td>{dpto.numero_departamento}</td>
-                                                            <td>{!!residente && store.finalUserBuilding.find(usuarioName).username}</td>
-                                                            <td>{!!propietario && store.usuariosEdificio.find(propietarioName).username}</td>
-                                                            <td>{dpto.bodega_id}</td>
-                                                            <td>{dpto.estacionamiento_id}</td>
-                                                            <td>{dpto.piso}</td>
-                                                            <td>{dpto.estado}</td>
-                                                            <td>{dpto.edificio.name}</td>
-                                                            <td>{dpto.modelo.name}</td>
-                                                            <td>
-                                                                <i className="fas fa-trash-alt btn" onClick={() => {
-                                                                    actions.deleteUsuarioDpto(index)
-                                                                }}></i>
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" className="btn" data-toggle="modal" data-target="#addUser" onClick={() => actions.dptoModificar(dpto.id)}>
-                                                                    <i className="fas fa-pencil-alt cursor-pointer"></i>
-                                                                </button>
-                                                                <ModalAddUser />
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
+                                            (store.departamentosPorPiso.sort(function (a, b) { return a - b }).map((dpto, index) => {
+                                                const residente = dpto.residente;
+                                                const propietario = dpto.propietario;
+                                                const usuarioName = (user) => {
+                                                    return user.id == residente;
+                                                }
+                                                const propietarioName = (user) => {
+                                                    return user.id == propietario;
+                                                }
+                                                return (
+                                                    <tr key={index}>
+                                                        <th scope="row">{index + 1}</th>
+                                                        <td>{dpto.numero_departamento}</td>
+                                                        <td>{!!residente && store.finalUserBuilding.find(usuarioName).username}</td>
+                                                        <td>{!!propietario && store.usuariosEdificio.find(propietarioName).username}</td>
+                                                        <td>{dpto.bodega_id}</td>
+                                                        <td>{dpto.estacionamiento_id}</td>
+                                                        <td>{dpto.piso}</td>
+                                                        <td>{dpto.estado}</td>
+                                                        <td>{dpto.edificio.name}</td>
+                                                        <td>{dpto.modelo.name}</td>
+                                                        <td>
+                                                            <i className="fas fa-trash-alt btn" onClick={() => {
+                                                                actions.deleteUsuarioDpto(index)
+                                                            }}></i>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" className="btn" data-toggle="modal" data-target="#addUser" onClick={() => {
+                                                                actions.dptoModificar(dpto.id)
+                                                                actions.activarModalAddUser()
+                                                            }}>
+                                                                <i className="fas fa-pencil-alt cursor-pointer"></i>
+                                                            </button>
+                                                            <ModalAddUser />
+                                                        </td>
+                                                    </tr>
                                                 )
-                                                /* :
-                                                (store.departamentoUsuarios.map((dpto, index) => {
-                                                    const residente = dpto.residente
-                                                    const usuarioName = (user) =>{ 
-                                                        return user.id == residente;
-                                                    }
-                                                    console.log(!!residente && store.finalUserBuilding.find(usuarioName).username)
-                                                    return (
-                                                        <tr key={index}>
-                                                            <th scope="row">{index + 1}</th>
-                                                            <td>{dpto.numero_departamento}</td>
-                                                            <td>{"j"}</td>
-                                                            <td>{"h"}</td>
-                                                            <td>{dpto.bodega_id}</td>
-                                                            <td>{dpto.estacionamiento_id}</td>
-                                                            <td>{dpto.piso}</td>
-                                                            <td>{dpto.estado}</td>
-                                                            <td>{dpto.edificio.name}</td>
-                                                            <td>{dpto.modelo.name}</td>
-                                                            <td>
-                                                                <i className="fas fa-trash-alt btn" onClick={() => {
-                                                                    actions.deleteUsuarioDpto(index)
-                                                                }}></i>
-                                                            </td>
-                                                            <td>
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn"
-                                                                    data-toggle="modal"
-                                                                    data-target="#addUser"
-                                                                    onClick={() => {
-                                                                        actions.dptoModificar(dpto.id)
-                                                                        actions.activarModalAddUser()
-                                                                    }}>
-                                                                    <i className="fas fa-pencil-alt cursor-pointer"></i>
-                                                                </button>
-                                                                <ModalAddUser />
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                                ) */
+                                            })
+                                            )
+                                            /* :
+                                            (store.departamentoUsuarios.map((dpto, index) => {
+                                                const residente = dpto.residente
+                                                const usuarioName = (user) =>{ 
+                                                    return user.id == residente;
+                                                }
+                                                console.log(!!residente && store.finalUserBuilding.find(usuarioName).username)
+                                                return (
+                                                    <tr key={index}>
+                                                        <th scope="row">{index + 1}</th>
+                                                        <td>{dpto.numero_departamento}</td>
+                                                        <td>{"j"}</td>
+                                                        <td>{"h"}</td>
+                                                        <td>{dpto.bodega_id}</td>
+                                                        <td>{dpto.estacionamiento_id}</td>
+                                                        <td>{dpto.piso}</td>
+                                                        <td>{dpto.estado}</td>
+                                                        <td>{dpto.edificio.name}</td>
+                                                        <td>{dpto.modelo.name}</td>
+                                                        <td>
+                                                            <i className="fas fa-trash-alt btn" onClick={() => {
+                                                                actions.deleteUsuarioDpto(index)
+                                                            }}></i>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                type="button"
+                                                                className="btn"
+                                                                data-toggle="modal"
+                                                                data-target="#addUser"
+                                                                onClick={() => {
+                                                                    actions.dptoModificar(dpto.id)
+                                                                    actions.activarModalAddUser()
+                                                                }}>
+                                                                <i className="fas fa-pencil-alt cursor-pointer"></i>
+                                                            </button>
+                                                            <ModalAddUser />
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })
+                                            ) */
                                         }
                                     </tbody>
                                 </table>

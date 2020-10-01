@@ -28,17 +28,17 @@ const Home = () => {
                         {
                             !!store.currentRol ?
                                 <>
-                                    
-                                        <Link to="/dashboard" className=" btn btn-verde mr-3" role="button">Dashboard</Link>
-                                    
-                                    
-                                        <Link to="/" className=" btn btn-secondary mr-3" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-3"></i>Cerrar sesion</Link>
-                                    
+
+                                    <Link to="/dashboard" className=" btn btn-verde mr-3" role="button">Dashboard</Link>
+
+
+                                    <Link to="/" className=" btn btn-secondary mr-3" onClick={() => actions.handleClose(history)}> <i className="fas fa-power-off mr-3"></i>Cerrar sesion</Link>
+
                                 </>
                                 :
-                                
-                                    <Link to="/login" className=" btn btn-verde mr-3" role="button">Iniciar sesión</Link>
-                                
+
+                                <Link to="/login" className=" btn btn-verde mr-3" role="button">Iniciar sesión</Link>
+
                         }
                     </ul>
                 </div>
@@ -106,8 +106,10 @@ const Home = () => {
                 <div className="container">
                     <h1 className="masthead-subheading">Mejora tu productividad</h1> <br />
                     <h5 className="masthead-heading text-uppercase">La mejor aplicación para la Administración de <br /> Edificios y Condominios</h5> <br />
-                    <a className="btn btn-azul text-white btn-xl text-uppercase" href="./planes"> nuestros planes</a>
-                    <a className="btn bg-db-2 text-white ml-3 d-inline-block btn-xl text-uppercase" href="#services"> Nuestros Servicios</a>
+                    <div className="d-flex justify-content-center">
+                        <a className="btn btn-azul text-white btn-xl text-uppercase" href="./planes"> nuestros planes</a>
+                        <a className="btn bg-db-2 text-white ml-3 d-inline-block btn-xl text-uppercase" href="#services"> Nuestros Servicios</a>
+                    </div>
                 </div>
             </header>
 

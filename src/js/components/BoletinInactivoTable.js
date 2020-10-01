@@ -21,7 +21,7 @@ const BoletinInactivoTable = (props) => {
 
     return (
         <>
-            <div className="row container mt-4">
+            <div className="row container mt-4 overflow-auto">
                 <table className="table col-10 mx-auto  overflow-auto ">
                     <thead className="btn-oscuro text-center">
                         <tr>
@@ -31,7 +31,7 @@ const BoletinInactivoTable = (props) => {
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="overflow-auto">
+                    <tbody className="boletines">
                         {
                             store.all_boletin.length > 0 ?
                                 filtroBoletin().map((edificio, index) => (

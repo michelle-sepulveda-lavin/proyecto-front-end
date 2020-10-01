@@ -71,7 +71,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             errorCreacionUser: null,
             flagModalEditUser: null,
             flagModalAddUser: null,
-            administradorEdificio: null
+            propietarioNoAsignado: null
         },
         actions: {
             handleChangeLogin: e => {
@@ -310,7 +310,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     contadorUsuarios: null,
                     bodegasEdificio: null,
                     estacionamientoEdificios: null,
-                    errorLogin: null
+                    errorLogin: null,
+                    propietariosNoAsignados: null
                 })
                 history.push("/")
             },
@@ -481,7 +482,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         })
                     }
                 }
-                catch(error){
+                catch (error) {
                     console.log(error)
                 }
             },
@@ -579,6 +580,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         departamentoUsuarios: data,
                     })
                     getActions().usuariosNoAsignados()
+                    getActions().propietarioNoAsignado()
                     await setStore({
                         contadorUsuarios: getStore().departamentoUsuarios.length
                     })
@@ -635,6 +637,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         usuariosEdificio: data
                     })
                     getActions().usuariosparaAsignar()
+                    getActions().propietarioNoAsignado()
                 }
             },
             filtradoEstado: (estado) => {
@@ -688,6 +691,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         getActions().usuariosNoAsignados()
                         getActions().getBodegasDelEdificio()
                         getActions().getEstacionamientosDelEdificio()
+                        getActions().propietarioNoAsignado()
                         getActions().cerrarModalAddUsert()
                     } else {
                         setStore({
@@ -829,6 +833,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             dptoModificar: (numero) => {
                 setStore({
                     departamentoModificar: numero
+
                 })
             },
             getTotalM2: (modelos) => {
@@ -1370,21 +1375,31 @@ const getState = ({ getStore, getActions, setStore }) => {
                     flagModalAddUser: false
                 })
             },
-            getAdministradorEdificio: async(id) =>{
-                const {apiURL} = getStore()
+            getAdministradorEdificio: async (id) => {
+                const { apiURL } = getStore()
                 const resp = await fetch(`${apiURL}/admnistradorEdificio/${id}`)
                 const data = await resp.json()
-                if(!data.msg){
+                if (!data.msg) {
                     setStore({
                         administradorEdificio: data
                     })
                 }
             },
 
-            correoGastos: async (id, monto) => {
+            correoGastos: async (id, monto, propietario) => {
                 const { apiURL } = getStore();
                 if (!!id) {
-                    const resp = await fetch(`${apiURL}/correo-gastos/${id}`, {
+                    const resp = await fetch(`${apiURL}/correo-gastos/${"sinResidente"}/${null}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ "monto": monto })
+                    });
+                    const data = await resp.json();
+                    alert(data.msg)
+                } else if (id === null && !!propietario) {
+                    const resp = await fetch(`${apiURL}/correo-gastos/${"prueba"}/${propietario}`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -1396,6 +1411,51 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } else {
                     alert("Este departamento no tiene una cuenta asociada")
                 }
+            },
+
+            propietarioNoAsignado: () => {
+                const { departamentoUsuarios, usuariosEdificio } = getStore();
+                if (!!departamentoUsuarios) {
+                    const aux = departamentoUsuarios.filter((dpto) => {
+                        return dpto.propietario != null
+                    })
+                    const aux2 = aux.map((dpto) => {
+                        return dpto.propietario
+                    })
+                    const propietarios = usuariosEdificio.filter((user) => {
+                        return user.rol.name === "propietario"
+                    })
+
+                    const aux3 = propietarios.filter((user) => {
+                        return !aux2.includes(user.id)
+                    })
+                    setStore({
+                        propietarioNoAsignado: aux3
+                    })
+
+                }
+            },
+            correoBoletines: async (id, asunto, body, edificio) => {
+                const { apiURL } = getStore();
+
+                try {
+                    const resp = await fetch(`${apiURL}/correo-boletin/${id}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            "body": body,
+                            "edificio": edificio,
+                            "asunto": asunto
+                        })
+                    });
+                    const data = await resp.json();
+                }
+                catch (error) {
+                    console.log(error)
+                }
+
             }
         }
     }

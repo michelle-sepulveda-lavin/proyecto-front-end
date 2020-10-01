@@ -477,7 +477,7 @@ header.masthead {
   line-height: inherit;
 }
 .min-h-20 {
-  min-height: 25vh;
+  min-height: 20vh;
 }
 
 .btn-verde {
@@ -627,4 +627,11 @@ margin-left: 0;
 }
 .fa-building {
   width: 2em;
+}
+.boletines p {
+  overflow-y: auto;
+  max-height: 12em;
+  min-width: 10em;
+  max-width: 35em;
+  padding-top: 1em;
 }

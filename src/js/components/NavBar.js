@@ -8,16 +8,16 @@ const NavBar = (props) => {
     return (
         <>
 
-            <div className="d-flex" id="wrapper2">
+            <div className="" id="wrapper2">
 
                 <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <nav className="navbar navbar-expand-lg navbar-light btn-oscuro border-bottom">
+                        <button className="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
 
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="text-center navbar-nav sidebar-horizontal bg-gradient-primary">
+                            <ul className="text-center navbar-nav sidebar-horizontal ">
                                 <li className="mb-4">
                                     <div className="d-flex align-items-center justify-content-center">
                                         <div className="sidebar-brand-icon2">
