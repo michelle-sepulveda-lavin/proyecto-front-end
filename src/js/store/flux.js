@@ -506,10 +506,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getDepartamentos: async () => {
                 const { apiURL, currentEdificioID } = getStore();
-                const response = await fetch(`${apiURL}/info-departamento/${currentEdificioID}`)
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const response = await fetch(`${apiURL}/info-departamento/${edificioID}`)
                 const data = await response.json()
                 const { msg } = data
-                if (msg === undefined) {
+                if (response.ok) {
                     setStore({
                         departamentos: data
                     })
@@ -566,7 +568,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getDptosUsuarios: async () => {
                 const { apiURL, currentEdificioID } = getStore();
-                const response = await fetch(`${apiURL}/departamentoUsuarioEdificio/${currentEdificioID}`)
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const response = await fetch(`${apiURL}/departamentoUsuarioEdificio/${edificioID}`)
                 const data = await response.json()
                 const { msg } = data;
                 if (msg !== undefined) {
@@ -603,7 +607,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     getActions().getDptosUsuarios()
                 }
             },
-            filtradoDepartamentos: (filtro) =>{
+            filtradoDepartamentos: (filtro) => {
                 const { departamentoUsuarios } = getStore();
                 setStore({
                     departamentosFiltrados: [],
@@ -612,28 +616,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         departamentosFiltrados: departamentoUsuarios
                     })
-                }else if (filtro == "habitado") {
+                } else if (filtro == "habitado") {
                     const auxiliar = departamentoUsuarios.filter((dpto) => {
                         return (dpto.estado === filtro)
                     })
                     setStore({
                         departamentosFiltrados: auxiliar
                     })
-                }else if (filtro == "deshabitado") {
+                } else if (filtro == "deshabitado") {
                     const auxiliar = departamentoUsuarios.filter((dpto) => {
                         return (dpto.estado === filtro)
                     })
                     setStore({
                         departamentosFiltrados: auxiliar
                     })
-                }else if(typeof(filtro) === "object"){
+                } else if (typeof (filtro) === "object") {
                     const auxiliar = departamentoUsuarios.filter((dpto) => {
                         return (dpto.numero_departamento === filtro.dpto)
                     })
                     setStore({
                         departamentosFiltrados: auxiliar
                     })
-                }else{
+                } else {
                     const auxiliar = departamentoUsuarios.filter((dpto) => {
                         return (dpto.piso === filtro)
                     })
@@ -669,7 +673,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 e.preventDefault()
                 setStore({ success: null })
                 const { apiURL, departamentoModificar } = getStore();
-                if(!!info){
+                if (!!info) {
                     const resp = await fetch(`${apiURL}/add-residente/${departamentoModificar.id}`, {
                         method: "PUT",
                         headers: {
@@ -700,8 +704,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                             })
                         }
                     }
-                    
-                }else{
+
+                } else {
                     setStore({
                         error: "Completar los campos"
                     })
@@ -837,14 +841,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                     getActions().usuariosNoAsignados()
                 }
             },
-            dptoModificar: async(numero) => {
-                const {apiURL} = getStore()
+            dptoModificar: async (numero) => {
+                const { apiURL } = getStore()
                 const resp = await fetch(`${apiURL}/infoDepartamentoEspecifico/${numero}`)
                 const data = await resp.json()
-                if(!data.msg){
+                if (!data.msg) {
                     setStore({
                         departamentoModificar: data
-                        
+
                     })
                 }
             },
@@ -883,7 +887,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 formData.append("comprobante", comprobante.comprobante)
 
 
-                let tamañoDepto = departamentos.filter(depart => depart.id === depto.modelo.id)[0].total
+
+                let tamañoDepto = departamentos.filter(depart => depart.modelo === depto.modelo.name)[0].total
                 if (depto.bodega_id !== null && depto.estacionamiento_id !== null) {
                     tamañoDepto += (bodegasEdificio.total_superficie + estacionamientoEdificios.total_superficie)
                 }
@@ -975,7 +980,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getBodegasDelEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
-                const resp = await fetch(`${apiURL}/bodegas/${currentEdificioID}`)
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const resp = await fetch(`${apiURL}/bodegas/${edificioID}`)
                 const data = await resp.json()
                 const { msg } = data;
                 if (msg !== undefined) {
@@ -990,7 +997,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getEstacionamientosDelEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
-                const resp = await fetch(`${apiURL}/estacionamientos/${currentEdificioID}`)
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const resp = await fetch(`${apiURL}/estacionamientos/${edificioID}`)
                 const data = await resp.json()
                 const { msg } = data;
                 if (msg !== undefined) {
@@ -1019,6 +1028,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({
                         crearGastoComun: { error: msg }
                     })
+                    console.log(data)
                 } else {
                     setStore({
                         crearGastoComun: { error: msg }
@@ -1093,7 +1103,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             deleteBodegaEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
-                const resp = await fetch(`${apiURL}/delete-bodega-edificio/${currentEdificioID}`, {
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const resp = await fetch(`${apiURL}/delete-bodega-edificio/${edificioID}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -1111,7 +1123,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             deleteEstacionamientoEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
-                const resp = await fetch(`${apiURL}/delete-estacionamiento-edificio/${currentEdificioID}`, {
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const resp = await fetch(`${apiURL}/delete-estacionamiento-edificio/${edificioID}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -1302,13 +1316,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                 e.preventDefault();
                 const store = getStore();
                 const { asunto_boletin, body_boletin, apiURL } = getStore();
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
                 const resp = await fetch(`${apiURL}/boletin`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         asunto: asunto_boletin,
                         body: body_boletin,
-                        edificio_id: store.currentEdificioID
+                        edificio_id: edificioID
                     })
                 });
 
@@ -1339,7 +1355,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getBoletines: async () => {
                 const { apiURL } = getStore();
-                const response = await fetch(`${apiURL}/boletin`)
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const response = await fetch(`${apiURL}/boletin/${edificioID}`)
                 const data = await response.json()
                 if (data.msg) {
                     alert(data.msg)
@@ -1361,7 +1379,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                     const data = await response.json()
                     console.log(data)
-                    actions.getBoletines(edificioID)
+                    actions.getBoletines()
                 }
                 catch (error) {
                     console.log(error)
@@ -1401,7 +1419,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             correoGastos: async (id, monto, propietario) => {
                 const { apiURL } = getStore();
                 if (!!id) {
-                    const resp = await fetch(`${apiURL}/correo-gastos/${"sinResidente"}/${null}`, {
+                    const resp = await fetch(`${apiURL}/correo-gastos/${id}/${null}`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -1411,7 +1429,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await resp.json();
                     alert(data.msg)
                 } else if (id === null && !!propietario) {
-                    const resp = await fetch(`${apiURL}/correo-gastos/${"prueba"}/${propietario}`, {
+                    const resp = await fetch(`${apiURL}/correo-gastos/${"sinResidente"}/${propietario}`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
