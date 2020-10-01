@@ -165,7 +165,16 @@ const GastosDepartamentos = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {data.length > 0 && currentPosts.map((gasto, index) => {
+                                                {data.length > 0 && currentPosts.sort(function (a, b) {
+                                                    if (a.departamento.numero_depto > b.departamento.numero_depto) {
+                                                      return 1;
+                                                    }
+                                                    if (a.departamento.numero_depto < b.departamento.numero_depto) {
+                                                      return -1;
+                                                    }
+                                                    // a must be equal to b
+                                                    return 0;
+                                                  }).map((gasto, index) => {
 
                                                     return (
 

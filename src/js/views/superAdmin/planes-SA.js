@@ -89,6 +89,12 @@ const ModifyPlans = () => {
                             <button className="btn btn-verde mb-5" onClick={() => {
                                 if (!createPlan) {
                                     setCreatePlan(true)
+                                    setNewPlan({
+                                        name: "",
+                                        price: "",
+                                        body: [],
+                                        frecuencia: ""
+                                    })
                                 } else {
                                     setCreatePlan(false)
                                 }

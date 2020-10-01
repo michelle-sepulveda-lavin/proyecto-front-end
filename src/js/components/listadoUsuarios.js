@@ -8,28 +8,26 @@ const ListadoUsuarios = () => {
     return (
         <>
             <div className="row my-5">
-                <div className="col">
-                    <form onSubmit={e => actions.getUsuarios(e)} >
-                        <div className="form-row text-center ">
-                            <div className="col-md-2">
-                                <label htmlFor="rol_id text-center">Filtro busqueda</label>
-                            </div>
-                            <div className="col-md-4 ">
-                                <select defaultValue={''} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
-                                    <option value="" >Todos</option>
-                                    <option value="superAdministrador">Super Administradores</option>
-                                    <option value="administrador">Administradores</option>
-                                    <option value="conserje">Conserje</option>
-                                    <option value="usuario">Usuarios</option>
-                                    <option value="propietario">Propietario</option>
-                                </select>
-                            </div>
-                            <div className="col-md-6 ">
-                                <button className="btn btn-verde">Mostrar</button>
-                            </div>
+                <form onSubmit={e => actions.getUsuarios(e)} className="col d-flex justify-content-center">
+                    <div className="form-row ">
+                        <div className="col-md-4">
+                                <label htmlFor="rol_id text-center">Ordenar por</label>
                         </div>
-                    </form>
-                </div>
+                        <div className="col-md-4 ">
+                            <select defaultValue={''} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
+                                <option value="" >Todos</option>
+                                <option value="superAdministrador">Super Administradores</option>
+                                <option value="administrador">Administradores</option>
+                                <option value="conserje">Conserje</option>
+                                <option value="usuario">Usuarios</option>
+                                <option value="propietario">Propietario</option>
+                            </select>
+                        </div>
+                        <div className="col-md-4 ">
+                            <button className="btn btn-verde"><i className="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <div className="row mt-5">

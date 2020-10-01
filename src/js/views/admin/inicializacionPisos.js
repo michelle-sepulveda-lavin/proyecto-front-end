@@ -61,6 +61,8 @@ const InicializacionPisos = () => {
         actions.usuariosNoAsignados()
         actions.getBodegasDelEdificio()
         actions.getEstacionamientosDelEdificio()
+        actions.propietarioNoAsignado()
+
 
     }, []);
     return (
@@ -116,7 +118,7 @@ const InicializacionPisos = () => {
                                     limpiarFormulario(e)
                                     limpiarState()
                                 }}>
-                                    <table className="table table-bordered text-center table-responsive-md">
+                                    <table className="table table-bordered text-center table-responsive">
                                         <thead className="btn-oscuro">
                                             <tr>
                                                 <th scope="col">N° Departamento</th>
@@ -262,14 +264,14 @@ const InicializacionPisos = () => {
                                         Piso
                             </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a className="dropdown-item" onClick={() => actions.filtradoPiso("todos")}>
+                                        <a className="dropdown-item" onClick={() => actions.filtradoDepartamentos("todos")}>
                                             Todos
                                 </a>
                                         {
                                             !!pisos &&
                                             pisos.sort(function (a, b) { return a - b }).map((piso, index) => {
                                                 return (
-                                                    <a className="dropdown-item" key={index} onClick={() => actions.filtradoPiso(piso)}>
+                                                    <a className="dropdown-item" key={index} onClick={() => actions.filtradoDepartamentos(piso)}>
                                                         {piso}
                                                     </a>
                                                 )
@@ -289,7 +291,7 @@ const InicializacionPisos = () => {
                         </div>
                         <div className="row">
                             <div className="col">
-                                <table className="table table-hover table-bordered border">
+                                <table className="table table-hover table-bordered border table-responsive">
                                     <thead className="btn-oscuro">
                                         <tr>
                                             <th scope="col">#</th>
@@ -308,8 +310,16 @@ const InicializacionPisos = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            store.departamentosPorPiso.length > 0 &&
-                                                (store.departamentosPorPiso.sort(function (a, b) { return a - b }).map((dpto, index) => {
+                                            store.departamentosFiltrados.length > 0 ?
+                                                (store.departamentosFiltrados.sort(function (a, b) {
+                                                    if (a.numero_departamento > b.numero_departamento) {
+                                                      return 1;
+                                                    }
+                                                    if (a.numero_departamento < b.numero_departamento) {
+                                                      return -1;
+                                                    }
+                                                    return 0;
+                                                  }).map((dpto, index) => {
                                                     const residente = dpto.residente;
                                                     const propietario = dpto.propietario;
                                                     const usuarioName = (user) =>{ 
@@ -348,19 +358,27 @@ const InicializacionPisos = () => {
                                                     )
                                                 })
                                                 )
-                                                /* :
-                                                (store.departamentoUsuarios.map((dpto, index) => {
-                                                    const residente = dpto.residente
-                                                    const usuarioName = (user) =>{ 
-                                                        return user.id == residente;
+                                                :
+                                                !!store.finalUserBuilding &&
+                                                (store.departamentoUsuarios.sort(function (a, b) {
+                                                    if (a.numero_departamento > b.numero_departamento) {
+                                                      return 1;
                                                     }
-                                                    console.log(!!residente && store.finalUserBuilding.find(usuarioName).username)
+                                                    if (a.numero_departamento < b.numero_departamento) {
+                                                      return -1;
+                                                    }
+                                                    return 0;
+                                                  }).map((dpto, index) => {
+                                                    const residente = !!dpto.residente && dpto.residente;
+                                                    const propietario = !!dpto.propietario && dpto.propietario;
+                                                    const resultado = !!store.finalUserBuilding && store.finalUserBuilding.find(elem => elem.id == residente);
+                                                    const resultado2 = !!store.usuariosEdificio && store.usuariosEdificio.find(elem => elem.id == propietario);
                                                     return (
                                                         <tr key={index}>
                                                             <th scope="row">{index + 1}</th>
                                                             <td>{dpto.numero_departamento}</td>
-                                                            <td>{"j"}</td>
-                                                            <td>{"h"}</td>
+                                                            <td>{!!resultado && resultado.username}</td>
+                                                            <td>{!!resultado2 && resultado2.username}</td>
                                                             <td>{dpto.bodega_id}</td>
                                                             <td>{dpto.estacionamiento_id}</td>
                                                             <td>{dpto.piso}</td>
@@ -389,7 +407,7 @@ const InicializacionPisos = () => {
                                                         </tr>
                                                     )
                                                 })
-                                                ) */
+                                                )
                                         }
                                     </tbody>
                                 </table>

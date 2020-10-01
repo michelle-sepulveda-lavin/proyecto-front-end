@@ -30,8 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             planes: [],
             departamentos: [],
             departamentoUsuarios: [],
-            departamentosPorPiso: [],
-            departamentoEstado: [],
+            departamentosFiltrados: [],
             usuariosEdificio: [],
             crearConserje: {
                 error: null,
@@ -604,24 +603,44 @@ const getState = ({ getStore, getActions, setStore }) => {
                     getActions().getDptosUsuarios()
                 }
             },
-            filtradoPiso: (piso) => {
+            filtradoDepartamentos: (filtro) =>{
                 const { departamentoUsuarios } = getStore();
                 setStore({
-                    departamentoEstado: []
+                    departamentosFiltrados: [],
                 })
-                if (piso !== "todos") {
-                    const auxiliar = departamentoUsuarios.filter((dpto, index) => {
-                        return (dpto.piso === piso)
+                if (filtro === "todos") {
+                    setStore({
+                        departamentosFiltrados: departamentoUsuarios
+                    })
+                }else if (filtro == "habitado") {
+                    const auxiliar = departamentoUsuarios.filter((dpto) => {
+                        return (dpto.estado === filtro)
                     })
                     setStore({
-                        departamentosPorPiso: auxiliar
+                        departamentosFiltrados: auxiliar
                     })
-                } else if (piso === "todos") {
+                }else if (filtro == "deshabitado") {
+                    const auxiliar = departamentoUsuarios.filter((dpto) => {
+                        return (dpto.estado === filtro)
+                    })
                     setStore({
-                        departamentosPorPiso: departamentoUsuarios
+                        departamentosFiltrados: auxiliar
+                    })
+                }else if(typeof(filtro) === "object"){
+                    const auxiliar = departamentoUsuarios.filter((dpto) => {
+                        return (dpto.numero_departamento === filtro.dpto)
+                    })
+                    setStore({
+                        departamentosFiltrados: auxiliar
+                    })
+                }else{
+                    const auxiliar = departamentoUsuarios.filter((dpto) => {
+                        return (dpto.piso === filtro)
+                    })
+                    setStore({
+                        departamentosFiltrados: auxiliar
                     })
                 }
-
             },
             getUsuariosDelEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
@@ -640,64 +659,52 @@ const getState = ({ getStore, getActions, setStore }) => {
                     getActions().propietarioNoAsignado()
                 }
             },
-            filtradoEstado: (estado) => {
-                const { departamentoUsuarios } = getStore();
-                setStore({
-                    departamentosPorPiso: []
-                })
-                if (estado !== "todos") {
-                    const auxiliar = departamentoUsuarios.filter((dpto) => {
-                        return (dpto.estado === estado)
-                    })
-                    setStore({
-                        departamentoEstado: auxiliar
-                    })
-                } else if (estado === "todos") {
-                    setStore({
-                        departamentoEstado: departamentoUsuarios
-                    })
-                }
-
-            },
             limpiarCamposFiltrado: () => {
                 setStore({
                     departamentoEstado: [],
                     departamentosPorPiso: []
                 })
             },
-            addResidente: async (e, residente) => {
+            addResidente: async (e, info) => {
                 e.preventDefault()
                 setStore({ success: null })
                 const { apiURL, departamentoModificar } = getStore();
-                const resp = await fetch(`${apiURL}/add-residente/${departamentoModificar}`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(residente)
-                })
-                const data = await resp.json()
-                if (data.msg !== undefined) {
-                    if (data.msg === "Departamento actualizado exitosamente") {
-                        setStore({
-                            error: null
-                        })
-                        getActions().getUsuariosDelEdificio()
-                        getActions().getUsuarios(e)
-                        getActions().getEdificioCompleto()
-                        getActions().getDepartamentos()
-                        getActions().getDptosUsuarios()
-                        getActions().getUsuariosDelEdificio()
-                        getActions().usuariosNoAsignados()
-                        getActions().getBodegasDelEdificio()
-                        getActions().getEstacionamientosDelEdificio()
-                        getActions().propietarioNoAsignado()
-                        getActions().cerrarModalAddUsert()
-                    } else {
-                        setStore({
-                            error: data.msg
-                        })
+                if(!!info){
+                    const resp = await fetch(`${apiURL}/add-residente/${departamentoModificar.id}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(info)
+                    })
+                    const data = await resp.json()
+                    if (data.msg !== undefined) {
+                        if (data.msg === "Departamento actualizado exitosamente") {
+                            setStore({
+                                error: null
+                            })
+                            getActions().getUsuariosDelEdificio()
+                            getActions().getUsuarios(e)
+                            getActions().getEdificioCompleto()
+                            getActions().getDepartamentos()
+                            getActions().getDptosUsuarios()
+                            getActions().getUsuariosDelEdificio()
+                            getActions().usuariosNoAsignados()
+                            getActions().getBodegasDelEdificio()
+                            getActions().getEstacionamientosDelEdificio()
+                            getActions().propietarioNoAsignado()
+                            getActions().cerrarModalAddUsert()
+                        } else {
+                            setStore({
+                                error: data.msg
+                            })
+                        }
                     }
+                    
+                }else{
+                    setStore({
+                        error: "Completar los campos"
+                    })
                 }
 
             },
@@ -830,11 +837,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                     getActions().usuariosNoAsignados()
                 }
             },
-            dptoModificar: (numero) => {
-                setStore({
-                    departamentoModificar: numero
-                    
-                })
+            dptoModificar: async(numero) => {
+                const {apiURL} = getStore()
+                const resp = await fetch(`${apiURL}/infoDepartamentoEspecifico/${numero}`)
+                const data = await resp.json()
+                if(!data.msg){
+                    setStore({
+                        departamentoModificar: data
+                        
+                    })
+                }
             },
             getTotalM2: (modelos) => {
                 const { departamentos, edificioCompleto, bodegasEdificio, estacionamientoEdificios } = getStore()

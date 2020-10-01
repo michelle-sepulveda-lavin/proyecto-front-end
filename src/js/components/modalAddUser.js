@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
 
 const ModalAddUser = (props) => {
     const { store, actions } = useContext(Context)
-    const [info, setInfo] = useState({});
+    const [info, setInfo] = useState();
+
 
     return (
         <>
@@ -12,9 +13,6 @@ const ModalAddUser = (props) => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">Añadir residente</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </div>
                         {
                             !!store.error &&
@@ -26,8 +24,10 @@ const ModalAddUser = (props) => {
                             <form onSubmit={(e) => actions.addResidente(e, info)}>
                                 <div className="form-group">
                                     <label htmlFor="propietario">Propietario</label>
-                                    <select defaultValue={'default'} className="form-control" name="propietario" onClick={e => setInfo({ ...info, "propietario": e.target.value })}>
-                                        <option value="default" disabled>Seleccionar</option>
+                                    <select defaultValue={!!store.departamentoModificar && store.departamentoModificar.propietario} className="form-control" name="propietario" onClick={e => setInfo({ ...info, "propietario": e.target.value })}>
+                                        {/* <option value="default" disabled>Seleccionar</option> */}
+                                        <option value={!!store.departamentoModificar && store.departamentoModificar.propietario}>{!!store.departamentoModificar &&  store.usuariosEdificio.find(elem => elem.id == store.departamentoModificar.propietario).username}</option>
+                                        
                                         {
                                             !!store.propietarioNoAsignado &&
                                             store.propietarioNoAsignado.map((user, index) => {
@@ -41,8 +41,8 @@ const ModalAddUser = (props) => {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="residente">Residente</label>
-                                    <select defaultValue={'default'} className="form-control" name="residente" onClick={e => setInfo({ ...info, "residente": e.target.value })}>
-                                        <option value="default" disabled>Seleccionar</option>
+                                    <select defaultValue={!!store.departamentoModificar && store.departamentoModificar.residente} className="form-control" name="residente" onClick={e => setInfo({ ...info, "residente": e.target.value })}>
+                                        <option value={!!store.departamentoModificar && store.departamentoModificar.residente} >{!!store.departamentoModificar &&  store.finalUserBuilding.find(elem => elem.id == store.departamentoModificar.residente).username}</option>
                                         <option value="default" >Sin usuario</option>
                                         {
                                             !!store.usuariosEdificioNoAsignados &&
