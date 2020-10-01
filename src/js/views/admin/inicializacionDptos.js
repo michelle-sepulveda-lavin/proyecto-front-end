@@ -7,6 +7,7 @@ const InicializacionDptos = () => {
     const { actions, store } = useContext(Context);
     const [modelInfo, setModelInfo] = useState({});
 
+
     const handleChange = (e) => {
         setModelInfo({
             ...modelInfo, [e.target.name]: e.target.value

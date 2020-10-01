@@ -67,7 +67,7 @@ const DashboardSuperAdmin = () => {
 
                                     <div className="d-flex justify-content-center p-3">
                                         <span className="ml-md-1 big-font d-flex align-items-center justify-content-center p-5 btn-db-1 shadow-sm">
-                                            <p className="pt-3">{!!store.edificios.length && store.edificios.length}</p>
+                                            <p className="pt-3">{store.edificios.length  > 0? store.edificios.length : "0"}</p>
                                         </span>
                                     </div>
                                 </div>

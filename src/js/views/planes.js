@@ -131,7 +131,7 @@ const Planes = () => {
                                                                 ¡Te contactaremos lo antes posible!
                                                             </div>
 
-                                                            <button type="submit" className="btn btn-lg btn-success">Enviar solicitud </button>
+                                                            <button type="submit" className="btn btn-lg btn-verde">Enviar solicitud </button>
 
 
 

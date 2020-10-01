@@ -41,7 +41,7 @@ const ModalCreacionUser = props => {
                                     <input type="email" className="form-control" value={store.email} name="email" onChange={e => actions.handleChangeLogin(e)} />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="password">Password</label>
+                                    <label htmlFor="password">Contraseña</label>
                                     <input type="password" className="form-control" value={store.password} name="password" onChange={e => actions.handleChangeLogin(e)} />
                                 </div>
                                 <div className="form-group">

@@ -145,7 +145,7 @@ const InicializacionPisos = () => {
                                                             <>
                                                                 <label className="sr-only" htmlFor="residente">Residente</label>
                                                                 <select defaultValue={'null'} className="form-control form-control-sm" name="residente" onChange={e => handleChange(e)}>
-                                                                    <option value="null" disabled>Seleccionar</option>
+                                                                    <option value="null" disabled></option>
                                                                     {
                                                                         !!store.usuariosEdificioNoAsignados &&
                                                                         store.usuariosEdificioNoAsignados.map((user, index) => {
@@ -172,7 +172,7 @@ const InicializacionPisos = () => {
                                                             <>
                                                                 <label className="sr-only" htmlFor="propietario">Propietario</label>
                                                                 <select defaultValue={'null'} className="form-control form-control-sm" name="propietario" onChange={e => handleChange(e)}>
-                                                                    <option value="null" disabled>Seleccionar</option>
+                                                                    <option value="null" disabled></option>
                                                                     {
                                                                         !!store.propietarioNoAsignado &&
                                                                         store.propietarioNoAsignado.map((user, index) => {
@@ -262,7 +262,7 @@ const InicializacionPisos = () => {
                                 <div className="btn-group">
                                     <button type="button" className="btn btn-verde dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={() => contadorPisos()}>
                                         Piso
-                            </button>
+                                    </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a className="dropdown-item" onClick={() => actions.filtradoDepartamentos("todos")}>
                                             Todos
