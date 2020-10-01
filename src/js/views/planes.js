@@ -65,9 +65,9 @@ const Planes = () => {
 
             <img src="../edificos-felices-logo.png" alt="logo" className="logo logo-planes ml-3 mt-2" />
 
-            <h1 className="text-center planes-titulo">NUESTROS PLANES</h1>
+            <h1 className="text-center planes-titulo mt-3">NUESTROS PLANES</h1>
 
-            <div className="container my-5">
+            <div className="container my-4">
 
                 <div className="row row-cols-1 row-cols-md-2 d-flex justify-content-center">
 

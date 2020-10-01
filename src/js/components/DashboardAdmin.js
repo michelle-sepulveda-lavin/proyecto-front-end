@@ -28,10 +28,17 @@ const DashboardAdmin = (props) => {
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const userID = JSON.parse(localStorage.getItem("departamento"))
         const edificioID = user.user.edificio.id
-        const resp = await fetch(`${store.apiURL}/gastoscomunes/edificio/${edificioID}/${mes}/${year}`)
-        const data = await resp.json()
-        if (resp.ok){
-        setGastosDepto(data)
+
+        try {
+            const resp = await fetch(`${store.apiURL}/gastoscomunes/edificio/${edificioID}/${mes}/${year}`)
+            const data = await resp.json()
+            if (resp.ok) {
+                setGastosDepto(data)
+                console.log(data)
+            }
+        }
+        catch (error) {
+            console.log(error)
         }
     }
 
@@ -55,32 +62,34 @@ const DashboardAdmin = (props) => {
     }
 
     const filtroNoPagado = () => {
-        if (gastosDepto !== ""){
-        const noPagados = gastosDepto.filter((meses) => {
-            return meses.estado === "noPagado"
-        })
-        return noPagados
-    }}
+        if (gastosDepto !== "") {
+            const noPagados = gastosDepto.filter((meses) => {
+                return meses.estado === "noPagado"
+            })
+            return noPagados
+        }
+    }
     const filtroRevision = () => {
-        if (gastosDepto !== ""){
-        const revision = gastosDepto.filter((meses) => {
-            return meses.estado === "revision"
-        })
-        return revision
-    }}
+        if (gastosDepto !== "") {
+            const revision = gastosDepto.filter((meses) => {
+                return meses.estado === "revision"
+            })
+            return revision
+        }
+    }
 
     return (
         <div className="container-fluid">
             <h1 className="text-center mt-3 mb-4">Edificio {!!store.edificioCompleto ? store.edificioCompleto.nombre_edificio : ""} </h1>
             <div className="card mb-4 shadow-sm bg-dashboard">
                 <div className="card-body">
-                    <h2 className="card-title mt-3 mb-3 text-center text-md-left">Boletines Activos</h2>
+                    <h2 className="card-title mt-3 mb-4 text-center text-md-left">Boletines Activos</h2>
                     <ul className="p-0 justify-content-start align-items-center row row-cols-1 mb-1 row-cols-md-3">
                         {store.all_boletin.length > 0 &&
                             filtroBoletin().map((boletin, index) => {
 
 
-                                return <li key={index} className="h-100 pt-0 pl-4 pr-4 col mb-3 text-dark ">  <div className="bg-db-3 row py-2"><div className="col-10 col-md-3 d-flex align-items-center"><img className="img-fluid  d-inline" src="../email.png" /></div> <h4 className="p-3 col-md-9 col-12 d-inline rounded-lg" >{boletin.asunto}</h4> </div> </li>
+                                return <li key={index} className="h-100 pt-0 pl-4 pr-4 col mb-3 text-dark ">  <div className="bg-db-3 row py-2 justify-content-center"><div className="col-5 col-md-3 d-flex align-items-center justify-content-center"><img className="img-fluid w-75 d-inline" src="../email.png" /></div> <h4 className="p-3 col-md-9 col-12 d-inline rounded-lg" >{boletin.asunto}</h4> </div> </li>
 
 
                             })

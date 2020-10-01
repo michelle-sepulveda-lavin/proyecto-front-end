@@ -97,7 +97,7 @@ const GastosDeptoActual = () => {
                                                                 <td> {
                                                                     gasto.estado === "pagado" ?
 
-                                                                        <span className="btn btn-azul px-4"
+                                                                        <span className="btn btn-verde px-4"
                                                                             onClick={() => {
                                                                                 setShowPago(true)
                                                                                 setComprobantePago(gasto.pago)
@@ -105,7 +105,7 @@ const GastosDeptoActual = () => {
                                                                             }>Comprobante</span>
                                                                         :
                                                                         gasto.estado === "revision" ?
-                                                                            <span className="btn btn-warning px-5"
+                                                                            <span className="btn btn-amarillo px-5"
                                                                                 onClick={() => {
 
                                                                                     setShow(true)
@@ -119,9 +119,9 @@ const GastosDeptoActual = () => {
                                                                                 }}>Validar</span>
                                                                             :
                                                                             gasto.estado === "noPagado" ?
-                                                                                <span className="btn btn-verde"
+                                                                                <span className="btn btn-azul"
                                                                                     onClick={() => {
-                                                                                        console.log("EN PROGRESO")
+                                                                                        actions.correoGastos(gasto.departamento.residente, gasto.monto, gasto.departamento.propietario)
                                                                                     }}>Enviar notificación</span>
                                                                                 :
                                                                                 ""

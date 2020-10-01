@@ -51,7 +51,7 @@ const InicializacionPisos = () => {
         const aux2 = [...new Set(auxiliar)]
         return (aux2).length
     }
-    
+
 
     useEffect(() => {
         actions.getEdificioCompleto()
@@ -313,19 +313,19 @@ const InicializacionPisos = () => {
                                             store.departamentosFiltrados.length > 0 ?
                                                 (store.departamentosFiltrados.sort(function (a, b) {
                                                     if (a.numero_departamento > b.numero_departamento) {
-                                                      return 1;
+                                                        return 1;
                                                     }
                                                     if (a.numero_departamento < b.numero_departamento) {
-                                                      return -1;
+                                                        return -1;
                                                     }
                                                     return 0;
-                                                  }).map((dpto, index) => {
+                                                }).map((dpto, index) => {
                                                     const residente = dpto.residente;
                                                     const propietario = dpto.propietario;
-                                                    const usuarioName = (user) =>{ 
+                                                    const usuarioName = (user) => {
                                                         return user.id == residente;
                                                     }
-                                                    const propietarioName = (user) =>{ 
+                                                    const propietarioName = (user) => {
                                                         return user.id == propietario;
                                                     }
                                                     return (
@@ -349,7 +349,7 @@ const InicializacionPisos = () => {
                                                                 <button type="button" className="btn" data-toggle="modal" data-target="#addUser" onClick={() => {
                                                                     actions.dptoModificar(dpto.id)
                                                                     actions.activarModalAddUser()
-                                                                    }}>
+                                                                }}>
                                                                     <i className="fas fa-pencil-alt cursor-pointer"></i>
                                                                 </button>
                                                                 <ModalAddUser />
@@ -362,13 +362,13 @@ const InicializacionPisos = () => {
                                                 !!store.finalUserBuilding &&
                                                 (store.departamentoUsuarios.sort(function (a, b) {
                                                     if (a.numero_departamento > b.numero_departamento) {
-                                                      return 1;
+                                                        return 1;
                                                     }
                                                     if (a.numero_departamento < b.numero_departamento) {
-                                                      return -1;
+                                                        return -1;
                                                     }
                                                     return 0;
-                                                  }).map((dpto, index) => {
+                                                }).map((dpto, index) => {
                                                     const residente = !!dpto.residente && dpto.residente;
                                                     const propietario = !!dpto.propietario && dpto.propietario;
                                                     const resultado = !!store.finalUserBuilding && store.finalUserBuilding.find(elem => elem.id == residente);

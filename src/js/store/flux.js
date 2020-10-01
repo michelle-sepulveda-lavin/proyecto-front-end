@@ -481,7 +481,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         })
                     }
                 }
-                catch(error){
+                catch (error) {
                     console.log(error)
                 }
             },
@@ -1387,21 +1387,31 @@ const getState = ({ getStore, getActions, setStore }) => {
                     flagModalAddUser: false
                 })
             },
-            getAdministradorEdificio: async(id) =>{
-                const {apiURL} = getStore()
+            getAdministradorEdificio: async (id) => {
+                const { apiURL } = getStore()
                 const resp = await fetch(`${apiURL}/admnistradorEdificio/${id}`)
                 const data = await resp.json()
-                if(!data.msg){
+                if (!data.msg) {
                     setStore({
                         administradorEdificio: data
                     })
                 }
             },
 
-            correoGastos: async (id, monto) => {
+            correoGastos: async (id, monto, propietario) => {
                 const { apiURL } = getStore();
                 if (!!id) {
-                    const resp = await fetch(`${apiURL}/correo-gastos/${id}`, {
+                    const resp = await fetch(`${apiURL}/correo-gastos/${"sinResidente"}/${null}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ "monto": monto })
+                    });
+                    const data = await resp.json();
+                    alert(data.msg)
+                } else if (id === null && !!propietario) {
+                    const resp = await fetch(`${apiURL}/correo-gastos/${"prueba"}/${propietario}`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -1424,7 +1434,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const aux2 = aux.map((dpto) => {
                         return dpto.propietario
                     })
-                    const propietarios = usuariosEdificio.filter((user)=>{
+                    const propietarios = usuariosEdificio.filter((user) => {
                         return user.rol.name === "propietario"
                     })
 
@@ -1437,6 +1447,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 }
             },
+            correoBoletines: async (id, asunto, body, edificio) => {
+                const { apiURL } = getStore();
+
+                try {
+                    const resp = await fetch(`${apiURL}/correo-boletin/${id}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            "body": body,
+                            "edificio": edificio,
+                            "asunto": asunto
+                        })
+                    });
+                    const data = await resp.json();
+                }
+                catch (error) {
+                    console.log(error)
+                }
+
+            }
         }
     }
 };

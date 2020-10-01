@@ -16,7 +16,6 @@ const DepartamentosAdmin = () => {
         setPisos(aux2)
     }
 
-
     useEffect(() => {
         actions.getEdificioCompleto()
         actions.getDepartamentos()
@@ -157,7 +156,6 @@ const DepartamentosAdmin = () => {
                             )
                         })
                     }
-
                 </div>
             </div>
         </SidebarPage>

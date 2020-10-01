@@ -75,7 +75,7 @@ const GastosUser = () => {
                     <div className="col-12 col-md-10 row align-items-center">
 
                         <div className="col-12 col-md-7">
-                            <div class="card rounded">
+                            <div class="card rounded mb-3 mb-md-0">
                                 <div class="card-body">
                                     <h4 class="card-title text-center mb-3">Gastos comunes de {mesActual}</h4>
                                     <div className="row justify-content-center">

@@ -60,7 +60,7 @@ const DashboardSuperAdmin = () => {
                 <div className="col mb-4">
                     <div className="card h-100 shadow-sm bg-dashboard">
                         <div className="card-body">
-                            <h2 className="card-title text-center " >Edificios</h2>
+                            <h2 className="card-title text-center" >Edificios</h2>
                             <h5 className="mt-3">Edificios administrados</h5>
                             <div className="row justify-content-center">
                                 <div className="card col-9 col-md-6 my-4 p-3 bg-db-1">
@@ -118,7 +118,7 @@ const DashboardSuperAdmin = () => {
                                         return (
 
                                             <div key={index} className="col h-100">
-                                                <div className={"card p-3 text-white" + (index % 2 === 0 ? " bg-db-4" : " bg-db-2")}>
+                                                <div className={"mb-3 card p-3 text-white" + (index % 2 === 0 ? " bg-db-4" : " bg-db-2")}>
                                                     <h4 >{plan.name}</h4>
                                                     <div className="d-flex justify-content-end">
                                                         <span className={"ml-md-1 d-flex align-items-center justify-content-center btn-db-2 shadow-sm dashboard-green" + (index % 2 === 0 ? " btn-db-4" : " btn-db-2")}>
@@ -141,10 +141,11 @@ const DashboardSuperAdmin = () => {
             <div className="card mb-4 shadow-sm bg-dashboard">
                 <div className="card-body">
                     <h2 className="card-title text-center">Contratos</h2>
-                    <ul className="p-0 mt-5 justify-content-center row">
-                        <li className="d-flex mb-3 text-dark align-items-center justify-content-center row col-md-4"> <div className="col col-lg-6 d-flex justify-content-center"><div> <div className={"card p-3 text-white bg-db-1"}>  <span className={"ml-md-1 d-flex align-items-center justify-content-center btn-db-1 shadow-sm"}>
+                    <ul className="p-0 mt-4 justify-content-center row">
+
+                        <li className="d-flex mb-3 col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div className={"card p-3 text-white bg-db-4"}>  <span className={"ml-md-1 d-flex align-items-center justify-content-center btn-db-4 shadow-sm "}>
                             <p className="pt-3">{filtradoPorVencer().length}</p>
-                        </span></div></div> </div> <div className="col col-lg-6 text-center"><h4 >Próximos a Vencer</h4> </div></li>
+                        </span></div></div> <div className="col col-lg-6 text-center text-dark"><h4 >Por vencer</h4> </div></li>
 
                         <li className="d-flex mb-3 col-md-4 align-items-center justify-content-center row"> <div className="col col-lg-6 d-flex justify-content-center"><div className={"card p-3 text-white bg-db-4"}>  <span className={"ml-md-1 d-flex align-items-center justify-content-center btn-db-4 shadow-sm "}>
                             <p className="pt-3">{filtradoVencido().length}</p>
