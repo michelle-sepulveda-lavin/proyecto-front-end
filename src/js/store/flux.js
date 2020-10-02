@@ -70,7 +70,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             errorCreacionUser: null,
             flagModalEditUser: null,
             flagModalAddUser: null,
-            propietarioNoAsignado: null
+            propietarioNoAsignado: null,
+            gastoActualDB: []
         },
         actions: {
             handleChangeLogin: e => {
@@ -1200,10 +1201,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getPaqueteria: async () => {
                 const { apiURL, currentEdificioID } = getStore();
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
                 setStore({
                     errorPaqueteria: null
                 })
-                const resp = await fetch(`${apiURL}/paqueteria/${currentEdificioID}`)
+                const resp = await fetch(`${apiURL}/paqueteria/${edificioID}`)
                 const data = await resp.json();
                 if (resp.ok) {
                     setStore({
@@ -1484,6 +1487,29 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
                 catch (error) {
                     console.log(error)
+                }
+
+            },
+            getGastosDeptoActual: async () => {
+                const { apiURL } = getStore()
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const userID = JSON.parse(localStorage.getItem("departamento"))
+
+                const resp = await fetch(`${apiURL}/gastoscomunes/depto/${edificioID}/${userID}`)
+                const data = await resp.json()
+                console.log(data)
+                if (resp.ok) {
+                    setStore(
+                        {
+                            gastoActualDB: data.filter((meses) => {
+                                const q = new Date()
+                                const mes = q.getMonth();
+                                const year = q.getFullYear();
+                                return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
+                            })
+                        }
+                    )
                 }
 
             }
