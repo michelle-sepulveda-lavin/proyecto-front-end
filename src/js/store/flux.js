@@ -1490,7 +1490,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 
             },
-            getGastosDeptoActual: async () => {
+            getGastosActuales: async () => {
                 const { apiURL } = getStore()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
                 const edificioID = user.user.edificio.id
