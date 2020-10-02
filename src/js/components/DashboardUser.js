@@ -25,34 +25,18 @@ const DashboardUser = (props) => {
     }
     const [gastoActual, setGastoActual] = useState(null)
 
-    const getGastosDeptoActual = async () => {
-        const user = JSON.parse(localStorage.getItem("currentUser"))
-        const userID = JSON.parse(localStorage.getItem("departamento"))
-        const edificioID = user.user.edificio.id
-        const resp = await fetch(`${store.apiURL}/gastoscomunes/depto/${edificioID}/${userID}`)
-        const data = await resp.json()
-        console.log(data)
-        if (resp.ok) {
-            setGastoActual(data.filter((meses) => {
-                const q = new Date()
-                const mes = q.getMonth();
-                const year = q.getFullYear();
-                return meses.month === mes && meses.year === year && (meses.estado === "noPagado" || meses.estado === "revision")
-            }))
-        }
 
-    }
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("currentUser"))
         const edificioID = user.user.edificio.id
         actions.getEdificioCompleto()
-        getGastosDeptoActual()
         actions.getBoletines()
         actions.getDepartamentoActualInfo()
         actions.getPaqueteriaUsuario()
         actions.getDepartamentoActualUsuario()
         actions.getConserjes(edificioID)
+        actions.getGastosDeptoActual()
     }, [])
 
     const filtroBoletin = () => {
@@ -213,7 +197,7 @@ const DashboardUser = (props) => {
 
                                         <div className="font-bigger py-3">
                                             <div>
-                                                <p className="pt-2 text-light text-center">{!!gastoActual && gastoActual.length > 0 ? (gastoActual[0].estado === "revision" ? <p className="">El pago está pendiente de revisión</p> : gastoActual[0].estado === "noPagado" ? <p> {gastoCLP(gastoActual[0].monto)}</p> : "") : "No hay gastos pendientes este mes"}</p>
+                                                <p className="pt-2 text-light text-center">{store.gastoActualDB.length > 0 ? (store.gastoActualDB[0].estado === "revision" ? <p className="">El pago está pendiente de revisión</p> : store.gastoActualDB[0].estado === "noPagado" ? <p> {gastoCLP(store.gastoActualDB[0].monto)}</p> : "") : "No hay gastos pendientes este mes"}</p>
 
                                             </div>
                                         </div>

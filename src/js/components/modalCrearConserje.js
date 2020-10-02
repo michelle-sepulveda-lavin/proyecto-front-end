@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
 
 const ModalCrearConserje = props => {
@@ -8,6 +8,9 @@ const ModalCrearConserje = props => {
     const [state, setState] = useState({
 
     })
+    useEffect(() => {
+        actions.getRoles()
+    }, [])
     const handleInputConserje = (e) => {
         setState({ ...state, [e.target.id]: e.target.value })
     }
