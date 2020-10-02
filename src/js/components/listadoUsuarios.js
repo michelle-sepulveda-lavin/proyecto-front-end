@@ -13,7 +13,7 @@ const ListadoUsuarios = () => {
                         <div className="col-md-4">
                                 <label htmlFor="rol_id text-center">Ordenar por</label>
                         </div>
-                        <div className="col-md-4 ">
+                        <div className="col-md-6 ">
                             <select defaultValue={''} name="rol_id" className="form-control" onChange={e => actions.handleChangeLogin(e)}>
                                 <option value="" >Todos</option>
                                 <option value="superAdministrador">Super Administradores</option>
@@ -23,7 +23,7 @@ const ListadoUsuarios = () => {
                                 <option value="propietario">Propietario</option>
                             </select>
                         </div>
-                        <div className="col-md-4 ">
+                        <div className="col-md-2 ">
                             <button className="btn btn-verde"><i className="fas fa-search"></i></button>
                         </div>
                     </div>

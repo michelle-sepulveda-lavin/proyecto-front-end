@@ -38,7 +38,7 @@ const ModalPaquete = () => {
                                     <input type="number" className="form-control" name="numero_departamento" onChange={(e) => handleNumero(e)} />
                                 </div>
                                 <div className="modal-footer">
-                                    <button className="btn btn-primary">Enviar notificacion</button>
+                                    <button className="btn btn-verde">Enviar notificacion</button>
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                 </div>
                             </form>

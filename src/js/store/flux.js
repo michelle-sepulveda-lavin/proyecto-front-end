@@ -70,7 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             errorCreacionUser: null,
             flagModalEditUser: null,
             flagModalAddUser: null,
-            propietarioNoAsignado: null
+            propietarioNoAsignado: null,
         },
         actions: {
             handleChangeLogin: e => {
@@ -1486,7 +1486,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error)
                 }
 
-            }
+            },
         }
     }
 };

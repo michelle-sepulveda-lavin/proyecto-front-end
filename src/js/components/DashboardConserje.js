@@ -56,16 +56,22 @@ const DashboardConserje = (props) => {
     }
 
     const filtroNoPagado = () => {
-        const noPagados = gastosDepto.filter((meses) => {
-            return meses.estado === "noPagado"
-        })
-        return noPagados
+        if (gastosDepto !== ""){
+            const noPagados = gastosDepto.filter((meses) => {
+                return meses.estado === "noPagado"
+            })
+            return noPagados
+
+        }
     }
     const filtroRevision = () => {
-        const revision = gastosDepto.filter((meses) => {
-            return meses.estado === "revision"
-        })
-        return revision
+        if(gastosDepto !== ""){
+            const revision = gastosDepto.filter((meses) => {
+                return meses.estado === "revision"
+            })
+            return revision
+
+        }
     }
 
     return (
