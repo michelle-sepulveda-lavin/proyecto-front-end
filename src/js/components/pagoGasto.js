@@ -1,6 +1,7 @@
 
 import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
+import PDFView from './PDF';
 
 
 const PagoGastos = props => {
@@ -18,7 +19,7 @@ const PagoGastos = props => {
                     </div>
                     <div className="modal-body">
                         {!!props.datos.pago && props.show &&
-                            < iframe src={`${store.apiURL}/pagosgastos/${props.datos.pago}`} width="100%" height="auto" className="modal-lg"> </iframe>}
+                            < PDFView url={`${store.apiURL}/pagosgastos/${props.datos.pago}`}> </PDFView>}
                     </div>
                     <div className="modal-footer d-flex justify-content-center">
                         <div className="d-flex justify-content-center">

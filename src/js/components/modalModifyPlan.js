@@ -1,7 +1,9 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
+import { Context } from "../store/appContext";
 
 const ModalModifyPlan = (props) => {
 
+    const { actions } = useContext(Context)
     const handleInput = e => {
         e.preventDefault();
         props.setPlanToModify({ ...props.planToModify, [e.target.name]: e.target.value });
@@ -25,6 +27,7 @@ const ModalModifyPlan = (props) => {
         })
         const data = await response.json()
         console.log(data)
+        actions.getPlanes()
         props.getData()
     }
 

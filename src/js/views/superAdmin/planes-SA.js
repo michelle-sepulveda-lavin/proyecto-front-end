@@ -8,13 +8,14 @@ import { Context } from '../../store/appContext';
 
 const ModifyPlans = () => {
 
-    const { actions } = useContext(Context)
+    const { actions, store } = useContext(Context)
     const inputCaracteristica = useRef(null)
 
     const getData = async () => {
         const response = await fetch('http://127.0.0.1:5000/api/planes');
         const data = await response.json()
         setPlanes(data)
+        console.log(data)
     }
     const addPlan = async (plan) => {
         const response = await fetch("http://127.0.0.1:5000/api/planes", {
@@ -26,12 +27,11 @@ const ModifyPlans = () => {
         })
         const data = await response.json()
         console.log(data)
-        getData()
+        actions.getPlanes()
     }
 
     useEffect(() => {
-        getData()
-
+        actions.getPlanes()
     }, []);
 
     const [showModal, setShowModal] = useState(false);
@@ -105,7 +105,7 @@ const ModifyPlans = () => {
                         <div className="row row-cols-1 row-cols-md-2 d-flex justify-content-center">
 
 
-                            {planes.length > 0 && planes.map((plans, index) => {
+                            {store.planes.length > 0 && store.planes.map((plans, index) => {
 
                                 return (
                                     <div key={index} className="col-9 col-md-5 mb-5 plan">

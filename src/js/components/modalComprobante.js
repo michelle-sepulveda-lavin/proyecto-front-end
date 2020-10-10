@@ -1,6 +1,7 @@
 
 import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
+import PDFView from './PDF';
 
 
 const ModalComprobante = props => {
@@ -19,7 +20,7 @@ const ModalComprobante = props => {
                     </div>
                     <div className="modal-body">
                         {store.montosTotalesMes.length > 0 && props.comprobante !== "" && props.show &&
-                            < iframe src={`${store.apiURL}/comprobantes/${props.comprobante}`} width="100%" height="auto" className="modal-lg"> </iframe>}
+                            < PDFView url={`${store.apiURL}/comprobantes/${props.comprobante}`}> </PDFView>}
                     </div>
                     <div className="modal-footer">
                         <button
