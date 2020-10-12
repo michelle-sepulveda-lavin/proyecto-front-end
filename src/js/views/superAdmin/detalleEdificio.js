@@ -27,9 +27,10 @@ const DetalleEdificio = () => {
 
     useEffect(() => {
         getEdificio(id)
+        actions.getEdificioCompleto()
         actions.getPlanes()
         actions.getAdministradorEdificio(id)
-
+        actions.getRoles()
     }, [])
 
     const [edificio, setEdificio] = useState(null)
@@ -179,11 +180,7 @@ const DetalleEdificio = () => {
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Administrador</h5>
-                                        <p className="card-text">{edificio && modify === false && store.administradorEdificio ? store.administradorEdificio.username : edificio && modify === true && store.administradorEdificio.username ? (
-                                            <input className="mt-2" name="nombre_administrador" value={edificioModificado.nombre_administrador}
-                                                onChange={handleInput}
-                                            ></input>
-                                        ) : "Aún no asignado"}</p>
+                                        <p className="card-text">{edificio && store.administradorEdificio ? store.administradorEdificio.username : "Aún no asignado"}</p>
                                     </div>
                                 </div>
                             </div>
@@ -216,15 +213,22 @@ const DetalleEdificio = () => {
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Plan Seleccionado</h5>
                                         <p className="card-text">{edificio && modify === false ? edificio.plan_name : edificio && modify === true ? (
-                                            <select className="form-control form-control-sm mt-2" name="plan_id" onChange={handleInput}> {
-                                                !!store.planes &&
-                                                store.planes.map((plan, index) => {
-                                                    return (
-                                                        <option key={index} value={plan.id}>{plan.name}</option>
-                                                    )
-                                                })
+                                            <select className="form-control form-control-sm mt-2" name="plan_id" id="plan_name" defaultValue={"default"} onChange={(e) => {
+                                                handleInput(e)
+                                                setEdificioModificado({
+                                                    ...edificioModificado, [e.target.id]: e.target.options[e.target.selectedIndex].text
+                                                });
 
-                                            }
+                                            }}>
+                                                <option value="default" disabled>Seleccionar</option>                                                {
+                                                    !!store.planes &&
+                                                    store.planes.map((plan, index) => {
+                                                        return (
+                                                            <option key={index} value={plan.id} name={plan.name}>{plan.name}</option>
+                                                        )
+                                                    })
+
+                                                }
                                             </select>
                                         ) : ""}</p>
                                     </div>

@@ -3,7 +3,7 @@ import { useContext } from "react";
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            apiURL: "http://edificios-felices.herokuapp.com",
+            apiURL: "https://edificios-felices.herokuapp.com",
             username: "",
             password: '',
             email: " ",
@@ -651,7 +651,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getUsuariosDelEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
-                const resp = await fetch(`${apiURL}/usuarios-edificio/${currentEdificioID}`)
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const resp = await fetch(`${apiURL}/usuarios-edificio/${edificioID}`)
                 const data = await resp.json()
                 const { msg } = data;
                 if (msg !== undefined) {
@@ -1416,7 +1418,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore()
                 const resp = await fetch(`${apiURL}/admnistradorEdificio/${id}`)
                 const data = await resp.json()
-                if (!data.msg) {
+                if (resp.ok) {
                     setStore({
                         administradorEdificio: data
                     })

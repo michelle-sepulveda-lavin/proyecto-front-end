@@ -34,7 +34,6 @@ const DashboardAdmin = (props) => {
             const data = await resp.json()
             if (resp.ok) {
                 setGastosDepto(data)
-                console.log(data)
             }
         }
         catch (error) {
@@ -215,7 +214,7 @@ const DashboardAdmin = (props) => {
                                         <div className="col h-100">
                                             <div className="card p-3 bg-db-2">
                                                 <h4 >Por Revisar</h4>      <div className="d-flex justify-content-end">                    <span className="ml-md-1 d-flex align-items-center justify-content-center btn-db-2 shadow-sm dashboard-green">
-                                                    <p className="pt-3">{gastosDepto !== "" && filtroRevision().length > 0 ? filtroRevision().length : "0" }</p>
+                                                    <p className="pt-3">{gastosDepto !== "" && filtroRevision().length > 0 ? filtroRevision().length : "0"}</p>
                                                 </span>
                                                 </div>
                                             </div>
