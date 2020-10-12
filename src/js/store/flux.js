@@ -3,7 +3,7 @@ import { useContext } from "react";
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            apiURL: "http://edificios-felices.herokuapp.com",
+            apiURL: "https://edificios-felices.herokuapp.com",
             username: "",
             password: '',
             email: " ",
