@@ -9,13 +9,13 @@ const DetalleEdificio = () => {
     const { id } = useParams()
 
     const getEdificio = async (id) => {
-        const response = await fetch(`http://127.0.0.1:5000/crearedificio/${id}`)
+        const response = await fetch(`${store.apiURL}/crearedificio/${id}`)
         const data = await response.json()
         setEdificio(data)
     }
 
     const changeEdificio = async (edificioNuevo, id) => {
-        const response = await fetch(`http://127.0.0.1:5000/crearedificio/${id}`, {
+        const response = await fetch(`${store.apiURL}/crearedificio/${id}`, {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json'

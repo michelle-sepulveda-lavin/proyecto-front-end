@@ -1,8 +1,9 @@
+import { useContext } from "react";
 
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            apiURL: "http://localhost:5000",
+            apiURL: "http://edificios-felices.herokuapp.com",
             username: "",
             password: '',
             email: " ",
@@ -106,7 +107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             crearEdificio: async (e, aux) => {
                 e.preventDefault()
-                const { archivoCSV } = getStore();
+                const { archivoCSV, apiURL } = getStore();
                 const dataEdificio = Object.entries(aux);
                 const formData = new FormData();
                 dataEdificio.map((dato) => {
@@ -115,7 +116,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
                 formData.append("archivoCSV", archivoCSV)
 
-                const resp = await fetch("http://localhost:5000/crearedificio", {
+                const resp = await fetch(`${apiURL}/crearedificio`, {
                     method: "POST",
                     headers: {},
                     body: formData
@@ -240,7 +241,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getEdificiosData: async () => {
                 const store = getStore()
-                const response = await fetch('http://127.0.0.1:5000/crearedificio');
+                const response = await fetch(`${store.apiURL}/crearedificio`);
                 const data = await response.json()
                 if (response.ok) {
                     setStore({
@@ -250,7 +251,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getContactData: async () => {
                 const store = getStore()
-                const response = await fetch('http://127.0.0.1:5000/api/info-contacto');
+                const response = await fetch(`${store.apiURL}/api/info-contacto`);
                 const data = await response.json()
                 if (data.msg !== "empty list") {
                     setStore({
@@ -472,8 +473,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
             },
             getPlanes: async () => {
+                const { apiURL } = getStore()
                 try {
-                    const response = await fetch('http://127.0.0.1:5000/api/planes');
+                    const response = await fetch(`${apiURL}/api/planes`);
                     const data = await response.json()
 
                     if (response.ok) {
@@ -715,7 +717,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             crearConserje: async (e, aux) => {
                 const actions = getActions()
-                const { crearConserje, roles } = getStore()
+                const { crearConserje, roles, apiURL } = getStore()
                 const user = JSON.parse(localStorage.getItem("currentUser"))
                 const edificioID = user.user.edificio.id
                 e.preventDefault()
@@ -744,7 +746,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
                 try {
-                    const resp = await fetch("http://localhost:5000/conserjes", {
+                    const resp = await fetch(`${apiURL}/conserjes`, {
                         method: "POST",
                         headers: {},
                         body: formData
@@ -757,7 +759,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             crearConserje: { ...crearConserje, error: null }
                         })
                     }
-                    else if (msg !== undefined) {
+                    else {
                         setStore({
                             crearConserje: { ...crearConserje, error: msg }
                         })
@@ -779,8 +781,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             getRoles: async () => {
+                const { apiURL } = getStore()
                 try {
-                    const response = await fetch('http://127.0.0.1:5000/roles');
+                    const response = await fetch(`${apiURL}/roles`);
                     const data = await response.json()
                     setStore({
                         roles: data
@@ -1032,7 +1035,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(data)
                 } else {
                     setStore({
-                        crearGastoComun: { error: msg }
+                        crearGastoComun: { success: msg, error: null }
                     })
                     setTimeout(() => {
                         history.push("/admin/gastos-comunes")

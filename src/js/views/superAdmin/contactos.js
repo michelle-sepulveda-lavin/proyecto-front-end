@@ -7,7 +7,7 @@ const Contactos = () => {
     const { store, actions } = useContext(Context);
 
     const contactado = async (email) => {
-        const response = await fetch(`http://127.0.0.1:5000/api/info-contacto/${email}`, {
+        const response = await fetch(`${store.apiURL}/api/info-contacto/${email}`, {
             method: "PATCH",
             body: JSON.stringify({
                 state: false

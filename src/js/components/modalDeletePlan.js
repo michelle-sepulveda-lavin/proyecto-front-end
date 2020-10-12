@@ -3,9 +3,9 @@ import { Context } from "../store/appContext";
 
 
 const ModalDeletePlan = props => {
-    const { actions } = useContext(Context)
+    const { actions, store } = useContext(Context)
     const deletePlan = async () => {
-        const response = await fetch(`http://127.0.0.1:5000/api/planes/${props.id}`, {
+        const response = await fetch(`${store.apiURL}/api/planes/${props.id}`, {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'

@@ -7,7 +7,7 @@ const Contactados = () => {
     const { store, actions } = useContext(Context);
 
     const deleteContact = async (email) => {
-        const response = await fetch(`http://127.0.0.1:5000/api/info-contacto/${email}`, {
+        const response = await fetch(`${store.apiURL}/api/info-contacto/${email}`, {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
@@ -17,20 +17,7 @@ const Contactados = () => {
         console.log(data)
         actions.getContactData()
     }
-    /*     const noContactado = async (email) => {
-            const response = await fetch(`http://127.0.0.1:5000/api/info-contacto/${email}`, {
-                method: "PATCH",
-                body: JSON.stringify({
-                    state: true
-                }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8'
-                },
-            })
-            const data = await response.json()
-            console.log(data)
-            actions.getContactData()
-        } */
+
     const includes = store.contactos.map((contacto) => {
         if (Object.values(contacto).includes(false)) {
             return false

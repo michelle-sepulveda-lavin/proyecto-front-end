@@ -12,13 +12,13 @@ const ModifyPlans = () => {
     const inputCaracteristica = useRef(null)
 
     const getData = async () => {
-        const response = await fetch('http://127.0.0.1:5000/api/planes');
+        const response = await fetch(`${store.apiURL}/api/planes`);
         const data = await response.json()
         setPlanes(data)
         console.log(data)
     }
     const addPlan = async (plan) => {
-        const response = await fetch("http://127.0.0.1:5000/api/planes", {
+        const response = await fetch(`${store.apiURL}/api/planes`, {
             method: "POST",
             headers: {
                 'Content-type': 'application/json'

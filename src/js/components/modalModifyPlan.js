@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 
 const ModalModifyPlan = (props) => {
 
-    const { actions } = useContext(Context)
+    const { actions, store } = useContext(Context)
     const handleInput = e => {
         e.preventDefault();
         props.setPlanToModify({ ...props.planToModify, [e.target.name]: e.target.value });
@@ -18,7 +18,7 @@ const ModalModifyPlan = (props) => {
     }
 
     const changePlan = async (modifiedPlan, id) => {
-        const response = await fetch(`http://127.0.0.1:5000/api/planes/${id}`, {
+        const response = await fetch(`${store.apiURL}/api/planes/${id}`, {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json'

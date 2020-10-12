@@ -50,6 +50,16 @@ const ModalPromedio = props => {
                             </div>
                         }
 
+                        {
+                            store.crearGastoComun.success &&
+                            <div className="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Mensaje: </strong>{" "}
+                                {store.crearGastoComun.success}
+                                <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        }
 
 
                         <p className="border shadow p-2 bg-white text-body">Monto total ingresado: {gastoCLP(props.monto)}</p>
