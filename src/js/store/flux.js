@@ -651,7 +651,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             getUsuariosDelEdificio: async () => {
                 const { apiURL, currentEdificioID } = getStore();
-                const resp = await fetch(`${apiURL}/usuarios-edificio/${currentEdificioID}`)
+                const user = JSON.parse(localStorage.getItem("currentUser"))
+                const edificioID = user.user.edificio.id
+                const resp = await fetch(`${apiURL}/usuarios-edificio/${edificioID}`)
                 const data = await resp.json()
                 const { msg } = data;
                 if (msg !== undefined) {
