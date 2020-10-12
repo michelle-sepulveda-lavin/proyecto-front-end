@@ -1417,7 +1417,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const { apiURL } = getStore()
                 const resp = await fetch(`${apiURL}/admnistradorEdificio/${id}`)
                 const data = await resp.json()
-                if (!data.msg) {
+                if (resp.ok) {
                     setStore({
                         administradorEdificio: data
                     })

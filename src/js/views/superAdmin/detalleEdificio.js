@@ -180,7 +180,7 @@ const DetalleEdificio = () => {
                                 <div className="col-lg-9 d-flex align-items-center justify-content-center">
                                     <div>
                                         <h5 className="card-title mb-0 mt-2 mt-md-0">Administrador</h5>
-                                        <p className="card-text">{edificio && modify === false && store.administradorEdificio ? store.administradorEdificio.username : "Aún no asignado"}</p>
+                                        <p className="card-text">{edificio && store.administradorEdificio ? store.administradorEdificio.username : "Aún no asignado"}</p>
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +271,6 @@ const DetalleEdificio = () => {
                     <div className={"btn btn-verde ml-1" + (modify === true ? " d-none" : "")} onClick={() => {
                         setModify(true)
                         setEdificioModificado(edificio)
-                        console.log(edificioModificado)
                     }}>
                         Modificar <i className="fas fa-pencil-alt cursor-pointer"> </i>  </div>
 
