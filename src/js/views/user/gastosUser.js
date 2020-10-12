@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import ModalComprobante from '../../components/modalComprobante';
 import Pagination from '../../components/pagination';
 import PagoUsuario from '../../components/pagoUsuario';
 import SidebarPage from '../../components/SidebarPage';
@@ -10,8 +11,11 @@ const GastosUser = () => {
         actions.getDepartamentoActualUsuario()
         actions.getCurrentDate()
         getGastosDeptoActual()
-
+        actions.getMontosTotales()
     }, [])
+
+    const [showGastoGeneral, setShowGastoGeneral] = useState(false)
+
 
     const deptoID = !!store.departamentoActualUsuario && store.departamentoActualUsuario.id
 
@@ -50,6 +54,7 @@ const GastosUser = () => {
 
     }
     const [comprobantePago, setComprobantePago] = useState("")
+    const [comprobanteGastoGeneral, setComprobanteGastoGeneral] = useState("")
 
     const [currentPage, setCurrentPage] = useState(1)
     const [perPage, setPerPage] = useState(5)
@@ -141,7 +146,7 @@ const GastosUser = () => {
                     </div>
 
 
-                    <div className="col-12 col-md-9 mx-auto overflow-auto pb-4 mt-4">
+                    <div className="col-12 col-md-10 container mx-auto overflow-auto pb-4 mt-4">
                         <h3 className="text-center mb-3" onClick={() => console.log(currentPosts)}>Historial</h3>
                         {!!gastosDepto && gastosDepto.length > 0 &&
                             <>
@@ -150,8 +155,9 @@ const GastosUser = () => {
                                         <tr className="mx-auto">
                                             <th scope="col">Año</th>
                                             <th scope="col">Mes</th>
-                                            <th scope="col">Monto Total</th>
                                             <th scope="col">Estado</th>
+                                            <th scope="col">Monto</th>
+                                            <th scope="col">Gasto General</th>
 
                                             <th scope="col">Comprobante</th>
 
@@ -170,7 +176,11 @@ const GastosUser = () => {
                                                     <td>{new Intl.NumberFormat('en-US',
                                                         { style: 'currency', currency: 'CLP' }
                                                     ).format(monto.monto)}</td>
-
+                                                    <td>
+                                                        <span className="btn btn-azul" onClick={() => {
+                                                            setShowGastoGeneral(true)
+                                                            setComprobanteGastoGeneral(store.montosTotalesMes.filter((gasto) => gasto.month === monto.month)[0].comprobante)
+                                                        }}>Detalle</span></td>
 
                                                     <td>
                                                         {(monto.estado === "pagado" || monto.estado === "revision") &&
@@ -197,6 +207,7 @@ const GastosUser = () => {
 
             </div>
             <PagoUsuario pago={pago} show={show} setShow={setShow}></PagoUsuario>
+            <ModalComprobante show={showGastoGeneral} setShow={setShowGastoGeneral} comprobante={comprobanteGastoGeneral} />
         </SidebarPage>
     )
 };

@@ -45,6 +45,7 @@ const DashboardConserje = (props) => {
         actions.getPaqueteria()
         getGastosDeptoActual()
         actions.getBoletines()
+        actions.getConserjeActual()
     }, [])
 
     const filtroBoletin = () => {
@@ -56,7 +57,7 @@ const DashboardConserje = (props) => {
     }
 
     const filtroNoPagado = () => {
-        if (gastosDepto !== ""){
+        if (gastosDepto !== "") {
             const noPagados = gastosDepto.filter((meses) => {
                 return meses.estado === "noPagado"
             })
@@ -65,7 +66,7 @@ const DashboardConserje = (props) => {
         }
     }
     const filtroRevision = () => {
-        if(gastosDepto !== ""){
+        if (gastosDepto !== "") {
             const revision = gastosDepto.filter((meses) => {
                 return meses.estado === "revision"
             })
@@ -76,8 +77,33 @@ const DashboardConserje = (props) => {
 
     return (
         <div className="container-fluid">
-            <h1 className="text-center mt-3 mb-5">Edificio {!!store.edificioCompleto ? store.edificioCompleto.nombre_edificio : ""} </h1>
+            <div className="container">
+                <h1 className="text-center mt-3 mb-5">Edificio {!!store.edificioCompleto ? store.edificioCompleto.nombre_edificio : ""} </h1>
+            </div>
+            <div className="row  mb-4 justify-content-center">
+                <div className="btn-verde col-6 col-md-3 rounded-lg shadow-sm d-flex justify-content-center pt-2">
+                    <div className="">
+                        <h5 className="text-center"> Hola {!!store.conserjeActualUsuario && store.conserjeActualUsuario.nombre}</h5>
+                        <p className="text-center">{!!store.conserjeActualUsuario && store.conserjeActualUsuario.estado === false ? "Activa tu turno" : "Desactiva tu turno"}
 
+                            <span className="custom-control custom-switch d-flex justify-content-center">
+                                <input type="checkbox" className="custom-control-input" id={"customSwitch"} defaultChecked={store.checked} />
+                                <label className="custom-control-label" htmlFor={"customSwitch"} onClick={() => {
+                                    let estado_conserje;
+
+                                    if (store.conserjeActualUsuario.estado === false) {
+                                        estado_conserje = true
+                                    } else {
+                                        estado_conserje = false
+                                    }
+                                    actions.cambiarEstadoConserje(store.conserjeActualUsuario.id, estado_conserje)
+
+                                }}></label>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div className="row row-cols-1 row-cols-md-2">
 
 

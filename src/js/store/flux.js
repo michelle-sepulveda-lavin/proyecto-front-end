@@ -825,6 +825,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                     const data = await response.json()
                     actions.getConserjes(edificioID)
+                    actions.getConserjeActual()
                 }
 
                 catch (error) {
@@ -1515,6 +1516,20 @@ const getState = ({ getStore, getActions, setStore }) => {
                     )
                 }
 
+            },
+            getConserjeActual: async () => {
+                const { currentUser, apiURL, currentUserId } = getStore()
+                try {
+                    const response = await fetch(`${apiURL}/conserje/usuario/${currentUserId}`)
+                    const data = await response.json()
+                    setStore({
+                        conserjeActualUsuario: data,
+                        checked: data.estado === true ? "checked" : ""
+                    })
+                }
+                catch (error) {
+                    console.log(error)
+                }
             }
         }
     }

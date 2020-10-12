@@ -47,7 +47,7 @@ const Conserjes = () => {
             formData1.append("avatar", conserje.avatar)
         }
         try {
-            const response = await fetch(`${store.apiURL}/conserjes/${id}`, {
+            const response = await fetch(`${store.apiURL}/conserje/usuario/${id}`, {
                 method: "PATCH",
                 body: formData1,
                 headers: {}
