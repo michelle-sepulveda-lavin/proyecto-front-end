@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import ModalNuevoResidente from '../../components/modalNuevoResidente';
 import SidebarPage from '../../components/SidebarPage';
 import { Context } from '../../store/appContext';
 
@@ -26,9 +27,22 @@ const DepartamentosConserje = () => {
     return (
         <SidebarPage>
             <div className="container mt-4">
-                <h1>Departamentos</h1>
+                <div className="row">
+                    <div className="col">
+                        <h1>Departamentos</h1>
+                    </div>
+                </div>
+                <div className="row my-5">
+                    <div className="col d-flex justify-content-center">
+                        <button type="button" className="btn btn-verde" data-toggle="modal" data-target="#nuevoResidente">
+                            Solicitud Nuevo Residente
+                        </button>
+                        <ModalNuevoResidente/>
+                    </div>
+                </div>
+
             </div>
-            <div className="container border bg-white mt-5 p-3" style={{ width: "50vw" }}>
+            <div className="container border bg-white mt-2 p-3" style={{ width: "50vw" }}>
                 <div className="row">
                     <div className="col m-1">
                         <div className="btn-group btn-block">
@@ -77,7 +91,7 @@ const DepartamentosConserje = () => {
                         <div className="row">
                             <div className="col-md-8">
                                 <label htmlFor="numero_departamento" className="sr-only">Numero Departamento</label>
-                                <input type="number" className="form-control" name="numero_departamento" onChange={e => setNumero({dpto: e.target.value})} />
+                                <input type="number" className="form-control" name="numero_departamento" onChange={e => setNumero({ dpto: e.target.value })} />
                             </div>
                             <div className="col-md-4">
                                 <button className="btn btn-azul" onClick={(e) => {

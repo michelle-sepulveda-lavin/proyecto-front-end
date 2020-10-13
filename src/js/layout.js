@@ -33,6 +33,7 @@ import SubirGastos from './components/subirGastos';
 import GastosDepartamentos from './views/admin/gastosDepartamentos';
 import GastosDeptoActual from './views/admin/buscarGastoDepto';
 import HistorialBoletin from './views/admin/historialBoletin';
+import PaqueteriaUser from './views/user/paqueteriaUser';
 
 
 
@@ -41,6 +42,7 @@ const Layout = () => {
         <>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path='/usuario/paqueteria' component={PaqueteriaUser} />
                     <Route exact path='/admin/historial-boletines' component={HistorialBoletin} />
                     <Route exact path='/admin/gastos-depto-actual' component={GastosDeptoActual} />
                     <Route exact path='/admin/gastos-departamentos' component={GastosDepartamentos} />
