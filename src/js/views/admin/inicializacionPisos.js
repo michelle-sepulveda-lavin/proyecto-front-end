@@ -62,7 +62,7 @@ const InicializacionPisos = () => {
         actions.getBodegasDelEdificio()
         actions.getEstacionamientosDelEdificio()
         actions.propietarioNoAsignado()
-
+        actions.getNuevoResidente()
 
     }, []);
     return (
@@ -88,6 +88,49 @@ const InicializacionPisos = () => {
                                 <p>Departamentos Creados: {!!store.contadorUsuarios && (store.contadorUsuarios)}</p>
                                 <p>Bodegas asignadas {!!store.departamentoUsuarios && sumaBodegas()}</p>
                                 <p>Estacionamiento asignados {sumaEstacionamientos()}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="container mt-5">
+                        <div className="row">
+                            <div className="col">
+                                <h5>
+                                    Solicitud nuevos residentes
+                                </h5>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                                <table className="table table-hover table-bordered border table-responsive-md">
+                                    <thead className="btn-oscuro">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Departamento</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            !!store.nuevosResidentes &&
+                                            store.nuevosResidentes.map((residente, index) => {
+                                                return (
+                                                    <tr >
+                                                        <th scope="row">{index + 1}</th>
+                                                        <td>{residente.username}</td>
+                                                        <td>{residente.email}</td>
+                                                        <td>{residente.numero_dpto}</td>
+                                                        <td>{residente.estado}</td>
+                                                        <td><button className="btn btn-azul" onClick={()=>actions.handleCreado(index)}>Creado</button></td>
+                                                    </tr>
+
+                                                )
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -51,6 +51,7 @@ const DashboardAdmin = (props) => {
         actions.getPaqueteria()
         getGastosDeptoActual()
         actions.getBoletines()
+        actions.getNuevoResidente()
     }, [])
 
     const filtroBoletin = () => {
@@ -105,59 +106,91 @@ const DashboardAdmin = (props) => {
             <div className="row row-cols-1 row-cols-md-2 mt-2">
 
                 <div className="col p-3 mb-4 h-100 ">
-                    <div className="card shadow-sm rounded-lg row justify-content-center">
-                        <div className="container card-body">
-                            <div className="row mb-2">
-                                <div className="col-12 mb-4 mt-3 text-center text-md-left">
-                                    <h2>Conserjes de Turno</h2>
+                    <div className="row-cols-1">
+                        <div className="col p-0 h-100">
+                            <div className="card shadow-sm rounded-lg row justify-content-center">
+                                <div className="container card-body">
+                                    <div className="row mb-2">
+                                        <div className="col-12 mb-4 mt-3 text-center text-md-left">
+                                            <h2>Conserjes de Turno</h2>
+                                        </div>
+                                    </div>
+
+                                    {store.conserjes.length > 0 &&
+                                        store.conserjes.map((conserje, index) => {
+                                            if (conserje.estado === true) {
+                                                return (
+
+                                                    <div key={index} className="card mb-2 mb-md-4 p-2 prueba shadow-sm ">
+                                                        <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
+                                                            <div className="w-75 d-flex align-items-center" >
+
+                                                                <div className="d-flex align-items-center  flex-column">  <img src="../user.png" className="img-fluid w-40" />
+                                                                    <div className="text-center">
+                                                                        <h3>{conserje.nombre}</h3>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div className="w-75 conserjes-activos">
+
+                                                                <ul className="p-0">
+
+                                                                    <li><strong>Teléfono: </strong>{conserje.telefono}</li>
+                                                                    <li className="mt-md-2"><strong>Email: </strong>{conserje.usuario.email}</li>
+                                                                    <li className="mt-md-2"><strong>Turno: </strong>{conserje.turno}</li>
+
+                                                                </ul>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                )
+                                            }
+                                        })
+
+
+
+                                    }
+                                    {}
+                                    <div className="">
+                                        <Link to="/conserjes"><button className="w-100 btn btn-dashboard text-light"> Ver todos</button></Link>
+                                    </div>
                                 </div>
                             </div>
-
-                            {store.conserjes.length > 0 &&
-                                store.conserjes.map((conserje, index) => {
-                                    if (conserje.estado === true) {
-                                        return (
-
-                                            <div key={index} className="card mb-2 mb-md-4 p-2 prueba shadow-sm ">
-                                                <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
-                                                    <div className="w-75 d-flex align-items-center" >
-
-                                                        <div className="d-flex align-items-center  flex-column">  <img src="../user.png" className="img-fluid w-40" />
-                                                            <div className="text-center">
-                                                                <h3>{conserje.nombre}</h3>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div className="w-75 conserjes-activos">
-
-                                                        <ul className="p-0">
-
-                                                            <li><strong>Teléfono: </strong>{conserje.telefono}</li>
-                                                            <li className="mt-md-2"><strong>Email: </strong>{conserje.usuario.email}</li>
-                                                            <li className="mt-md-2"><strong>Turno: </strong>{conserje.turno}</li>
-
-                                                        </ul>
-
-                                                    </div>
-
+                        </div>
+                        <div className="col p-0 h-100 mt-3">
+                            <div className="card shadow-sm rounded-lg row justify-content-center">
+                                <div className="container card-body">
+                                    <div className="row mb-2">
+                                        <div className="col-12 mb-4 mt-3 text-center text-md-left">
+                                            <h2>Solicitudes nuevos residentes</h2>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="col-md-6 m-auto h-100">
+                                            <div className="card p-3 bg-db-2 mt-3 mt-md-0">
+                                                <h4 >Por crear</h4>
+                                                <div className="d-flex justify-content-end">
+                                                    <span className="ml-md-1 d-flex align-items-center justify-content-center btn-db-2 shadow-sm dashboard-green">
+                                                        <p className="pt-3">{!!store.nuevosResidentes? store.nuevosResidentes.length : "0"}</p>
+                                                    </span>
                                                 </div>
                                             </div>
-
-
-                                        )
-                                    }
-                                })
-
-
-
-                            }
-                            {}
-                            <div className="">
-                                <Link to="/conserjes"><button className="w-100 btn btn-dashboard text-light"> Ver todos</button></Link>
+                                    </div>
+                                    
+                                    <div className="d-flex justify-content-end my-3">
+                                        <Link to={"/admin/inicializacion-pisos"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        
+
                     </div>
                 </div>
                 <div className="col mb-4 h-100 p-md-3 p-0">

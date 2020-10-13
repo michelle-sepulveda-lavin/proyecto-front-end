@@ -176,6 +176,13 @@ const DashboardUser = (props) => {
                                 </div>
 
                             </div>
+                            {
+                                !!store.paqueteriaUsuario &&
+                                <div className="d-flex justify-content-end mr-2">
+                                    <Link to={"/usuario/paqueteria"} style={{ textDecoration: 'none', color: "#ffffff" }} className="btn btn-dashboard mt-2">Ver detalle </Link>
+                                </div>
+                            }
+
 
                         </div>
 
