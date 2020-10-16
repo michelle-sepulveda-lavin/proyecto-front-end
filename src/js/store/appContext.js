@@ -5,6 +5,7 @@ export const Context = React.createContext(null);
 
 
 const injectContext = PassedComponent => {
+
 	const StoreWrapper = props => {
 		const [state, setState] = useState(
 			getState({
@@ -19,8 +20,12 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-        //Mis fetch
-        }, []);
+			state.actions.getCurrentRol();
+			state.actions.getCurrentDate()
+			state.actions.sesionIniciada()
+
+		}, []);
+
 
 		return (
 			<Context.Provider value={state}>
